@@ -40,3 +40,10 @@ button:hover {
     background-color: gray;
     color: white;
 }
+
+footer {
+    margin-top: 20px;
+    padding: 8px;
+    background-color: lightgray;
+    text-align: center;
+}
