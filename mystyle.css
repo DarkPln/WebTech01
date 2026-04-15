@@ -1,10 +1,10 @@
 body {
-    background-color: #756868;
+    background-color: #101319;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     margin: 0;
     padding: 10px;
-    color:rgb(0, 0, 0);
+    color:rgb(250, 250, 250);
     text-align: justify;
 }
 
@@ -14,6 +14,10 @@ th{
 
 p{
     text-align: justify;
+}
+
+h2{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 h1{
