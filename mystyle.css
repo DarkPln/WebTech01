@@ -1,11 +1,42 @@
 body {
     background-color: #756868;
-    font-family: "Gill Sans", sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
     margin: 0;
     padding: 10px;
-    color:rgb(255, 255, 255)
+    color:rgb(0, 0, 0);
+    text-align: justify;
+}
+
+th{
+    background-color: lightgray;
+}
+
+p{
+    text-align: justify;
 }
 
 h1{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Orbitron', sans-serif;
+}
+
+a:hover{
+    color: blueviolet;
+}
+
+input, button {
+    padding: 5px;
+    margin: 5px;
+    color: blue
+}
+
+button{
+    background-color: lightgray;
+    color: black; 
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: gray;
+    color: white;
 }
