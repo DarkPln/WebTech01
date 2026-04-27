@@ -63,7 +63,7 @@ footer {
 display: flex;
 font-size: 12px; 
 align-items: center;
-justify-content: space-between;
+justify-content: center;
 flex-wrap: wrap
 
 }
@@ -80,7 +80,7 @@ ul{
 
 a{
     display: block; 
-    text-align: right;
+    text-align: center;  /* Center the links */
   
 }
 
