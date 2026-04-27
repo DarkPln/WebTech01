@@ -143,9 +143,8 @@ footer {
 .footer-bot{
 display: flex;
 font-size: 12px; 
-align-items: center;
+flex-wrap: wrap;
 justify-content: center;
-flex-wrap: wrap
 
 }
 
@@ -154,14 +153,22 @@ flex-wrap: wrap
     color: white;
 }
 
-
 ul{
     list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+    text-align: center;
+}
+
+li{
+    list-style-type: none;
+    text-align: center;
+    margin: 5px 0;
 }
 
 a{
     display: block; 
-    text-align: center;  /* Center the links */
+    text-align: center;
   
 }
 
