@@ -52,14 +52,24 @@ button:hover {
 }
 
 footer {
-    margin-top: 20px;
-    padding: 8px;
-    background-color: rgba(184, 26, 26, 0.618);
+    border-top: px solid rgba(211, 211, 211, 0.311);
+    margin-top: 15px;
+    padding: 50px 4rem 30px; 
+    background-color: rgba(20, 17, 17, 0.618);
     text-align: center;
 
 }
  
+.footer-top{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 15px; 
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(211, 211, 211, 0.311) 
+}
+
 .footer-bot{
+padding-top: 30px;
 display: flex;
 font-size: 12px; 
 align-items: center;
@@ -68,9 +78,56 @@ flex-wrap: wrap
 
 }
 
+.footer-heading {
+    font-size: 10px; 
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: lightgray; 
+    margin-bottom: 20px;
+}
+
+
+
+.footer-logo{
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.footer-logo span{
+    color: rgb(227, 27, 27); 
+}
+
+.footer-top a{
+    text-decoration: none;
+    color: rgba(211, 211, 211, 0.792);
+    font-size: 11px;
+    text-transform: uppercase;
+    
+}
+
+.footer-top a:hover{
+    color: rgb(227, 27, 27); 
+}
+
+
+.footer-dsc{
+    font-size: 14px;
+    color: lightgray;
+    max-width: 300px;
+}
+
+
+
 .footer-bot a{
     text-decoration: none;
     color: white;
+    
+}
+
+.footer-bot a:hover{
+    color: rgb(227, 27, 27); 
 }
 
 ul{
@@ -88,7 +145,7 @@ li{
 
 a{
     display: block; 
-    text-align: center;  /* Center the links */
+    text-align: center; 
   
 }
 
