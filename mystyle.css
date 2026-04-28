@@ -17,42 +17,162 @@ th{
     background-color: lightgray;
 }
 
+/* ===== TYPOGRAFIE - Einheitliches Schriftbild ===== */
+/* Angepasst von: tim */
+
+/* Absätze - Standard-Textgröße */
 p{
     text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 15px 0;
 }
 
-h2{
-    font-family: "Arial", serif;
-}
-
+/* Hauptüberschrift */
 h1{
-    font-family: 'Arial', sans-serif;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 20px 0;
+    letter-spacing: 0.5px;
+}
 
+/* Sekundäre Überschrift */
+h2{
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 18px 0;
+}
+
+/* Tertiäre Überschrift */
+h3{
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 15px 0;
 }
 
 a:hover{
     color: rgb(164, 18, 18);
 }
 
+/* ===== FORMULAR-STYLING ===== */
+/* Angepasst von: tim */
+/* Verbesserte Rahmen, Abstände und einheitliches Design */
 
-
-
-
-input, button {
-    padding: 5px;
-    margin: 5px;
-    color: blue
+/* Labels für Formularfelder */
+label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(220, 220, 220);
+    margin-bottom: 2px;
+    margin-top: 15px;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-button{
-    background-color: lightgray;
-    color: black; 
-    cursor: pointer;
+/* Eingabefelder - Einheitliche Gestaltung mit angepassten Rändern und Abständen */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    margin: 0 auto 8px auto;
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #1a1a1a;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background-color: gray;
+/* Fokus-Zustand für Eingabefelder - Rote Akzentfarbe */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: rgb(227, 27, 27);
+    background-color: #222222;
+    box-shadow: 0 0 0 3px rgba(227, 27, 27, 0.1);
+}
+
+/* Platzhaltertext */
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+input[type="email"]::placeholder,
+input[type="tel"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
+    color: #888888;
+    font-style: italic;
+}
+
+/* Buttons - Submit, Reset und Standard-Buttons */
+input[type="submit"],
+input[type="reset"],
+button {
+    max-width: 400px;
+    width: 100%;
+    padding: 12px 25px;
+    margin: 20px auto 10px;
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: rgb(227, 27, 27);
     color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Hover-Effekt für Submit-Buttons */
+input[type="submit"]:hover,
+button:hover {
+    background-color: rgb(200, 20, 20);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
+}
+
+/* Reset-Button - Graues Design zur Unterscheidung */
+input[type="reset"] {
+    background-color: #333333;
+    color: rgb(220, 220, 220);
+    text-transform: none;
+}
+
+/* Hover-Effekt für Reset-Button */
+input[type="reset"]:hover {
+    background-color: #444444;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(68, 68, 68, 0.3);
+}
+
+/* Textbereich-Spezifikationen */
+textarea {
+    min-height: 120px;
+    resize: vertical;
 }
 
 footer {
@@ -162,4 +282,6 @@ a{
     text-align: center; 
   
 }
+
+/* Formular-Styling abgeschlossen - tim */
 
