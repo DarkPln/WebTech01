@@ -402,6 +402,13 @@ flex-wrap: wrap
 
 }
 
+/* Footer-Bot Links Container */
+.footer-bot-links {
+    display: flex;
+    gap: 25px;
+    margin-left: auto;
+}
+
 .footer-heading {
     font-size: 10px; 
     letter-spacing: 2px;
