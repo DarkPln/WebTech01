@@ -403,6 +403,9 @@ flex-wrap: wrap
 }
 
 /* Footer-Bot Links Container */
+/* Lukas */
+
+
 .footer-bot-links {
     display: flex;
     gap: 25px;
@@ -471,6 +474,8 @@ flex-wrap: wrap
     color: rgb(227, 27, 27); 
 }
 
+/* Lukas */
+
 ul{
     list-style-type: none;
     padding: 0;
@@ -483,6 +488,57 @@ li{
     text-align: center;
     margin: 5px 0;
 }
+
+
+nav{
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    z-index: 100;  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 4rem;
+    background-color: rgba(20, 17, 17, 0.618);
+    border-bottom: 1px solid darkred;
+    backdrop-filter: blur(12px);
+    height: 64px;
+    box-sizing: border-box;
+
+}
+
+.nav-logo{
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 36px;
+}
+
+.nav-logo span{
+    color: rgb(227, 27, 27); 
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(211, 211, 211, 0.792);
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+/* Lukas */
 
 a{
     display: block; 
