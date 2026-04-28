@@ -34,6 +34,10 @@ a:hover{
     color: rgb(164, 18, 18);
 }
 
+
+
+
+
 input, button {
     padding: 5px;
     margin: 5px;
@@ -93,6 +97,7 @@ flex-wrap: wrap
     letter-spacing: 2px;
     color: white;
     margin-bottom: 12px;
+    font-weight: bold;
 }
 
 .footer-logo span{
@@ -111,6 +116,13 @@ flex-wrap: wrap
     color: rgb(227, 27, 27); 
 }
 
+.footer-logo-dsc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .footer-dsc{
     font-size: 14px;
@@ -118,7 +130,9 @@ flex-wrap: wrap
     max-width: 300px;
 }
 
-
+.footer-logo{
+    text-transform: uppercase;
+}
 
 .footer-bot a{
     text-decoration: none;
