@@ -9,14 +9,45 @@
 <body>  
     <h1>Login</h1>
     <p>Bitte loggen Sie sich mit ihrem Account ein</p>
-    <label for="username">Benutzername:</label>
-    <input type="text" id="username" name="username" required>
-
-    <label for="password">Passwort:</label>
-    <input type="password" id="password" name="password" required>
+    <p class="demo-hint">(Demo: Benutzername: abc, Passwort: 123)</p>
     
-    <input type="submit" value="Einloggen">
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required>
 
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <div id="errorMessage" class="error-message"></div>
+        
+        <input type="submit" value="Einloggen">
+    </form>
+
+    <script>
+        // Login-Funktionalität für Demo-Zwecke - tim
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Demo-Zugangsdaten
+            if (username === 'abc' && password === '123') {
+                // Erfolgreicher Login
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('username', username);
+                errorMessage.style.display = 'none';
+                window.location.href = 'user.html';
+            } else {
+                // Fehlgeschlagener Login
+                errorMessage.textContent = 'Falscher Benutzername oder Passwort!';
+                errorMessage.style.display = 'block';
+            }
+            
+            return false;
+        }
+    </script>
 
 <p>Noch kein Konto? <a href="registration.html">Registrieren Sie sich hier</a>.</p>
 <a href="index.html">Startseite</a>

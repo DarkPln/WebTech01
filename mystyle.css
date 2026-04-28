@@ -175,6 +175,206 @@ textarea {
     resize: vertical;
 }
 
+/* Absätze in Formularen - Reduzierte Abstände */
+form p {
+    margin: 5px 0;
+}
+
+/* BR-Tags nach Labels - Kein zusätzlicher Abstand */
+label + br {
+    display: none;
+}
+
+/* ===== CHECKBOX UND RADIO-BUTTON STYLING ===== */
+/* Angepasst von: tim */
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 10px 8px 10px 0;
+    cursor: pointer;
+    accent-color: rgb(227, 27, 27);
+}
+
+/* Radio-Button Styling */
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin: 10px 8px 10px 0;
+    cursor: pointer;
+    accent-color: rgb(227, 27, 27);
+}
+
+/* Labels für Checkboxen und Radio-Buttons */
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+    display: inline;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* ===== SELECT-DROPDOWN VERBESSERUNGEN ===== */
+/* Angepasst von: tim */
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23ffffff" d="M1 1l5 5 5-5"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+select:disabled {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23666666" d="M1 1l5 5 5-5"/></svg>');
+}
+
+/* ===== FORMULAR-ZUSTÄNDE ===== */
+/* Angepasst von: tim */
+
+/* Deaktivierte Felder */
+input:disabled,
+textarea:disabled,
+select:disabled,
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #151515;
+    border-color: #2a2a2a;
+}
+
+/* Ungültige Eingaben */
+input:invalid:not(:focus):not(:placeholder-shown),
+textarea:invalid:not(:focus):not(:placeholder-shown),
+select:invalid:not(:focus) {
+    border-color: rgb(227, 27, 27);
+    background-color: rgba(227, 27, 27, 0.05);
+}
+
+/* Gültige Eingaben */
+input:valid:not(:focus):not(:placeholder-shown),
+textarea:valid:not(:focus):not(:placeholder-shown) {
+    border-color: #2ecc71;
+}
+
+/* ===== ACCESSIBILITY-VERBESSERUNGEN ===== */
+/* Angepasst von: tim */
+
+/* Fokus für Tastaturnavigation */
+*:focus-visible {
+    outline: 3px solid rgb(227, 27, 27);
+    outline-offset: 2px;
+}
+
+/* Größere Klickbereiche für Buttons */
+button,
+input[type="submit"],
+input[type="reset"] {
+    min-height: 44px;
+}
+
+/* ===== HILFSKLASSEN ===== */
+/* Angepasst von: tim */
+
+/* Demo-Hinweis */
+.demo-hint {
+    font-size: 12px;
+    color: #888888;
+    font-style: italic;
+}
+
+/* Fehlermeldung */
+.error-message {
+    color: rgb(227, 27, 27);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px auto;
+    max-width: 400px;
+    display: none;
+    text-align: center;
+}
+
+.error-message {
+    display: block;
+}
+
+/* Erfolgsmeldung */
+.success-message {
+    color: #2ecc71;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px auto;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+/* Angepasst von: tim */
+
+/* Tablets und kleinere Bildschirme */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+    
+    h2 {
+        font-size: 22px;
+    }
+    
+    h3 {
+        font-size: 18px;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select,
+    button,
+    input[type="submit"],
+    input[type="reset"] {
+        max-width: 100%;
+        font-size: 16px;
+    }
+    
+    label {
+        max-width: 100%;
+    }
+    
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Smartphones */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+    
+    footer {
+        padding: 30px 1rem 20px;
+    }
+}
+
+/* Formular-Styling abgeschlossen - tim */
+
 footer {
     border-top: px solid rgba(211, 211, 211, 0.311);
     margin-top: 15px;
