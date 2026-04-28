@@ -713,3 +713,147 @@ a{
     background: #CC0000;
     color: white;
 }
+
+/* ===== Index - Auto24 von Niclas ===== */
+
+.home-main {
+    padding-top: 80px;
+}
+
+.home-hero {
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 4rem;
+    background:
+        radial-gradient(circle at 70% 40%, rgba(227, 27, 27, 0.25), transparent 35%),
+        linear-gradient(135deg, #0a0a0a 0%, #180505 50%, #0a0a0a 100%);
+    border-bottom: 1px solid #2e2e2e;
+}
+
+.home-hero-content {
+    max-width: 800px;
+    text-align: center;
+}
+
+.home-badge {
+    display: inline-block;
+    border: 1px solid darkred;
+    background: rgba(227, 27, 27, 0.15);
+    color: rgb(227, 27, 27);
+    padding: 6px 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.home-hero h1 {
+    font-size: 56px;
+    margin-bottom: 20px;
+}
+
+.home-hero h1 span {
+    color: rgb(227, 27, 27);
+}
+
+.home-hero p {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    color: lightgray;
+    font-size: 18px;
+}
+
+.home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.home-btn-primary,
+.home-btn-secondary {
+    text-decoration: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.home-btn-primary {
+    background: rgb(227, 27, 27);
+    color: white;
+}
+
+.home-btn-primary:hover {
+    background: rgb(200, 20, 20);
+    color: white;
+}
+
+.home-btn-secondary {
+    border: 1px solid #8B0000;
+    color: white;
+}
+
+.home-btn-secondary:hover {
+    background: #8B0000;
+    color: white;
+}
+
+.home-section,
+.home-about {
+    padding: 70px 4rem;
+}
+
+.home-category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 35px;
+}
+
+.home-category-card {
+    background: #111111;
+    border: 1px solid #2e2e2e;
+    border-radius: 8px;
+    padding: 30px 24px;
+    transition: 0.2s;
+}
+
+.home-category-card:hover {
+    border-color: #8B0000;
+    transform: translateY(-4px);
+}
+
+.home-category-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.home-category-card p {
+    color: #bdbdbd;
+    font-size: 14px;
+}
+
+.home-category-card a {
+    color: rgb(227, 27, 27);
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+.home-about {
+    background: #111111;
+    border-top: 1px solid #2e2e2e;
+    border-bottom: 1px solid #2e2e2e;
+}
+
+.home-about p {
+    max-width: 750px;
+    margin: 0 auto 30px;
+    color: lightgray;
+}
+
