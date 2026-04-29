@@ -264,6 +264,63 @@ input[type="reset"] {
     text-align: center;
 }
 
+/* ===== NAVIGATIONS-BUTTONS ===== */
+/* Angepasst von: tim */
+
+/* Container für Navigation-Buttons */
+.login-navigation {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 30px auto 20px;
+    max-width: 400px;
+    flex-wrap: wrap;
+}
+
+/* Basis-Stil für Navigations-Buttons */
+.nav-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Sekundärer Button (Registrierung) */
+.nav-btn-secondary {
+    background-color: rgb(227, 27, 27);
+    color: white;
+    border: 2px solid rgb(227, 27, 27);
+}
+
+.nav-btn-secondary:hover {
+    background-color: rgb(200, 20, 20);
+    border-color: rgb(200, 20, 20);
+    color: black;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
+}
+
+/* Outline Button (Startseite) */
+.nav-btn-outline {
+    background-color: transparent;
+    color: rgb(220, 220, 220);
+    border: 2px solid #444444;
+}
+
+.nav-btn-outline:hover {
+    background-color: #333333;
+    border-color: #555555;
+    color: white;
+    transform: translateY(-2px);
+}
+
 footer {
     border-top: px solid rgba(211, 211, 211, 0.311);
     margin-top: 15px;
@@ -685,6 +742,9 @@ a{
 .home-btn-secondary {
     border: 1px solid #8B0000;
     color: white;
+    display: inline-block;
+    max-width: 300px;
+    text-align: center;
 }
 
 .home-btn-secondary:hover {
