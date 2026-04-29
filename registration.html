@@ -5,6 +5,7 @@
         <meta charset = "UTF-8">
         <title>Registrierung</title>
         <link rel="stylesheet" href="mystyle.css">
+        <script src="validation.js"></script>
     </head>
     <body>
         <h1>Registrierung-Auto24</h1>
@@ -28,104 +29,6 @@
         </form>
 
         <p><a href="login.html">Zurück zum Login</a></p>
-
-        <script>
-            // Formularvalidierung - tim
-            const form = document.getElementById('registrationForm');
-            const benutzername = document.getElementById('benutzername');
-            const passwort = document.getElementById('passwort');
-            const passwortWiederholen = document.getElementById('passwort_wiederholen');
-            const submitBtn = document.getElementById('submitBtn');
-
-            // Validierungsfunktionen
-            function validateUsername(value) {
-                const errors = [];
-                if (value.length < 5) {
-                    errors.push('Mindestens 5 Zeichen erforderlich');
-                }
-                if (!/[a-z]/.test(value)) {
-                    errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-                }
-                if (!/[A-Z]/.test(value)) {
-                    errors.push('Mindestens ein Großbuchstabe erforderlich');
-                }
-                return errors;
-            }
-
-            function validatePassword(value) {
-                const errors = [];
-                if (value.length < 10) {
-                    errors.push('Mindestens 10 Zeichen erforderlich');
-                }
-                return errors;
-            }
-
-            function validatePasswordMatch(password, passwordRepeat) {
-                if (password !== passwordRepeat) {
-                    return ['Passwörter stimmen nicht überein'];
-                }
-                return [];
-            }
-
-            // Feldvalidierung mit visueller Rückmeldung
-            function validateField(field, validator, ...args) {
-                const value = field.value;
-                const errorSpan = document.getElementById(field.id + '-error');
-                const errors = validator(value, ...args);
-
-                if (errors.length > 0) {
-                    field.classList.add('invalid');
-                    field.classList.remove('valid');
-                    errorSpan.textContent = errors[0];
-                } else if (value.length > 0) {
-                    field.classList.remove('invalid');
-                    field.classList.add('valid');
-                    errorSpan.textContent = '';
-                } else {
-                    field.classList.remove('invalid', 'valid');
-                    errorSpan.textContent = '';
-                }
-
-                checkFormValidity();
-            }
-
-            // Formular-Gültigkeit prüfen und Submit-Button aktivieren/deaktivieren
-            function checkFormValidity() {
-                const usernameValid = validateUsername(benutzername.value).length === 0;
-                const passwordValid = validatePassword(passwort.value).length === 0;
-                const passwordMatchValid = validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0;
-
-                const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                               benutzername.value.length > 0 && passwort.value.length > 0;
-
-                submitBtn.disabled = !isValid;
-            }
-
-            // Event-Listener für Echtzeit-Validierung
-            benutzername.addEventListener('input', () => validateField(benutzername, validateUsername));
-            passwort.addEventListener('input', () => {
-                validateField(passwort, validatePassword);
-                if (passwortWiederholen.value.length > 0) {
-                    validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-                }
-            });
-            passwortWiederholen.addEventListener('input', () => 
-                validateField(passwortWiederholen, validatePasswordMatch, passwort.value)
-            );
-
-            // Form-Submit
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (!submitBtn.disabled) {
-                    alert('Registrierung erfolgreich!');
-                    localStorage.setItem('registeredUser', benutzername.value);
-                    window.location.href = 'login.html';
-                }
-            });
-
-            // Initial Button deaktivieren
-            submitBtn.disabled = true;
-        </script>
     </body>
 
 

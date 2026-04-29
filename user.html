@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Nutzerbereich</title>
     <link rel="stylesheet" href="mystyle.css">
+    <script src="validation.js"></script>
 </head>
 
 <body>
@@ -30,110 +31,6 @@
     <p>
         <a href="logout.html">Abmelden</a>
     </p>
-
-    <script>
-        // Benutzerprofil-Validierung - tim
-        const userForm = document.getElementById('userForm');
-        const username = document.getElementById('username');
-        const password = document.getElementById('password');
-        const passwordConfirm = document.getElementById('password_confirm');
-        const saveBtn = document.getElementById('saveBtn');
-
-        // Validierungsfunktionen
-        function validateUsername(value) {
-            const errors = [];
-            if (value.length < 5) {
-                errors.push('Mindestens 5 Zeichen erforderlich');
-            }
-            if (!/[a-z]/.test(value)) {
-                errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-            }
-            if (!/[A-Z]/.test(value)) {
-                errors.push('Mindestens ein Großbuchstabe erforderlich');
-            }
-            return errors;
-        }
-
-        function validatePassword(value) {
-            const errors = [];
-            if (value.length < 10) {
-                errors.push('Mindestens 10 Zeichen erforderlich');
-            }
-            return errors;
-        }
-
-        function validatePasswordMatch(password, passwordRepeat) {
-            if (password !== passwordRepeat) {
-                return ['Passwörter stimmen nicht überein'];
-            }
-            return [];
-        }
-
-        // Feldvalidierung
-        function validateField(field, validator, ...args) {
-            const value = field.value;
-            const errorSpan = document.getElementById(field.id + '-error');
-            const errors = validator(value, ...args);
-
-            if (errors.length > 0) {
-                field.classList.add('invalid');
-                field.classList.remove('valid');
-                errorSpan.textContent = errors[0];
-            } else if (value.length > 0) {
-                field.classList.remove('invalid');
-                field.classList.add('valid');
-                errorSpan.textContent = '';
-            } else {
-                field.classList.remove('invalid', 'valid');
-                errorSpan.textContent = '';
-            }
-
-            checkFormValidity();
-        }
-
-        // Formular-Gültigkeit prüfen
-        function checkFormValidity() {
-            const usernameValid = validateUsername(username.value).length === 0;
-            const passwordValid = validatePassword(password.value).length === 0;
-            const passwordMatchValid = validatePasswordMatch(password.value, passwordConfirm.value).length === 0;
-
-            const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                           username.value.length > 0 && password.value.length > 0;
-
-            saveBtn.disabled = !isValid;
-        }
-
-        // Event-Listener
-        username.addEventListener('input', () => validateField(username, validateUsername));
-        password.addEventListener('input', () => {
-            validateField(password, validatePassword);
-            if (passwordConfirm.value.length > 0) {
-                validateField(passwordConfirm, validatePasswordMatch, password.value);
-            }
-        });
-        passwordConfirm.addEventListener('input', () => 
-            validateField(passwordConfirm, validatePasswordMatch, password.value)
-        );
-
-        // Form-Submit
-        userForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!saveBtn.disabled) {
-                alert('Änderungen erfolgreich gespeichert!');
-                localStorage.setItem('username', username.value);
-            }
-        });
-
-        // Gespeicherten Benutzernamen laden
-        window.addEventListener('load', () => {
-            const savedUsername = localStorage.getItem('username');
-            if (savedUsername) {
-                username.value = savedUsername;
-                validateField(username, validateUsername);
-            }
-            saveBtn.disabled = true;
-        });
-    </script>
 
      <footer>
         
