@@ -96,7 +96,7 @@ select {
     background-color: #1a1a1a;
     border: 2px solid #333333;
     border-radius: 8px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Inklusive Width + Padding + Border in der Breitenberechnung */
     transition: all 0.3s ease;
 }
 
@@ -130,7 +130,7 @@ button {
     color: white;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
+    cursor: pointer; /* Zeigt an, dass es klickbar ist mit Handsymbol */
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
