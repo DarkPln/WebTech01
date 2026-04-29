@@ -857,3 +857,6 @@ a{
     color: lightgray;
 }
 
+.car-footer a{
+    text-decoration: none;
+}
