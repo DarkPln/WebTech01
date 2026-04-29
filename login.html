@@ -9,44 +9,107 @@
 <body>  
     <h1>Login</h1>
     <p>Bitte loggen Sie sich mit ihrem Account ein</p>
-    <p class="demo-hint">(Demo: Benutzername: abc, Passwort: 123)</p>
+    <p class="demo-hint">(Demo: Benutzername: TestUser, Passwort: TestPass123)</p>
     
-    <form id="loginForm" onsubmit="return handleLogin(event)">
+    <form id="loginForm">
         <label for="username">Benutzername:</label>
         <input type="text" id="username" name="username" required>
+        <span class="field-error" id="username-error"></span>
 
         <label for="password">Passwort:</label>
         <input type="password" id="password" name="password" required>
+        <span class="field-error" id="password-error"></span>
         
         <div id="errorMessage" class="error-message"></div>
         
-        <input type="submit" value="Einloggen">
+        <input type="submit" value="Einloggen" id="loginBtn">
     </form>
 
     <script>
-        // Login-Funktionalität für Demo-Zwecke - tim
-        function handleLogin(event) {
-            event.preventDefault();
+        // Login-Funktionalität mit Validierung - tim
+        const loginForm = document.getElementById('loginForm');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Validierungsfunktionen
+        function validateUsername(value) {
+            const errors = [];
+            if (value.length < 5) {
+                errors.push('Mindestens 5 Zeichen erforderlich');
+            }
+            if (!/[a-z]/.test(value)) {
+                errors.push('Mindestens ein Kleinbuchstabe erforderlich');
+            }
+            if (!/[A-Z]/.test(value)) {
+                errors.push('Mindestens ein Großbuchstabe erforderlich');
+            }
+            return errors;
+        }
+
+        function validatePassword(value) {
+            const errors = [];
+            if (value.length < 10) {
+                errors.push('Mindestens 10 Zeichen erforderlich');
+            }
+            return errors;
+        }
+
+        // Feldvalidierung
+        function validateField(field, validator) {
+            const value = field.value;
+            const errorSpan = document.getElementById(field.id + '-error');
+            const errors = validator(value);
+
+            if (errors.length > 0) {
+                field.classList.add('invalid');
+                field.classList.remove('valid');
+                errorSpan.textContent = errors[0];
+            } else if (value.length > 0) {
+                field.classList.remove('invalid');
+                field.classList.add('valid');
+                errorSpan.textContent = '';
+            } else {
+                field.classList.remove('invalid', 'valid');
+                errorSpan.textContent = '';
+            }
+
+            checkFormValidity();
+        }
+
+        // Button-Status prüfen
+        function checkFormValidity() {
+            const usernameValid = validateUsername(username.value).length === 0;
+            const passwordValid = validatePassword(password.value).length === 0;
+            const isValid = usernameValid && passwordValid && username.value.length > 0 && password.value.length > 0;
+            loginBtn.disabled = !isValid;
+        }
+
+        // Event-Listener
+        username.addEventListener('input', () => validateField(username, validateUsername));
+        password.addEventListener('input', () => validateField(password, validatePassword));
+
+        // Form-Submit
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
             
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // Demo-Zugangsdaten
-            if (username === 'abc' && password === '123') {
-                // Erfolgreicher Login
+            if (loginBtn.disabled) return;
+
+            // Demo-Zugangsdaten (erfüllen die Validierungskriterien)
+            if (username.value === 'TestUser' && password.value === 'TestPass123') {
                 localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('username', username);
+                localStorage.setItem('username', username.value);
                 errorMessage.style.display = 'none';
                 window.location.href = 'user.html';
             } else {
-                // Fehlgeschlagener Login
                 errorMessage.textContent = 'Falscher Benutzername oder Passwort!';
                 errorMessage.style.display = 'block';
             }
-            
-            return false;
-        }
+        });
+
+        // Initial Button deaktivieren
+        loginBtn.disabled = true;
     </script>
 
 <p>Noch kein Konto? <a href="registration.html">Registrieren Sie sich hier</a>.</p>
