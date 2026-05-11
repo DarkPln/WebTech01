@@ -5,52 +5,31 @@
     <meta charset="UTF-8">
     <title>Login - Auto24</title>
     <link rel="stylesheet" href="mystyle.css">
+    <script src="validation.js"></script>
 </head>
 <body>  
     <h1>Login</h1>
     <p>Bitte loggen Sie sich mit ihrem Account ein</p>
-    <p class="demo-hint">(Demo: Benutzername: abc, Passwort: 123)</p>
+    <p class="demo-hint">(Demo: Benutzername: TestUser, Passwort: TestPass123)</p>
     
-    <form id="loginForm" onsubmit="return handleLogin(event)">
+    <form id="loginForm">
         <label for="username">Benutzername:</label>
         <input type="text" id="username" name="username" required>
+        <span class="field-error" id="username-error"></span>
 
         <label for="password">Passwort:</label>
         <input type="password" id="password" name="password" required>
+        <span class="field-error" id="password-error"></span>
         
         <div id="errorMessage" class="error-message"></div>
         
-        <input type="submit" value="Einloggen">
+        <input type="submit" value="Einloggen" id="loginBtn">
     </form>
 
-    <script>
-        // Login-Funktionalität für Demo-Zwecke - tim
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // Demo-Zugangsdaten
-            if (username === 'abc' && password === '123') {
-                // Erfolgreicher Login
-                localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('username', username);
-                errorMessage.style.display = 'none';
-                window.location.href = 'user.html';
-            } else {
-                // Fehlgeschlagener Login
-                errorMessage.textContent = 'Falscher Benutzername oder Passwort!';
-                errorMessage.style.display = 'block';
-            }
-            
-            return false;
-        }
-    </script>
-
-<p>Noch kein Konto? <a href="registration.html">Registrieren Sie sich hier</a>.</p>
-<a href="index.html">Startseite</a>
+    <div class="login-navigation">
+        <a href="registration.html" class="nav-btn nav-btn-secondary">Zur Registrierung</a>
+        <a href="index.html" class="nav-btn nav-btn-outline">Zur Startseite</a>
+    </div>
 
 
 

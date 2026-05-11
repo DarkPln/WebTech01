@@ -5,33 +5,32 @@
     <meta charset="UTF-8">
     <title>Nutzerbereich</title>
     <link rel="stylesheet" href="mystyle.css">
+    <script src="validation.js"></script>
 </head>
 
 <body>
     <h1>Nutzerbereich</h1>
     <h2>Persönliche Informationen</h2>
     
-    <form>
-        <p>
-            <label for="username">Benutzername:</label><br>
-            <input type="text">
-        </p>
+    <form id="userForm">
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required>
+        <span class="field-error" id="username-error"></span>
 
-        <p>
-            <label for="password">Passwort:</label><br>
-            <input type="text">
-        </p>
+        <label for="password">Neues Passwort:</label>
+        <input type="password" id="password" name="password" required>
+        <span class="field-error" id="password-error"></span>
+
+        <label for="password_confirm">Passwort bestätigen:</label>
+        <input type="password" id="password_confirm" name="password_confirm" required>
+        <span class="field-error" id="password_confirm-error"></span>
         
-        <p>
-            <input type="submit" value="Änderungen speichern">
-        </p>
+        <input type="submit" value="Änderungen speichern" id="saveBtn">
     </form>
 
     <p>
         <a href="logout.html">Abmelden</a>
     </p>
-
-
 
      <footer>
         

@@ -177,6 +177,48 @@ textarea:valid:not(:focus):not(:placeholder-shown) {
     border-color: #2ecc71;
 }
 
+/* JavaScript-Validierung - Fehlerzustand */
+input.invalid,
+textarea.invalid,
+select.invalid {
+    border-color: rgb(227, 27, 27) !important;
+    background-color: rgba(227, 27, 27, 0.05) !important;
+}
+
+/* JavaScript-Validierung - Erfolgszustand */
+input.valid,
+textarea.valid,
+select.valid {
+    border-color: #2ecc71 !important;
+    background-color: rgba(46, 204, 113, 0.05) !important;
+}
+
+/* Feldspezifische Fehlermeldungen */
+.field-error {
+    color: rgb(227, 27, 27);
+    font-size: 12px;
+    margin: 2px auto 8px auto;
+    max-width: 400px;
+    text-align: left;
+    display: block;
+}
+
+/* Deaktivierter Submit-Button */
+input[type="submit"]:disabled,
+button[type="submit"]:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #666666;
+    transform: none;
+}
+
+input[type="submit"]:disabled:hover,
+button[type="submit"]:disabled:hover {
+    background-color: #666666;
+    transform: none;
+    box-shadow: none;
+}
+
 /* ===== ACCESSIBILITY-VERBESSERUNGEN ===== */
 /* Angepasst von: tim */
 
@@ -220,6 +262,63 @@ input[type="reset"] {
     margin: 10px auto;
     max-width: 400px;
     text-align: center;
+}
+
+/* ===== NAVIGATIONS-BUTTONS ===== */
+/* Angepasst von: tim */
+
+/* Container für Navigation-Buttons */
+.login-navigation {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 30px auto 20px;
+    max-width: 400px;
+    flex-wrap: wrap;
+}
+
+/* Basis-Stil für Navigations-Buttons */
+.nav-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Sekundärer Button (Registrierung) */
+.nav-btn-secondary {
+    background-color: rgb(227, 27, 27);
+    color: white;
+    border: 2px solid rgb(227, 27, 27);
+}
+
+.nav-btn-secondary:hover {
+    background-color: rgb(200, 20, 20);
+    border-color: rgb(200, 20, 20);
+    color: black;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
+}
+
+/* Outline Button (Startseite) */
+.nav-btn-outline {
+    background-color: transparent;
+    color: rgb(220, 220, 220);
+    border: 2px solid #444444;
+}
+
+.nav-btn-outline:hover {
+    background-color: #333333;
+    border-color: #555555;
+    color: white;
+    transform: translateY(-2px);
 }
 
 footer {
@@ -564,7 +663,7 @@ a{
 /* ===== Index - Auto24 von Niclas ===== */
 
 .home-main {
-    padding-top: 80px;
+    padding-top: 50px;
 }
 
 .home-hero {
@@ -643,6 +742,9 @@ a{
 .home-btn-secondary {
     border: 1px solid #8B0000;
     color: white;
+    display: inline-block;
+    max-width: 300px;
+    text-align: center;
 }
 
 .home-btn-secondary:hover {

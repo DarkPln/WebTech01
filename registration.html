@@ -5,22 +5,30 @@
         <meta charset = "UTF-8">
         <title>Registrierung</title>
         <link rel="stylesheet" href="mystyle.css">
+        <script src="validation.js"></script>
     </head>
     <body>
         <h1>Registrierung-Auto24</h1>
         <p>Bitte füllen Sie die folgenden Informationen aus, um ein neues Konto zu erstellen:</p>
 
-        <label for = "benutzername">Benutzername:</label><br>
-        <input type = "text" id = "benutzername" name = "benutzername" ><br><br>
-   
-        <label  for = "passwort">Passwort:</label><br>
-        <input type = "password" id = "passwort" name = "passwort" ><br><br>
-        
-        <label for = "passwort_wiederholen">Passwort wiederholen:</label><br>
-        <input type = "password" id = "passwort_wiederholen" name = "passwort_wiederholen" ><br><br>
-        
-        <input type = "submit" value = "Registrieren">
-        <input type = "reset" value = "zurück zum Login"><br><br>
+        <form id="registrationForm">
+            <label for="benutzername">Benutzername:</label>
+            <input type="text" id="benutzername" name="benutzername" required>
+            <span class="field-error" id="benutzername-error"></span>
+       
+            <label for="passwort">Passwort:</label>
+            <input type="password" id="passwort" name="passwort" required>
+            <span class="field-error" id="passwort-error"></span>
+            
+            <label for="passwort_wiederholen">Passwort wiederholen:</label>
+            <input type="password" id="passwort_wiederholen" name="passwort_wiederholen" required>
+            <span class="field-error" id="passwort_wiederholen-error"></span>
+            
+            <input type="submit" value="Registrieren" id="submitBtn">
+            <input type="reset" value="Zurücksetzen">
+        </form>
+
+        <p><a href="login.html">Zurück zum Login</a></p>
     </body>
 
 
