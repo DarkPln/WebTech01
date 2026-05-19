@@ -32,7 +32,9 @@
 
     </nav>
 
-    <div class = "fav-ovl" id="favOvl" onclick = "togglePanel()"></div>
+    <div 
+        class = "fav-ovl" id="favOvl" onclick = "togglePanel()">
+    </div>
 
     <!-- Lukas: Favoritenliste / warenkorb   -->
 
@@ -74,7 +76,11 @@
     
     <p> Hier finden Sie verschiedene Arten von Gebrauchtwagen.</p>
     <!-- FAHRZEUGE GRID -->
-<div class="cars-grid">
+     <div class="layout-buttons">
+        <button onclick="setVerticalLayout()">Smartphone Layout</button> 
+        <button onclick="setHorizontalLayout()">Desktop Layout</button>
+    </div>
+<div id = "carLayout" class="cars-grid horizontal-layout">
 
     <!-- Card 1 -->
     <div class="car-card" data-id="audi_a8_001" data-make="Audi" data-model="A8L" data-year="2024" data-fuel="Benzin" data-body="Limousine" data-power="510 PS" data-km="40000 km" data-drive="S-Line Quattro" data-price="89900">

@@ -1280,3 +1280,15 @@ body.light-mode nav,
 body.light-mode footer {
     background-color: #eeeeee;
 }
+
+/* Layout-Umschaltung */
+.cars-grid.vertical-layout {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cars-grid.horizontal-layout {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}

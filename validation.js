@@ -498,3 +498,21 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleMode() {
     document.body.classList.toggle("light-mode");
 }
+/*Layout-Umschaltung: Niclas */
+function setVerticalLayout() {
+    const layout = document.getElementById("carLayout");
+
+    if (!layout) return;
+
+    layout.classList.remove("horizontal-layout");
+    layout.classList.add("vertical-layout");
+}
+
+function setHorizontalLayout() {
+    const layout = document.getElementById("carLayout");
+
+    if (!layout) return;
+
+    layout.classList.remove("vertical-layout");
+    layout.classList.add("horizontal-layout");
+}
