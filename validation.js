@@ -7,7 +7,7 @@
 // Dieses Muster (Fehler sammeln statt sofort abbrechen) erlaubt mehrere Fehlermeldungen gleichzeitig.
 function validateUsername(value) {
     const errors = [];
-    if (value.length < 5)   errors.push('Mindestens 5 Zeichen erforderlich');
+    if (value.length < 5) errors.push('Mindestens 5 Zeichen erforderlich');
     if (!/[a-z]/.test(value)) errors.push('Mindestens ein Kleinbuchstabe erforderlich');
     if (!/[A-Z]/.test(value)) errors.push('Mindestens ein Großbuchstabe erforderlich');
     return errors;
@@ -26,30 +26,39 @@ function validatePasswordMatch(password, passwordRepeat) {
     return [];
 }
 
-// Generische Validierungsfunktion: nimmt ein DOM-Eingabefeld, eine Validator-Funktion und
-// beliebig viele Zusatzargumente (...args, Rest-Parameter). Der Spread-Operator leitet
-// diese args direkt an den Validator weiter (z.B. das erste Passwort beim Match-Check).
-// Setzt CSS-Klassen 'valid'/'invalid' am Input und zeigt den Fehlertext im zugehörigen
-// <span id="feldId-error"> an – die ID-Konvention wird automatisch gebildet.
-function validateField(field, validator, ...args) {
-    const value = field.value;
+// Nimmt ein Eingabefeld, eine Validator-Funktion und optional ein Zusatzargument (z.B. das
+// erste Passwort beim Match-Check). Setzt CSS-Klassen und zeigt Fehlertexte an.
+function validateField(field, validator, extraArg) {
+    // extraArg !== undefined prüft ob ein Zusatzargument übergeben wurde.
+    // Ternärer Operator (? :) wählt dann die passende Variante aus.
+    const errors = extraArg !== undefined
+        ? validator(field.value, extraArg)  // z.B. validatePasswordMatch(wert, erstesPasswort)
+        : validator(field.value);           // z.B. validateUsername(wert)
+
+    // Sucht den zugehörigen Fehler-<span> anhand der Feld-ID.
+    // Konvention: Feld-ID "passwort" → Span-ID "passwort-error".
     const errorSpan = document.getElementById(field.id + '-error');
-    const errors = validator(value, ...args);
+
+    // Beide Klassen zuerst entfernen, damit nie beide gleichzeitig gesetzt sind.
+    field.classList.remove('valid', 'invalid');
+
+    // Fall 1: Es gibt Fehler → Feld rot markieren und ersten Fehler anzeigen.
     if (errors.length > 0) {
         field.classList.add('invalid');
-        field.classList.remove('valid');
         if (errorSpan) errorSpan.textContent = errors[0];
         return false;
-    } else if (value.length > 0) {
-        field.classList.remove('invalid');
+    }
+
+    // Fall 2: Keine Fehler und Feld hat Inhalt → Feld grün markieren.
+    if (field.value.length > 0) {
         field.classList.add('valid');
         if (errorSpan) errorSpan.textContent = '';
         return true;
-    } else {
-        field.classList.remove('invalid', 'valid');
-        if (errorSpan) errorSpan.textContent = '';
-        return false;
     }
+
+    // Fall 3: Feld ist leer → keine Markierung, kein Fehlertext.
+    if (errorSpan) errorSpan.textContent = '';
+    return false;
 }
 
 // ===== NUTZERVERWALTUNG (localStorage) =====
@@ -94,12 +103,10 @@ function initRegistrationForm() {
     // && verknüpft alle Bedingungen: nur wenn alle true sind, ist isValid = true.
     // submitBtn.disabled = !isValid deaktiviert/aktiviert den Button direkt.
     function checkFormValidity() {
-        const isValid =
-            validateUsername(benutzername.value).length === 0 &&
-            validatePassword(passwort.value).length === 0 &&
-            validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0 &&
-            benutzername.value.length > 0 && passwort.value.length > 0;
-        submitBtn.disabled = !isValid;
+        submitBtn.disabled =
+            validateUsername(benutzername.value).length > 0 ||
+            validatePassword(passwort.value).length > 0 ||
+            validatePasswordMatch(passwort.value, passwortWiederholen.value).length > 0;
     }
 
     // 'input'-Event bei jeder Tasteneingabe, ermöglicht Live-Validierung.
@@ -183,15 +190,13 @@ function initLoginForm() {
 
         const uname = username.value.trim();
         const pwd = password.value;
-
         const user = findUser(uname);
         // Hardcoded Demo-Zugangsdaten als Fallback für Tests ohne vorherige Registrierung.
-        const isDemo = (uname === 'TestUser' && pwd === 'TestPass123');
+        const isDemo = uname === 'TestUser' && pwd === 'TestPass123';
 
-        // Kurzschluss-Auswertung (Short-Circuit): user && user.password === pwd wird nur
-        // vollständig ausgewertet, wenn user nicht null ist – verhindert einen Fehler bei
-        // user.password, falls findUser() null zurückgegeben hat.
-        if ((user && user.password === pwd) || isDemo) {
+        // Optional Chaining (?.): user?.password gibt undefined zurück wenn user null ist –
+        // kein Fehler, kein extra null-Check nötig.
+        if (user?.password === pwd || isDemo) {
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('loggedInUser', uname);
             window.location.href = 'user.html';
@@ -235,12 +240,10 @@ function initUserForm() {
     if (displayName) displayName.textContent = loggedInUser;
 
     function checkFormValidity() {
-        const isValid =
-            validateUsername(usernameInput.value).length === 0 &&
-            validatePassword(passwordInput.value).length === 0 &&
-            validatePasswordMatch(passwordInput.value, passwordConfirm.value).length === 0 &&
-            usernameInput.value.length > 0 && passwordInput.value.length > 0;
-        saveBtn.disabled = !isValid;
+        saveBtn.disabled =
+            validateUsername(usernameInput.value).length > 0 ||
+            validatePassword(passwordInput.value).length > 0 ||
+            validatePasswordMatch(passwordInput.value, passwordConfirm.value).length > 0;
     }
 
     usernameInput.addEventListener('input', () => {
@@ -307,7 +310,7 @@ function initLogout() {
 // Damit ist sichergestellt, dass alle getElementById()-Aufrufe die Elemente bereits finden.
 // Jede init-Funktion prüft selbst, ob ihr Zielelement existiert – dadurch kann dieses eine
 // Skript auf allen Seiten eingebunden werden, ohne seitenspezifische Fehler zu verursachen.
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     initLogout();
     initRegistrationForm();
     initLoginForm();
