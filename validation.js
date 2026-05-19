@@ -89,8 +89,8 @@ function initRegistrationForm() {
     const submitBtn = document.getElementById('submitBtn');
     const errorMessage = document.getElementById('reg-error');
 
-    // Closure: checkFormValidity() ist eine innere Funktion mit Zugriff auf alle äußeren
-    // Variablen (benutzername, passwort, etc.) – das nennt sich Closure/Abschluss.
+    // checkFormValidity() ist eine innere Funktion mit Zugriff auf alle äußeren
+    // Variablen (benutzername, passwort, etc.)
     // && verknüpft alle Bedingungen: nur wenn alle true sind, ist isValid = true.
     // submitBtn.disabled = !isValid deaktiviert/aktiviert den Button direkt.
     function checkFormValidity() {
@@ -102,7 +102,7 @@ function initRegistrationForm() {
         submitBtn.disabled = !isValid;
     }
 
-    // 'input'-Event feuert bei jeder Tasteneingabe – ermöglicht Live-Validierung.
+    // 'input'-Event bei jeder Tasteneingabe, ermöglicht Live-Validierung.
     // Arrow-Functions (() => {...}) als Handler binden kein eigenes 'this'.
     benutzername.addEventListener('input', () => {
         validateField(benutzername, validateUsername);
@@ -162,14 +162,6 @@ function initLoginForm() {
     const loginBtn = document.getElementById('loginBtn');
     const errorMessage = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
-
-    // window.location.search enthält den Query-String der aktuellen URL (z.B. "?registered=1").
-    // .includes() prüft als einfache String-Suche, ob der Parameter vorhanden ist.
-    // Dieser Mechanismus überträgt Zustandsinformationen zwischen zwei Seiten ohne Server.
-    if (window.location.search.includes('registered=1') && successMessage) {
-        successMessage.textContent = 'Registrierung erfolgreich! Sie können sich jetzt einloggen.';
-        successMessage.style.display = 'block';
-    }
 
     // Kurzschreibweise: loginBtn.disabled ist direkt das Ergebnis des booleschen Ausdrucks.
     function checkFormValidity() {
