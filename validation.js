@@ -493,3 +493,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // fav logik ende Lukas 
+
+/*Light Mode Toggle: Niclas */
+function toggleMode() {
+    document.body.classList.toggle("light-mode");
+}
