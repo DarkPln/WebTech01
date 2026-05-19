@@ -25,7 +25,51 @@
             <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
             <li><a href="about.html">Auto verkaufen</a></li>
         </ul>
+
+                <!-- Lukas: Fav -->
+         <button class = "nFav-btn" id="nFavBtn" onclick= "togglePanel()">
+            <span class = "navFav-label"> ♡ Merkliste </span>
+            <span class = "navFav-count" id="favCount" style = "display: none">0</span>
+
+         </button>
     </nav>
+
+
+        <div class = "fav-ovl" id="favOvl" onclick = "togglePanel()"></div>
+
+    <!-- Lukas: Favoritenliste / warenkorb   -->
+
+    <div class = "fav-list" id="favList" >
+        <div class = "fav-list-header">
+            <div class = "fav-list-title">Merkliste </div>
+            <div class = "fav-list-dsc" id="favListCount">0 Fahrzeuge in den Favoriten</div>
+            <button class = "fav-list-close-btn" onclick= "togglePanel()">X</button>
+        </div>
+    
+        <div class = "fav-list-body" id="favListBody">
+        <div class = "fav-list-empty" id="favListEmpty">Keine Fahrzeuge in der Merkliste.
+            <div class = "fav-empty-heart">♡</div>
+
+            <div class ="fav-empty-title">Ihre Merkliste ist leer</div>
+            <div class = "fav-empty-desc">Fügen Sie Fahrzeuge zu Ihren Favoriten hinzu, um sie hier zu sehen.</div>
+        </div>
+
+        <!-- JS Fkt dynamisch favs werden geaddet -->
+            <div id="favItems"></div>
+        </div>
+
+        <div class = "fav-list-footer" id = "favListFooter" style = "display: none"> 
+
+            <div class = "total-cost-row"> 
+                <span class = "total-cost-label">Gesamtkosten: </span>
+                <span class = "total-cost-value" id="totalCostValue">0 € </span>
+            </div>
+
+            <button class ="clear-fav-list-btn" id="clearFavListBtn">Favoriten leeren</button>
+        <!-- JS FKT ergänzen-->
+        </div>
+           
+    </div>
 
     <br> <br> <br>
 
@@ -58,13 +102,20 @@
         Dank ausgeprägter Fahrassistenzsysteme eignet er sich perfekt für Langstreckenreisen.
     </p>
 
-    <form action="specialPage.html" method="get">
-        <button type="submit">Zu Favoriten hinzufügen</button>
-    </form>
+    <button class="fav-list-btn" type="button"
+        data-id="audi_a8_001"
+        data-make="Audi"
+        data-model="A8"
+        data-year="2021"
+        data-fuel="Diesel"
+        data-km="33.000 km"
+        data-price="48.750 €"
+        data-image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg/1920px-Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg">
+        Zu Favoriten hinzufügen
+    </button>
 
     <hr>
 
-    <p><a href="gebrauchtwagenList.html"> Zurück zur Gebrauchtwagen-Liste</a></p>
     
     </form>
     
@@ -125,6 +176,9 @@
         </div>
     </footer>
 
+
+
+<script src="validation.js"></script>    
 </body>
 </html>
 <!-- Lukas -->

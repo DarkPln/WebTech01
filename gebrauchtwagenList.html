@@ -8,10 +8,12 @@
 
     <link rel="stylesheet" href="mystyle.css">
 </head>
+
+<!-- Lukas: Navigation -->
 <body>
             
 
-        <nav> 
+    <nav> 
         <div class="nav-logo">Auto<span>24</span></div>
         <ul class = "nav-links">
             <li><a href="index.html">Fahrzeuge</a></li>
@@ -19,8 +21,53 @@
             <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
             <li><a href="about.html">Auto verkaufen</a></li>
         </ul>
+
+        <!-- Lukas: Fav -->
+         <button class = "nFav-btn" id="nFavBtn" onclick= "togglePanel()">
+            <span class = "navFav-label"> ♡ Merkliste </span>
+            <span class = "navFav-count" id="favCount" style = "display: none">0</span>
+
+         </button>
+
     </nav>
 
+    <div class = "fav-ovl" id="favOvl" onclick = "togglePanel()"></div>
+
+    <!-- Lukas: Favoritenliste / warenkorb   -->
+
+    <div class = "fav-list" id="favList" >
+        <div class = "fav-list-header">
+            <div class = "fav-list-title">Merkliste </div>
+            <div class = "fav-list-dsc" id="favListCount">0 Fahrzeuge in den Favoriten</div>
+            <button class = "fav-list-close-btn" onclick= "togglePanel()">X</button>
+        </div>
+    
+        <div class = "fav-list-body" id="favListBody">
+        <div class = "fav-list-empty" id="favListEmpty">Keine Fahrzeuge in der Merkliste.
+            <div class = "fav-empty-heart">♡</div>
+
+            <div class ="fav-empty-title">Ihre Merkliste ist leer</div>
+            <div class = "fav-empty-desc">Fügen Sie Fahrzeuge zu Ihren Favoriten hinzu, um sie hier zu sehen.</div>
+        </div>
+
+        <!-- JS Fkt dynamisch favs werden geaddet -->
+            <div id="favItems"></div>
+        </div>
+
+        <div class = "fav-list-footer" id = "favListFooter" style = "display: none"> 
+
+            <div class = "total-cost-row"> 
+                <span class = "total-cost-label">Gesamtkosten: </span>
+                <span class = "total-cost-value" id="totalCostValue">0 € </span>
+            </div>
+
+            <button class ="clear-fav-list-btn" id="clearFavListBtn">Favoriten leeren</button>
+        <!-- JS FKT ergänzen-->
+        </div>
+           
+    </div>
+
+    <!-- Lukas: Ende FAvs -->
 
     <h1> GEBRAUCHTWAGEN</h1>
     
@@ -29,10 +76,12 @@
 <div class="cars-grid">
 
     <!-- Card 1 -->
-    <div class="car-card">
+    <div class="car-card" data-id="audi_a8_001" data-make="Audi" data-model="A8L" data-year="2024" data-fuel="Benzin" data-body="Limousine" data-power="510 PS" data-km="40000 km" data-drive="S-Line Quattro" data-price="89900">
         <div class="car-image">
             <span class="car-badge-used">Gebraucht</span>
-            <div class="car-fav">♡</div>
+            <!-- Klick auf das Herz wird in validation.js behandelt: Event-Listener (.car-fav) ruft `toggleFavorite(btn)` auf -->
+            <button class="car-fav" type="button" >♡</button>
+          
 
             <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg/1920px-Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg" alt="Audi A8" height = 200 width = 400
@@ -78,7 +127,7 @@
     <div class="car-card">
         <div class="car-image">
             <span class="car-badge-used">Gebraucht</span>
-            <div class="car-fav">♡</div>
+            <button class="car-fav" type="button">♡</button>
 
             <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Audi_SQ7_FL_IMG_3595.jpg/1920px-Audi_SQ7_FL_IMG_3595.jpg" alt="Audi A8" height = 220 width = 400
@@ -123,7 +172,7 @@
     <div class="car-card">
         <div class="car-image">
             <span class="car-badge-used">Gebraucht</span>
-            <div class="car-fav">♡</div>
+            <button class="car-fav" type="button">♡</button>
 
             <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Mercedes-Benz_C_220_BlueTEC_Exclusive_%28W_205%29_%E2%80%93_Frontansicht%2C_12._Juli_2014%2C_D%C3%BCsseldorf.jpg/1920px-Mercedes-Benz_C_220_BlueTEC_Exclusive_%28W_205%29_%E2%80%93_Frontansicht%2C_12._Juli_2014%2C_D%C3%BCsseldorf.jpg" alt="Mercedes-Benz C 220" height = 220 width = 420
@@ -221,7 +270,7 @@
             <a href="about.html">Impressum</a>
         </div>
     
-    
         </div>
     </footer>
+    <script src="validation.js"></script>
 </body>
