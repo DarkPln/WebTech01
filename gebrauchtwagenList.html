@@ -221,6 +221,26 @@
         </div>
     </div>
 </div>
+<!--Niclas: Funktionen Kauffinanzierung-->
+<h2>Kauffinanzierung</h2>
+<label>Preis ohne Steuer:</label>
+<input type="number" id="priceInput">
+
+<button onclick="calculatePrice()">Berechnen</button>
+
+<p id="priceWithoutTax"></p>
+<p id="priceWithTax"></p>
+
+<label>Auto24 Bank - Finanzierungshilfe:</label>
+<p>Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).</p>
+<input type="number" id="financingInput">
+<p>Geben Sie die gewünschte Laufzeit in Monaten ein (12-48):</p>
+<input type="number" id="loanTermInput">
+
+<button onclick="calculateFinancing()">Berechnen</button>
+
+<p id="financingResult"></p>
+<p id="financingResult2"></p>
 
 
 <footer>

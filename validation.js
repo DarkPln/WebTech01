@@ -516,3 +516,71 @@ function setHorizontalLayout() {
     layout.classList.remove("vertical-layout");
     layout.classList.add("horizontal-layout");
 }
+
+/*Preisberechnung mit Steuern */
+function getTotalPrice(priceWOTax) {
+    const taxRate = 0.19;
+    return priceWOTax * (1 + taxRate);
+}
+function calculatePrice() {
+    const input = document.getElementById("priceInput");
+    const value = Number(input.value);
+
+    if (value <= 0) {
+        alert("Bitte gültigen Preis eingeben");
+        return;
+    }
+
+    const total = getTotalPrice(value);
+
+    document.getElementById("priceWithoutTax").textContent =
+        "Preis ohne Steuer: " + value.toFixed(2) + " €";
+
+    document.getElementById("priceWithTax").textContent =
+        "Preis mit 19% Steuer: " + total.toFixed(2) + " €";
+}
+
+/* Finanzierungshilfe */
+function calculateFinancing() {
+    const input = document.getElementById("financingInput");
+    const value = Number(input.value);
+
+    const loanTermInput = document.getElementById("loanTermInput");
+    const loanTerm = Number(loanTermInput.value);
+
+    if (value <= 0) {
+        alert("Bitte gültigen Finanzierungsbetrag eingeben");
+        return;
+    }
+
+    if (loanTerm < 12 || loanTerm > 48) {
+        alert("Bitte gültige Laufzeit eingeben (12-48 Monate)");
+        return;
+    }
+
+    const interest = value * 0.05;
+    const totalAmount = value + interest;
+    const monthlyRate = totalAmount / loanTerm;
+
+    document.getElementById("financingResult").textContent =
+        "Monatliche Rate: " + monthlyRate.toFixed(2) + " €";
+
+    document.getElementById("financingResult2").textContent =
+        "Gesamtbetrag: " + totalAmount.toFixed(2) + " €";
+}
+
+/*Passwort Generator: Niclas */
+function generatePassword() {
+    const input = document.getElementById("pwInput");
+    
+    const length = 12;  
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    let password = "";  
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
+
+    input.value = password;
+    output.textContent = "Generiertes Passwort: " + password;
+}
