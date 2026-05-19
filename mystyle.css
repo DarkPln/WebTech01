@@ -523,6 +523,25 @@ nav{
     color: white;
 }
 
+.nav-auth-link {
+    text-decoration: none;
+    color: rgb(227, 27, 27);
+    border: 1px solid rgb(227, 27, 27);
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.nav-auth-link:hover {
+    background: rgba(227, 27, 27, 0.15);
+    color: rgb(227, 27, 27);
+}
+
 .nav-logo span{
     color: rgb(227, 27, 27); 
 }
@@ -1073,7 +1092,64 @@ button.car-fav {
 
 /* Lukas: Favoritenliste Ende */
 
-/* ===== ÜBER UNS SEITE - about.html ===== */
+/* ===== AUTH-SEITEN (login, registration, user, logout) ===== */
+
+.auth-section {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 1rem;
+    background:
+        radial-gradient(circle at 30% 60%, rgba(227, 27, 27, 0.15), transparent 40%),
+        linear-gradient(135deg, #0a0a0a 0%, #180505 50%, #0a0a0a 100%);
+}
+
+.auth-card {
+    background: #111111;
+    border: 1px solid #2e2e2e;
+    border-radius: 12px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.auth-card h1 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 28px;
+}
+
+.auth-card h2 {
+    font-size: 18px;
+    color: #bdbdbd;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.auth-card p {
+    margin: 12px 0 0;
+}
+
+.auth-card .demo-hint {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.field-error {
+    display: block;
+    font-size: 12px;
+    color: rgb(227, 27, 27);
+    min-height: 16px;
+    margin-top: 2px;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== Tim - ÜBER UNS SEITE - about.html ===== */
 
 /* Dienstleistungs-Grid: 4 kompakte Spalten */
 .about-services-section {

@@ -3,54 +3,29 @@
 
 // ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
 
-/**
- * Validiert einen Benutzernamen
- * Anforderungen: Min. 5 Zeichen, mind. 1 Groß- und 1 Kleinbuchstabe
- */
 function validateUsername(value) {
     const errors = [];
-    if (value.length < 5) {
-        errors.push('Mindestens 5 Zeichen erforderlich');
-    }
-    if (!/[a-z]/.test(value)) {
-        errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-    }
-    if (!/[A-Z]/.test(value)) {
-        errors.push('Mindestens ein Großbuchstabe erforderlich');
-    }
+    if (value.length < 5)   errors.push('Mindestens 5 Zeichen erforderlich');
+    if (!/[a-z]/.test(value)) errors.push('Mindestens ein Kleinbuchstabe erforderlich');
+    if (!/[A-Z]/.test(value)) errors.push('Mindestens ein Großbuchstabe erforderlich');
     return errors;
 }
 
-/**
- * Validiert ein Passwort
- * Anforderungen: Min. 10 Zeichen
- */
 function validatePassword(value) {
     const errors = [];
-    if (value.length < 10) {
-        errors.push('Mindestens 10 Zeichen erforderlich');
-    }
+    if (value.length < 10) errors.push('Mindestens 10 Zeichen erforderlich');
     return errors;
 }
 
-/**
- * Prüft ob zwei Passwörter übereinstimmen
- */
 function validatePasswordMatch(password, passwordRepeat) {
-    if (password !== passwordRepeat) {
-        return ['Passwörter stimmen nicht überein'];
-    }
+    if (password !== passwordRepeat) return ['Passwörter stimmen nicht überein'];
     return [];
 }
 
-/**
- * Validiert ein einzelnes Feld und zeigt visuelle Rückmeldung
- */
 function validateField(field, validator, ...args) {
     const value = field.value;
     const errorSpan = document.getElementById(field.id + '-error');
     const errors = validator(value, ...args);
-
     if (errors.length > 0) {
         field.classList.add('invalid');
         field.classList.remove('valid');
@@ -68,131 +43,18 @@ function validateField(field, validator, ...args) {
     }
 }
 
-// ===== REGISTRIERUNGS-FORMULAR =====
+// ===== NUTZERVERWALTUNG (localStorage) =====
 
-function initRegistrationForm() {
-    const form = document.getElementById('registrationForm');
-    if (!form) return;
-
-    const benutzername = document.getElementById('benutzername');
-    const passwort = document.getElementById('passwort');
-    const passwortWiederholen = document.getElementById('passwort_wiederholen');
-    const submitBtn = document.getElementById('submitBtn');
-
-    // Formular-Gültigkeit prüfen
-    function checkFormValidity() {
-        const usernameValid = validateUsername(benutzername.value).length === 0;
-        const passwordValid = validatePassword(passwort.value).length === 0;
-        const passwordMatchValid = validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0;
-
-        const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                       benutzername.value.length > 0 && passwort.value.length > 0;
-
-        submitBtn.disabled = !isValid;
-    }
-
-    // Event-Listener für Echtzeit-Validierung
-    benutzername.addEventListener('input', () => {
-        validateField(benutzername, validateUsername);
-        checkFormValidity();
-    });
-
-    passwort.addEventListener('input', () => {
-        validateField(passwort, validatePassword);
-        if (passwortWiederholen.value.length > 0) {
-            validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-        }
-        checkFormValidity();
-    });
-
-    passwortWiederholen.addEventListener('input', () => {
-        validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-        checkFormValidity();
-    });
-
-    // Form-Submit
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!submitBtn.disabled) {
-            alert('Registrierung erfolgreich!');
-            localStorage.setItem('registeredUser', benutzername.value);
-            window.location.href = 'login.html';
-        }
-    });
-
-    // Initial Button deaktivieren
-    submitBtn.disabled = true;
+function getUsers() {
+    return JSON.parse(localStorage.getItem('auto24_users') || '[]');
 }
 
-// ===== LOGIN-FORMULAR =====
-// Formularvalidierung für Auto24
-// Autor: tim
-
-// ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
-
-/**
- * Validiert einen Benutzernamen
- * Anforderungen: Min. 5 Zeichen, mind. 1 Groß- und 1 Kleinbuchstabe
- */
-function validateUsername(value) {
-    const errors = [];
-    if (value.length < 5) {
-        errors.push('Mindestens 5 Zeichen erforderlich');
-    }
-    if (!/[a-z]/.test(value)) {
-        errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-    }
-    if (!/[A-Z]/.test(value)) {
-        errors.push('Mindestens ein Großbuchstabe erforderlich');
-    }
-    return errors;
+function saveUsers(users) {
+    localStorage.setItem('auto24_users', JSON.stringify(users));
 }
 
-/**
- * Validiert ein Passwort
- * Anforderungen: Min. 10 Zeichen
- */
-function validatePassword(value) {
-    const errors = [];
-    if (value.length < 10) {
-        errors.push('Mindestens 10 Zeichen erforderlich');
-    }
-    return errors;
-}
-
-/**
- * Prüft ob zwei Passwörter übereinstimmen
- */
-function validatePasswordMatch(password, passwordRepeat) {
-    if (password !== passwordRepeat) {
-        return ['Passwörter stimmen nicht überein'];
-    }
-    return [];
-}
-
-/**
- * Validiert ein einzelnes Feld und zeigt visuelle Rückmeldung
- */
-function validateField(field, validator, ...args) {
-    const value = field.value;
-    const errorSpan = document.getElementById(field.id + '-error');
-    const errors = validator(value, ...args);
-
-    if (errors.length > 0) {
-        field.classList.add('invalid');
-        field.classList.remove('valid');
-        if (errorSpan) errorSpan.textContent = errors[0];
-        return false;
-    } else if (value.length > 0) {
-        field.classList.remove('invalid');
-        field.classList.add('valid');
-        if (errorSpan) errorSpan.textContent = '';
-        return true;
-    } else {
-        field.classList.remove('invalid', 'valid');
-        if (errorSpan) errorSpan.textContent = '';
-        return false;
-    }
+function findUser(username) {
+    return getUsers().find(u => u.username === username) || null;
 }
 
 // ===== REGISTRIERUNGS-FORMULAR =====
@@ -205,30 +67,27 @@ function initRegistrationForm() {
     const passwort = document.getElementById('passwort');
     const passwortWiederholen = document.getElementById('passwort_wiederholen');
     const submitBtn = document.getElementById('submitBtn');
+    const errorMessage = document.getElementById('reg-error');
 
-    // Formular-Gültigkeit prüfen
     function checkFormValidity() {
-        const usernameValid = validateUsername(benutzername.value).length === 0;
-        const passwordValid = validatePassword(passwort.value).length === 0;
-        const passwordMatchValid = validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0;
-
-        const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                       benutzername.value.length > 0 && passwort.value.length > 0;
-
+        const isValid =
+            validateUsername(benutzername.value).length === 0 &&
+            validatePassword(passwort.value).length === 0 &&
+            validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0 &&
+            benutzername.value.length > 0 && passwort.value.length > 0;
         submitBtn.disabled = !isValid;
     }
 
-    // Event-Listener für Echtzeit-Validierung
     benutzername.addEventListener('input', () => {
         validateField(benutzername, validateUsername);
+        if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
 
     passwort.addEventListener('input', () => {
         validateField(passwort, validatePassword);
-        if (passwortWiederholen.value.length > 0) {
+        if (passwortWiederholen.value.length > 0)
             validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-        }
         checkFormValidity();
     });
 
@@ -237,17 +96,26 @@ function initRegistrationForm() {
         checkFormValidity();
     });
 
-    // Form-Submit
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!submitBtn.disabled) {
-            alert('Registrierung erfolgreich!');
-            localStorage.setItem('registeredUser', benutzername.value);
-            window.location.href = 'login.html';
+        if (submitBtn.disabled) return;
+
+        const username = benutzername.value.trim();
+
+        if (findUser(username)) {
+            if (errorMessage) {
+                errorMessage.textContent = 'Dieser Benutzername ist bereits vergeben.';
+                errorMessage.style.display = 'block';
+            }
+            return;
         }
+
+        const users = getUsers();
+        users.push({ username, password: passwort.value });
+        saveUsers(users);
+        window.location.href = 'login.html?registered=1';
     });
 
-    // Initial Button deaktivieren
     submitBtn.disabled = true;
 }
 
@@ -261,112 +129,138 @@ function initLoginForm() {
     const password = document.getElementById('password');
     const loginBtn = document.getElementById('loginBtn');
     const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
 
-    // Button-Status prüfen
-    function checkFormValidity() {
-        const usernameValid = validateUsername(username.value).length === 0;
-        const passwordValid = validatePassword(password.value).length === 0;
-        const isValid = usernameValid && passwordValid && username.value.length > 0 && password.value.length > 0;
-        loginBtn.disabled = !isValid;
+    // Erfolgsmeldung nach Registrierung anzeigen
+    if (window.location.search.includes('registered=1') && successMessage) {
+        successMessage.textContent = 'Registrierung erfolgreich! Sie können sich jetzt einloggen.';
+        successMessage.style.display = 'block';
     }
 
-    // Event-Listener
+    function checkFormValidity() {
+        loginBtn.disabled = username.value.trim().length === 0 || password.value.length === 0;
+    }
+
     username.addEventListener('input', () => {
-        validateField(username, validateUsername);
+        if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
-
     password.addEventListener('input', () => {
-        validateField(password, validatePassword);
+        if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
 
-    // Form-Submit
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
         if (loginBtn.disabled) return;
 
-        // Demo-Zugangsdaten (erfüllen die Validierungskriterien)
-        if (username.value === 'TestUser' && password.value === 'TestPass123') {
+        const uname = username.value.trim();
+        const pwd = password.value;
+
+        const user = findUser(uname);
+        const isDemo = (uname === 'TestUser' && pwd === 'TestPass123');
+
+        if ((user && user.password === pwd) || isDemo) {
             localStorage.setItem('loggedIn', 'true');
-            localStorage.setItem('username', username.value);
-            errorMessage.style.display = 'none';
+            localStorage.setItem('loggedInUser', uname);
             window.location.href = 'user.html';
         } else {
-            errorMessage.textContent = 'Falscher Benutzername oder Passwort!';
-            errorMessage.style.display = 'block';
+            if (errorMessage) {
+                errorMessage.textContent = 'Falscher Benutzername oder Passwort.';
+                errorMessage.style.display = 'block';
+            }
         }
     });
 
-    // Initial Button deaktivieren
     loginBtn.disabled = true;
 }
 
-// ===== BENUTZERPROFIL-FORMULAR =====
+// ===== NUTZERBEREICH =====
 
 function initUserForm() {
-    const userForm = document.getElementById('userForm');
-    if (!userForm) return;
+    if (!document.getElementById('userForm')) return;
 
-    const username = document.getElementById('username');
-    const password = document.getElementById('password');
+    // Nicht eingeloggt → redirect
+    if (localStorage.getItem('loggedIn') !== 'true') {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
     const passwordConfirm = document.getElementById('password_confirm');
     const saveBtn = document.getElementById('saveBtn');
+    const displayName = document.getElementById('display-username');
+    const saveSuccess = document.getElementById('saveSuccess');
 
-    // Formular-Gültigkeit prüfen
+    const loggedInUser = localStorage.getItem('loggedInUser') || '';
+
+    if (usernameInput) usernameInput.value = loggedInUser;
+    if (displayName) displayName.textContent = loggedInUser;
+
     function checkFormValidity() {
-        const usernameValid = validateUsername(username.value).length === 0;
-        const passwordValid = validatePassword(password.value).length === 0;
-        const passwordMatchValid = validatePasswordMatch(password.value, passwordConfirm.value).length === 0;
-
-        const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                       username.value.length > 0 && password.value.length > 0;
-
+        const isValid =
+            validateUsername(usernameInput.value).length === 0 &&
+            validatePassword(passwordInput.value).length === 0 &&
+            validatePasswordMatch(passwordInput.value, passwordConfirm.value).length === 0 &&
+            usernameInput.value.length > 0 && passwordInput.value.length > 0;
         saveBtn.disabled = !isValid;
     }
 
-    // Event-Listener
-    username.addEventListener('input', () => {
-        validateField(username, validateUsername);
+    usernameInput.addEventListener('input', () => {
+        validateField(usernameInput, validateUsername);
         checkFormValidity();
     });
-
-    password.addEventListener('input', () => {
-        validateField(password, validatePassword);
-        if (passwordConfirm.value.length > 0) {
-            validateField(passwordConfirm, validatePasswordMatch, password.value);
-        }
+    passwordInput.addEventListener('input', () => {
+        validateField(passwordInput, validatePassword);
+        if (passwordConfirm.value.length > 0)
+            validateField(passwordConfirm, validatePasswordMatch, passwordInput.value);
         checkFormValidity();
     });
-
     passwordConfirm.addEventListener('input', () => {
-        validateField(passwordConfirm, validatePasswordMatch, password.value);
+        validateField(passwordConfirm, validatePasswordMatch, passwordInput.value);
         checkFormValidity();
     });
 
-    // Form-Submit
-    userForm.addEventListener('submit', (e) => {
+    document.getElementById('userForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!saveBtn.disabled) {
-            alert('Änderungen erfolgreich gespeichert!');
-            localStorage.setItem('username', username.value);
+        if (saveBtn.disabled) return;
+
+        const newUsername = usernameInput.value.trim();
+        const newPassword = passwordInput.value;
+
+        const users = getUsers();
+        const idx = users.findIndex(u => u.username === loggedInUser);
+        if (idx !== -1) {
+            users[idx] = { username: newUsername, password: newPassword };
+            saveUsers(users);
+        }
+
+        localStorage.setItem('loggedInUser', newUsername);
+        if (displayName) displayName.textContent = newUsername;
+
+        if (saveSuccess) {
+            saveSuccess.textContent = 'Änderungen erfolgreich gespeichert!';
+            saveSuccess.style.display = 'block';
+            setTimeout(() => saveSuccess.style.display = 'none', 3000);
         }
     });
 
-    // Gespeicherten Benutzernamen laden
-    const savedUsername = localStorage.getItem('username');
-    if (savedUsername) {
-        username.value = savedUsername;
-        validateField(username, validateUsername);
-    }
     saveBtn.disabled = true;
+}
+
+// ===== LOGOUT =====
+
+function initLogout() {
+    if (!document.getElementById('logoutPage')) return;
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('loggedInUser');
 }
 
 // ===== INITIALISIERUNG =====
 
-// Wird ausgeführt wenn das DOM vollständig geladen ist
 document.addEventListener('DOMContentLoaded', function() {
+    initLogout();
     initRegistrationForm();
     initLoginForm();
     initUserForm();

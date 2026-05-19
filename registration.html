@@ -8,27 +8,45 @@
         <script src="validation.js"></script>
     </head>
     <body>
-        <h1>Registrierung-Auto24</h1>
-        <p>Bitte füllen Sie die folgenden Informationen aus, um ein neues Konto zu erstellen:</p>
+        <nav>
+            <a href="index.html" class="nav-logo">Auto<span>24</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Fahrzeuge</a></li>
+                <li><a href="index.html">Neuwagen</a></li>
+                <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
+                <li><a href="about.html">Auto verkaufen</a></li>
+            </ul>
+        </nav>
 
-        <form id="registrationForm">
-            <label for="benutzername">Benutzername:</label>
-            <input type="text" id="benutzername" name="benutzername" required>
-            <span class="field-error" id="benutzername-error"></span>
-       
-            <label for="passwort">Passwort:</label>
-            <input type="password" id="passwort" name="passwort" required>
-            <span class="field-error" id="passwort-error"></span>
-            
-            <label for="passwort_wiederholen">Passwort wiederholen:</label>
-            <input type="password" id="passwort_wiederholen" name="passwort_wiederholen" required>
-            <span class="field-error" id="passwort_wiederholen-error"></span>
-            
-            <input type="submit" value="Registrieren" id="submitBtn">
-            <input type="reset" value="Zurücksetzen">
-        </form>
+        <main class="home-main">
+            <section class="auth-section">
+                <div class="auth-card">
+                    <h1>Registrierung</h1>
+                    <p>Erstellen Sie ein neues Auto24-Konto.</p>
 
-        <p><a href="login.html">Zurück zum Login</a></p>
+                    <div id="reg-error" class="error-message" style="display:none;"></div>
+
+                    <form id="registrationForm">
+                        <label for="benutzername">Benutzername:</label>
+                        <input type="text" id="benutzername" name="benutzername" required autocomplete="username">
+                        <span class="field-error" id="benutzername-error"></span>
+
+                        <label for="passwort">Passwort:</label>
+                        <input type="password" id="passwort" name="passwort" required autocomplete="new-password">
+                        <span class="field-error" id="passwort-error"></span>
+
+                        <label for="passwort_wiederholen">Passwort wiederholen:</label>
+                        <input type="password" id="passwort_wiederholen" name="passwort_wiederholen" required autocomplete="new-password">
+                        <span class="field-error" id="passwort_wiederholen-error"></span>
+
+                        <input type="submit" value="Registrieren" id="submitBtn">
+                        <input type="reset" value="Zurücksetzen">
+                    </form>
+
+                    <p><a href="login.html">Bereits ein Konto? Jetzt einloggen</a></p>
+                </div>
+            </section>
+        </main>
     </body>
 
 

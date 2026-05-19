@@ -9,28 +9,44 @@
 </head>
 
 <body>
-    <h1>Nutzerbereich</h1>
-    <h2>Persönliche Informationen</h2>
-    
-    <form id="userForm">
-        <label for="username">Benutzername:</label>
-        <input type="text" id="username" name="username" required>
-        <span class="field-error" id="username-error"></span>
+    <nav>
+        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Fahrzeuge</a></li>
+            <li><a href="index.html">Neuwagen</a></li>
+            <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
+            <li><a href="about.html">Auto verkaufen</a></li>
+        </ul>
+    </nav>
 
-        <label for="password">Neues Passwort:</label>
-        <input type="password" id="password" name="password" required>
-        <span class="field-error" id="password-error"></span>
+    <main class="home-main">
+        <section class="auth-section">
+            <div class="auth-card">
+    <h1>Willkommen, <span id="display-username" style="color: rgb(227,27,27);"></span></h1>
+                <h2>Persönliche Informationen</h2>
 
-        <label for="password_confirm">Passwort bestätigen:</label>
-        <input type="password" id="password_confirm" name="password_confirm" required>
-        <span class="field-error" id="password_confirm-error"></span>
-        
-        <input type="submit" value="Änderungen speichern" id="saveBtn">
-    </form>
+                <div id="saveSuccess" class="success-message" style="display:none;"></div>
 
-    <p>
-        <a href="logout.html">Abmelden</a>
-    </p>
+                <form id="userForm">
+                    <label for="username">Benutzername:</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                    <span class="field-error" id="username-error"></span>
+
+                    <label for="password">Neues Passwort:</label>
+                    <input type="password" id="password" name="password" required autocomplete="new-password">
+                    <span class="field-error" id="password-error"></span>
+
+                    <label for="password_confirm">Passwort bestätigen:</label>
+                    <input type="password" id="password_confirm" name="password_confirm" required autocomplete="new-password">
+                    <span class="field-error" id="password_confirm-error"></span>
+
+                    <input type="submit" value="Änderungen speichern" id="saveBtn">
+                </form>
+
+                <p><a href="logout.html">Abmelden</a></p>
+            </div>
+        </section>
+    </main>
 
      <footer>
         
