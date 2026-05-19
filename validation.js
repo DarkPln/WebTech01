@@ -1,8 +1,10 @@
 // Formularvalidierung für Auto24
 // Autor: tim
-
 // ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
 
+// Gibt ein Array mit Fehlermeldungen zurück – leeres Array bedeutet "gültig".
+// Regex-Test: /[a-z]/.test(value) gibt true, wenn mindestens ein Kleinbuchstabe vorkommt.
+// Dieses Muster (Fehler sammeln statt sofort abbrechen) erlaubt mehrere Fehlermeldungen gleichzeitig.
 function validateUsername(value) {
     const errors = [];
     if (value.length < 5)   errors.push('Mindestens 5 Zeichen erforderlich');
@@ -11,17 +13,24 @@ function validateUsername(value) {
     return errors;
 }
 
+// Selbes Prinzip wie validateUsername – nur Längenprüfung, leicht erweiterbar.
 function validatePassword(value) {
     const errors = [];
     if (value.length < 10) errors.push('Mindestens 10 Zeichen erforderlich');
     return errors;
 }
 
+// Strikter Vergleich (===) prüft Wert UND Typ – verhindert ungewollte Typenumwandlung.
 function validatePasswordMatch(password, passwordRepeat) {
     if (password !== passwordRepeat) return ['Passwörter stimmen nicht überein'];
     return [];
 }
 
+// Generische Validierungsfunktion: nimmt ein DOM-Eingabefeld, eine Validator-Funktion und
+// beliebig viele Zusatzargumente (...args, Rest-Parameter). Der Spread-Operator leitet
+// diese args direkt an den Validator weiter (z.B. das erste Passwort beim Match-Check).
+// Setzt CSS-Klassen 'valid'/'invalid' am Input und zeigt den Fehlertext im zugehörigen
+// <span id="feldId-error"> an – die ID-Konvention wird automatisch gebildet.
 function validateField(field, validator, ...args) {
     const value = field.value;
     const errorSpan = document.getElementById(field.id + '-error');
@@ -45,20 +54,31 @@ function validateField(field, validator, ...args) {
 
 // ===== NUTZERVERWALTUNG (localStorage) =====
 
+// localStorage ist ein persistenter Schlüssel-Wert-Speicher im Browser – Daten bleiben nach
+// dem Schließen des Tabs erhalten. Er speichert nur Strings, daher JSON für Objekte/Arrays.
+// JSON.parse() wandelt den gespeicherten JSON-String zurück in ein JS-Array.
+// Der || '[]' Fallback liefert ein leeres Array, wenn der Schlüssel noch nicht existiert.
 function getUsers() {
     return JSON.parse(localStorage.getItem('auto24_users') || '[]');
 }
 
+// JSON.stringify() serialisiert das JS-Array in einen String, der im localStorage abgelegt wird.
 function saveUsers(users) {
     localStorage.setItem('auto24_users', JSON.stringify(users));
 }
 
+// Array.find() gibt das erste Element zurück, für das die Callback-Funktion true ergibt.
+// Arrow-Function als Callback: u => u.username === username – kurz und lesbar.
+// || null stellt sicher, dass der Rückgabewert explizit null ist (nicht undefined).
 function findUser(username) {
     return getUsers().find(u => u.username === username) || null;
 }
 
 // ===== REGISTRIERUNGS-FORMULAR =====
 
+// Initialisierungsfunktion: prüft zuerst, ob das Formular auf dieser Seite existiert.
+// Das ermöglicht es, dieses Skript auf allen Seiten einzubinden – ohne Fehler.
+// Alle DOM-Referenzen werden einmalig abgefragt (Performance) und in Konstanten gespeichert.
 function initRegistrationForm() {
     const form = document.getElementById('registrationForm');
     if (!form) return;
@@ -69,6 +89,10 @@ function initRegistrationForm() {
     const submitBtn = document.getElementById('submitBtn');
     const errorMessage = document.getElementById('reg-error');
 
+    // Closure: checkFormValidity() ist eine innere Funktion mit Zugriff auf alle äußeren
+    // Variablen (benutzername, passwort, etc.) – das nennt sich Closure/Abschluss.
+    // && verknüpft alle Bedingungen: nur wenn alle true sind, ist isValid = true.
+    // submitBtn.disabled = !isValid deaktiviert/aktiviert den Button direkt.
     function checkFormValidity() {
         const isValid =
             validateUsername(benutzername.value).length === 0 &&
@@ -78,12 +102,16 @@ function initRegistrationForm() {
         submitBtn.disabled = !isValid;
     }
 
+    // 'input'-Event feuert bei jeder Tasteneingabe – ermöglicht Live-Validierung.
+    // Arrow-Functions (() => {...}) als Handler binden kein eigenes 'this'.
     benutzername.addEventListener('input', () => {
         validateField(benutzername, validateUsername);
         if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
 
+    // Passwort-Wiederholung wird nur erneut geprüft, wenn sie bereits einen Wert hat –
+    // verhindert eine Fehlermeldung bevor der Nutzer das Feld überhaupt berührt hat.
     passwort.addEventListener('input', () => {
         validateField(passwort, validatePassword);
         if (passwortWiederholen.value.length > 0)
@@ -96,6 +124,10 @@ function initRegistrationForm() {
         checkFormValidity();
     });
 
+    // e.preventDefault() verhindert den nativen Browser-Submit (der die Seite neu laden würde).
+    // Stattdessen speichern wir den Nutzer manuell in localStorage.
+    // window.location.href = ... führt eine programmatische Navigation durch.
+    // '?registered=1' im URL übergibt einen Parameter an die Login-Seite.
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (submitBtn.disabled) return;
@@ -131,12 +163,15 @@ function initLoginForm() {
     const errorMessage = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
 
-    // Erfolgsmeldung nach Registrierung anzeigen
+    // window.location.search enthält den Query-String der aktuellen URL (z.B. "?registered=1").
+    // .includes() prüft als einfache String-Suche, ob der Parameter vorhanden ist.
+    // Dieser Mechanismus überträgt Zustandsinformationen zwischen zwei Seiten ohne Server.
     if (window.location.search.includes('registered=1') && successMessage) {
         successMessage.textContent = 'Registrierung erfolgreich! Sie können sich jetzt einloggen.';
         successMessage.style.display = 'block';
     }
 
+    // Kurzschreibweise: loginBtn.disabled ist direkt das Ergebnis des booleschen Ausdrucks.
     function checkFormValidity() {
         loginBtn.disabled = username.value.trim().length === 0 || password.value.length === 0;
     }
@@ -158,8 +193,12 @@ function initLoginForm() {
         const pwd = password.value;
 
         const user = findUser(uname);
+        // Hardcoded Demo-Zugangsdaten als Fallback für Tests ohne vorherige Registrierung.
         const isDemo = (uname === 'TestUser' && pwd === 'TestPass123');
 
+        // Kurzschluss-Auswertung (Short-Circuit): user && user.password === pwd wird nur
+        // vollständig ausgewertet, wenn user nicht null ist – verhindert einen Fehler bei
+        // user.password, falls findUser() null zurückgegeben hat.
         if ((user && user.password === pwd) || isDemo) {
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('loggedInUser', uname);
@@ -177,10 +216,12 @@ function initLoginForm() {
 
 // ===== NUTZERBEREICH =====
 
+// Auth-Guard: Diese Prüfung blockiert den gesamten Nutzerbereich für nicht eingeloggte Besucher.
+// localStorage.getItem() gibt null zurück, wenn der Schlüssel nicht existiert – daher !== 'true'.
+// window.location.href leitet sofort weiter; return beendet die Funktion danach.
 function initUserForm() {
     if (!document.getElementById('userForm')) return;
 
-    // Nicht eingeloggt → redirect
     if (localStorage.getItem('loggedIn') !== 'true') {
         window.location.href = 'login.html';
         return;
@@ -193,8 +234,11 @@ function initUserForm() {
     const displayName = document.getElementById('display-username');
     const saveSuccess = document.getElementById('saveSuccess');
 
+    // || '' verhindert null als Wert – falls kein Nutzer gespeichert ist, wird ein leerer String verwendet.
     const loggedInUser = localStorage.getItem('loggedInUser') || '';
 
+    // Vorausfüllen des Formularfelds mit dem aktuell eingeloggten Benutzernamen.
+    // displayName.textContent schreibt reinen Text in den <span> – sicherer als innerHTML (kein XSS-Risiko).
     if (usernameInput) usernameInput.value = loggedInUser;
     if (displayName) displayName.textContent = loggedInUser;
 
@@ -229,6 +273,9 @@ function initUserForm() {
         const newUsername = usernameInput.value.trim();
         const newPassword = passwordInput.value;
 
+        // Array.findIndex() sucht nach dem alten Benutzernamen im Array und gibt dessen Index zurück.
+        // -1 bedeutet "nicht gefunden" – nur dann updaten, wenn der Nutzer existiert.
+        // users[idx] = {...} überschreibt den Eintrag im Array; saveUsers() persistiert das Ergebnis.
         const users = getUsers();
         const idx = users.findIndex(u => u.username === loggedInUser);
         if (idx !== -1) {
@@ -239,6 +286,8 @@ function initUserForm() {
         localStorage.setItem('loggedInUser', newUsername);
         if (displayName) displayName.textContent = newUsername;
 
+        // setTimeout(callback, 3000) führt die Funktion nach 3000ms (3s) asynchron aus –
+        // der restliche Code läuft sofort weiter, die Ausblendung erfolgt zeitverzögert.
         if (saveSuccess) {
             saveSuccess.textContent = 'Änderungen erfolgreich gespeichert!';
             saveSuccess.style.display = 'block';
@@ -251,6 +300,9 @@ function initUserForm() {
 
 // ===== LOGOUT =====
 
+// Erkennt die Logout-Seite am Element mit id="logoutPage" (nur in logout.html vorhanden).
+// localStorage.removeItem() löscht gezielt einzelne Einträge – dadurch ist der Nutzer abgemeldet.
+// Der Auth-Guard in initUserForm() leitet bei erneutem Besuch von user.html automatisch weiter.
 function initLogout() {
     if (!document.getElementById('logoutPage')) return;
     localStorage.removeItem('loggedIn');
@@ -259,6 +311,10 @@ function initLogout() {
 
 // ===== INITIALISIERUNG =====
 
+// DOMContentLoaded feuert, sobald das HTML vollständig geparst wurde (bevor Bilder/CSS fertig laden).
+// Damit ist sichergestellt, dass alle getElementById()-Aufrufe die Elemente bereits finden.
+// Jede init-Funktion prüft selbst, ob ihr Zielelement existiert – dadurch kann dieses eine
+// Skript auf allen Seiten eingebunden werden, ohne seitenspezifische Fehler zu verursachen.
 document.addEventListener('DOMContentLoaded', function() {
     initLogout();
     initRegistrationForm();

@@ -18,6 +18,9 @@ th{
 
 /* ===== TYPOGRAFIE - Einheitliches Schriftbild ===== */
 /* Angepasst von: tim */
+/* CSS-Kaskade: Diese Regeln gelten global für alle HTML-Elemente des Typs p, h1, h2, h3.
+   Spezifischere Selektoren (z.B. .auth-card p) überschreiben diese Basis-Regeln.
+   font-family, font-weight und letter-spacing sorgen für ein einheitliches Schriftbild. */
 
 /* Absätze - Standard-Textgröße */
 p{
@@ -59,6 +62,11 @@ a:hover{
 /* ===== FORMULAR-STYLING ===== */
 /* Angepasst von: tim */
 /* Verbesserte Rahmen, Abstände und einheitliches Design */
+/* Attribut-Selektor input[type="text"] greift gezielt auf Inputs nach ihrem type-Attribut zu –
+   sauberer als Klassen, da HTML-Semantik genutzt wird.
+   transition: all 0.3s ease animiert Zustandsänderungen (z.B. Fokus-Farbe) weich über 0,3s.
+   box-sizing: border-box zählt Padding und Border zur Gesamtbreite (width) mit –
+   verhindert, dass Inputs breiter werden als ihr Container. */
 
 /* Labels für Formularfelder */
 label {
