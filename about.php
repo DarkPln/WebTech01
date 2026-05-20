@@ -29,7 +29,10 @@
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
             <li><a href="about.php">Auto verkaufen</a></li>
         </ul>
-        <button class ="toggle-mode" onclick="toggleMode()">Modus wechseln</button>
+        <div class="nav-right">
+            <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
+            <button class="mode-btn" onclick="toggleMode()">Light</button>
+        </div>
     </nav>
 
 
@@ -50,25 +53,21 @@
 
             <div class="about-service-grid">
                 <div class="about-service-card">
-                    <div class="about-service-icon">🚗</div>
                     <h3>Kauf von Neuwagen</h3>
                     <p>Entdecken Sie die neuesten Modelle führender Automobilhersteller zu fairen Preisen.</p>
                 </div>
 
                 <div class="about-service-card">
-                    <div class="about-service-icon">🔧</div>
                     <h3>Kauf von Gebrauchtwagen</h3>
                     <p>Hochwertige geprüfte Gebrauchtwagen mit transparenter Fahrzeughistorie.</p>
                 </div>
 
                 <div class="about-service-card">
-                    <div class="about-service-icon">💰</div>
                     <h3>Verkauf von Fahrzeugen</h3>
                     <p>Verkaufen Sie Ihr Fahrzeug schnell und unkompliziert über unsere Plattform.</p>
                 </div>
 
                 <div class="about-service-card">
-                    <div class="about-service-icon">🤝</div>
                     <h3>Fahrzeugvermittlung</h3>
                     <p>Professionelle Vermittlung zwischen Käufern und Verkäufern mit Bestpreisgarantie.</p>
                 </div>

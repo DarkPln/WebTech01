@@ -20,6 +20,10 @@
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
             <li><a href="about.php">Auto verkaufen</a></li>
         </ul>
+        <div class="nav-right">
+            <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
+            <button class="mode-btn" onclick="toggleMode()">Light</button>
+        </div>
     </nav>
 
     <h1><?php echo $carTitle; ?></h1>

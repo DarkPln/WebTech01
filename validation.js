@@ -302,6 +302,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initRegistrationForm();
     initLoginForm();
     initUserForm();
+
+    // Nav-Auth-Link auf allen Seiten aktualisieren (eingeloggt → Nutzername + user.php)
+    const navAuthLink = document.getElementById('navAuthLink');
+    if (navAuthLink && localStorage.getItem('loggedIn') === 'true') {
+        const user = localStorage.getItem('loggedInUser') || 'Konto';
+        navAuthLink.textContent = user;
+        navAuthLink.href = 'user.php';
+    }
 });
 
 
@@ -488,10 +496,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // fav logik ende Lukas 
 
-/*Light Mode Toggle: Niclas */
+/* Light Mode Toggle: Niclas – erweitert von Tim (localStorage-Persistenz + Button-Label) */
 function toggleMode() {
-    document.body.classList.toggle("light-mode");
+    const isLight = document.body.classList.toggle("light-mode");
+    localStorage.setItem('colorMode', isLight ? 'light' : 'dark');
+    const btn = document.querySelector('.mode-btn');
+    if (btn) btn.textContent = isLight ? 'Dark' : 'Light';
 }
+
+// Gespeicherten Modus sofort beim Laden anwenden.
+// Script liegt am Ende von <body>, daher ist document.body und .mode-btn bereits verfügbar.
+(function applyStoredMode() {
+    if (localStorage.getItem('colorMode') === 'light') {
+        document.body.classList.add('light-mode');
+        const btn = document.querySelector('.mode-btn');
+        if (btn) btn.textContent = 'Dark';
+    }
+})();
 /*Layout-Umschaltung: Niclas */
 function setVerticalLayout() {
     const layout = document.getElementById("carLayout");

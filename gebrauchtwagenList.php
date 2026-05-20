@@ -25,12 +25,15 @@
             <li><a href="about.php">Auto verkaufen</a></li>
         </ul>
 
-        <!-- Lukas: Fav -->
-         <button class = "nFav-btn" id="nFavBtn" onclick= "togglePanel()">
-            <span class = "navFav-label"> ♡ Merkliste </span>
-            <span class = "navFav-count" id="favCount" style = "display: none">0</span>
-         </button>
-             <button class="mode-btn" onclick="toggleMode()">Modus wechseln</button>
+        <div class="nav-right">
+            <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
+            <!-- Lukas: Fav -->
+            <button class="nFav-btn" id="nFavBtn" onclick="togglePanel()">
+                <span class="navFav-label"> ♡ Merkliste </span>
+                <span class="navFav-count" id="favCount" style="display: none">0</span>
+            </button>
+            <button class="mode-btn" onclick="toggleMode()">Light</button>
+        </div>
     </nav>
 
     <div class = "fav-ovl" id="favOvl" onclick = "togglePanel()"></div>
@@ -251,16 +254,6 @@
             </div>
             </div>
          </div>
-
-
-
-        <div class="footer-bot">
-        <span> &copy 2026 Auto24. Alle Rechte vorbehalten.</span>
-        <div style = "display: flex; gap: 25px; margin-left: auto">
-            <a href="index.php">Home</a>
-            <a href="gebrauchtwagenList.php">Gebrauchtwagen</a>
-            <a href="about.php">Impressum</a>
-        </div>
 
         </div>
     </footer>

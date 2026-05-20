@@ -12,7 +12,7 @@
             if (!link) return;
             if (localStorage.getItem('loggedIn') === 'true') {
                 const user = localStorage.getItem('loggedInUser') || 'Konto';
-                link.textContent = '👤 ' + user;
+                link.textContent = user;
                 link.href = 'user.php';
             }
         });
@@ -40,8 +40,10 @@
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
             <li><a href="about.php">Auto verkaufen</a></li>
         </ul>
-        <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
-            <button class="mode-btn" onclick="toggleMode()">Modus wechseln</button>
+        <div class="nav-right">
+            <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
+            <button class="mode-btn" onclick="toggleMode()">Light</button>
+        </div>
     </nav>
     <main class="home-main">
 
@@ -65,21 +67,18 @@
 
         <div class="home-category-grid">
             <div class="home-category-card">
-                <div class="home-category-icon">🚗</div>
                 <h3><?php echo $cat1Title; ?></h3>
                 <p><?php echo $cat1Text; ?></p>
                 <a href="gebrauchtwagenList.php">Autos kaufen</a>
             </div>
 
             <div class="home-category-card">
-                <div class="home-category-icon">💰</div>
                 <h3><?php echo $cat2Title; ?></h3>
                 <p><?php echo $cat2Text; ?></p>
                 <a href="about.php">Autos verkaufen</a>
             </div>
 
             <div class="home-category-card">
-                <div class="home-category-icon">👤</div>
                 <h3><?php echo $cat3Title; ?></h3>
                 <p><?php echo $cat3Text; ?></p>
                 <a href="login.php">Zum Login</a>
@@ -137,16 +136,6 @@
             </div>
             </div>
          </div>
-
-
-        <div class="footer-bot">
-        <span> &copy 2026 Auto24. Alle Rechte vorbehalten.</span>
-        <div class="footer-bot-links">
-            <a href="index.php">Home</a>
-            <a href="gebrauchtwagenList.php">Gebrauchtwagen</a>
-            <a href="about.php">Impressum</a>
-        </div>
-
 
         </div>
     </footer>
