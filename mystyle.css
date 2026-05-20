@@ -378,6 +378,9 @@ input[type="reset"] {
     footer {
         padding: 30px 1rem 20px;
     }
+ 
+    
+
 }
 
 /* Formular-Styling abgeschlossen - tim */
@@ -620,7 +623,17 @@ a{
     
 }
 
-
+.mode-btn {
+    background: transparent;
+    border: 1px solid #8B0000;
+    color: #FF1A1A;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    width: auto;
+    margin: 0;
+}
 
 
 .car-img {
