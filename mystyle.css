@@ -251,17 +251,16 @@ button:disabled {
     border-color: #2a2a2a;
 }
 
-/* Ungültige Eingaben */
-input:invalid:not(:focus):not(:placeholder-shown),
-textarea:invalid:not(:focus):not(:placeholder-shown),
-select:invalid:not(:focus) {
+/* Ungültige Eingaben – nur wenn JS .invalid gesetzt hat (echte Regelprüfung) */
+input.invalid,
+textarea.invalid {
     border-color: rgb(227, 27, 27);
     background-color: rgba(227, 27, 27, 0.05);
 }
 
-/* Gültige Eingaben */
-input:valid:not(:focus):not(:placeholder-shown),
-textarea:valid:not(:focus):not(:placeholder-shown) {
+/* Gültige Eingaben – nur wenn JS .valid gesetzt hat (alle Bedingungen erfüllt) */
+input.valid,
+textarea.valid {
     border-color: #2ecc71;
 }
 

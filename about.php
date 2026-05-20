@@ -96,19 +96,16 @@
 
             <div class="about-team-grid">
                 <div class="home-category-card">
-                    <div class="home-category-icon">👨‍💼</div>
                     <h3>Lukas Neumayer</h3>
                     <p class="about-team-role">Geschäftsführer</p>
                 </div>
 
                 <div class="home-category-card">
-                    <div class="home-category-icon">👨‍💼</div>
                     <h3>Niclas Reuter</h3>
                     <p class="about-team-role">Geschäftsführer</p>
                 </div>
 
                 <div class="home-category-card">
-                    <div class="home-category-icon">👨‍💼</div>
                     <h3>Tim Höhn</h3>
                     <p class="about-team-role">Geschäftsführer</p>
                 </div>
