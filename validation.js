@@ -1,75 +1,93 @@
 // Formularvalidierung für Auto24
 // Autor: tim
-
 // ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
 
-/**
- * Validiert einen Benutzernamen
- * Anforderungen: Min. 5 Zeichen, mind. 1 Groß- und 1 Kleinbuchstabe
- */
+// Gibt ein Array mit Fehlermeldungen zurück – leeres Array bedeutet "gültig".
+// Regex-Test: /[a-z]/.test(value) gibt true, wenn mindestens ein Kleinbuchstabe vorkommt.
+// Dieses Muster (Fehler sammeln statt sofort abbrechen) erlaubt mehrere Fehlermeldungen gleichzeitig.
 function validateUsername(value) {
     const errors = [];
-    if (value.length < 5) {
-        errors.push('Mindestens 5 Zeichen erforderlich');
-    }
-    if (!/[a-z]/.test(value)) {
-        errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-    }
-    if (!/[A-Z]/.test(value)) {
-        errors.push('Mindestens ein Großbuchstabe erforderlich');
-    }
+    if (value.length < 5) errors.push('Mindestens 5 Zeichen erforderlich');
+    if (!/[a-z]/.test(value)) errors.push('Mindestens ein Kleinbuchstabe erforderlich');
+    if (!/[A-Z]/.test(value)) errors.push('Mindestens ein Großbuchstabe erforderlich');
     return errors;
 }
 
-/**
- * Validiert ein Passwort
- * Anforderungen: Min. 10 Zeichen
- */
+// Selbes Prinzip wie validateUsername – nur Längenprüfung, leicht erweiterbar.
 function validatePassword(value) {
     const errors = [];
-    if (value.length < 10) {
-        errors.push('Mindestens 10 Zeichen erforderlich');
-    }
+    if (value.length < 10) errors.push('Mindestens 10 Zeichen erforderlich');
     return errors;
 }
 
-/**
- * Prüft ob zwei Passwörter übereinstimmen
- */
+// Strikter Vergleich (===) prüft Wert UND Typ – verhindert ungewollte Typenumwandlung.
 function validatePasswordMatch(password, passwordRepeat) {
-    if (password !== passwordRepeat) {
-        return ['Passwörter stimmen nicht überein'];
-    }
+    if (password !== passwordRepeat) return ['Passwörter stimmen nicht überein'];
     return [];
 }
 
-/**
- * Validiert ein einzelnes Feld und zeigt visuelle Rückmeldung
- */
-function validateField(field, validator, ...args) {
-    const value = field.value;
-    const errorSpan = document.getElementById(field.id + '-error');
-    const errors = validator(value, ...args);
+// Nimmt ein Eingabefeld, eine Validator-Funktion und optional ein Zusatzargument (z.B. das
+// erste Passwort beim Match-Check). Setzt CSS-Klassen und zeigt Fehlertexte an.
+function validateField(field, validator, extraArg) {
+    // extraArg !== undefined prüft ob ein Zusatzargument übergeben wurde.
+    // Ternärer Operator (? :) wählt dann die passende Variante aus.
+    const errors = extraArg !== undefined
+        ? validator(field.value, extraArg)  // z.B. validatePasswordMatch(wert, erstesPasswort)
+        : validator(field.value);           // z.B. validateUsername(wert)
 
+    // Sucht den zugehörigen Fehler-<span> anhand der Feld-ID.
+    // Konvention: Feld-ID "passwort" → Span-ID "passwort-error".
+    const errorSpan = document.getElementById(field.id + '-error');
+
+    // Beide Klassen zuerst entfernen, damit nie beide gleichzeitig gesetzt sind.
+    field.classList.remove('valid', 'invalid');
+
+    // Fall 1: Es gibt Fehler → Feld rot markieren und ersten Fehler anzeigen.
     if (errors.length > 0) {
         field.classList.add('invalid');
-        field.classList.remove('valid');
         if (errorSpan) errorSpan.textContent = errors[0];
         return false;
-    } else if (value.length > 0) {
-        field.classList.remove('invalid');
+    }
+
+    // Fall 2: Keine Fehler und Feld hat Inhalt → Feld grün markieren.
+    if (field.value.length > 0) {
         field.classList.add('valid');
         if (errorSpan) errorSpan.textContent = '';
         return true;
-    } else {
-        field.classList.remove('invalid', 'valid');
-        if (errorSpan) errorSpan.textContent = '';
-        return false;
     }
+
+    // Fall 3: Feld ist leer → keine Markierung, kein Fehlertext.
+    if (errorSpan) errorSpan.textContent = '';
+    return false;
+}
+
+// ===== NUTZERVERWALTUNG (localStorage) =====
+
+// localStorage ist ein persistenter Schlüssel-Wert-Speicher im Browser – Daten bleiben nach
+// dem Schließen des Tabs erhalten. Er speichert nur Strings, daher JSON für Objekte/Arrays.
+// JSON.parse() wandelt den gespeicherten JSON-String zurück in ein JS-Array.
+// Der || '[]' Fallback liefert ein leeres Array, wenn der Schlüssel noch nicht existiert.
+function getUsers() {
+    return JSON.parse(localStorage.getItem('auto24_users') || '[]');
+}
+
+// JSON.stringify() serialisiert das JS-Array in einen String, der im localStorage abgelegt wird.
+function saveUsers(users) {
+    localStorage.setItem('auto24_users', JSON.stringify(users));
+}
+
+// Array.find() gibt das erste Element zurück, für das die Callback-Funktion true ergibt.
+// Arrow-Function als Callback: u => u.username === username – kurz und lesbar.
+// || null stellt sicher, dass der Rückgabewert explizit null ist (nicht undefined).
+function findUser(username) {
+    return getUsers().find(u => u.username === username) || null;
 }
 
 // ===== REGISTRIERUNGS-FORMULAR =====
 
+// Initialisierungsfunktion: prüft zuerst, ob das Formular auf dieser Seite existiert.
+// Das ermöglicht es, dieses Skript auf allen Seiten einzubinden – ohne Fehler.
+// Alle DOM-Referenzen werden einmalig abgefragt (Performance) und in Konstanten gespeichert.
 function initRegistrationForm() {
     const form = document.getElementById('registrationForm');
     if (!form) return;
@@ -78,30 +96,33 @@ function initRegistrationForm() {
     const passwort = document.getElementById('passwort');
     const passwortWiederholen = document.getElementById('passwort_wiederholen');
     const submitBtn = document.getElementById('submitBtn');
+    const errorMessage = document.getElementById('reg-error');
 
-    // Formular-Gültigkeit prüfen
+    // checkFormValidity() ist eine innere Funktion mit Zugriff auf alle äußeren
+    // Variablen (benutzername, passwort, etc.)
+    // && verknüpft alle Bedingungen: nur wenn alle true sind, ist isValid = true.
+    // submitBtn.disabled = !isValid deaktiviert/aktiviert den Button direkt.
     function checkFormValidity() {
-        const usernameValid = validateUsername(benutzername.value).length === 0;
-        const passwordValid = validatePassword(passwort.value).length === 0;
-        const passwordMatchValid = validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0;
-
-        const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                       benutzername.value.length > 0 && passwort.value.length > 0;
-
-        submitBtn.disabled = !isValid;
+        submitBtn.disabled =
+            validateUsername(benutzername.value).length > 0 ||
+            validatePassword(passwort.value).length > 0 ||
+            validatePasswordMatch(passwort.value, passwortWiederholen.value).length > 0;
     }
 
-    // Event-Listener für Echtzeit-Validierung
+    // 'input'-Event bei jeder Tasteneingabe, ermöglicht Live-Validierung.
+    // Arrow-Functions (() => {...}) als Handler binden kein eigenes 'this'.
     benutzername.addEventListener('input', () => {
         validateField(benutzername, validateUsername);
+        if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
 
+    // Passwort-Wiederholung wird nur erneut geprüft, wenn sie bereits einen Wert hat –
+    // verhindert eine Fehlermeldung bevor der Nutzer das Feld überhaupt berührt hat.
     passwort.addEventListener('input', () => {
         validateField(passwort, validatePassword);
-        if (passwortWiederholen.value.length > 0) {
+        if (passwortWiederholen.value.length > 0)
             validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-        }
         checkFormValidity();
     });
 
@@ -110,144 +131,30 @@ function initRegistrationForm() {
         checkFormValidity();
     });
 
-    // Form-Submit
+    // e.preventDefault() verhindert den nativen Browser-Submit (der die Seite neu laden würde).
+    // Stattdessen speichern wir den Nutzer manuell in localStorage.
+    // window.location.href = ... führt eine programmatische Navigation durch.
+    // '?registered=1' im URL übergibt einen Parameter an die Login-Seite.
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!submitBtn.disabled) {
-            alert('Registrierung erfolgreich!');
-            localStorage.setItem('registeredUser', benutzername.value);
-            window.location.href = 'login.html';
+        if (submitBtn.disabled) return;
+
+        const username = benutzername.value.trim();
+
+        if (findUser(username)) {
+            if (errorMessage) {
+                errorMessage.textContent = 'Dieser Benutzername ist bereits vergeben.';
+                errorMessage.style.display = 'block';
+            }
+            return;
         }
+
+        const users = getUsers();
+        users.push({ username, password: passwort.value });
+        saveUsers(users);
+        window.location.href = 'login.html?registered=1';
     });
 
-    // Initial Button deaktivieren
-    submitBtn.disabled = true;
-}
-
-// ===== LOGIN-FORMULAR =====
-// Formularvalidierung für Auto24
-// Autor: tim
-
-// ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
-
-/**
- * Validiert einen Benutzernamen
- * Anforderungen: Min. 5 Zeichen, mind. 1 Groß- und 1 Kleinbuchstabe
- */
-function validateUsername(value) {
-    const errors = [];
-    if (value.length < 5) {
-        errors.push('Mindestens 5 Zeichen erforderlich');
-    }
-    if (!/[a-z]/.test(value)) {
-        errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-    }
-    if (!/[A-Z]/.test(value)) {
-        errors.push('Mindestens ein Großbuchstabe erforderlich');
-    }
-    return errors;
-}
-
-/**
- * Validiert ein Passwort
- * Anforderungen: Min. 10 Zeichen
- */
-function validatePassword(value) {
-    const errors = [];
-    if (value.length < 10) {
-        errors.push('Mindestens 10 Zeichen erforderlich');
-    }
-    return errors;
-}
-
-/**
- * Prüft ob zwei Passwörter übereinstimmen
- */
-function validatePasswordMatch(password, passwordRepeat) {
-    if (password !== passwordRepeat) {
-        return ['Passwörter stimmen nicht überein'];
-    }
-    return [];
-}
-
-/**
- * Validiert ein einzelnes Feld und zeigt visuelle Rückmeldung
- */
-function validateField(field, validator, ...args) {
-    const value = field.value;
-    const errorSpan = document.getElementById(field.id + '-error');
-    const errors = validator(value, ...args);
-
-    if (errors.length > 0) {
-        field.classList.add('invalid');
-        field.classList.remove('valid');
-        if (errorSpan) errorSpan.textContent = errors[0];
-        return false;
-    } else if (value.length > 0) {
-        field.classList.remove('invalid');
-        field.classList.add('valid');
-        if (errorSpan) errorSpan.textContent = '';
-        return true;
-    } else {
-        field.classList.remove('invalid', 'valid');
-        if (errorSpan) errorSpan.textContent = '';
-        return false;
-    }
-}
-
-// ===== REGISTRIERUNGS-FORMULAR =====
-
-function initRegistrationForm() {
-    const form = document.getElementById('registrationForm');
-    if (!form) return;
-
-    const benutzername = document.getElementById('benutzername');
-    const passwort = document.getElementById('passwort');
-    const passwortWiederholen = document.getElementById('passwort_wiederholen');
-    const submitBtn = document.getElementById('submitBtn');
-
-    // Formular-Gültigkeit prüfen
-    function checkFormValidity() {
-        const usernameValid = validateUsername(benutzername.value).length === 0;
-        const passwordValid = validatePassword(passwort.value).length === 0;
-        const passwordMatchValid = validatePasswordMatch(passwort.value, passwortWiederholen.value).length === 0;
-
-        const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                       benutzername.value.length > 0 && passwort.value.length > 0;
-
-        submitBtn.disabled = !isValid;
-    }
-
-    // Event-Listener für Echtzeit-Validierung
-    benutzername.addEventListener('input', () => {
-        validateField(benutzername, validateUsername);
-        checkFormValidity();
-    });
-
-    passwort.addEventListener('input', () => {
-        validateField(passwort, validatePassword);
-        if (passwortWiederholen.value.length > 0) {
-            validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-        }
-        checkFormValidity();
-    });
-
-    passwortWiederholen.addEventListener('input', () => {
-        validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
-        checkFormValidity();
-    });
-
-    // Form-Submit
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!submitBtn.disabled) {
-            alert('Registrierung erfolgreich!');
-            localStorage.setItem('registeredUser', benutzername.value);
-            window.location.href = 'login.html';
-        }
-    });
-
-    // Initial Button deaktivieren
     submitBtn.disabled = true;
 }
 
@@ -261,112 +168,150 @@ function initLoginForm() {
     const password = document.getElementById('password');
     const loginBtn = document.getElementById('loginBtn');
     const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
 
-    // Button-Status prüfen
+    // Kurzschreibweise: loginBtn.disabled ist direkt das Ergebnis des booleschen Ausdrucks.
     function checkFormValidity() {
-        const usernameValid = validateUsername(username.value).length === 0;
-        const passwordValid = validatePassword(password.value).length === 0;
-        const isValid = usernameValid && passwordValid && username.value.length > 0 && password.value.length > 0;
-        loginBtn.disabled = !isValid;
+        loginBtn.disabled = username.value.trim().length === 0 || password.value.length === 0;
     }
 
-    // Event-Listener
     username.addEventListener('input', () => {
-        validateField(username, validateUsername);
+        if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
-
     password.addEventListener('input', () => {
-        validateField(password, validatePassword);
+        if (errorMessage) errorMessage.style.display = 'none';
         checkFormValidity();
     });
 
-    // Form-Submit
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
         if (loginBtn.disabled) return;
 
-        // Demo-Zugangsdaten (erfüllen die Validierungskriterien)
-        if (username.value === 'TestUser' && password.value === 'TestPass123') {
+        const uname = username.value.trim();
+        const pwd = password.value;
+        const user = findUser(uname);
+        // Hardcoded Demo-Zugangsdaten als Fallback für Tests ohne vorherige Registrierung.
+        const isDemo = uname === 'TestUser' && pwd === 'TestPass123';
+
+        // Optional Chaining (?.): user?.password gibt undefined zurück wenn user null ist –
+        // kein Fehler, kein extra null-Check nötig.
+        if (user?.password === pwd || isDemo) {
             localStorage.setItem('loggedIn', 'true');
-            localStorage.setItem('username', username.value);
-            errorMessage.style.display = 'none';
+            localStorage.setItem('loggedInUser', uname);
             window.location.href = 'user.html';
         } else {
-            errorMessage.textContent = 'Falscher Benutzername oder Passwort!';
-            errorMessage.style.display = 'block';
+            if (errorMessage) {
+                errorMessage.textContent = 'Falscher Benutzername oder Passwort.';
+                errorMessage.style.display = 'block';
+            }
         }
     });
 
-    // Initial Button deaktivieren
     loginBtn.disabled = true;
 }
 
-// ===== BENUTZERPROFIL-FORMULAR =====
+// ===== NUTZERBEREICH =====
 
+// Auth-Guard: Diese Prüfung blockiert den gesamten Nutzerbereich für nicht eingeloggte Besucher.
+// localStorage.getItem() gibt null zurück, wenn der Schlüssel nicht existiert – daher !== 'true'.
+// window.location.href leitet sofort weiter; return beendet die Funktion danach.
 function initUserForm() {
-    const userForm = document.getElementById('userForm');
-    if (!userForm) return;
+    if (!document.getElementById('userForm')) return;
 
-    const username = document.getElementById('username');
-    const password = document.getElementById('password');
+    if (localStorage.getItem('loggedIn') !== 'true') {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
     const passwordConfirm = document.getElementById('password_confirm');
     const saveBtn = document.getElementById('saveBtn');
+    const displayName = document.getElementById('display-username');
+    const saveSuccess = document.getElementById('saveSuccess');
 
-    // Formular-Gültigkeit prüfen
+    // || '' verhindert null als Wert – falls kein Nutzer gespeichert ist, wird ein leerer String verwendet.
+    const loggedInUser = localStorage.getItem('loggedInUser') || '';
+
+    // Vorausfüllen des Formularfelds mit dem aktuell eingeloggten Benutzernamen.
+    // displayName.textContent schreibt reinen Text in den <span> – sicherer als innerHTML (kein XSS-Risiko).
+    if (usernameInput) usernameInput.value = loggedInUser;
+    if (displayName) displayName.textContent = loggedInUser;
+
     function checkFormValidity() {
-        const usernameValid = validateUsername(username.value).length === 0;
-        const passwordValid = validatePassword(password.value).length === 0;
-        const passwordMatchValid = validatePasswordMatch(password.value, passwordConfirm.value).length === 0;
-
-        const isValid = usernameValid && passwordValid && passwordMatchValid && 
-                       username.value.length > 0 && password.value.length > 0;
-
-        saveBtn.disabled = !isValid;
+        saveBtn.disabled =
+            validateUsername(usernameInput.value).length > 0 ||
+            validatePassword(passwordInput.value).length > 0 ||
+            validatePasswordMatch(passwordInput.value, passwordConfirm.value).length > 0;
     }
 
-    // Event-Listener
-    username.addEventListener('input', () => {
-        validateField(username, validateUsername);
+    usernameInput.addEventListener('input', () => {
+        validateField(usernameInput, validateUsername);
         checkFormValidity();
     });
-
-    password.addEventListener('input', () => {
-        validateField(password, validatePassword);
-        if (passwordConfirm.value.length > 0) {
-            validateField(passwordConfirm, validatePasswordMatch, password.value);
-        }
+    passwordInput.addEventListener('input', () => {
+        validateField(passwordInput, validatePassword);
+        if (passwordConfirm.value.length > 0)
+            validateField(passwordConfirm, validatePasswordMatch, passwordInput.value);
         checkFormValidity();
     });
-
     passwordConfirm.addEventListener('input', () => {
-        validateField(passwordConfirm, validatePasswordMatch, password.value);
+        validateField(passwordConfirm, validatePasswordMatch, passwordInput.value);
         checkFormValidity();
     });
 
-    // Form-Submit
-    userForm.addEventListener('submit', (e) => {
+    document.getElementById('userForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!saveBtn.disabled) {
-            alert('Änderungen erfolgreich gespeichert!');
-            localStorage.setItem('username', username.value);
+        if (saveBtn.disabled) return;
+
+        const newUsername = usernameInput.value.trim();
+        const newPassword = passwordInput.value;
+
+        // Array.findIndex() sucht nach dem alten Benutzernamen im Array und gibt dessen Index zurück.
+        // -1 bedeutet "nicht gefunden" – nur dann updaten, wenn der Nutzer existiert.
+        // users[idx] = {...} überschreibt den Eintrag im Array; saveUsers() persistiert das Ergebnis.
+        const users = getUsers();
+        const idx = users.findIndex(u => u.username === loggedInUser);
+        if (idx !== -1) {
+            users[idx] = { username: newUsername, password: newPassword };
+            saveUsers(users);
+        }
+
+        localStorage.setItem('loggedInUser', newUsername);
+        if (displayName) displayName.textContent = newUsername;
+
+        // setTimeout(callback, 3000) führt die Funktion nach 3000ms (3s) asynchron aus –
+        // der restliche Code läuft sofort weiter, die Ausblendung erfolgt zeitverzögert.
+        if (saveSuccess) {
+            saveSuccess.textContent = 'Änderungen erfolgreich gespeichert!';
+            saveSuccess.style.display = 'block';
+            setTimeout(() => saveSuccess.style.display = 'none', 3000);
         }
     });
 
-    // Gespeicherten Benutzernamen laden
-    const savedUsername = localStorage.getItem('username');
-    if (savedUsername) {
-        username.value = savedUsername;
-        validateField(username, validateUsername);
-    }
     saveBtn.disabled = true;
+}
+
+// ===== LOGOUT =====
+
+// Erkennt die Logout-Seite am Element mit id="logoutPage" (nur in logout.html vorhanden).
+// localStorage.removeItem() löscht gezielt einzelne Einträge – dadurch ist der Nutzer abgemeldet.
+// Der Auth-Guard in initUserForm() leitet bei erneutem Besuch von user.html automatisch weiter.
+function initLogout() {
+    if (!document.getElementById('logoutPage')) return;
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('loggedInUser');
 }
 
 // ===== INITIALISIERUNG =====
 
-// Wird ausgeführt wenn das DOM vollständig geladen ist
-document.addEventListener('DOMContentLoaded', function() {
+// DOMContentLoaded feuert, sobald das HTML vollständig geparst wurde (bevor Bilder/CSS fertig laden).
+// Damit ist sichergestellt, dass alle getElementById()-Aufrufe die Elemente bereits finden.
+// Jede init-Funktion prüft selbst, ob ihr Zielelement existiert – dadurch kann dieses eine
+// Skript auf allen Seiten eingebunden werden, ohne seitenspezifische Fehler zu verursachen.
+document.addEventListener('DOMContentLoaded', () => {
+    initLogout();
     initRegistrationForm();
     initLoginForm();
     initUserForm();
@@ -555,3 +500,94 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // fav logik ende Lukas 
+
+/*Light Mode Toggle: Niclas */
+function toggleMode() {
+    document.body.classList.toggle("light-mode");
+}
+/*Layout-Umschaltung: Niclas */
+function setVerticalLayout() {
+    const layout = document.getElementById("carLayout");
+
+    if (!layout) return;
+
+    layout.classList.remove("horizontal-layout");
+    layout.classList.add("vertical-layout");
+}
+
+function setHorizontalLayout() {
+    const layout = document.getElementById("carLayout");
+
+    if (!layout) return;
+
+    layout.classList.remove("vertical-layout");
+    layout.classList.add("horizontal-layout");
+}
+
+/*Preisberechnung mit Steuern */
+function getTotalPrice(priceWOTax) {
+    const taxRate = 0.19;
+    return priceWOTax * (1 + taxRate);
+}
+function calculatePrice() {
+    const input = document.getElementById("priceInput");
+    const value = Number(input.value);
+
+    if (value <= 0) {
+        alert("Bitte gültigen Preis eingeben");
+        return;
+    }
+
+    const total = getTotalPrice(value);
+
+    document.getElementById("priceWithoutTax").textContent =
+        "Preis ohne Steuer: " + value.toFixed(2) + " €";
+
+    document.getElementById("priceWithTax").textContent =
+        "Preis mit 19% Steuer: " + total.toFixed(2) + " €";
+}
+
+/* Finanzierungshilfe */
+function calculateFinancing() {
+    const input = document.getElementById("financingInput");
+    const value = Number(input.value);
+
+    const loanTermInput = document.getElementById("loanTermInput");
+    const loanTerm = Number(loanTermInput.value);
+
+    if (value <= 0) {
+        alert("Bitte gültigen Finanzierungsbetrag eingeben");
+        return;
+    }
+
+    if (loanTerm < 12 || loanTerm > 48) {
+        alert("Bitte gültige Laufzeit eingeben (12-48 Monate)");
+        return;
+    }
+
+    const interest = value * 0.05;
+    const totalAmount = value + interest;
+    const monthlyRate = totalAmount / loanTerm;
+
+    document.getElementById("financingResult").textContent =
+        "Monatliche Rate: " + monthlyRate.toFixed(2) + " €";
+
+    document.getElementById("financingResult2").textContent =
+        "Gesamtbetrag: " + totalAmount.toFixed(2) + " €";
+}
+
+/*Passwort Generator: Niclas */
+function generatePassword() {
+    const input = document.getElementById("pwInput");
+    
+    const length = 12;  
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    let password = "";  
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
+
+    input.value = password;
+    output.textContent = "Generiertes Passwort: " + password;
+}

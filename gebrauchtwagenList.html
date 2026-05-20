@@ -14,7 +14,7 @@
             
 
     <nav> 
-        <div class="nav-logo">Auto<span>24</span></div>
+        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
         <ul class = "nav-links">
             <li><a href="index.html">Fahrzeuge</a></li>
             <li><a href="index.html">Neuwagen</a></li>
@@ -28,10 +28,13 @@
             <span class = "navFav-count" id="favCount" style = "display: none">0</span>
 
          </button>
+             <button onclick="toggleMode()">Modus wechseln</button>
 
     </nav>
 
-    <div class = "fav-ovl" id="favOvl" onclick = "togglePanel()"></div>
+    <div 
+        class = "fav-ovl" id="favOvl" onclick = "togglePanel()">
+    </div>
 
     <!-- Lukas: Favoritenliste / warenkorb   -->
 
@@ -73,7 +76,11 @@
     
     <p> Hier finden Sie verschiedene Arten von Gebrauchtwagen.</p>
     <!-- FAHRZEUGE GRID -->
-<div class="cars-grid">
+     <div class="layout-buttons">
+        <button onclick="setVerticalLayout()">Smartphone Layout</button> 
+        <button onclick="setHorizontalLayout()">Desktop Layout</button>
+    </div>
+<div id = "carLayout" class="cars-grid horizontal-layout">
 
     <!-- Card 1 -->
     <div class="car-card" data-id="audi_a8_001" data-make="Audi" data-model="A8L" data-year="2024" data-fuel="Benzin" data-body="Limousine" data-power="510 PS" data-km="40000 km" data-drive="S-Line Quattro" data-price="89900">
@@ -214,6 +221,26 @@
         </div>
     </div>
 </div>
+<!--Niclas: Funktionen Kauffinanzierung-->
+<h2>Kauffinanzierung</h2>
+<label>Preis ohne Steuer:</label>
+<input type="number" id="priceInput">
+
+<button onclick="calculatePrice()">Berechnen</button>
+
+<p id="priceWithoutTax"></p>
+<p id="priceWithTax"></p>
+
+<label>Auto24 Bank - Finanzierungshilfe:</label>
+<p>Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).</p>
+<input type="number" id="financingInput">
+<p>Geben Sie die gewünschte Laufzeit in Monaten ein (12-48):</p>
+<input type="number" id="loanTermInput">
+
+<button onclick="calculateFinancing()">Berechnen</button>
+
+<p id="financingResult"></p>
+<p id="financingResult2"></p>
 
 
 <footer>

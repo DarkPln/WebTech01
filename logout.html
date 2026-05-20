@@ -5,16 +5,39 @@
     <meta charset="UTF-8">
     <title>Abgemeldet</title>
     <link rel="stylesheet" href="mystyle.css">
+    <!-- validation.js wird im <head> ohne defer eingebunden. Die initLogout()-Funktion
+         wird über den DOMContentLoaded-Listener in validation.js aufgerufen, sodass
+         das DOM erst vollständig geladen ist, bevor auf Elemente zugegriffen wird. -->
+    <script src="validation.js"></script>
 </head>
 
 <body>
-    <h1>Abgemeldet</h1>
-    <p>Sie wurden erfolgreich abgemeldet.</p>
-    
-    <p>
-        <a href="login.html">Zum Login</a> | 
-        <a href="index.html">Zur Hauptseite</a>
-    </p> 
+    <nav>
+        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Fahrzeuge</a></li>
+            <li><a href="index.html">Neuwagen</a></li>
+            <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
+            <li><a href="about.html">Auto verkaufen</a></li>
+        </ul>
+            <button onclick="toggleMode()">Modus wechseln</button>
+
+    </nav>
+    <!-- Dieses leere div ist der "Trigger" für initLogout() in validation.js.
+         document.getElementById('logoutPage') findet es und startet dadurch den
+         Logout-Vorgang (localStorage leeren). Auf keiner anderen Seite existiert dieses Element. -->
+    <div id="logoutPage"></div>
+
+    <main class="home-main">
+        <section class="auth-section">
+            <div class="auth-card">
+                <h1>Abgemeldet</h1>
+                <p>Sie wurden erfolgreich abgemeldet.</p>
+                <p><a href="login.html">Zum Login</a></p>
+                <p><a href="index.html">Zur Hauptseite</a></p>
+            </div>
+        </section>
+    </main>
 
  <footer>
         

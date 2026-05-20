@@ -5,31 +5,60 @@
     <meta charset="UTF-8">
     <title>Login - Auto24</title>
     <link rel="stylesheet" href="mystyle.css">
+    <!-- validation.js enthält initLoginForm(), die per DOMContentLoaded automatisch startet.
+         Sie prüft window.location.search auf '?registered=1' (gesetzt nach Registrierung)
+         und zeigt dann die successMessage an. -->
     <script src="validation.js"></script>
 </head>
-<body>  
-    <h1>Login</h1>
-    <p>Bitte loggen Sie sich mit ihrem Account ein</p>
-    <p class="demo-hint">(Demo: Benutzername: TestUser, Passwort: TestPass123)</p>
-    
-    <form id="loginForm">
-        <label for="username">Benutzername:</label>
-        <input type="text" id="username" name="username" required>
-        <span class="field-error" id="username-error"></span>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Fahrzeuge</a></li>
+            <li><a href="index.html">Neuwagen</a></li>
+            <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
+            <li><a href="about.html">Auto verkaufen</a></li>
+        </ul>
+            <button onclick="toggleMode()">Modus wechseln</button>
+    </nav>
 
-        <label for="password">Passwort:</label>
-        <input type="password" id="password" name="password" required>
-        <span class="field-error" id="password-error"></span>
-        
-        <div id="errorMessage" class="error-message"></div>
-        
-        <input type="submit" value="Einloggen" id="loginBtn">
-    </form>
+    <main class="home-main">
+        <section class="auth-section">
+            <div class="auth-card">
+                <h1>Login</h1>
+                <p>Bitte loggen Sie sich mit Ihrem Account ein.</p>
+                <p class="demo-hint">Demo: Benutzername <strong>TestUser</strong>, Passwort <strong>TestPass123</strong></p>
 
-    <div class="login-navigation">
-        <a href="registration.html" class="nav-btn nav-btn-secondary">Zur Registrierung</a>
-        <a href="index.html" class="nav-btn nav-btn-outline">Zur Startseite</a>
-    </div>
+                <!-- successMessage: JS schreibt hier die Erfolgsmeldung nach Registrierung hinein
+                     und setzt display='block'. Standardmäßig display:none (unsichtbar). -->
+                <div id="successMessage" class="success-message" style="display:none;"></div>
+
+                <!-- loginForm: Trigger für initLoginForm(). JS hängt einen submit-Listener an,
+                     der e.preventDefault() aufruft und stattdessen localStorage prüft/setzt. -->
+                <form id="loginForm">
+                    <label for="username">Benutzername:</label>
+                    <!-- username/password: JS lauscht auf 'input'-Events für Live-Aktivierung
+                         des loginBtn. Die IDs müssen exakt mit getElementById() übereinstimmen. -->
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                    <span class="field-error" id="username-error"></span>
+
+                    <label for="password">Passwort:</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                    <span class="field-error" id="password-error"></span>
+
+                    <!-- errorMessage: JS zeigt hier Fehlermeldungen bei falschem Login an. -->
+                    <div id="errorMessage" class="error-message" style="display:none;"></div>
+
+                    <!-- loginBtn: JS setzt disabled=true beim Laden und aktiviert ihn erst,
+                         wenn beide Felder nicht leer sind (checkFormValidity). -->
+                    <input type="submit" value="Einloggen" id="loginBtn">
+                </form>
+
+                <p><a href="registration.html">Noch kein Konto? Jetzt registrieren</a></p>
+                <p><a href="index.html">Zurück zur Startseite</a></p>
+            </div>
+        </section>
+    </main>
 
 
 

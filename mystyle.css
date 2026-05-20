@@ -2,7 +2,7 @@ body {
     background-color: #0a0a0a;
     
     margin: 0;
-    padding: 10px;
+    padding: 0;
     color:rgb(250, 250, 250);
     text-align: center;
 
@@ -18,6 +18,9 @@ th{
 
 /* ===== TYPOGRAFIE - Einheitliches Schriftbild ===== */
 /* Angepasst von: tim */
+/* CSS-Kaskade: Diese Regeln gelten global für alle HTML-Elemente des Typs p, h1, h2, h3.
+   Spezifischere Selektoren (z.B. .auth-card p) überschreiben diese Basis-Regeln.
+   font-family, font-weight und letter-spacing sorgen für ein einheitliches Schriftbild. */
 
 /* Absätze - Standard-Textgröße */
 p{
@@ -59,6 +62,11 @@ a:hover{
 /* ===== FORMULAR-STYLING ===== */
 /* Angepasst von: tim */
 /* Verbesserte Rahmen, Abstände und einheitliches Design */
+/* Attribut-Selektor input[type="text"] greift gezielt auf Inputs nach ihrem type-Attribut zu –
+   sauberer als Klassen, da HTML-Semantik genutzt wird.
+   transition: all 0.3s ease animiert Zustandsänderungen (z.B. Fokus-Farbe) weich über 0,3s.
+   box-sizing: border-box zählt Padding und Border zur Gesamtbreite (width) mit –
+   verhindert, dass Inputs breiter werden als ihr Container. */
 
 /* Labels für Formularfelder */
 label {
@@ -376,7 +384,7 @@ input[type="reset"] {
 
 footer {
     border-top: 1px solid rgba(211, 211, 211, 0.311);
-    margin-top: 30px;
+    margin-top: 0;
     padding: 50px 64 30px; 
     background-color: rgba(20, 17, 17, 0.618);
     text-align: center;
@@ -515,6 +523,31 @@ nav{
     font-weight: bold;
     text-transform: uppercase;
     font-size: 36px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-logo:hover {
+    color: white;
+}
+
+.nav-auth-link {
+    text-decoration: none;
+    color: rgb(227, 27, 27);
+    border: 1px solid rgb(227, 27, 27);
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.nav-auth-link:hover {
+    background: rgba(227, 27, 27, 0.15);
+    color: rgb(227, 27, 27);
 }
 
 .nav-logo span{
@@ -768,7 +801,7 @@ button.car-fav {
 /* ===== Index - Auto24 von Niclas ===== */
 
 .home-main {
-    padding-top: 80px;
+    padding-top: 64px;
 }
 
 .home-hero {
@@ -826,6 +859,7 @@ button.car-fav {
 
 .home-btn-primary,
 .home-btn-secondary {
+    display: inline-block;
     text-decoration: none;
     padding: 13px 28px;
     border-radius: 8px;
@@ -1082,3 +1116,196 @@ button.car-fav {
 
 
 /* Lukas: Favoritenliste Ende */
+
+/* ===== AUTH-SEITEN (login, registration, user, logout) ===== */
+
+.auth-section {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 1rem;
+    background:
+        radial-gradient(circle at 30% 60%, rgba(227, 27, 27, 0.15), transparent 40%),
+        linear-gradient(135deg, #0a0a0a 0%, #180505 50%, #0a0a0a 100%);
+}
+
+.auth-card {
+    background: #111111;
+    border: 1px solid #2e2e2e;
+    border-radius: 12px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.auth-card h1 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 28px;
+}
+
+.auth-card h2 {
+    font-size: 18px;
+    color: #bdbdbd;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.auth-card p {
+    margin: 12px 0 0;
+}
+
+.auth-card .demo-hint {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.field-error {
+    display: block;
+    font-size: 12px;
+    color: rgb(227, 27, 27);
+    min-height: 16px;
+    margin-top: 2px;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== Tim - ÜBER UNS SEITE - about.html ===== */
+
+/* Dienstleistungs-Grid: 4 kompakte Spalten */
+.about-services-section {
+    padding: 40px 4rem;
+}
+
+.about-service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-service-card {
+    background: #111111;
+    border: 1px solid #2e2e2e;
+    border-radius: 8px;
+    padding: 18px 16px;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.about-service-card:hover {
+    border-color: #8B0000;
+    transform: translateY(-3px);
+}
+
+.about-service-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.about-service-card h3 {
+    font-size: 15px;
+    margin: 6px 0;
+}
+
+.about-service-card p {
+    color: #bdbdbd;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* Kontakt-Bereich */
+.about-contact-wrapper {
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.about-contact-card {
+    background: #0a0a0a;
+    border: 1px solid #2e2e2e;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: left;
+}
+
+.about-contact-card p {
+    margin: 10px 0;
+    color: white;
+}
+
+.about-contact-card strong {
+    color: rgb(227, 27, 27);
+}
+
+/* Team-Bereich */
+.about-team-intro {
+    max-width: 700px;
+    margin: 20px auto 40px;
+    color: lightgray;
+}
+
+.about-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-team-role {
+    color: rgb(227, 27, 27);
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .about-service-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .about-services-section {
+        padding: 30px 1rem;
+    }
+}
+
+/* Dark Mode Toggle */
+body.light-mode {
+    background-color: white;
+    color: black;
+}
+body.light-mode .car-card {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+body.light-mode .car-model,
+body.light-mode .car-price,
+body.light-mode .car-spec-val {
+    color: black;
+}
+
+body.light-mode nav,
+body.light-mode footer {
+    background-color: #eeeeee;
+}
+
+/* Layout-Umschaltung */
+.cars-grid.vertical-layout {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cars-grid.horizontal-layout {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}

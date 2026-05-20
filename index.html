@@ -5,16 +5,30 @@
     <meta charset="UTF-8">
     <title>Willkommen bei unserer Web-Anwendung "Auto24"-Startseite</title>
     <link rel="stylesheet" href="mystyle.css">
+    <script>
+        // Nav-Auth-Link vor dem Rendern setzen, um Flackern zu vermeiden
+        document.addEventListener('DOMContentLoaded', function() {
+            const link = document.getElementById('navAuthLink');
+            if (!link) return;
+            if (localStorage.getItem('loggedIn') === 'true') {
+                const user = localStorage.getItem('loggedInUser') || 'Konto';
+                link.textContent = '\uD83D\uDC64 ' + user;
+                link.href = 'user.html';
+            }
+        });
+    </script>
 </head>
 <body>
     <nav> 
-        <div class="nav-logo">Auto<span>24</span></div>
+        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
         <ul class = "nav-links">
             <li><a href="index.html">Fahrzeuge</a></li>
             <li><a href="index.html">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
             <li><a href="about.html">Auto verkaufen</a></li>
         </ul>
+        <a href="login.html" class="nav-auth-link" id="navAuthLink">Login</a>
+            <button onclick="toggleMode()">Modus wechseln</button>
     </nav>
     <main class="home-main">
 
@@ -131,7 +145,7 @@
     
         </div>
     </footer>
-
+    <script src="validation.js"></script>
 </body>
 </html>
 <!-- Niclas -->

@@ -7,53 +7,123 @@
     <link rel="stylesheet" href="mystyle.css">
 </head>
 
-<body>
+<body class="about-page">
 
     
     <nav> 
-        <div class="nav-logo">Auto<span>24</span></div>
+        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
         <ul class = "nav-links">
             <li><a href="index.html">Fahrzeuge</a></li>
             <li><a href="index.html">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
             <li><a href="about.html">Auto verkaufen</a></li>
         </ul>
+        <button class ="toggle-mode" onclick="toggleMode()">Modus wechseln</button>
     </nav>
+    
 
-    <br> <br> <br>
+    <main class="home-main">
 
-    <h1>Über uns</h1>
-    <h2>Auto24 - Ihre Online-Plattform für Fahrzeuge</h2>
-    
-    <p>Willkommen bei der Automobilbörse, der führenden Online-Plattform für den Kauf und Verkauf von Neuwagen und Gebrauchtwagen.</p>
+        <!-- Hero Section -->
+        <section class="home-hero">
+            <div class="home-hero-content">
+                <div class="home-badge">Über uns</div>
+                <h1>Auto<span>24</span></h1>
+                <p>
+                    Die führende Online-Plattform für den Kauf und Verkauf von Fahrzeugen.
+                    Unkompliziert, sicher und schnell – Ihre vertrauenswürdige Fahrzeugbörse seit 2024.
+                </p>
+            </div>
+        </section>
 
-    <h3>Unsere Dienstleistungen</h3>
-    <p>
-    Kauf von Neuwagen<br>
-    Kauf von Gebrauchtwagen<br>
-    Verkauf von Fahrzeugen<br>
-    Fahrzeugvermittlung<br>
-    </p>
-    
-    <h3>Kontaktinformationen</h3>
-    <p>
-        <strong>Auto24</strong><br>
-        Altschauerberg 8<br>
-        85049 Ingolstadt<br>
-        Deutschland
-    </p>
-    
-    <p>
-        <strong>E-Mail:</strong> info@auto24.de<br>
-        <strong>Öffnungszeiten:</strong> Mo-Fr 8:00-18:00 Uhr
-    </p>
-    
-    <h3>Geschäftsführung</h3>
-    <p>Lukas Neumayer, Niclas Reuter, Tim Höhn</p>
-    
-    <div class="login-navigation">
-        <a href="index.html" class="nav-btn nav-btn-secondary">Zurück zur Startseite</a>
-    </div>
+        <!-- Services Section -->
+        <section class="about-services-section">
+            <h2>Unsere Dienstleistungen</h2>
+            
+            <div class="about-service-grid">
+                <div class="about-service-card">
+                    <div class="about-service-icon">🚗</div>
+                    <h3>Kauf von Neuwagen</h3>
+                    <p>Entdecken Sie die neuesten Modelle führender Automobilhersteller zu fairen Preisen.</p>
+                </div>
+
+                <div class="about-service-card">
+                    <div class="about-service-icon">🔧</div>
+                    <h3>Kauf von Gebrauchtwagen</h3>
+                    <p>Hochwertige geprüfte Gebrauchtwagen mit transparenter Fahrzeughistorie.</p>
+                </div>
+
+                <div class="about-service-card">
+                    <div class="about-service-icon">💰</div>
+                    <h3>Verkauf von Fahrzeugen</h3>
+                    <p>Verkaufen Sie Ihr Fahrzeug schnell und unkompliziert über unsere Plattform.</p>
+                </div>
+
+                <div class="about-service-card">
+                    <div class="about-service-icon">🤝</div>
+                    <h3>Fahrzeugvermittlung</h3>
+                    <p>Professionelle Vermittlung zwischen Käufern und Verkäufern mit Bestpreisgarantie.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information Section -->
+        <section class="home-about">
+            <h2>Kontaktinformationen</h2>
+            
+            <div class="about-contact-wrapper">
+                <div class="about-contact-card">
+                    <p><strong>Unternehmen:</strong> Auto24 GmbH</p>
+                    <p><strong>Adresse:</strong> Altschauerberg 8, 85049 Ingolstadt, Deutschland</p>
+                    <p><strong>E-Mail:</strong> info@auto24.de</p>
+                    <p><strong>Telefon:</strong> +49 (0) 841 / 123 456</p>
+                    <p><strong>Öffnungszeiten:</strong> Montag - Freitag: 8:00 - 18:00 Uhr</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="home-section">
+            <h2>Unser Team</h2>
+            <p class="about-team-intro">
+                Auto24 wird von einem engagierten Team aus erfahrenen Fachleuten geleitet, 
+                die sich für Innovation und Kundenzufriedenheit einsetzen.
+            </p>
+
+            <div class="about-team-grid">
+                <div class="home-category-card">
+                    <div class="home-category-icon">👨‍💼</div>
+                    <h3>Lukas Neumayer</h3>
+                    <p class="about-team-role">Geschäftsführer</p>
+                </div>
+
+                <div class="home-category-card">
+                    <div class="home-category-icon">👨‍💼</div>
+                    <h3>Niclas Reuter</h3>
+                    <p class="about-team-role">Geschäftsführer</p>
+                </div>
+
+                <div class="home-category-card">
+                    <div class="home-category-icon">👨‍💼</div>
+                    <h3>Tim Höhn</h3>
+                    <p class="about-team-role">Geschäftsführer</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="home-about">
+            <h2>Bereit loszulegen?</h2>
+            <p>
+                Entdecken Sie unsere große Auswahl an Fahrzeugen oder verkaufen Sie Ihr eigenes Auto.
+            </p>
+            <div class="home-buttons">
+                <a href="gebrauchtwagenList.html" class="home-btn-primary">Fahrzeuge ansehen</a>
+                <a href="index.html" class="home-btn-secondary">Zur Startseite</a>
+            </div>
+        </section>
+
+    </main>
 
      <footer>
         
@@ -111,7 +181,7 @@
     
         </div>
     </footer>
-
+    <script src="validation.js"></script>
 </body>
 </html>
 <!-- Tim -->
