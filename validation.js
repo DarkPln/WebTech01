@@ -141,7 +141,7 @@ function initRegistrationForm() {
         const users = getUsers();
         users.push({ username, password: passwort.value });
         saveUsers(users);
-        window.location.href = 'login.html?registered=1';
+        window.location.href = 'login.php?registered=1';
     });
 
     submitBtn.disabled = true;
@@ -186,7 +186,7 @@ function initLoginForm() {
         if (user?.password === pwd || isDemo) {
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('loggedInUser', uname);
-            window.location.href = 'user.html';
+            window.location.href = 'user.php';
         } else {
             if (errorMessage) {
                 errorMessage.textContent = 'Falscher Benutzername oder Passwort.';
@@ -207,7 +207,7 @@ function initUserForm() {
     if (!document.getElementById('userForm')) return;
 
     if (localStorage.getItem('loggedIn') !== 'true') {
-        window.location.href = 'login.html';
+        window.location.href = 'login.php';
         return;
     }
 

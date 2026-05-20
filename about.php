@@ -8,38 +8,46 @@
 </head>
 
 <body class="about-page">
+    <?php
+        $pageTitle      = "Über uns - Auto24";
+        $heroBadge      = "Über uns";
+        $heroText       = "Die führende Online-Plattform für den Kauf und Verkauf von Fahrzeugen. Unkompliziert, sicher und schnell – Ihre vertrauenswürdige Fahrzeugbörse seit 2024.";
+        $contactCompany = "Auto24 GmbH";
+        $contactAddress = "Altschauerberg 8, 85049 Ingolstadt, Deutschland";
+        $contactEmail   = "info@auto24.de";
+        $contactPhone   = "+49 (0) 841 / 123 456";
+        $contactHours   = "Montag - Freitag: 8:00 - 18:00 Uhr";
+        $teamIntro      = "Auto24 wird von einem engagierten Team aus erfahrenen Fachleuten geleitet, die sich für Innovation und Kundenzufriedenheit einsetzen.";
+        $ctaText        = "Entdecken Sie unsere große Auswahl an Fahrzeugen oder verkaufen Sie Ihr eigenes Auto.";
+    ?>
 
-    
-    <nav> 
-        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
+    <nav>
+        <a href="index.php" class="nav-logo">Auto<span>24</span></a>
         <ul class = "nav-links">
-            <li><a href="index.html">Fahrzeuge</a></li>
-            <li><a href="index.html">Neuwagen</a></li>
-            <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
-            <li><a href="about.html">Auto verkaufen</a></li>
+            <li><a href="index.php">Fahrzeuge</a></li>
+            <li><a href="index.php">Neuwagen</a></li>
+            <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
+            <li><a href="about.php">Auto verkaufen</a></li>
         </ul>
         <button class ="toggle-mode" onclick="toggleMode()">Modus wechseln</button>
     </nav>
-    
+
 
     <main class="home-main">
 
         <!-- Hero Section -->
         <section class="home-hero">
             <div class="home-hero-content">
-                <div class="home-badge">Über uns</div>
+                <div class="home-badge"><?php echo $heroBadge; ?></div>
                 <h1>Auto<span>24</span></h1>
-                <p>
-                    Die führende Online-Plattform für den Kauf und Verkauf von Fahrzeugen.
-                    Unkompliziert, sicher und schnell – Ihre vertrauenswürdige Fahrzeugbörse seit 2024.
-                </p>
+                <p><?php echo $heroText; ?></p>
             </div>
         </section>
 
         <!-- Services Section -->
         <section class="about-services-section">
             <h2>Unsere Dienstleistungen</h2>
-            
+
             <div class="about-service-grid">
                 <div class="about-service-card">
                     <div class="about-service-icon">🚗</div>
@@ -70,14 +78,14 @@
         <!-- Contact Information Section -->
         <section class="home-about">
             <h2>Kontaktinformationen</h2>
-            
+
             <div class="about-contact-wrapper">
                 <div class="about-contact-card">
-                    <p><strong>Unternehmen:</strong> Auto24 GmbH</p>
-                    <p><strong>Adresse:</strong> Altschauerberg 8, 85049 Ingolstadt, Deutschland</p>
-                    <p><strong>E-Mail:</strong> info@auto24.de</p>
-                    <p><strong>Telefon:</strong> +49 (0) 841 / 123 456</p>
-                    <p><strong>Öffnungszeiten:</strong> Montag - Freitag: 8:00 - 18:00 Uhr</p>
+                    <p><strong>Unternehmen:</strong> <?php echo $contactCompany; ?></p>
+                    <p><strong>Adresse:</strong> <?php echo $contactAddress; ?></p>
+                    <p><strong>E-Mail:</strong> <?php echo $contactEmail; ?></p>
+                    <p><strong>Telefon:</strong> <?php echo $contactPhone; ?></p>
+                    <p><strong>Öffnungszeiten:</strong> <?php echo $contactHours; ?></p>
                 </div>
             </div>
         </section>
@@ -85,10 +93,7 @@
         <!-- Team Section -->
         <section class="home-section">
             <h2>Unser Team</h2>
-            <p class="about-team-intro">
-                Auto24 wird von einem engagierten Team aus erfahrenen Fachleuten geleitet, 
-                die sich für Innovation und Kundenzufriedenheit einsetzen.
-            </p>
+            <p class="about-team-intro"><?php echo $teamIntro; ?></p>
 
             <div class="about-team-grid">
                 <div class="home-category-card">
@@ -114,30 +119,27 @@
         <!-- Call to Action -->
         <section class="home-about">
             <h2>Bereit loszulegen?</h2>
-            <p>
-                Entdecken Sie unsere große Auswahl an Fahrzeugen oder verkaufen Sie Ihr eigenes Auto.
-            </p>
+            <p><?php echo $ctaText; ?></p>
             <div class="home-buttons">
-                <a href="gebrauchtwagenList.html" class="home-btn-primary">Fahrzeuge ansehen</a>
-                <a href="index.html" class="home-btn-secondary">Zur Startseite</a>
+                <a href="gebrauchtwagenList.php" class="home-btn-primary">Fahrzeuge ansehen</a>
+                <a href="index.php" class="home-btn-secondary">Zur Startseite</a>
             </div>
         </section>
 
     </main>
 
      <footer>
-        
+
         <div class ="footer-top">
-            <div class = footer-logo-dsc> 
+            <div class = footer-logo-dsc>
             <div class = "footer-logo">
                 Auto
                 <span>24</span>
                 </div>
-           
+
             <div class = "footer-dsc"> Deutschlands praktische Fahrzeugbörse für Neu- und Gebrauchtwagen. Unkompliziert, sicher und schnell.</div>
             </div>
-            
-        
+
 
             <div>
                 <div class = "footer-heading">Fahrzeuge</div>
@@ -160,12 +162,12 @@
             <div>
                 <div class = "footer-heading">Unternehmen</div>
                 <ul class "footer-links">
-                    <li><a href="about.html">Über uns</a></li>
+                    <li><a href="about.php">Über uns</a></li>
                     <li><a href = "#"> Datenschutz </a></li>
                     <li><a href = "#"> AGB </a></li>
-                    <li> <a href = "#"> Partner </a></li> 
+                    <li> <a href = "#"> Partner </a></li>
                 </ul>
-            </div>    
+            </div>
             </div>
          </div>
 
@@ -173,12 +175,12 @@
         <div class="footer-bot">
         <span> &copy 2026 Auto24. Alle Rechte vorbehalten.</span>
         <div class="footer-bot-links">
-            <a href="index.html">Home</a>
-            <a href="gebrauchtwagenList.html">Gebrauchtwagen</a>
-            <a href="about.html">Impressum</a>
+            <a href="index.php">Home</a>
+            <a href="gebrauchtwagenList.php">Gebrauchtwagen</a>
+            <a href="about.php">Impressum</a>
         </div>
-    
-    
+
+
         </div>
     </footer>
     <script src="validation.js"></script>

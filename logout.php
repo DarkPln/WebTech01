@@ -12,17 +12,21 @@
 </head>
 
 <body>
+    <?php
+        $pageTitle   = "Abgemeldet";
+        $pageSubtext = "Sie wurden erfolgreich abgemeldet.";
+    ?>
     <nav>
-        <a href="index.html" class="nav-logo">Auto<span>24</span></a>
+        <a href="index.php" class="nav-logo">Auto<span>24</span></a>
         <ul class="nav-links">
-            <li><a href="index.html">Fahrzeuge</a></li>
-            <li><a href="index.html">Neuwagen</a></li>
-            <li><a href="gebrauchtwagenList.html">Gebrauchtwagen</a></li>
-            <li><a href="about.html">Auto verkaufen</a></li>
+            <li><a href="index.php">Fahrzeuge</a></li>
+            <li><a href="index.php">Neuwagen</a></li>
+            <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
+            <li><a href="about.php">Auto verkaufen</a></li>
         </ul>
             <button onclick="toggleMode()">Modus wechseln</button>
-
     </nav>
+
     <!-- Dieses leere div ist der "Trigger" für initLogout() in validation.js.
          document.getElementById('logoutPage') findet es und startet dadurch den
          Logout-Vorgang (localStorage leeren). Auf keiner anderen Seite existiert dieses Element. -->
@@ -31,27 +35,26 @@
     <main class="home-main">
         <section class="auth-section">
             <div class="auth-card">
-                <h1>Abgemeldet</h1>
-                <p>Sie wurden erfolgreich abgemeldet.</p>
-                <p><a href="login.html">Zum Login</a></p>
-                <p><a href="index.html">Zur Hauptseite</a></p>
+                <h1><?php echo $pageTitle; ?></h1>
+                <p><?php echo $pageSubtext; ?></p>
+                <p><a href="login.php">Zum Login</a></p>
+                <p><a href="index.php">Zur Hauptseite</a></p>
             </div>
         </section>
     </main>
 
- <footer>
-        
+    <footer>
+
         <div class ="footer-top">
-            <div class = footer-logo-dsc> 
+            <div class = footer-logo-dsc>
             <div class = "footer-logo">
                 Auto
                 <span>24</span>
                 </div>
-           
+
             <div class = "footer-dsc"> Deutschlands praktische Fahrzeugbörse für Neu- und Gebrauchtwagen. Unkompliziert, sicher und schnell.</div>
             </div>
-            
-        
+
 
             <div>
                 <div class = "footer-heading">Fahrzeuge</div>
@@ -74,12 +77,12 @@
             <div>
                 <div class = "footer-heading">Unternehmen</div>
                 <ul class "footer-links">
-                    <li><a href="about.html">Über uns</a></li>
+                    <li><a href="about.php">Über uns</a></li>
                     <li><a href = "#"> Datenschutz </a></li>
                     <li><a href = "#"> AGB </a></li>
-                    <li> <a href = "#"> Partner </a></li> 
+                    <li> <a href = "#"> Partner </a></li>
                 </ul>
-            </div>    
+            </div>
             </div>
          </div>
 
@@ -87,12 +90,12 @@
         <div class="footer-bot">
         <span> &copy 2026 Auto24. Alle Rechte vorbehalten.</span>
         <div class="footer-bot-links">
-            <a href="index.html">Home</a>
-            <a href="gebrauchtwagenList.html">Gebrauchtwagen</a>
-            <a href="about.html">Impressum</a>
+            <a href="index.php">Home</a>
+            <a href="gebrauchtwagenList.php">Gebrauchtwagen</a>
+            <a href="about.php">Impressum</a>
         </div>
-    
-    
+
+
         </div>
     </footer>
 
