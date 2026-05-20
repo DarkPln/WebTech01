@@ -30,7 +30,7 @@ function validateField(field, validator, extraArg) {
     // extraArg !== undefined prüft ob ein Zusatzargument übergeben wurde.
     // Ternärer Operator (? :) wählt dann die passende Variante aus.
     const errors = extraArg !== undefined ? validator(field.value, extraArg)  : validator(field.value);           // z.B. validateUsername(wert) // z.B. validatePasswordMatch(wert, erstesPasswort) 
-
+    //andere schreibweise für if/else (wenn extraarg nicht null, dann passwort mtach sonst Username validierung)
     // Sucht den zugehörigen Fehler-<span> anhand der Feld-ID.
     // Feld-ID "passwort" -> Span-ID "passwort-error".
     const errorSpan = document.getElementById(field.id + '-error');
@@ -41,7 +41,7 @@ function validateField(field, validator, extraArg) {
     // Fall 1: Es gibt Fehler → Feld rot markieren und ersten Fehler anzeigen.
     if (errors.length > 0) {
         field.classList.add('invalid');
-        if (errorSpan) errorSpan.textContent = errors[0];
+        if (errorSpan) errorSpan.textContent = errors[0]; //error span, fehlertext anzeigen
         return false;
     }
 
@@ -61,7 +61,7 @@ function validateField(field, validator, extraArg) {
 
 // localStorage ist ein persistenter Schlüssel-Wert-Speicher im Browser
 // Daten bleiben nach dem Schließen des Tabs erhalten
-// Der || '[]' Fallback liefert ein leeres Array, wenn der Schlüssel noch nicht existiert.
+// || [] Fallback liefert ein leeres Array, wenn der Schlüssel noch nicht existiert, nueer Nutzer
 function getUsers() {
     return JSON.parse(localStorage.getItem('auto24_users') || '[]'); //verwandelt den String zurück in ein JS-Array, damit wir damit arbeiten können
 }
@@ -93,7 +93,6 @@ function initRegistrationForm() {
     const submitBtn = document.getElementById('submitBtn');
     const errorMessage = document.getElementById('reg-error');
 
-    // checkFormValidity() ist eine innere Funktion mit Zugriff auf alle äußeren
     // Variablen (benutzername, passwort, etc.)
     // && verknüpft alle Bedingungen: nur wenn alle true sind, ist isValid = true.
     // submitBtn.disabled = !isValid deaktiviert/aktiviert den Button direkt.
@@ -105,7 +104,6 @@ function initRegistrationForm() {
     }
 
     // 'input'-Event bei jeder Tasteneingabe, ermöglicht Live-Validierung.
-    // Arrow-Functions (() => {...}) als Handler binden kein eigenes 'this'.
     benutzername.addEventListener('input', () => {
         validateField(benutzername, validateUsername);
         if (errorMessage) errorMessage.style.display = 'none';
@@ -186,9 +184,7 @@ function initLoginForm() {
         const user = findUser(uname);
         // Hardcoded Demo-Zugangsdaten als Fallback für Tests ohne vorherige Registrierung.
         const isDemo = uname === 'TestUser' && pwd === 'TestPass123';
-
-        // Optional Chaining (?.): user?.password gibt undefined zurück wenn user null ist –
-        // kein Fehler, kein extra null-Check nötig.
+        //? ob user null ist
         if (user?.password === pwd || isDemo) {
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('loggedInUser', uname);
@@ -262,7 +258,7 @@ function initUserForm() {
         const newPassword = passwordInput.value;
 
         // Array.findIndex() sucht nach dem alten Benutzernamen im Array und gibt dessen Index zurück.
-        // -1 bedeutet "nicht gefunden" – nur dann updaten, wenn der Nutzer existiert.
+        // -1 bedeutet "nicht gefunden", nur dann updaten, wenn der Nutzer existiert.
         // users[idx] = {...} überschreibt den Eintrag im Array; saveUsers() persistiert das Ergebnis.
         const users = getUsers();
         const idx = users.findIndex(u => u.username === loggedInUser);
