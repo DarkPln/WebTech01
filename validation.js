@@ -2,14 +2,12 @@
 // Autor: tim
 // ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
 
-// Gibt ein Array mit Fehlermeldungen zurück – leeres Array bedeutet "gültig".
-// Regex-Test: /[a-z]/.test(value) gibt true, wenn mindestens ein Kleinbuchstabe vorkommt.
-// Dieses Muster (Fehler sammeln statt sofort abbrechen) erlaubt mehrere Fehlermeldungen gleichzeitig.
+// Gibt ein Array mit Fehlermeldungen zurück, leeres Array bedeutet "gültig".
 function validateUsername(value) {
     const errors = [];
     if (value.length < 5) errors.push('Mindestens 5 Zeichen erforderlich');
-    if (!/[a-z]/.test(value)) errors.push('Mindestens ein Kleinbuchstabe erforderlich');
-    if (!/[A-Z]/.test(value)) errors.push('Mindestens ein Großbuchstabe erforderlich');
+    if (value === value.toUpperCase()) errors.push('Mindestens ein Kleinbuchstabe erforderlich');
+    if (value === value.toLowerCase()) errors.push('Mindestens ein Großbuchstabe erforderlich');
     return errors;
 }
 
@@ -31,12 +29,10 @@ function validatePasswordMatch(password, passwordRepeat) {
 function validateField(field, validator, extraArg) {
     // extraArg !== undefined prüft ob ein Zusatzargument übergeben wurde.
     // Ternärer Operator (? :) wählt dann die passende Variante aus.
-    const errors = extraArg !== undefined
-        ? validator(field.value, extraArg)  // z.B. validatePasswordMatch(wert, erstesPasswort)
-        : validator(field.value);           // z.B. validateUsername(wert)
+    const errors = extraArg !== undefined ? validator(field.value, extraArg)  : validator(field.value);           // z.B. validateUsername(wert) // z.B. validatePasswordMatch(wert, erstesPasswort) 
 
     // Sucht den zugehörigen Fehler-<span> anhand der Feld-ID.
-    // Konvention: Feld-ID "passwort" → Span-ID "passwort-error".
+    // Feld-ID "passwort" -> Span-ID "passwort-error".
     const errorSpan = document.getElementById(field.id + '-error');
 
     // Beide Klassen zuerst entfernen, damit nie beide gleichzeitig gesetzt sind.
@@ -52,7 +48,7 @@ function validateField(field, validator, extraArg) {
     // Fall 2: Keine Fehler und Feld hat Inhalt → Feld grün markieren.
     if (field.value.length > 0) {
         field.classList.add('valid');
-        if (errorSpan) errorSpan.textContent = '';
+        if (errorSpan) errorSpan.textContent = ''; //kein fehler anzeigen
         return true;
     }
 
@@ -61,23 +57,22 @@ function validateField(field, validator, extraArg) {
     return false;
 }
 
-// ===== NUTZERVERWALTUNG (localStorage) =====
+// ===== NUTZERVERWALTUNG (localStorage) ===== TIm
 
-// localStorage ist ein persistenter Schlüssel-Wert-Speicher im Browser – Daten bleiben nach
-// dem Schließen des Tabs erhalten. Er speichert nur Strings, daher JSON für Objekte/Arrays.
-// JSON.parse() wandelt den gespeicherten JSON-String zurück in ein JS-Array.
+// localStorage ist ein persistenter Schlüssel-Wert-Speicher im Browser
+// Daten bleiben nach dem Schließen des Tabs erhalten
 // Der || '[]' Fallback liefert ein leeres Array, wenn der Schlüssel noch nicht existiert.
 function getUsers() {
-    return JSON.parse(localStorage.getItem('auto24_users') || '[]');
+    return JSON.parse(localStorage.getItem('auto24_users') || '[]'); //verwandelt den String zurück in ein JS-Array, damit wir damit arbeiten können
 }
 
 // JSON.stringify() serialisiert das JS-Array in einen String, der im localStorage abgelegt wird.
 function saveUsers(users) {
-    localStorage.setItem('auto24_users', JSON.stringify(users));
+    localStorage.setItem('auto24_users', JSON.stringify(users)); //speichert das Array als String im localStorage unter dem Schlüssel 'auto24_users'
 }
 
 // Array.find() gibt das erste Element zurück, für das die Callback-Funktion true ergibt.
-// Arrow-Function als Callback: u => u.username === username – kurz und lesbar.
+// Arrow-Function als Callback: u => u.username === username
 // || null stellt sicher, dass der Rückgabewert explizit null ist (nicht undefined).
 function findUser(username) {
     return getUsers().find(u => u.username === username) || null;
@@ -86,7 +81,7 @@ function findUser(username) {
 // ===== REGISTRIERUNGS-FORMULAR =====
 
 // Initialisierungsfunktion: prüft zuerst, ob das Formular auf dieser Seite existiert.
-// Das ermöglicht es, dieses Skript auf allen Seiten einzubinden – ohne Fehler.
+// Das ermöglicht es, dieses Skript auf allen Seiten einzubinden, ohne Fehler.
 // Alle DOM-Referenzen werden einmalig abgefragt (Performance) und in Konstanten gespeichert.
 function initRegistrationForm() {
     const form = document.getElementById('registrationForm');
@@ -133,8 +128,6 @@ function initRegistrationForm() {
 
     // e.preventDefault() verhindert den nativen Browser-Submit (der die Seite neu laden würde).
     // Stattdessen speichern wir den Nutzer manuell in localStorage.
-    // window.location.href = ... führt eine programmatische Navigation durch.
-    // '?registered=1' im URL übergibt einen Parameter an die Login-Seite.
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (submitBtn.disabled) return;
