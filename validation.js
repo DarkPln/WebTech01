@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // fav logik: Lukas 
 
-const favorites = new Map();
+const favorites = new Map(); // schlüssel: auto id, wert: auto daten
 let notTimer = null;
 
 function showNotification(message) {
@@ -322,33 +322,35 @@ function showNotification(message) {
     if (!not) {
         not = document.createElement('div');
         not.id = 'favNot';
-        not.className = 'fav-notification';
+        not.className = 'fav-notification'; //css
         document.body.appendChild(not);
     }
     not.textContent = message;
-    not.classList.add('show');
+    not.classList.add('show'); // später visibility show css regeln 
     clearTimeout(notTimer);
     notTimer = setTimeout(() => not.classList.remove('show'), 2500);
 }
 
 // Panel umschalten
-const favOvl = document.getElementById('favOvl');
-const favList = document.getElementById('favList');
+const favOvl = document.getElementById('favOvl'); //overlay element
+const favList = document.getElementById('favList'); // favliste selbst
 
 function togglePanel() {
     if (!favOvl || !favList) return;
     const isActive = favList.classList.toggle('active');
     favOvl.classList.toggle('active', isActive);
-    document.body.style.overflow = isActive ? 'hidden' : '';
+    document.body.style.overflow = isActive ? 'hidden' : ''; // kein scrollen der mainpage
 }
+
 window.togglePanel = togglePanel;
 
-favList?.addEventListener('click', e => e.stopPropagation());
+favList?.addEventListener('click', e => e.stopPropagation()); // klicks in der fav liste sollen nicht panel schließen
 
 function getCarData(card) {
-    const imageSrc = card.dataset.image || card.dataset.img || card.querySelector('img')?.src || card.closest('.car-card')?.querySelector('img')?.src || '';
+    // sucht bild raus damit das in der fav liste angezeigt wird & oben ? damit kein fehler wenn favlist null oder undef ist zb 
+    const imageSrc = card.querySelector('img')?.src 
     return {
-        id: card.dataset.id || `${card.querySelector('.car-make')?.textContent || ''}-${card.querySelector('.car-model')?.textContent || ''}`.trim().replace(/\s+/g, '-').toLowerCase(),
+        id: card.dataset.id || ((card.querySelector('.car-make')?.textContent || '') + '-' + (card.querySelector('.car-model')?.textContent || '')).trim().replace(/\s+/g, '-').toLowerCase(),
         make: card.dataset.make || card.querySelector('.car-make')?.textContent?.trim() || '',
         model: card.dataset.model || card.querySelector('.car-model')?.textContent?.trim() || '',
         year: card.dataset.year || card.querySelector('.car-year')?.textContent?.trim().split('·')[0]?.trim() || '',
@@ -364,29 +366,30 @@ function renderList() {
     if (!list) return;
     list.innerHTML = '';
 
+    // liste neu bauen wenn favs da sind, macht für jeden fav ein listenel
     favorites.forEach((car, id) => {
         const item = document.createElement('div');
-        item.className = 'fav-item';
+        item.className = 'fav-item'; //css
         item.dataset.id = id;
-        item.innerHTML = `
-            <div class="fav-item-preview">
-                ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}" />` : ''}
-            </div>
-            <div class="fav-item-info">
-                <div class="fav-item-title">${car.make} ${car.model}</div>
-                <div class="fav-item-price">${car.price}</div>
-                <div class="fav-item-meta">${car.year} · ${car.fuel} · ${car.km}</div>
-            </div>
-            <button class="fav-item-remove-btn" onclick="removeFav('${id}')" title="Entfernen">✕</button>
-        `;
+        item.innerHTML =
+            '<div class="fav-item-preview">' +
+                (car.image ? '<img src="' + car.image + '" alt="' + car.make + ' ' + car.model + '" />' : '') +
+            '</div>' +
+            '<div class="fav-item-info">' +
+                '<div class="fav-item-title">' + car.make + ' ' + car.model + '</div>' +
+                '<div class="fav-item-price">' + car.price + '</div>' +
+                '<div class="fav-item-meta">' + car.year + ' · ' + car.fuel + ' · ' + car.km + '</div>' +
+            '</div>' +
+            '<button class="fav-item-remove-btn" onclick="removeFav(\'' + id + '\')" title="Entfernen">✕</button>';
         list.appendChild(item);
     });
+    // lieber template literals? 
 }
-
+// favoriten zähler: -> ui update zur folge 
 function updateUI() {
     const counter = favorites.size;
     const count = document.getElementById('favCount');
-    const counterEl = document.getElementById('favListCount');
+    const counterEl = document.getElementById('favListCount'); // count in fav liste drin 
     const footer = document.getElementById('favListFooter');
     const emptyEl = document.getElementById('favListEmpty');
     const totalCostEl = document.getElementById('totalCostValue');
@@ -399,7 +402,7 @@ function updateUI() {
         counterEl.textContent =
             counter === 0 ? '0 Fahrzeuge in den Favoriten' :
             counter === 1 ? '1 Fahrzeug in den Favoriten' :
-            `${counter} Fahrzeuge in den Favoriten`;
+            counter + ' Fahrzeuge in den Favoriten';
     }
     if (emptyEl) emptyEl.style.display = counter === 0 ? 'flex' : 'none';
     if (footer) footer.style.display = counter > 0 ? 'block' : 'none';
@@ -415,6 +418,8 @@ function updateUI() {
 }
 
 function toggleFavorite(btn) {
+    // schau ob das herz in einer karte steckt
+    // sonst ist es der detail button
     const card = btn.closest('.car-card');
     const source = card || btn;
 
@@ -422,15 +427,16 @@ function toggleFavorite(btn) {
     if (!car.id) return;
 
     if (favorites.has(car.id)) {
+        // war schon drin also raus damit
         favorites.delete(car.id);
         btn.textContent = '♡';
         btn.classList.remove('active');
-        showNotification(`${car.make} ${car.model} entfernt`);
+        showNotification(car.make + ' ' + car.model + ' entfernt');
     } else {
         favorites.set(car.id, car);
         btn.textContent = '♥';
         btn.classList.add('active');
-        showNotification(`${car.make} ${car.model} hinzugefügt`);
+        showNotification(car.make + ' ' + car.model + ' hinzugefügt');
     }
 
     updateUI();
@@ -440,7 +446,7 @@ function removeFav(id) {
     const car = favorites.get(id);
     if (!car) return;
     favorites.delete(id);
-    const card = document.querySelector(`.car-card[data-id="${id}"]`);
+    const card = document.querySelector('.car-card[data-id="' + id + '"]');
     if (card) {
         const btn = card.querySelector('.car-fav');
         if (btn) {
@@ -448,7 +454,7 @@ function removeFav(id) {
             btn.classList.remove('active');
         }
     }
-    showNotification(`${car.make} ${car.model} entfernt`);
+    showNotification(car.make + ' ' + car.model + ' entfernt');
     updateUI();
 }
 
@@ -462,15 +468,15 @@ function clearAllFavs() {
     updateUI();
 }
 
-// Initialisierung der Favoriten-Logik:
-// Fügt für alle Elemente mit `.car-fav` einen Klick-Listener hinzu,
-// der `toggleFavorite(btn)` aufruft. Dadurch werden Herz-Klicks in
-// der Liste verarbeitet (hinzufügen/entfernen von Favoriten).
+// fav setup erst wenn seite geladen ist
+// dann die ganzen herz knöpfe anhängen
+// sonst gehts nicht richtig
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.car-fav').forEach(btn => {
         btn.addEventListener('click', event => {
             event.stopPropagation();
             toggleFavorite(btn);
+            updateUI();
         });
     });
 
@@ -478,6 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', event => {
             event.stopPropagation();
             toggleFavorite(btn);
+            updateUI();
         });
     });
 
@@ -486,3 +493,94 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // fav logik ende Lukas 
+
+/*Light Mode Toggle: Niclas */
+function toggleMode() {
+    document.body.classList.toggle("light-mode");
+}
+/*Layout-Umschaltung: Niclas */
+function setVerticalLayout() {
+    const layout = document.getElementById("carLayout");
+
+    if (!layout) return;
+
+    layout.classList.remove("horizontal-layout");
+    layout.classList.add("vertical-layout");
+}
+
+function setHorizontalLayout() {
+    const layout = document.getElementById("carLayout");
+
+    if (!layout) return;
+
+    layout.classList.remove("vertical-layout");
+    layout.classList.add("horizontal-layout");
+}
+
+/*Preisberechnung mit Steuern */
+function getTotalPrice(priceWOTax) {
+    const taxRate = 0.19;
+    return priceWOTax * (1 + taxRate);
+}
+function calculatePrice() {
+    const input = document.getElementById("priceInput");
+    const value = Number(input.value);
+
+    if (value <= 0) {
+        alert("Bitte gültigen Preis eingeben");
+        return;
+    }
+
+    const total = getTotalPrice(value);
+
+    document.getElementById("priceWithoutTax").textContent =
+        "Preis ohne Steuer: " + value.toFixed(2) + " €";
+
+    document.getElementById("priceWithTax").textContent =
+        "Preis mit 19% Steuer: " + total.toFixed(2) + " €";
+}
+
+/* Finanzierungshilfe */
+function calculateFinancing() {
+    const input = document.getElementById("financingInput");
+    const value = Number(input.value);
+
+    const loanTermInput = document.getElementById("loanTermInput");
+    const loanTerm = Number(loanTermInput.value);
+
+    if (value <= 0) {
+        alert("Bitte gültigen Finanzierungsbetrag eingeben");
+        return;
+    }
+
+    if (loanTerm < 12 || loanTerm > 48) {
+        alert("Bitte gültige Laufzeit eingeben (12-48 Monate)");
+        return;
+    }
+
+    const interest = value * 0.05;
+    const totalAmount = value + interest;
+    const monthlyRate = totalAmount / loanTerm;
+
+    document.getElementById("financingResult").textContent =
+        "Monatliche Rate: " + monthlyRate.toFixed(2) + " €";
+
+    document.getElementById("financingResult2").textContent =
+        "Gesamtbetrag: " + totalAmount.toFixed(2) + " €";
+}
+
+/*Passwort Generator: Niclas */
+function generatePassword() {
+    const input = document.getElementById("pwInput");
+    
+    const length = 12;  
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    let password = "";  
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
+
+    input.value = password;
+    output.textContent = "Generiertes Passwort: " + password;
+}

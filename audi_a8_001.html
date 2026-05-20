@@ -75,26 +75,57 @@
 
     <h1> Audi A8 (Limousine)</h1>
     
+   
     
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg/1920px-Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg" alt="Audi A8" height = 200 width = 400>
-    <br>
-    <hr>
-    
-    <h2> Fahrzeugdetails</h2>
-    <p>Marke: Audi</p>
-    <p>Modell: A8</p>
-    <p>Baujahr: 2021 </p>
-    <p>Preis: 48.750 €</p>
-    <p>Kilometerstand: 33.000 km</p>
-    <p>Kraftstoff: Diesel</p>
-    <p>Getriebe: Automatik</p>
-    <p>Leistung: 286 PS</p>
-    <p>Farbe: Silber</p>
-    <br>
-    <hr>
-    <h2>Beschreibung</h2>
+        <div class="car-card" data-id="audi_a8_001" data-make="Audi" data-model="A8L" data-year="2024" data-fuel="Benzin" data-body="Limousine" data-power="510 PS" data-km="40000 km" data-drive="S-Line Quattro" data-price="89900">
+        <div class="car-imageA8">
+            <span class="car-badge-used">Gebraucht</span>
+            <!-- Klick auf das Herz wird in validation.js behandelt: Event-Listener (.car-fav) ruft `toggleFavorite(btn)` auf -->
+            <button class="car-fav" type="button" >♡</button>
+          
+
+            <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg/1920px-Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg" alt="Audi A8" height = 200 width = 400
+                alt="Audi A8L"
+                class="car-imgA8"
+            >
+        </div>
+
+        <div class="car-body">
+            <div class="car-make">AUDI</div>
+            <div class="car-model">A8L</div>
+            <div class="car-year">2024 · Benzin · Limousine</div>
+
+            <div class="car-specs">
+                <div class="car-spec">
+                    <div class="car-spec-val">510 PS</div>
+                    <div class="car-spec-key">Leistung</div>
+                </div>
+
+                <div class="car-spec">
+                    <div class="car-spec-val">40.000 km</div>
+                    <div class="car-spec-key">Kilometerstand</div>
+                </div>
+
+                <div class="car-spec">
+                    <div class="car-spec-val">S-Line Quattro</div>
+                    <div class="car-spec-key">Antrieb</div>
+                </div>
+            </div>
+
+            <div class="car-footer">
+                <div>
+                    <div class="car-price">89.900 €</div>
+                    <div class="car-price-note">inkl. MwSt.</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <p>
-        Der Audi A8 ist eine luxuriöse Limousine mit durchaus hohem Fahrkomfort und modernster Austattung.
+        Der Audi A8 ist eine luxuriöse Limousine mit hohem Fahrkomfort und modernster Austattung.
         Das Fahrzeug überzeugt durch ein astreines Interieur, hochwertige Verarbeitung und elegantes Design.
     </p>
     <p>
@@ -114,7 +145,7 @@
         Zu Favoriten hinzufügen
     </button>
 
-    <hr>
+    
 
     
     </form>
