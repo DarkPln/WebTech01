@@ -24,7 +24,7 @@
             <li><a href="index.php">Fahrzeuge</a></li>
             <li><a href="index.php">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-            <li><a href="about.php">Auto verkaufen</a></li>
+            <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
         </ul>
 
         <div class="nav-right">

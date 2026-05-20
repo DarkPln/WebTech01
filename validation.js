@@ -280,6 +280,44 @@ function initUserForm() {
     saveBtn.disabled = true;
 }
 
+// ===== FAHRZEUG INSERIEREN =====
+
+function initVehicleForm() {
+    const form = document.getElementById('vehicleForm');
+    if (!form) return;
+
+    const submitBtn = document.getElementById('vehicleSubmitBtn');
+    const successMsg = document.getElementById('vehicleSuccess');
+
+    function checkValidity() {
+        const required = form.querySelectorAll('[required]');
+        let allFilled = true;
+        required.forEach(field => {
+            if (!field.value.trim()) allFilled = false;
+        });
+        if (submitBtn) submitBtn.disabled = !allFilled;
+    }
+
+    form.querySelectorAll('input, select, textarea').forEach(field => {
+        field.addEventListener('input', checkValidity);
+        field.addEventListener('change', checkValidity);
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (submitBtn && submitBtn.disabled) return;
+        if (successMsg) {
+            successMsg.textContent = 'Ihr Inserat wurde erfolgreich eingereicht. Wir melden uns innerhalb von 24 Stunden.';
+            successMsg.style.display = 'block';
+            setTimeout(() => successMsg.style.display = 'none', 5000);
+        }
+        form.reset();
+        if (submitBtn) submitBtn.disabled = true;
+    });
+
+    if (submitBtn) submitBtn.disabled = true;
+}
+
 // ===== LOGOUT =====
 
 // Erkennt die Logout-Seite am Element mit id="logoutPage" (nur in logout.html vorhanden).
@@ -302,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRegistrationForm();
     initLoginForm();
     initUserForm();
+    initVehicleForm();
 
     // Nav-Auth-Link auf allen Seiten aktualisieren (eingeloggt → Nutzername + user.php)
     const navAuthLink = document.getElementById('navAuthLink');

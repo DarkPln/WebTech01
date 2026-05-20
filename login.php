@@ -22,7 +22,7 @@
             <li><a href="index.php">Fahrzeuge</a></li>
             <li><a href="index.php">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-            <li><a href="about.php">Auto verkaufen</a></li>
+            <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
         </ul>
         <div class="nav-right">
             <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
@@ -82,45 +82,32 @@
 
 
             <div>
-                <div class = "footer-heading">Fahrzeuge</div>
-                <ul class "footer-links">
+                <div class="footer-heading">Fahrzeuge</div>
+                <ul class="footer-links">
                     <li><a href="#">Neuwagen</a></li>
-                    <li><a href="#">Gebrauchtwagen</a></li>
+                    <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
                     <li><a href="#">Elektrofahrzeuge</a></li>
                     <li><a href="#">Sonderangebote</a></li>
                 </ul>
             </div>
             <div>
-                <div class = "footer-heading">Kundenservice</div>
-                <ul class "footer-links">
-                    <li><a href="#">Fahrzeug verkaufen</a></li>
-                    <li><a href="#">Hilfe & FAQ</a></li>
-                    <li><a href="#">Finanzierung</a></li>
-                    <li><a href="#">Versicherung</a></li>
+                <div class="footer-heading">Kundenservice</div>
+                <ul class="footer-links">
+                    <li><a href="fahrzeug-verkaufen.php">Fahrzeug verkaufen</a></li>
+                    <li><a href="faq.php">Hilfe &amp; FAQ</a></li>
+                    <li><a href="finanzierung.php">Finanzierung</a></li>
+                    <li><a href="versicherung.php">Versicherung</a></li>
                 </ul>
-                </div>
+            </div>
             <div>
-                <div class = "footer-heading">Unternehmen</div>
-                <ul class "footer-links">
+                <div class="footer-heading">Unternehmen</div>
+                <ul class="footer-links">
                     <li><a href="about.php">Über uns</a></li>
-                    <li><a href = "#"> Datenschutz </a></li>
-                    <li><a href = "#"> AGB </a></li>
-                    <li> <a href = "#"> Partner </a></li>
+                    <li><a href="datenschutz.php">Datenschutz</a></li>
+                    <li><a href="agb.php">AGB</a></li>
+                    <li><a href="partner.php">Partner</a></li>
                 </ul>
             </div>
-            </div>
-         </div>
-
-
-        <div class="footer-bot">
-        <span> &copy 2026 Auto24. Alle Rechte vorbehalten.</span>
-        <div class="footer-bot-links">
-            <a href="index.php">Home</a>
-            <a href="gebrauchtwagenList.php">Gebrauchtwagen</a>
-            <a href="about.php">Impressum</a>
-        </div>
-
-
         </div>
     </footer>
 
