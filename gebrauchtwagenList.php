@@ -1,3 +1,7 @@
+<?php
+$data = json_decode(file_get_contents("items.json"), true);
+$fahrzeuge = $data["fahrzeuge"];
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -72,123 +76,69 @@
 
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
-    <!-- Card 1 -->
-    <div class="car-card" data-id="audi_a8_001" data-make="Audi" data-model="A8L" data-year="2024" data-fuel="Benzin" data-body="Limousine" data-power="510 PS" data-km="40000 km" data-drive="S-Line Quattro" data-price="89900">
-        <div class="car-image">
-            <span class="car-badge-used">Gebraucht</span>
-            <!-- Klick auf das Herz wird in validation.js behandelt: Event-Listener (.car-fav) ruft `toggleFavorite(btn)` auf -->
-            <button class="car-fav" type="button" >♡</button>
-            <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg/1920px-Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg" alt="Audi A8" height = 200 width = 400
-                alt="Audi A8L"
-                class="car-img"
-            >
-        </div>
-        <div class="car-body">
-            <div class="car-make">AUDI</div>
-            <div class="car-model">A8L</div>
-            <div class="car-year">2024 · Benzin · Limousine</div>
-            <div class="car-specs">
-                <div class="car-spec">
-                    <div class="car-spec-val">510 PS</div>
-                    <div class="car-spec-key">Leistung</div>
-                </div>
-                <div class="car-spec">
-                    <div class="car-spec-val">40.000 km</div>
-                    <div class="car-spec-key">Kilometerstand</div>
-                </div>
-                <div class="car-spec">
-                    <div class="car-spec-val">S-Line Quattro</div>
-                    <div class="car-spec-key">Antrieb</div>
-                </div>
-            </div>
-            <div class="car-footer">
-                <div>
-                    <div class="car-price">89.900 €</div>
-                    <div class="car-price-note">inkl. MwSt.</div>
-                </div>
-                <a href = "audi_a8_001.php"><button class="car-btn">Details</button></a>
-            </div>
-        </div>
-    </div>
+    <?php foreach ($fahrzeuge as $auto): ?>
+        <div class="car-card"
+            data-id="<?php echo $auto['iid']; ?>"
+            data-make="<?php echo $auto['marke']; ?>"
+            data-model="<?php echo $auto['modell']; ?>"
+            data-year="<?php echo $auto['baujahr']; ?>"
+            data-fuel="<?php echo $auto['kraftstoff']; ?>"
+            data-km="<?php echo $auto['kilometerstand']; ?> km"
+            data-drive="<?php echo $auto['antrieb']; ?>"
+            data-price="<?php echo $auto['preis']; ?>">
 
-    <!-- Card 2 -->
-    <div class="car-card">
-        <div class="car-image">
-            <span class="car-badge-used">Gebraucht</span>
-            <button class="car-fav" type="button">♡</button>
-            <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Audi_SQ7_FL_IMG_3595.jpg/1920px-Audi_SQ7_FL_IMG_3595.jpg" alt="Audi A8" height = 220 width = 400
-                alt="Audi SQ7"
-                class="car-img"
-            >
-        </div>
-        <div class="car-body">
-            <div class="car-make">AUDI</div>
-            <div class="car-model">SQ7</div>
-            <div class="car-year">2021 · Benzin · SUV</div>
-            <div class="car-specs">
-                <div class="car-spec">
-                    <div class="car-spec-val">250 PS</div>
-                    <div class="car-spec-key">Leistung</div>
-                </div>
-                <div class="car-spec">
-                    <div class="car-spec-val">28.400 km</div>
-                    <div class="car-spec-key">Kilometerstand</div>
-                </div>
-                <div class="car-spec">
-                    <div class="car-spec-val">Quattro</div>
-                    <div class="car-spec-key">Antrieb</div>
-                </div>
-            </div>
-            <div class="car-footer">
-                <div>
-                    <div class="car-price">75.000 €</div>
-                    <div class="car-price-note">inkl. MwSt.</div>
-                </div>
-                <button class="car-btn">Details</button>
-            </div>
-        </div>
-    </div>
+            <div class="car-image">
+                <span class="car-badge-used">Gebraucht</span>
+                <button class="car-fav" type="button">♡</button>
 
-    <!-- Card 3 -->
-    <div class="car-card">
-        <div class="car-image">
-            <span class="car-badge-used">Gebraucht</span>
-            <button class="car-fav" type="button">♡</button>
-            <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Mercedes-Benz_C_220_BlueTEC_Exclusive_%28W_205%29_%E2%80%93_Frontansicht%2C_12._Juli_2014%2C_D%C3%BCsseldorf.jpg/1920px-Mercedes-Benz_C_220_BlueTEC_Exclusive_%28W_205%29_%E2%80%93_Frontansicht%2C_12._Juli_2014%2C_D%C3%BCsseldorf.jpg" alt="Mercedes-Benz C 220" height = 220 width = 420
-                alt="Mercedes-Benz C 220"
-                class="car-img"
-            >
-        </div>
-        <div class="car-body">
-            <div class="car-make">MERCEDES-BENZ</div>
-            <div class="car-model">C 220</div>
-            <div class="car-year">2024 · Benzin · Limousine</div>
-            <div class="car-specs">
-                <div class="car-spec">
-                    <div class="car-spec-val">510 PS</div>
-                    <div class="car-spec-key">Leistung</div>
+                <img
+                    src="<?php echo $auto['imagepath']; ?>"
+                    alt="<?php echo $auto['name']; ?>"
+                    class="car-img">
+            </div>
+
+            <div class="car-body">
+                <div class="car-make"><?php echo strtoupper($auto['marke']); ?></div>
+                <div class="car-model"><?php echo $auto['modell']; ?></div>
+                <div class="car-year">
+                    <?php echo $auto['baujahr']; ?> ·
+                    <?php echo $auto['kraftstoff']; ?> ·
+                    <?php echo ucfirst($auto['unterkategorie']); ?>
                 </div>
-                <div class="car-spec">
-                    <div class="car-spec-val">60.000 km</div>
-                    <div class="car-spec-key">Kilometerstand</div>
+
+                <div class="car-specs">
+                    <div class="car-spec">
+                        <div class="car-spec-val"><?php echo $auto['leistung_ps']; ?> PS</div>
+                        <div class="car-spec-key">Leistung</div>
+                    </div>
+
+                    <div class="car-spec">
+                        <div class="car-spec-val"><?php echo number_format($auto['kilometerstand'], 0, ',', '.'); ?> km</div>
+                        <div class="car-spec-key">Kilometerstand</div>
+                    </div>
+
+                    <div class="car-spec">
+                        <div class="car-spec-val"><?php echo $auto['antrieb']; ?></div>
+                        <div class="car-spec-key">Antrieb</div>
+                    </div>
                 </div>
-                <div class="car-spec">
-                    <div class="car-spec-val">S-Tronic</div>
-                    <div class="car-spec-key">Antrieb</div>
+
+                <div class="car-footer">
+                    <div>
+                        <div class="car-price">
+                            <?php echo number_format($auto['preis'], 0, ',', '.'); ?> €
+                        </div>
+                        <div class="car-price-note">inkl. MwSt.</div>
+                    </div>
+
+                    <a href="item.php?pid=<?php echo $auto['iid']; ?>">
+                        <button class="car-btn">Details</button>
+                    </a>
                 </div>
             </div>
-            <div class="car-footer">
-                <div>
-                    <div class="car-price">69.900 €</div>
-                    <div class="car-price-note">inkl. MwSt.</div>
-                </div>
-                <button class="car-btn">Details</button>
-            </div>
         </div>
-    </div>
+    <?php endforeach; ?>
+    
 </div>
 
 <section class="finance-teaser">
