@@ -9,8 +9,6 @@
 <!-- Lukas: Navigation -->
 <body>
     <?php
-        $pageHeadline   = "GEBRAUCHTWAGEN";
-        $pageIntro      = "Hier finden Sie verschiedene Arten von Gebrauchtwagen.";
         $financeHeadline = "Kauffinanzierung";
         $financeHint    = "Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).";
         $loanTermHint   = "Geben Sie die gewünschte Laufzeit in Monaten ein (12-48):";
@@ -61,18 +59,17 @@
                 <span class = "total-cost-value" id="totalCostValue">0 € </span>
             </div>
             <button class ="clear-fav-list-btn" id="clearFavListBtn">Favoriten leeren</button>
+            <a href="merkliste.php" class="open-full-favs-btn">
+            Ganze Merkliste öffnen
+            </a>
         </div>
     </div>
     <!-- Lukas: Ende Favs -->
 
-    <h1><?php echo $pageHeadline; ?></h1>
-    <p><?php echo $pageIntro; ?></p>
+    <br>
+    <br>
+    <br>
 
-    <!-- FAHRZEUGE GRID -->
-    <div class="layout-buttons">
-        <button onclick="setVerticalLayout()">Smartphone Layout</button>
-        <button onclick="setHorizontalLayout()">Desktop Layout</button>
-    </div>
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
     <!-- Card 1 -->

@@ -11,14 +11,14 @@ function validateUsername(value) {
     return errors;
 }
 
-// Selbes Prinzip wie validateUsername, nur Längenprüfung, leicht erweiterbar.
+// Selbes Prinzip wie validateUsername – nur Längenprüfung, leicht erweiterbar.
 function validatePassword(value) {
     const errors = [];
     if (value.length < 10) errors.push('Mindestens 10 Zeichen erforderlich');
     return errors;
 }
 
-// Strikter Vergleich (===) prüft Wert und Typ, verhindert ungewollte Typenumwandlung.
+// Strikter Vergleich (===) prüft Wert UND Typ – verhindert ungewollte Typenumwandlung.
 function validatePasswordMatch(password, passwordRepeat) {
     if (password !== passwordRepeat) return ['Passwörter stimmen nicht überein'];
     return [];
@@ -28,8 +28,9 @@ function validatePasswordMatch(password, passwordRepeat) {
 // erste Passwort beim Match-Check). Setzt CSS-Klassen und zeigt Fehlertexte an.
 function validateField(field, validator, extraArg) {
     // extraArg !== undefined prüft ob ein Zusatzargument übergeben wurde.
+    // Ternärer Operator (? :) wählt dann die passende Variante aus.
     const errors = extraArg !== undefined ? validator(field.value, extraArg)  : validator(field.value);           // z.B. validateUsername(wert) // z.B. validatePasswordMatch(wert, erstesPasswort) 
-    //ternärer operator andere schreibweise für if/else (wenn extraarg nicht null, dann passwort mtach sonst Username validierung)
+    //andere schreibweise für if/else (wenn extraarg nicht null, dann passwort mtach sonst Username validierung)
     // Sucht den zugehörigen Fehler-<span> anhand der Feld-ID.
     // Feld-ID "passwort" -> Span-ID "passwort-error".
     const errorSpan = document.getElementById(field.id + '-error');
@@ -79,8 +80,9 @@ function findUser(username) {
 
 // ===== REGISTRIERUNGS-FORMULAR =====
 
-// Initialisierungsfunktion: prüft zuerst, ob das Formular auf dieser Seite existiert
-// Das ermöglicht es, dieses Skript auf allen Seiten einzubinden, ohne Fehler
+// Initialisierungsfunktion: prüft zuerst, ob das Formular auf dieser Seite existiert.
+// Das ermöglicht es, dieses Skript auf allen Seiten einzubinden, ohne Fehler.
+// Alle DOM-Referenzen werden einmalig abgefragt (Performance) und in Konstanten gespeichert.
 function initRegistrationForm() {
     const form = document.getElementById('registrationForm');
     if (!form) return;
@@ -108,7 +110,7 @@ function initRegistrationForm() {
         checkFormValidity();
     });
 
-    // Passwort-Wiederholung wird nur erneut geprüft, wenn sie bereits einen Wert hat
+    // Passwort-Wiederholung wird nur erneut geprüft, wenn sie bereits einen Wert hat –
     // verhindert eine Fehlermeldung bevor der Nutzer das Feld überhaupt berührt hat.
     passwort.addEventListener('input', () => {
         validateField(passwort, validatePassword);
@@ -123,7 +125,7 @@ function initRegistrationForm() {
     });
 
     // e.preventDefault() verhindert den nativen Browser-Submit (der die Seite neu laden würde).
-    // Stattdessen speichern den Nutzer manuell in localStorage
+    // Stattdessen speichern wir den Nutzer manuell in localStorage.
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (submitBtn.disabled) return;
@@ -141,7 +143,7 @@ function initRegistrationForm() {
         const users = getUsers();
         users.push({ username, password: passwort.value });
         saveUsers(users);
-        window.location.href = 'login.php?registered=1';
+        window.location.href = 'login.html?registered=1';
     });
 
     submitBtn.disabled = true;
@@ -186,7 +188,7 @@ function initLoginForm() {
         if (user?.password === pwd || isDemo) {
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('loggedInUser', uname);
-            window.location.href = 'user.php';
+            window.location.href = 'user.html';
         } else {
             if (errorMessage) {
                 errorMessage.textContent = 'Falscher Benutzername oder Passwort.';
@@ -200,14 +202,14 @@ function initLoginForm() {
 
 // ===== NUTZERBEREICH =====
 
-// Diese Prüfung blockiert den gesamten Nutzerbereich für nicht eingeloggte Besucher.
+// Auth-Guard: Diese Prüfung blockiert den gesamten Nutzerbereich für nicht eingeloggte Besucher.
 // localStorage.getItem() gibt null zurück, wenn der Schlüssel nicht existiert – daher !== 'true'.
 // window.location.href leitet sofort weiter; return beendet die Funktion danach.
 function initUserForm() {
     if (!document.getElementById('userForm')) return;
 
     if (localStorage.getItem('loggedIn') !== 'true') {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
 
@@ -257,7 +259,7 @@ function initUserForm() {
 
         // Array.findIndex() sucht nach dem alten Benutzernamen im Array und gibt dessen Index zurück.
         // -1 bedeutet "nicht gefunden", nur dann updaten, wenn der Nutzer existiert.
-        // users[idx] = {...} überschreibt den Eintrag im Array, saveUsers() speichert das Ergebnis
+        // users[idx] = {...} überschreibt den Eintrag im Array; saveUsers() persistiert das Ergebnis.
         const users = getUsers();
         const idx = users.findIndex(u => u.username === loggedInUser);
         if (idx !== -1) {
@@ -268,7 +270,7 @@ function initUserForm() {
         localStorage.setItem('loggedInUser', newUsername);
         if (displayName) displayName.textContent = newUsername;
 
-        // setTimeout(callback, 3000) führt die Funktion nach 3000ms (3s) asynchron aus
+        // setTimeout(callback, 3000) führt die Funktion nach 3000ms (3s) asynchron aus –
         // der restliche Code läuft sofort weiter, die Ausblendung erfolgt zeitverzögert.
         if (saveSuccess) {
             saveSuccess.textContent = 'Änderungen erfolgreich gespeichert!';
@@ -280,48 +282,10 @@ function initUserForm() {
     saveBtn.disabled = true;
 }
 
-// ===== FAHRZEUG INSERIEREN =====
-
-function initVehicleForm() {
-    const form = document.getElementById('vehicleForm');
-    if (!form) return;
-
-    const submitBtn = document.getElementById('vehicleSubmitBtn');
-    const successMsg = document.getElementById('vehicleSuccess');
-
-    function checkValidity() {
-        const required = form.querySelectorAll('[required]');
-        let allFilled = true;
-        required.forEach(field => {
-            if (!field.value.trim()) allFilled = false;
-        });
-        if (submitBtn) submitBtn.disabled = !allFilled;
-    }
-
-    form.querySelectorAll('input, select, textarea').forEach(field => {
-        field.addEventListener('input', checkValidity);
-        field.addEventListener('change', checkValidity);
-    });
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        if (submitBtn && submitBtn.disabled) return;
-        if (successMsg) {
-            successMsg.textContent = 'Ihr Inserat wurde erfolgreich eingereicht. Wir melden uns innerhalb von 24 Stunden.';
-            successMsg.style.display = 'block';
-            setTimeout(() => successMsg.style.display = 'none', 5000);
-        }
-        form.reset();
-        if (submitBtn) submitBtn.disabled = true;
-    });
-
-    if (submitBtn) submitBtn.disabled = true;
-}
-
 // ===== LOGOUT =====
 
 // Erkennt die Logout-Seite am Element mit id="logoutPage" (nur in logout.html vorhanden).
-// localStorage.removeItem() löscht gezielt einzelne Einträge, dadurch ist der Nutzer abgemeldet.
+// localStorage.removeItem() löscht gezielt einzelne Einträge – dadurch ist der Nutzer abgemeldet.
 // Der Auth-Guard in initUserForm() leitet bei erneutem Besuch von user.html automatisch weiter.
 function initLogout() {
     if (!document.getElementById('logoutPage')) return;
@@ -331,24 +295,15 @@ function initLogout() {
 
 // ===== INITIALISIERUNG =====
 
-// DOMContentLoaded sobald das HTML vollständig geparst wurde (bevor Bilder/CSS fertig laden).
+// DOMContentLoaded feuert, sobald das HTML vollständig geparst wurde (bevor Bilder/CSS fertig laden).
 // Damit ist sichergestellt, dass alle getElementById()-Aufrufe die Elemente bereits finden.
-// Jede init-Funktion prüft selbst, ob ihr Zielelement existiert, dadurch kann dieses eine
+// Jede init-Funktion prüft selbst, ob ihr Zielelement existiert – dadurch kann dieses eine
 // Skript auf allen Seiten eingebunden werden, ohne seitenspezifische Fehler zu verursachen.
 document.addEventListener('DOMContentLoaded', () => {
     initLogout();
     initRegistrationForm();
     initLoginForm();
     initUserForm();
-    initVehicleForm();
-
-    // Nav-Auth-Link auf allen Seiten aktualisieren (eingeloggt → Nutzername + user.php)
-    const navAuthLink = document.getElementById('navAuthLink');
-    if (navAuthLink && localStorage.getItem('loggedIn') === 'true') {
-        const user = localStorage.getItem('loggedInUser') || 'Konto';
-        navAuthLink.textContent = user;
-        navAuthLink.href = 'user.php';
-    }
 });
 
 
@@ -439,18 +394,27 @@ function updateUI() {
         count.textContent = counter;
         count.style.display = counter > 0 ? 'flex' : 'none';
     }
+
     if (counterEl) {
+
+    if (counter === 0) {
+        counterEl.textContent = '0 Fahrzeuge in den Favoriten';
+
+    } else if (counter === 1) {
+        counterEl.textContent = '1 Fahrzeug in den Favoriten';
+
+    } else {
         counterEl.textContent =
-            counter === 0 ? '0 Fahrzeuge in den Favoriten' :
-            counter === 1 ? '1 Fahrzeug in den Favoriten' :
             counter + ' Fahrzeuge in den Favoriten';
     }
+    
+}
     if (emptyEl) emptyEl.style.display = counter === 0 ? 'flex' : 'none';
     if (footer) footer.style.display = counter > 0 ? 'block' : 'none';
 
     if (totalCostEl) {
         const total = Array.from(favorites.values()).reduce((sum, car) => {
-            return sum + (parseInt(car.price.replace(/[^0-9]/g, ''), 10) || 0);
+            return sum + (parseInt(car.price.replace(/[^0-9]/g, ''), 10) || 0); //regex um alles außer zahlen zu entfernen, parseInt um in zahl umzuwandeln
         }, 0);
         totalCostEl.textContent = total.toLocaleString('de-DE') + ' €';
     }
@@ -480,6 +444,7 @@ function toggleFavorite(btn) {
         showNotification(car.make + ' ' + car.model + ' hinzugefügt');
     }
 
+
     updateUI();
 }
 
@@ -487,6 +452,7 @@ function removeFav(id) {
     const car = favorites.get(id);
     if (!car) return;
     favorites.delete(id);
+
     const card = document.querySelector('.car-card[data-id="' + id + '"]');
     if (card) {
         const btn = card.querySelector('.car-fav');
@@ -505,6 +471,7 @@ function clearAllFavs() {
         btn.textContent = '♡';
         btn.classList.remove('active');
     });
+
     showNotification('Favoriten geleert');
     updateUI();
 }
@@ -533,25 +500,16 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
 });
 
+
+
+
+
 // fav logik ende Lukas 
 
-/* Light Mode Toggle: Niclas – erweitert von Tim (localStorage-Persistenz + Button-Label) */
+/*Light Mode Toggle: Niclas */
 function toggleMode() {
-    const isLight = document.body.classList.toggle("light-mode");
-    localStorage.setItem('colorMode', isLight ? 'light' : 'dark');
-    const btn = document.querySelector('.mode-btn');
-    if (btn) btn.textContent = isLight ? 'Dark' : 'Light';
+    document.body.classList.toggle("light-mode");
 }
-
-// Gespeicherten Modus sofort beim Laden anwenden.
-// Script liegt am Ende von <body>, daher ist document.body und .mode-btn bereits verfügbar.
-(function applyStoredMode() {
-    if (localStorage.getItem('colorMode') === 'light') {
-        document.body.classList.add('light-mode');
-        const btn = document.querySelector('.mode-btn');
-        if (btn) btn.textContent = 'Dark';
-    }
-})();
 /*Layout-Umschaltung: Niclas */
 function setVerticalLayout() {
     const layout = document.getElementById("carLayout");
