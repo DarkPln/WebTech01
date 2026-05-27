@@ -19,7 +19,15 @@ if (isset($_COOKIE['favorites'])) {
 <body>
 
 <nav>
-    
+    <a href="index.php" class="nav-logo">Auto<span>24</span></a>
+    <ul class="nav-links">
+        <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
+        <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
+    </ul>
+    <div class="nav-right">
+        <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
+        <button class="mode-btn" onclick="toggleMode()">Light</button>
+    </div>
 </nav>
 
 <h1>Meine Merkliste</h1>

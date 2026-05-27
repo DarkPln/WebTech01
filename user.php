@@ -18,7 +18,6 @@
     <nav>
         <a href="index.php" class="nav-logo">Auto<span>24</span></a>
         <ul class="nav-links">
-            <li><a href="index.php">Fahrzeuge</a></li>
             <li><a href="index.php">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
             <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
@@ -54,6 +53,7 @@
                     <input type="submit" value="<?php echo $saveLabel; ?>" id="saveBtn">
                 </form>
 
+                <p><a href="buchungen.php" style="color: rgb(227,27,27); font-weight:600;">Meine Buchungen ansehen</a></p>
                 <p><a href="logout.php"><?php echo $logoutText; ?></a></p>
             </div>
         </section>

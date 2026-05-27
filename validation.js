@@ -143,7 +143,7 @@ function initRegistrationForm() {
         const users = getUsers();
         users.push({ username, password: passwort.value });
         saveUsers(users);
-        window.location.href = 'login.html?registered=1';
+        window.location.href = 'login.php?registered=1';
     });
 
     submitBtn.disabled = true;
@@ -175,6 +175,12 @@ function initLoginForm() {
         checkFormValidity();
     });
 
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('registered') === '1' && successMessage) {
+        successMessage.textContent = 'Registrierung erfolgreich! Bitte jetzt einloggen.';
+        successMessage.style.display = 'block';
+    }
+
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (loginBtn.disabled) return;
@@ -185,10 +191,14 @@ function initLoginForm() {
         // Hardcoded Demo-Zugangsdaten als Fallback für Tests ohne vorherige Registrierung.
         const isDemo = uname === 'TestUser' && pwd === 'TestPass123';
         //? ob user null ist
-        if (user?.password === pwd || isDemo) {
+        const isAdmin = uname === ADMIN_CREDENTIALS.username && pwd === ADMIN_CREDENTIALS.password;
+        if (isAdmin) {
+            localStorage.setItem('auto24_adminLoggedIn', 'true');
+            window.location.href = 'admin.php';
+        } else if (user?.password === pwd || isDemo) {
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('loggedInUser', uname);
-            window.location.href = 'user.html';
+            window.location.href = 'user.php';
         } else {
             if (errorMessage) {
                 errorMessage.textContent = 'Falscher Benutzername oder Passwort.';
@@ -301,10 +311,27 @@ function initLogout() {
 // Skript auf allen Seiten eingebunden werden, ohne seitenspezifische Fehler zu verursachen.
 document.addEventListener('DOMContentLoaded', () => {
     initLogout();
+    initNavAuthLink();
     initRegistrationForm();
     initLoginForm();
     initUserForm();
+    initBookingsPage();
+    initBookingButton();
+    initAdminPage();
 });
+
+function initNavAuthLink() {
+    var link = document.getElementById('navAuthLink');
+    if (!link) return;
+    if (localStorage.getItem('loggedIn') === 'true') {
+        var username = localStorage.getItem('loggedInUser') || 'Konto';
+        link.textContent = username;
+        link.href = 'user.php';
+    } else {
+        link.textContent = 'Login';
+        link.href = 'login.php';
+    }
+}
 
 
 
@@ -508,8 +535,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*Light Mode Toggle: Niclas */
 function toggleMode() {
-    document.body.classList.toggle("light-mode");
+    const isLight = document.body.classList.toggle("light-mode");
+    localStorage.setItem('auto24_lightMode', isLight ? '1' : '0');
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.textContent = isLight ? 'Dark' : 'Light';
+    });
 }
+
+(function applyStoredMode() {
+    if (localStorage.getItem('auto24_lightMode') === '1') {
+        document.body.classList.add('light-mode');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.mode-btn').forEach(btn => { btn.textContent = 'Dark'; });
+        });
+    }
+})();
 /*Layout-Umschaltung: Niclas */
 function setVerticalLayout() {
     const layout = document.getElementById("carLayout");
@@ -584,15 +624,332 @@ function calculateFinancing() {
 /*Passwort Generator: Niclas */
 function generatePassword() {
     const input = document.getElementById("pwInput");
-    
-    const length = 12;  
+
+    const length = 12;
     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
-    let password = "";  
+    let password = "";
     for (let i = 0; i < length; i++) {
         const randomIndex = Math.floor(Math.random() * charset.length);
         password += charset[randomIndex];
     }
 
     input.value = password;
-    output.textContent = "Generiertes Passwort: " + password;
+    const output = document.getElementById('generatedPassword');
+    if (output) output.textContent = "Generiertes Passwort: " + password;
+}
+
+
+// ===== BUCHUNGEN (Tim) =====
+
+function getBookings() {
+    return JSON.parse(localStorage.getItem('auto24_bookings') || '[]');
+}
+
+function saveBookings(bookings) {
+    localStorage.setItem('auto24_bookings', JSON.stringify(bookings));
+}
+
+function getUserBookings(username) {
+    return getBookings().filter(function(b) { return b.userId === username; });
+}
+
+function createBooking(carId, carName, carPrice) {
+    var username = localStorage.getItem('loggedInUser');
+    if (!username) return null;
+    var booking = {
+        id: 'b_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        userId: username,
+        carId: String(carId),
+        carName: String(carName),
+        carPrice: Number(carPrice),
+        status: 'bestellt',
+        reason: '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+    var bookings = getBookings();
+    bookings.push(booking);
+    saveBookings(bookings);
+    return booking;
+}
+
+function cancelBooking(bookingId) {
+    var username = localStorage.getItem('loggedInUser');
+    if (!username) return false;
+    var bookings = getBookings();
+    var idx = bookings.findIndex(function(b) { return b.id === bookingId && b.userId === username; });
+    if (idx === -1 || bookings[idx].status !== 'bestellt') return false;
+    bookings[idx].status = 'storniert';
+    bookings[idx].updatedAt = new Date().toISOString();
+    saveBookings(bookings);
+    return true;
+}
+
+function isUserLocked(username) {
+    var user = findUser(username);
+    return user ? !!user.locked : false;
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+var BUCHUNG_STATUS_LABELS = {
+    bestellt: 'Bestellt',
+    in_bearbeitung: 'In Bearbeitung',
+    versandt: 'Versandt, aber nicht erhalten',
+    fertig: 'Fertig',
+    storniert: 'Storniert',
+    abgelehnt: 'Abgelehnt'
+};
+
+function initBookingsPage() {
+    var container = document.getElementById('buchungenContainer');
+    if (!container) return;
+
+    if (localStorage.getItem('loggedIn') !== 'true') {
+        window.location.href = 'login.php';
+        return;
+    }
+
+    var username = localStorage.getItem('loggedInUser') || '';
+    var displayEl = document.getElementById('buchungenUsername');
+    if (displayEl) displayEl.textContent = username;
+
+    renderBookingsPage();
+}
+
+function renderBookingsPage() {
+    var container = document.getElementById('buchungenContainer');
+    if (!container) return;
+
+    var username = localStorage.getItem('loggedInUser') || '';
+    var bookings = getUserBookings(username);
+
+    if (bookings.length === 0) {
+        container.innerHTML = '<p class="buchungen-empty">Sie haben noch keine Buchungen.<br><a href="gebrauchtwagenList.php" class="home-btn-primary" style="display:inline-block;margin-top:20px;">Fahrzeuge ansehen</a></p>';
+        return;
+    }
+
+    bookings.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+
+    container.innerHTML = bookings.map(function(b) {
+        var date = new Date(b.createdAt).toLocaleDateString('de-DE');
+        var canCancel = b.status === 'bestellt';
+        var label = BUCHUNG_STATUS_LABELS[b.status] || b.status;
+        var html = '<div class="buchung-card">' +
+            '<div class="buchung-header">' +
+                '<div class="buchung-car">' + escapeHtml(b.carName) + '</div>' +
+                '<span class="buchung-status status-' + escapeHtml(b.status) + '">' + escapeHtml(label) + '</span>' +
+            '</div>' +
+            '<div class="buchung-meta">' +
+                '<span>Preis: <strong>' + Number(b.carPrice).toLocaleString('de-DE') + ' €</strong></span>' +
+                '<span>Bestellt am: ' + date + '</span>' +
+            '</div>';
+        if (b.status === 'abgelehnt' && b.reason) {
+            html += '<div class="buchung-reason">Ablehnungsgrund: ' + escapeHtml(b.reason) + '</div>';
+        }
+        if (canCancel) {
+            html += '<button class="buchung-cancel-btn" onclick="handleCancelBooking(\'' + escapeHtml(b.id) + '\')">Buchung stornieren</button>';
+        }
+        html += '</div>';
+        return html;
+    }).join('');
+}
+
+function handleCancelBooking(bookingId) {
+    if (!confirm('Buchung wirklich stornieren?')) return;
+    if (cancelBooking(bookingId)) {
+        renderBookingsPage();
+    }
+}
+
+function initBookingButton() {
+    var btn = document.getElementById('buchungsBtn');
+    if (!btn) return;
+
+    var carId = btn.dataset.carId;
+    var carName = btn.dataset.carName;
+    var carPrice = btn.dataset.carPrice;
+    var note = document.getElementById('buchungsNote');
+
+    if (localStorage.getItem('loggedIn') !== 'true') {
+        btn.disabled = true;
+        btn.title = 'Bitte einloggen, um zu buchen.';
+        if (note) { note.textContent = 'Bitte einloggen, um dieses Fahrzeug zu buchen.'; note.style.display = 'block'; }
+        return;
+    }
+
+    var username = localStorage.getItem('loggedInUser') || '';
+    if (isUserLocked(username)) {
+        btn.disabled = true;
+        btn.title = 'Ihr Konto ist vom Administrator gesperrt.';
+        if (note) { note.textContent = 'Ihr Konto ist vom Administrator gesperrt.'; note.style.display = 'block'; }
+        return;
+    }
+
+    btn.addEventListener('click', function() {
+        if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
+        createBooking(carId, carName, carPrice);
+        window.location.href = 'buchungen.php';
+    });
+}
+
+
+// ===== ADMIN (Tim) =====
+
+var ADMIN_CREDENTIALS = { username: 'admin', password: 'Admin1234' };
+
+function isAdminLoggedIn() {
+    return localStorage.getItem('auto24_adminLoggedIn') === 'true';
+}
+
+function adminUpdateBookingStatus(bookingId, newStatus, reason) {
+    var bookings = getBookings();
+    var idx = bookings.findIndex(function(b) { return b.id === bookingId; });
+    if (idx === -1) return false;
+    bookings[idx].status = newStatus;
+    bookings[idx].reason = reason || '';
+    bookings[idx].updatedAt = new Date().toISOString();
+    saveBookings(bookings);
+    return true;
+}
+
+function adminToggleUserLock(username) {
+    var users = getUsers();
+    var idx = users.findIndex(function(u) { return u.username === username; });
+    if (idx === -1) return;
+    users[idx].locked = !users[idx].locked;
+    saveUsers(users);
+}
+
+function renderOrderList(containerId, bookings) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    if (bookings.length === 0) {
+        container.innerHTML = '<p class="admin-empty">Keine Aufträge.</p>';
+        return;
+    }
+    container.innerHTML = bookings.map(function(b) {
+        var date = new Date(b.createdAt).toLocaleDateString('de-DE');
+        var label = BUCHUNG_STATUS_LABELS[b.status] || b.status;
+        var actions = '';
+        if (b.status === 'bestellt') {
+            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'in_bearbeitung\')">In Bearbeitung</button>';
+            actions += '<button class="btn-reject" onclick="adminRejectOrder(\'' + b.id + '\')">Ablehnen</button>';
+        } else if (b.status === 'in_bearbeitung') {
+            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'versandt\')">Als versandt markieren</button>';
+            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'fertig\')">Fertigstellen</button>';
+            actions += '<button class="btn-reject" onclick="adminRejectOrder(\'' + b.id + '\')">Ablehnen</button>';
+        } else if (b.status === 'versandt') {
+            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'fertig\')">Als erhalten markieren</button>';
+        }
+        return '<div class="admin-order-card">' +
+            '<div class="admin-order-header">' +
+                '<div class="admin-order-car">' + escapeHtml(b.carName) + '</div>' +
+                '<span class="buchung-status status-' + escapeHtml(b.status) + '">' + escapeHtml(label) + '</span>' +
+            '</div>' +
+            '<div class="admin-order-meta">' +
+                '<span>Nutzer: <strong>' + escapeHtml(b.userId) + '</strong></span>' +
+                '<span>Preis: <strong>' + Number(b.carPrice).toLocaleString('de-DE') + ' €</strong></span>' +
+                '<span>Datum: ' + date + '</span>' +
+            '</div>' +
+            (b.reason ? '<div class="buchung-reason">Grund: ' + escapeHtml(b.reason) + '</div>' : '') +
+            (actions ? '<div class="admin-order-actions">' + actions + '</div>' : '') +
+        '</div>';
+    }).join('');
+}
+
+function renderAdminOrders() {
+    var bookings = getBookings();
+    bookings.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+    renderOrderList('adminOrdersNew', bookings.filter(function(b) { return b.status === 'bestellt'; }));
+    renderOrderList('adminOrdersProcessing', bookings.filter(function(b) { return b.status === 'in_bearbeitung' || b.status === 'versandt'; }));
+    renderOrderList('adminOrdersRejected', bookings.filter(function(b) { return b.status === 'abgelehnt' || b.status === 'storniert'; }));
+    renderOrderList('adminOrdersCompleted', bookings.filter(function(b) { return b.status === 'fertig'; }));
+}
+
+function renderAdminUsers() {
+    var container = document.getElementById('adminUsersList');
+    if (!container) return;
+    var users = getUsers();
+    if (users.length === 0) {
+        container.innerHTML = '<p class="admin-empty">Keine registrierten Nutzer.</p>';
+        return;
+    }
+    container.innerHTML = users.map(function(u) {
+        return '<div class="admin-user-row">' +
+            '<span class="admin-user-name">' + escapeHtml(u.username) + '</span>' +
+            '<span class="admin-user-status ' + (u.locked ? 'user-locked' : 'user-active') + '">' + (u.locked ? 'Gesperrt' : 'Aktiv') + '</span>' +
+            '<button class="' + (u.locked ? 'btn-unlock' : 'btn-lock') + '" onclick="adminToggleLock(\'' + escapeHtml(u.username) + '\')">' + (u.locked ? 'Entsperren' : 'Sperren') + '</button>' +
+        '</div>';
+    }).join('');
+}
+
+function adminSetStatus(bookingId, status) {
+    adminUpdateBookingStatus(bookingId, status, '');
+    renderAdminOrders();
+}
+
+function adminRejectOrder(bookingId) {
+    var reason = prompt('Bitte geben Sie einen Ablehnungsgrund an (z.B. nicht verfügbare Items):');
+    if (reason === null) return;
+    adminUpdateBookingStatus(bookingId, 'abgelehnt', reason || 'Kein Grund angegeben');
+    renderAdminOrders();
+}
+
+function adminToggleLock(username) {
+    adminToggleUserLock(username);
+    renderAdminUsers();
+}
+
+function adminLogout() {
+    localStorage.removeItem('auto24_adminLoggedIn');
+    window.location.reload();
+}
+
+function initAdminPage() {
+    var loginSection = document.getElementById('adminLoginSection');
+    var dashboard = document.getElementById('adminDashboard');
+    if (!loginSection && !dashboard) return;
+
+    if (isAdminLoggedIn()) {
+        if (loginSection) loginSection.style.display = 'none';
+        if (dashboard) dashboard.style.display = 'block';
+        renderAdminOrders();
+        renderAdminUsers();
+
+        document.querySelectorAll('.admin-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.admin-tab').forEach(function(t) { t.classList.remove('active'); });
+                document.querySelectorAll('.admin-tab-content').forEach(function(c) { c.classList.remove('active'); });
+                tab.classList.add('active');
+                var target = document.getElementById(tab.dataset.target);
+                if (target) target.classList.add('active');
+            });
+        });
+    } else {
+        if (loginSection) loginSection.style.display = 'flex';
+        if (dashboard) dashboard.style.display = 'none';
+
+        var form = document.getElementById('adminLoginForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var u = document.getElementById('adminUsername').value.trim();
+                var p = document.getElementById('adminPassword').value;
+                var err = document.getElementById('adminLoginError');
+                if (u === ADMIN_CREDENTIALS.username && p === ADMIN_CREDENTIALS.password) {
+                    localStorage.setItem('auto24_adminLoggedIn', 'true');
+                    window.location.reload();
+                } else {
+                    if (err) { err.textContent = 'Falscher Benutzername oder Passwort.'; err.style.display = 'block'; }
+                }
+            });
+        }
+    }
 }

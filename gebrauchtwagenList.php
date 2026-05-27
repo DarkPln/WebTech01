@@ -15,13 +15,11 @@ $fahrzeuge = $data["fahrzeuge"];
     <?php
         $financeHeadline = "Kauffinanzierung";
         $financeHint    = "Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).";
-        $loanTermHint   = "Geben Sie die gewünschte Laufzeit in Monaten ein (12-48):";
     ?>
 
     <nav>
         <a href="index.php" class="nav-logo">Auto<span>24</span></a>
         <ul class = "nav-links">
-            <li><a href="index.php">Fahrzeuge</a></li>
             <li><a href="index.php">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
             <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>

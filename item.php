@@ -37,11 +37,13 @@ if ($fahrzeug === null) {
 <nav>
     <a href="index.php" class="nav-logo">Auto<span>24</span></a>
     <ul class="nav-links">
-        <li><a href="index.php">Fahrzeuge</a></li>
         <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
         <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
     </ul>
-    <button class="mode-btn" onclick="toggleMode()">Light</button>
+    <div class="nav-right">
+        <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
+        <button class="mode-btn" onclick="toggleMode()">Light</button>
+    </div>
 </nav>
 
 <main class="home-main">
@@ -67,7 +69,19 @@ if ($fahrzeug === null) {
             <p><strong>Leistung:</strong> <?php echo $fahrzeug["leistung_ps"]; ?> PS</p>
             <p><strong>Antrieb:</strong> <?php echo $fahrzeug["antrieb"]; ?></p>
 
-            <a href="gebrauchtwagenList.php" class="home-btn-primary">
+            <div style="margin: 24px 0 8px;">
+                <button
+                    id="buchungsBtn"
+                    data-car-id="<?php echo htmlspecialchars($fahrzeug['iid']); ?>"
+                    data-car-name="<?php echo htmlspecialchars($fahrzeug['name']); ?>"
+                    data-car-price="<?php echo (int)$fahrzeug['preis']; ?>"
+                    style="max-width:400px;">
+                    Jetzt buchen
+                </button>
+                <p id="buchungsNote" class="buchungs-note"></p>
+            </div>
+
+            <a href="gebrauchtwagenList.php" class="home-btn-secondary" style="display:inline-block; max-width:400px;">
                 Zurück zur Liste
             </a>
 

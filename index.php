@@ -5,18 +5,6 @@
     <meta charset="UTF-8">
     <title>Willkommen bei unserer Web-Anwendung "Auto24"-Startseite</title>
     <link rel="stylesheet" href="mystyle.css">
-    <script>
-        // Nav-Auth-Link vor dem Rendern setzen, um Flackern zu vermeiden
-        document.addEventListener('DOMContentLoaded', function() {
-            const link = document.getElementById('navAuthLink');
-            if (!link) return;
-            if (localStorage.getItem('loggedIn') === 'true') {
-                const user = localStorage.getItem('loggedInUser') || 'Konto';
-                link.textContent = user;
-                link.href = 'user.php';
-            }
-        });
-    </script>
 </head>
 <body>
     <?php
@@ -35,10 +23,9 @@
     <nav>
         <a href="index.php" class="nav-logo">Auto<span>24</span></a>
         <ul class = "nav-links">
-            <li><a href="index.php">Fahrzeuge</a></li>
             <li><a href="index.php">Neuwagen</a></li>
             <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-            <li><a href="about.php">Auto verkaufen</a></li>
+            <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
         </ul>
         <div class="nav-right">
             <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>

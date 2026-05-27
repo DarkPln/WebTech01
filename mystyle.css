@@ -302,9 +302,6 @@ input[type="reset"] {
     text-align: center;
 }
 
-.error-message {
-    display: block;
-}
 
 /* Erfolgsmeldung */
 .success-message {
@@ -622,41 +619,31 @@ a{
     overflow: hidden;
 }
 
-.car-imageA8 {
-    position: relative;
-    height: 600px;
-    width: 1400px; 
-    align-items: center;
-    background: #1A1A1A;
-    overflow: hidden;
-    
-}
 
 .mode-btn {
     background: transparent;
-    border: 1px solid #8B0000;
-    color: #FF1A1A;
-    font-size: 12px;
-    letter-spacing: 1px;
+    border: 1px solid rgb(227, 27, 27);
+    color: rgb(227, 27, 27);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 8px 16px;
+    padding: 5px 14px;
+    border-radius: 4px;
     width: auto;
+    min-height: 0;
     margin: 0;
+    transition: background 0.2s;
+    white-space: nowrap;
 }
 
-.mode-btn span {
-    color: rgba(211, 211, 211, 0.792);
+.mode-btn:hover {
+    background: rgba(227, 27, 27, 0.15);
+    transform: none;
+    box-shadow: none;
 }
 
 .car-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    
-}
-
-.car-imgA8 {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -759,14 +746,6 @@ button.car-fav {
 }
 
 .car-specs {
-    display: flex;
-    margin: 16px 0;
-    border-top: 1px solid #2E2E2E;
-    border-bottom: 1px solid #2E2E2E;
-    padding: 12px 0;
-}
-
-.car-specs-detail{
     display: flex;
     margin: 16px 0;
     border-top: 1px solid #2E2E2E;
@@ -1001,24 +980,30 @@ button.car-fav {
 
 .nFav-btn {
     background: transparent;
-    border: 1px solid darkred; 
-    color: rgba(211, 211, 211, 0.792);
-    font-size: 12px;
-    letter-spacing: 1px;
+    border: 1px solid rgb(227, 27, 27);
+    color: rgb(227, 27, 27);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 8px 16px;
+    padding: 5px 14px;
+    border-radius: 4px;
     width: auto;
+    min-height: 0;
     margin: 0;
+    transition: background 0.2s;
+    white-space: nowrap;
 }
 
 .nFav-btn:hover {
-    border-color: #CC0000;
-    color: white;
+    background: rgba(227, 27, 27, 0.15);
+    color: rgb(227, 27, 27);
+    transform: none;
+    box-shadow: none;
 }
 
 .nFav-btn.has-items {
-    border-color: #CC0000;
-    color: white;
+    background: rgba(227, 27, 27, 0.15);
 }
 
 .nFav-count {
@@ -1328,26 +1313,220 @@ button.car-fav {
     }
 }
 
-/* Dark Mode Toggle */
+/* ===== LIGHT MODE – vollständig (Niclas / Tim) ===== */
+
 body.light-mode {
-    background-color: white;
-    color: black;
-}
-body.light-mode .car-card {
-    background: #f5f5f5;
-    border-color: #ccc;
+    background-color: #f2f2f2;
+    color: #1a1a1a;
 }
 
-body.light-mode .car-model,
-body.light-mode .car-price,
-body.light-mode .car-spec-val {
-    color: black;
+/* Navigation */
+body.light-mode nav {
+    background-color: rgba(255,255,255,0.95);
+    border-bottom-color: #e0e0e0;
+}
+body.light-mode .nav-logo,
+body.light-mode .nav-logo:hover { color: #1a1a1a; }
+body.light-mode .nav-links a { color: #444; }
+body.light-mode .nav-links a:hover { color: rgb(200,20,20); }
+body.light-mode .nav-auth-link {
+    color: rgb(200,20,20);
+    border-color: rgb(200,20,20);
 }
 
-body.light-mode nav,
+
+/* Footer */
 body.light-mode footer {
-    background-color: #eeeeee;
+    background-color: #e8e8e8;
+    border-top-color: #d0d0d0;
 }
+body.light-mode .footer-top a { color: #555; }
+body.light-mode .footer-top a:hover { color: rgb(200,20,20); }
+body.light-mode .footer-bot a { color: #333; }
+body.light-mode .footer-heading { color: #777; }
+body.light-mode .footer-dsc { color: #666; }
+
+/* Formulare & Inputs */
+body.light-mode label { color: #333; }
+
+body.light-mode input[type="text"],
+body.light-mode input[type="password"],
+body.light-mode input[type="email"],
+body.light-mode input[type="tel"],
+body.light-mode input[type="number"],
+body.light-mode textarea,
+body.light-mode select {
+    background-color: #ffffff;
+    border-color: #ccc;
+    color: #1a1a1a;
+}
+
+body.light-mode input[type="text"]:focus,
+body.light-mode input[type="password"]:focus,
+body.light-mode input[type="email"]:focus,
+body.light-mode input[type="tel"]:focus,
+body.light-mode input[type="number"]:focus,
+body.light-mode textarea:focus,
+body.light-mode select:focus {
+    background-color: #fff;
+    border-color: rgb(200,20,20);
+}
+
+body.light-mode input[type="text"]::placeholder,
+body.light-mode input[type="password"]::placeholder,
+body.light-mode input[type="email"]::placeholder,
+body.light-mode input[type="tel"]::placeholder,
+body.light-mode input[type="number"]::placeholder,
+body.light-mode textarea::placeholder { color: #aaa; }
+
+body.light-mode input:disabled,
+body.light-mode textarea:disabled,
+body.light-mode select:disabled,
+body.light-mode button:disabled {
+    background-color: #e8e8e8;
+    border-color: #d0d0d0;
+}
+
+body.light-mode select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23333333" d="M1 1l5 5 5-5"/></svg>');
+}
+
+/* Auth-Karten & Sektionen */
+body.light-mode .auth-section {
+    background:
+        radial-gradient(circle at 30% 60%, rgba(200,20,20,0.07), transparent 40%),
+        linear-gradient(135deg, #f2f2f2 0%, #fce8e8 50%, #f2f2f2 100%);
+}
+body.light-mode .auth-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .auth-card h2 { color: #555; }
+body.light-mode .auth-card p { color: #444; }
+body.light-mode .demo-hint { color: #888; }
+body.light-mode .field-error { color: rgb(200,20,20); }
+body.light-mode .success-message { color: #1a8a1a; }
+body.light-mode .error-message { color: rgb(200,20,20); }
+
+/* Hero */
+body.light-mode .home-hero {
+    background:
+        radial-gradient(circle at 70% 40%, rgba(200,20,20,0.1), transparent 35%),
+        linear-gradient(135deg, #f2f2f2 0%, #fce8e8 50%, #f2f2f2 100%);
+    border-bottom-color: #ddd;
+}
+body.light-mode .home-hero p { color: #555; }
+
+/* Kategorie-Karten */
+body.light-mode .home-category-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .home-category-card:hover { border-color: #c00; }
+body.light-mode .home-category-card p { color: #555; }
+
+/* About-Sektion */
+body.light-mode .home-about {
+    background: #e8e8e8;
+    border-color: #d0d0d0;
+}
+body.light-mode .home-about p { color: #555; }
+
+/* Auto-Karten */
+body.light-mode .car-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .car-card:hover { border-color: #c00; }
+body.light-mode .car-image { background: #eee; }
+body.light-mode .car-model { color: #1a1a1a; }
+body.light-mode .car-year { color: #666; }
+body.light-mode .car-specs { border-color: #ddd; }
+body.light-mode .car-spec { border-right-color: #ddd; }
+body.light-mode .car-spec-val { color: #1a1a1a; }
+body.light-mode .car-spec-key { color: #888; }
+body.light-mode .car-price { color: #1a1a1a; }
+body.light-mode .car-price-note { color: #888; }
+body.light-mode .car-badge-used {
+    background: #ddd;
+    border-color: #bbb;
+    color: #444;
+}
+body.light-mode .car-description p { color: #333; }
+
+/* Auth-Karte auf item.php */
+body.light-mode .auth-card p { color: #333; }
+body.light-mode .auth-card p strong { color: #1a1a1a; }
+
+/* Favoritenliste */
+body.light-mode .fav-list {
+    background: #ffffff;
+    color: #1a1a1a;
+}
+body.light-mode .fav-item {
+    border-bottom-color: rgba(0,0,0,0.1);
+}
+body.light-mode .fav-item-title { color: #1a1a1a; }
+body.light-mode .fav-item-price { color: #1a1a1a; }
+body.light-mode .fav-item-meta { color: #666; }
+body.light-mode .fav-list-header { border-bottom: 1px solid #eee; }
+
+/* Buchungs-Karten */
+body.light-mode .buchung-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .buchung-card:hover { border-color: #bbb; }
+body.light-mode .buchung-car { color: #1a1a1a; }
+body.light-mode .buchung-meta { color: #555; }
+
+/* Admin-Karten */
+body.light-mode .admin-order-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .admin-order-card:hover { border-color: #bbb; }
+body.light-mode .admin-order-car { color: #1a1a1a; }
+body.light-mode .admin-order-meta { color: #555; }
+body.light-mode .admin-user-row {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .admin-user-name { color: #1a1a1a; }
+body.light-mode .admin-tabs { border-bottom-color: #ddd; }
+body.light-mode .admin-tab { color: #777; }
+body.light-mode .admin-tab:hover { background: rgba(0,0,0,0.04); color: #333; }
+body.light-mode .admin-tab.active {
+    background: #ffffff;
+    border-color: #ddd;
+    color: #1a1a1a;
+}
+body.light-mode .admin-page-sub { color: #666; }
+
+/* Partner- & Service-Karten */
+body.light-mode .about-service-card,
+body.light-mode .home-category-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode .about-contact-card {
+    background: #f8f8f8;
+    border-color: #ddd;
+}
+body.light-mode .about-contact-card p { color: #333; }
+
+/* FAQ */
+body.light-mode details {
+    background: #ffffff;
+    border-color: #ddd;
+}
+body.light-mode summary { color: #1a1a1a; }
+
+/* Typo & Links */
+body.light-mode p { color: #444; }
+body.light-mode h1, body.light-mode h2, body.light-mode h3 { color: #1a1a1a; }
+body.light-mode a { color: #1a1a1a; }
+body.light-mode a:hover { color: rgb(200,20,20); }
 
 /* Layout-Umschaltung */
 .cars-grid.vertical-layout {
@@ -1359,4 +1538,374 @@ body.light-mode footer {
 
 .cars-grid.horizontal-layout {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* ===== BUCHUNGS-STATUS BADGES ===== */
+
+.buchung-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.status-bestellt      { background: #1a3a7a; color: #aac4ff; border: 1px solid #2255cc; }
+.status-in_bearbeitung{ background: #4a3000; color: #ffc96e; border: 1px solid #cc8800; }
+.status-versandt      { background: #2e1a5a; color: #c9a8ff; border: 1px solid #7744cc; }
+.status-fertig        { background: #0a3a0a; color: #80e680; border: 1px solid #228822; }
+.status-storniert     { background: #222;    color: #888;    border: 1px solid #444; }
+.status-abgelehnt     { background: #3a0a0a; color: #ff8888; border: 1px solid #882222; }
+
+/* ===== BUCHUNGEN SEITE (Nutzer) ===== */
+
+.buchungen-wrapper {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px 0;
+}
+
+.buchungen-empty {
+    text-align: center;
+    color: #888;
+    padding: 40px 0;
+}
+
+.buchung-card {
+    background: #111;
+    border: 1px solid #2e2e2e;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    text-align: left;
+    transition: border-color 0.2s;
+}
+
+.buchung-card:hover {
+    border-color: #444;
+}
+
+.buchung-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.buchung-car {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.buchung-meta {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+    color: #bdbdbd;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.buchung-reason {
+    background: rgba(170, 34, 34, 0.12);
+    border: 1px solid rgba(170, 34, 34, 0.4);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #ff9999;
+    margin-top: 8px;
+}
+
+.buchung-cancel-btn {
+    background: transparent;
+    border: 1px solid #8B0000;
+    color: #FF4444;
+    font-size: 13px;
+    max-width: 200px;
+    width: auto;
+    padding: 8px 18px;
+    margin: 12px 0 0 0;
+    min-height: 0;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.buchung-cancel-btn:hover {
+    background: rgba(139,0,0,0.2);
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== BOOKING BUTTON (item.php) ===== */
+
+.buchungs-note {
+    font-size: 13px;
+    color: #ff9999;
+    margin-top: 6px;
+    display: none;
+}
+
+/* ===== ADMIN SEITE ===== */
+
+.admin-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 48px;
+    background-color: rgba(20, 17, 17, 0.9);
+    border-bottom: 1px solid #8B0000;
+    backdrop-filter: blur(12px);
+    height: 64px;
+    box-sizing: border-box;
+}
+
+.admin-badge {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #FF4444;
+    border: 1px solid #8B0000;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-left: 14px;
+}
+
+.admin-logout-btn {
+    background: transparent;
+    border: 1px solid #8B0000;
+    color: #FF4444;
+    font-size: 12px;
+    width: auto;
+    max-width: none;
+    padding: 6px 16px;
+    margin: 0;
+    min-height: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-logout-btn:hover {
+    background: rgba(139,0,0,0.2);
+    transform: none;
+    box-shadow: none;
+}
+
+.admin-main {
+    padding-top: 80px;
+    min-height: 100vh;
+}
+
+.admin-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 30px 24px 60px;
+}
+
+.admin-page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.admin-page-title span {
+    color: rgb(227,27,27);
+}
+
+.admin-page-sub {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+/* Admin tabs */
+.admin-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #2e2e2e;
+    overflow-x: auto;
+    padding: 0;
+}
+
+.admin-tab {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: #888;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    min-height: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+}
+
+.admin-tab:hover {
+    color: #ccc;
+    background: rgba(255,255,255,0.04);
+    transform: none;
+    box-shadow: none;
+}
+
+.admin-tab.active {
+    background: #111;
+    border-color: #2e2e2e;
+    color: white;
+}
+
+.admin-tab-content {
+    display: none;
+    padding: 24px 0;
+}
+
+.admin-tab-content.active {
+    display: block;
+}
+
+/* Admin order cards */
+.admin-order-card {
+    background: #111;
+    border: 1px solid #2e2e2e;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    text-align: left;
+    transition: border-color 0.2s;
+}
+
+.admin-order-card:hover {
+    border-color: #444;
+}
+
+.admin-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-order-car {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+}
+
+.admin-order-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    color: #bdbdbd;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-order-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.admin-order-actions button {
+    max-width: none;
+    width: auto;
+    padding: 6px 16px;
+    font-size: 12px;
+    margin: 0;
+    min-height: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+}
+
+.admin-order-actions button:hover {
+    transform: none;
+}
+
+.btn-reject {
+    background: #5a0000 !important;
+    border-color: #8B0000 !important;
+}
+.btn-reject:hover {
+    background: #7a0000 !important;
+}
+
+/* Admin user list */
+.admin-user-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    background: #111;
+    border: 1px solid #2e2e2e;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-user-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 15px;
+    text-align: left;
+}
+
+.admin-user-status {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-active { color: #6be46b; }
+.user-locked { color: #ff7070; }
+
+.admin-user-row button {
+    max-width: none;
+    width: auto;
+    padding: 6px 16px;
+    font-size: 12px;
+    margin: 0;
+    min-height: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+}
+
+.admin-user-row button:hover {
+    transform: none;
+}
+
+.btn-lock   { background: #5a0000 !important; }
+.btn-lock:hover { background: #7a0000 !important; }
+.btn-unlock { background: #0a3a0a !important; }
+.btn-unlock:hover { background: #145014 !important; }
+
+.admin-empty {
+    color: #666;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 14px;
 }
