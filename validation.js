@@ -778,7 +778,7 @@ function isUserLocked(username) {
     var user = findUser(username);
     return user ? !!user.locked : false;
 }
-
+//schutz vor Cross-Site-Scripting (XSS) Angriffen, indem potenziell gefährliche Zeichen in HTML-Entities umgewandelt werden
 function escapeHtml(str) {
     return String(str)
         .replace(/&/g, '&amp;')
