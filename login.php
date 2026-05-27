@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <title>Login - Auto24</title>
     <link rel="stylesheet" href="mystyle.css">
-    <!-- validation.js enthält initLoginForm(), die per DOMContentLoaded automatisch startet.
-         Sie prüft window.location.search auf '?registered=1' (gesetzt nach Registrierung)
-         und zeigt dann die successMessage an. -->
     <script src="validation.js"></script>
 </head>
 <body>
@@ -37,16 +34,11 @@
                 <p><?php echo $pageSubtext; ?></p>
                 <p class="demo-hint">Demo: Benutzername <strong>TestUser</strong>, Passwort <strong>TestPass123</strong></p>
 
-                <!-- successMessage: JS schreibt hier die Erfolgsmeldung nach Registrierung hinein
-                     und setzt display='block'. Standardmäßig display:none (unsichtbar). -->
                 <div id="successMessage" class="success-message" style="display:none;"></div>
 
-                <!-- loginForm: Trigger für initLoginForm(). JS hängt einen submit-Listener an,
-                     der e.preventDefault() aufruft und stattdessen localStorage prüft/setzt. -->
                 <form id="loginForm">
                     <label for="username">Benutzername:</label>
-                    <!-- username/password: JS lauscht auf 'input'-Events für Live-Aktivierung
-                         des loginBtn. Die IDs müssen exakt mit getElementById() übereinstimmen. -->
+
                     <input type="text" id="username" name="username" required autocomplete="username">
                     <span class="field-error" id="username-error"></span>
 

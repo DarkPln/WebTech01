@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <title>Nutzerbereich</title>
     <link rel="stylesheet" href="mystyle.css">
-    <!-- validation.js enthält initUserForm(), die beim DOMContentLoaded-Event automatisch
-         ausgeführt wird. Sie prüft zuerst den localStorage auf den Login-Status und leitet
-         bei fehlendem Login sofort zu login.php weiter (Auth-Guard). -->
     <script src="validation.js"></script>
 </head>
 
@@ -35,17 +32,12 @@
     <main class="home-main">
         <section class="auth-section">
             <div class="auth-card">
-                <!-- display-username: JS schreibt hier per .textContent den Benutzernamen
-                     aus dem localStorage hinein – sowohl beim Laden als auch nach dem Speichern. -->
+
                 <h1>Willkommen, <span id="display-username" style="color: rgb(227,27,7);"></span></h1>
                 <h2><?php echo $sectionTitle; ?></h2>
 
-                <!-- saveSuccess: JS setzt .style.display='block' nach erfolgreichem Speichern
-                     und blendet die Meldung nach 3 Sekunden via setTimeout() wieder aus. -->
                 <div id="saveSuccess" class="success-message" style="display:none;"></div>
 
-                <!-- userForm: Trigger für initUserForm(). Die IDs der Inputs (username, password,
-                     password_confirm) werden in validation.js per getElementById() referenziert. -->
                 <form id="userForm">
                     <label for="username">Benutzername:</label>
                     <input type="text" id="username" name="username" required autocomplete="username">
@@ -59,8 +51,6 @@
                     <input type="password" id="password_confirm" name="password_confirm" required autocomplete="new-password">
                     <span class="field-error" id="password_confirm-error"></span>
 
-                    <!-- saveBtn: JS deaktiviert diesen Button (disabled=true) solange die Validierung
-                         fehlschlägt – der Nutzer kann erst speichern, wenn alle Felder korrekt sind. -->
                     <input type="submit" value="<?php echo $saveLabel; ?>" id="saveBtn">
                 </form>
 

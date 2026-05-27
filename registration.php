@@ -5,9 +5,6 @@
         <meta charset = "UTF-8">
         <title>Registrierung</title>
         <link rel="stylesheet" href="mystyle.css">
-        <!-- validation.js enthält initRegistrationForm(), die per DOMContentLoaded startet.
-             Sie hängt 'input'-Listener an alle drei Felder für Live-Validierung an und
-             überschreibt das Submit-Event, um den Nutzer in localStorage zu speichern. -->
         <script src="validation.js"></script>
     </head>
     <body>
@@ -43,17 +40,11 @@
                     <h1><?php echo $pageTitle; ?></h1>
                     <p><?php echo $pageSubtext; ?></p>
 
-                    <!-- reg-error: JS zeigt hier eine Fehlermeldung, wenn der gewählte
-                         Benutzername bereits in localStorage existiert (findUser() findet ihn). -->
                     <div id="reg-error" class="error-message" style="display:none;"></div>
 
-                    <!-- registrationForm: Trigger für initRegistrationForm().
-                         Die Feld-IDs (benutzername, passwort, passwort_wiederholen) müssen
-                         exakt mit den getElementById()-Aufrufen in validation.js übereinstimmen. -->
                     <form id="registrationForm">
                         <label for="benutzername">Benutzername:</label>
-                        <!-- benutzername-error: validateField() schreibt die erste Fehlermeldung
-                             aus dem errors-Array hier hinein (ID = Feld-ID + '-error'). -->
+
                         <input type="text" id="benutzername" name="benutzername" required autocomplete="username">
                         <span class="field-error" id="benutzername-error"></span>
 
@@ -65,8 +56,6 @@
                         <input type="password" id="passwort_wiederholen" name="passwort_wiederholen" required autocomplete="new-password">
                         <span class="field-error" id="passwort_wiederholen-error"></span>
 
-                        <!-- submitBtn: JS startet mit disabled=true und aktiviert ihn erst,
-                             wenn alle Validierungen in checkFormValidity() bestanden sind. -->
                         <input type="submit" value="Registrieren" id="submitBtn">
                         <input type="reset" value="Zurücksetzen">
                     </form>
