@@ -520,6 +520,12 @@ nav{
     /* padding und margin sind in box sonst außerhalb! adjustment anordnung der elemente bzw width */ 
 }
 
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 .nav-logo{
     font-size: 28px;
     letter-spacing: 2px;
