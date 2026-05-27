@@ -54,7 +54,12 @@
                 </form>
 
                 <p><a href="buchungen.php" style="color: rgb(227,27,27); font-weight:600;">Meine Buchungen ansehen</a></p>
-                <p><a href="logout.php"><?php echo $logoutText; ?></a></p>
+
+                <hr style="margin:24px 0; border-color:#333;">
+                <h2 style="margin-bottom:12px;">Meine Inserate</h2>
+                <div id="userInserate"></div>
+
+                <p style="margin-top:20px;"><a href="logout.php"><?php echo $logoutText; ?></a></p>
             </div>
         </section>
     </main>

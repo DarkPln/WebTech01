@@ -60,6 +60,7 @@
                 <button class="admin-tab" data-target="tabAbgelehnt">Abgelehnt / Storniert</button>
                 <button class="admin-tab" data-target="tabAbgeschlossen">Abgeschlossen</button>
                 <button class="admin-tab" data-target="tabNutzer">Nutzer verwalten</button>
+                <button class="admin-tab" data-target="tabInserate">Inserate</button>
             </div>
 
             <!-- Tab: Neue Aufträge -->
@@ -93,6 +94,12 @@
                     Gesperrte Nutzer können keine Buchungen tätigen. Die Schaltfläche auf der Fahrzeugdetailseite wird mit dem Hinweis "Ihr Konto ist vom Administrator gesperrt" deaktiviert.
                 </p>
                 <div id="adminUsersList"></div>
+            </div>
+
+            <!-- Tab: Inserate -->
+            <div id="tabInserate" class="admin-tab-content">
+                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Eingereichte Inserate</h3>
+                <div id="adminInserate"></div>
             </div>
         </div>
     </div>

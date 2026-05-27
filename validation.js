@@ -290,6 +290,34 @@ function initUserForm() {
     });
 
     saveBtn.disabled = true;
+    renderUserInserate();
+}
+
+function renderUserInserate() {
+    var container = document.getElementById('userInserate');
+    if (!container) return;
+    var user = localStorage.getItem('loggedInUser') || '';
+    var inserate = getInserate().filter(function(i) { return i.userId === user; });
+    if (inserate.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-size:14px;">Sie haben noch keine Inserate eingereicht.</p>';
+        return;
+    }
+    inserate.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+    container.innerHTML = inserate.map(function(ins) {
+        var date = new Date(ins.createdAt).toLocaleDateString('de-DE');
+        var label = INSERAT_STATUS_LABELS[ins.status] || ins.status;
+        var statusClass = ins.status === 'genehmigt' ? 'status-fertig'
+                        : ins.status === 'abgelehnt'  ? 'status-abgelehnt'
+                        : 'status-in_bearbeitung';
+        return '<div class="buchung-card">' +
+            '<div class="buchung-header">' +
+                '<span class="buchung-car">' + escapeHtml(ins.make) + ' ' + escapeHtml(ins.model) + ' (' + escapeHtml(ins.year) + ')</span>' +
+                '<span class="buchung-status ' + statusClass + '">' + escapeHtml(label) + '</span>' +
+            '</div>' +
+            '<div class="buchung-meta">Preis: ' + escapeHtml(String(ins.price)) + ' € &nbsp;|&nbsp; Eingereicht: ' + date + '</div>' +
+            (ins.status === 'abgelehnt' ? '<div class="buchung-reason">Vom Administrator abgelehnt</div>' : '') +
+        '</div>';
+    }).join('');
 }
 
 // ===== LOGOUT =====
@@ -315,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRegistrationForm();
     initLoginForm();
     initUserForm();
+    initVehicleForm();
     initBookingsPage();
     initBookingButton();
     initAdminPage();
@@ -639,6 +668,66 @@ function generatePassword() {
 }
 
 
+// ===== INSERATE (Tim) =====
+
+function getInserate() {
+    return JSON.parse(localStorage.getItem('auto24_inserate') || '[]');
+}
+
+function saveInserate(inserate) {
+    localStorage.setItem('auto24_inserate', JSON.stringify(inserate));
+}
+
+function initVehicleForm() {
+    var form = document.getElementById('vehicleForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var requiredFields = form.querySelectorAll('[required]');
+        var valid = true;
+        requiredFields.forEach(function(f) {
+            if (!f.value.trim()) { f.classList.add('invalid'); valid = false; }
+            else f.classList.remove('invalid');
+        });
+        if (!valid) return;
+
+        var inserat = {
+            id: 'i_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+            userId: localStorage.getItem('loggedInUser') || 'Gast',
+            make:      document.getElementById('sell-make').value.trim(),
+            model:     document.getElementById('sell-model').value.trim(),
+            year:      document.getElementById('sell-year').value,
+            km:        document.getElementById('sell-km').value,
+            fuel:      document.getElementById('sell-fuel').value,
+            gearbox:   document.getElementById('sell-gearbox').value,
+            power:     document.getElementById('sell-power').value,
+            type:      document.getElementById('sell-type').value,
+            condition: document.getElementById('sell-condition').value,
+            price:     document.getElementById('sell-price').value,
+            desc:      document.getElementById('sell-desc').value.trim(),
+            name:      document.getElementById('sell-name').value.trim(),
+            email:     document.getElementById('sell-email').value.trim(),
+            phone:     document.getElementById('sell-phone').value.trim(),
+            status:    'eingereicht',
+            createdAt: new Date().toISOString()
+        };
+
+        var inserate = getInserate();
+        inserate.push(inserat);
+        saveInserate(inserate);
+
+        form.reset();
+        form.style.display = 'none';
+        var success = document.getElementById('vehicleSuccess');
+        if (success) {
+            success.textContent = 'Ihr Inserat wurde erfolgreich eingereicht und wird innerhalb von 24 Stunden geprüft.';
+            success.style.display = 'block';
+        }
+    });
+}
+
 // ===== BUCHUNGEN (Tim) =====
 
 function getBookings() {
@@ -873,6 +962,67 @@ function renderAdminOrders() {
     renderOrderList('adminOrdersCompleted', bookings.filter(function(b) { return b.status === 'fertig'; }));
 }
 
+var INSERAT_STATUS_LABELS = {
+    eingereicht: 'Eingereicht',
+    genehmigt:   'Genehmigt',
+    abgelehnt:   'Abgelehnt'
+};
+
+function renderAdminInserate() {
+    var container = document.getElementById('adminInserate');
+    if (!container) return;
+    var inserate = getInserate();
+    if (inserate.length === 0) {
+        container.innerHTML = '<p class="admin-empty">Keine eingereichten Inserate.</p>';
+        return;
+    }
+    inserate.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+    container.innerHTML = inserate.map(function(ins) {
+        var date = new Date(ins.createdAt).toLocaleDateString('de-DE');
+        var label = INSERAT_STATUS_LABELS[ins.status] || ins.status;
+        var statusClass = ins.status === 'genehmigt' ? 'status-fertig' : ins.status === 'abgelehnt' ? 'status-abgelehnt' : 'status-in_bearbeitung';
+        var actions = '';
+        if (ins.status === 'eingereicht') {
+            actions = '<button onclick="adminApproveInserat(\'' + ins.id + '\')">Genehmigen</button>' +
+                      '<button class="btn-reject" onclick="adminRejectInserat(\'' + ins.id + '\')">Ablehnen</button>';
+        }
+        return '<div class="admin-order-card">' +
+            '<div class="admin-order-header">' +
+                '<div class="admin-order-car">' + escapeHtml(ins.make) + ' ' + escapeHtml(ins.model) + ' (' + escapeHtml(ins.year) + ')</div>' +
+                '<span class="buchung-status ' + statusClass + '">' + escapeHtml(label) + '</span>' +
+            '</div>' +
+            '<div class="admin-order-meta">' +
+                '<span>Von: <strong>' + escapeHtml(ins.name) + '</strong></span>' +
+                '<span>Nutzer: <strong>' + escapeHtml(ins.userId) + '</strong></span>' +
+                '<span>Preis: <strong>' + Number(ins.price).toLocaleString('de-DE') + ' €</strong></span>' +
+                '<span>Datum: ' + date + '</span>' +
+            '</div>' +
+            '<div class="admin-order-meta" style="margin-top:-8px;">' +
+                '<span>' + escapeHtml(ins.km) + ' km</span>' +
+                '<span>' + escapeHtml(ins.fuel) + '</span>' +
+                '<span>' + escapeHtml(ins.type) + '</span>' +
+                '<span>' + escapeHtml(ins.condition) + '</span>' +
+            '</div>' +
+            (ins.desc ? '<div style="font-size:13px;color:#bdbdbd;margin-bottom:8px;text-align:left;">' + escapeHtml(ins.desc) + '</div>' : '') +
+            (actions ? '<div class="admin-order-actions">' + actions + '</div>' : '') +
+        '</div>';
+    }).join('');
+}
+
+function adminApproveInserat(id) {
+    var inserate = getInserate();
+    var idx = inserate.findIndex(function(i) { return i.id === id; });
+    if (idx !== -1) { inserate[idx].status = 'genehmigt'; saveInserate(inserate); }
+    renderAdminInserate();
+}
+
+function adminRejectInserat(id) {
+    var inserate = getInserate();
+    var idx = inserate.findIndex(function(i) { return i.id === id; });
+    if (idx !== -1) { inserate[idx].status = 'abgelehnt'; saveInserate(inserate); }
+    renderAdminInserate();
+}
+
 function renderAdminUsers() {
     var container = document.getElementById('adminUsersList');
     if (!container) return;
@@ -922,6 +1072,7 @@ function initAdminPage() {
         if (dashboard) dashboard.style.display = 'block';
         renderAdminOrders();
         renderAdminUsers();
+        renderAdminInserate();
 
         document.querySelectorAll('.admin-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
