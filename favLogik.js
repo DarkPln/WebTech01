@@ -1,17 +1,14 @@
 // ── FAVORITEN LOGIK ──
-// Speichert nur die iid (Zahl) in der PHP-Session.
-// Die echten Auto-Daten fürs Panel kommen aus den data-* Attributen der Karte.
-
-const favorites = new Set(); // nur IDs (Zahlen)
+const favorites = new Set();
 
 // ── PANEL ÖFFNEN / SCHLIESSEN ──
 function togglePanel() {
     const panel   = document.getElementById('favList');
     const overlay = document.getElementById('favOvl');
     if (!panel) return;
-    const isOpen  = panel.classList.contains('active');  
-    panel.classList.toggle('active', !isOpen);           
-    overlay.classList.toggle('active', !isOpen);         
+    const isOpen  = panel.classList.contains('active');
+    panel.classList.toggle('active', !isOpen);
+    overlay.classList.toggle('active', !isOpen);
     document.body.style.overflow = isOpen ? '' : 'hidden';
 }
 
@@ -75,7 +72,6 @@ function updateUI() {
     if (emptyEl) emptyEl.style.display  = counter === 0 ? 'flex' : 'none';
     if (footer)  footer.style.display   = counter > 0   ? 'block' : 'none';
 
-    // Gesamtkosten berechnen aus data-price der Karten
     if (counter > 0) {
         let total = 0;
         favorites.forEach(id => {
@@ -105,14 +101,14 @@ function renderList() {
         item.className = 'fav-item';
         item.dataset.id = id;
 
-        const img   = card.querySelector('.car-img');
+        const img    = card.querySelector('.car-img');
         const imgSrc = img ? img.src : '';
-        const make  = card.dataset.make  || '';
-        const model = card.dataset.model || '';
-        const year  = card.dataset.year  || '';
-        const fuel  = card.dataset.fuel  || '';
-        const km    = card.dataset.km    || '';
-        const price = card.dataset.price || '';
+        const make   = card.dataset.make  || '';
+        const model  = card.dataset.model || '';
+        const year   = card.dataset.year  || '';
+        const fuel   = card.dataset.fuel  || '';
+        const km     = card.dataset.km    || '';
+        const price  = card.dataset.price || '';
 
         item.innerHTML = `
             <div class="fav-item-thumbnail">
@@ -135,11 +131,10 @@ async function toggleFavorite(btn) {
     const card = btn.closest('.car-card');
     if (!card) return;
 
-    const id = parseInt(card.dataset.id, 10);
+    const id    = parseInt(card.dataset.id, 10);
     const make  = card.dataset.make  || '';
     const model = card.dataset.model || '';
 
-    // Sofortiges visuelles Feedback
     if (favorites.has(id)) {
         favorites.delete(id);
         btn.innerHTML         = '&#9825;';
@@ -154,7 +149,6 @@ async function toggleFavorite(btn) {
         showNotification(`<strong>${make} ${model}</strong> zur Merkliste hinzugefügt`);
     }
 
-    // Badge-Animation
     const countEl = document.getElementById('favCount');
     if (countEl) {
         countEl.style.animation = 'none';
@@ -163,26 +157,19 @@ async function toggleFavorite(btn) {
     }
 
     updateUI();
-
-    // An PHP-Session schicken
     await sendToggle(id);
 }
 
-// ── EINZELN ENTFERNEN (aus Panel) ──
+// ── EINZELN ENTFERNEN ──
 async function removeFav(id) {
     id = parseInt(id, 10);
     if (!favorites.has(id)) return;
-
     favorites.delete(id);
 
-    // Herz auf Karte zurücksetzen
     const card = document.querySelector(`.car-card[data-id="${id}"]`);
     if (card) {
-        const btn         = card.querySelector('.car-fav');
-        if (btn) {
-            btn.innerHTML     = '&#9825;';
-            btn.style.color   = '';
-        }
+        const btn = card.querySelector('.car-fav');
+        if (btn) { btn.innerHTML = '&#9825;'; btn.style.color = ''; }
     }
 
     updateUI();
@@ -204,57 +191,14 @@ async function clearAllFavs() {
     await sendClear();
 }
 
-// ── BEIM LADEN: SESSION IN SET LADEN UND HERZEN WIEDERHERSTELLEN ──
-document.addEventListener('DOMContentLoaded', async function () {
-
-    // Session-Daten holen
-    try {
-        const res  = await fetch('get_favorites.php');
-        const data = await res.json();
-
-        if (data.favorites && data.favorites.length > 0) {
-            data.favorites.forEach(id => {
-                favorites.add(parseInt(id, 10));
-
-                // Herz-Button auf Karte als aktiv markieren
-                const card = document.querySelector(`.car-card[data-id="${id}"]`);
-                if (card) {
-                    const btn = card.querySelector('.car-fav');
-                    if (btn) {
-                        btn.innerHTML     = '&#9829;';
-                        btn.style.color   = 'red';
-                        btn.style.borderColor = 'red';
-                    }
-                }
-            });
-            updateUI();
-        }
-    } catch (e) {
-        console.error('Fehler beim Laden der Merkliste:', e);
-    }
-
-    // Herz-Buttons verdrahten
-    document.querySelectorAll('.car-fav').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            toggleFavorite(this);
-        });
-    });
-
-    // Clear-Button verdrahten
-    const clearBtn = document.getElementById('clearFavListBtn');
-    if (clearBtn) clearBtn.addEventListener('click', clearAllFavs);
-});
-
 // ── MERKLISTE: CHECKBOX-BUCHUNG ──
 function initMerklisteBuchung() {
     const checkboxes = document.querySelectorAll('.merkliste-checkbox');
     const buchungBtn = document.getElementById('buchungAusgewaehlt');
     const countSpan  = document.getElementById('ausgewaehltCount');
- 
+
     if (!checkboxes.length || !buchungBtn) return;
- 
-    // Zähler aktualisieren wenn Checkbox geklickt
+
     checkboxes.forEach(function(cb) {
         cb.addEventListener('change', function() {
             const checked = document.querySelectorAll('.merkliste-checkbox:checked').length;
@@ -262,8 +206,7 @@ function initMerklisteBuchung() {
             buchungBtn.disabled = checked === 0;
         });
     });
- 
-    // Buchen Button
+
     buchungBtn.addEventListener('click', function() {
         const loggedIn = localStorage.getItem('loggedIn') === 'true';
         if (!loggedIn) {
@@ -271,37 +214,35 @@ function initMerklisteBuchung() {
             window.location.href = 'login.php';
             return;
         }
- 
+
         const ausgewaehlt = document.querySelectorAll('.merkliste-checkbox:checked');
         if (!ausgewaehlt.length) return;
- 
+
         const namen = [];
-        ausgewaehlt.forEach(function(cb) {
-            namen.push(cb.dataset.carName);
-        });
- 
+        ausgewaehlt.forEach(function(cb) { namen.push(cb.dataset.carName); });
+
         if (!confirm('Möchten Sie folgende Fahrzeuge buchen?\n\n' + namen.join('\n'))) return;
- 
+
         ausgewaehlt.forEach(function(cb) {
             createBooking(cb.dataset.carId, cb.dataset.carName, cb.dataset.carPrice);
         });
- 
+
         window.location.href = 'buchungen.php';
     });
 }
- 
-// ── BEIM LADEN ──
+
+// ── EINZIGER DOMContentLoaded BLOCK ──
 document.addEventListener('DOMContentLoaded', async function () {
- 
+
     // Session-Daten holen
     try {
         const res  = await fetch('get_favorites.php');
         const data = await res.json();
- 
+
         if (data.favorites && data.favorites.length > 0) {
             data.favorites.forEach(id => {
                 favorites.add(parseInt(id, 10));
- 
+
                 const card = document.querySelector(`.car-card[data-id="${id}"]`);
                 if (card) {
                     const btn = card.querySelector('.car-fav');
@@ -317,7 +258,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (e) {
         console.error('Fehler beim Laden der Merkliste:', e);
     }
- 
+
     // Herz-Buttons verdrahten
     document.querySelectorAll('.car-fav').forEach(btn => {
         btn.addEventListener('click', function (e) {
@@ -325,11 +266,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             toggleFavorite(this);
         });
     });
- 
+
     // Clear-Button verdrahten
     const clearBtn = document.getElementById('clearFavListBtn');
     if (clearBtn) clearBtn.addEventListener('click', clearAllFavs);
- 
+
     // Merkliste Checkbox-Buchung initialisieren
     initMerklisteBuchung();
 });
