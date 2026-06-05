@@ -898,9 +898,16 @@ button.car-fav {
     letter-spacing: 1px;
 }
 
+.finance-teaser h2{
+    text-transform: uppercase;
+    letter-spacing: 3px; 
+    font-family: var(--font-display, sans-serif);
+}
+
 .home-btn-primary {
-    background: rgb(227, 27, 27);
-    color: white;
+    background: transparent;
+    border: 1px solid rgb(227, 27, 27);
+    color: rgb(227, 27, 27);
 }
 
 .home-btn-primary:hover {
@@ -986,14 +993,17 @@ button.car-fav {
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 5px 14px;
+    padding: 3.5px 14px;
+    padding-bottom: 6px; 
     border-radius: 4px;
     width: auto;
     min-height: 0;
     margin: 0;
     transition: background 0.2s;
     white-space: nowrap;
+    
 }
+
 
 .nFav-btn:hover {
     background: rgba(227, 27, 27, 0.15);
@@ -1149,6 +1159,71 @@ button.car-fav {
     color: #f00;
 }
 
+.fav-list-body {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.open-full-favs-btn{
+
+    border: 1px solid rgb(227, 27, 27);
+    background: transparent;
+    color:  rgb(227, 27, 27);
+    border: none;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    box-sizing: border-box;
+    height: 44px;
+    padding: 0 28px;
+    line-height: 44px;
+    margin-bottom: 10px;
+}
+
+.open-full-favs-btn:hover{
+    background-color: rgb(200, 20, 20);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
+}
+
+.clear-fav-list-btn{
+
+    border: 1px solid rgb(227, 27, 27);
+    background: transparent;
+    color:  rgb(227, 27, 27);
+    border: none;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    box-sizing: border-box;
+    height: 44px;
+    padding: 0 28px;
+    line-height: 44px;
+    margin-top: 20px;
+}
+
+.total-cost-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 16px;
+    font-weight: 700;
+    
+}
 
 
 /* Lukas: Favoritenliste Ende */
@@ -1909,3 +1984,247 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     padding: 30px 0;
     font-size: 14px;
 }
+
+.merkliste-wrap {
+            max-width: 900px;
+            margin: 100px auto 60px;
+            padding: 0 24px;
+        }
+
+ .merkliste-title {
+            font-family: var(--font-display, sans-serif);
+            font-size: 36px;
+            letter-spacing: 3px;
+            color: var(--white-pure, #fff);
+            margin-bottom: 6px;
+        }
+
+.merkliste-sub {
+            font-size: 13px;
+            color: var(--gray-light, #888);
+            margin-bottom: 32px;
+        }
+
+        /* ── Tabellen-Header ── */
+.merkliste-header {
+    display: grid;
+    grid-template-columns: 30px 180px 1fr 100px 110px 120px;
+    gap: 16px;
+    padding: 0 16px 10px;
+    border-bottom: 1px solid #2E2E2E;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+ /* ── Eine Zeile ── */
+.merkliste-row {
+    display: grid;
+    grid-template-columns: 30px 180px 1fr 100px 110px 120px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #1A1A1A;
+    transition: background 0.15s;
+    min-height: 80px;
+}
+
+.merkliste-row:hover {
+    background: #111;
+}
+
+.merkliste-row img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid #2E2E2E;
+}
+
+.merkliste-row-info-make {
+        font-size: 14px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #CC0000;
+        margin-bottom: 3px;
+}
+
+.merkliste-row-info-model {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.merkliste-row-info-meta {
+    font-size: 13px;
+    color: #888;
+}
+
+.merkliste-row-spec {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.merkliste-row-spec span {
+    display: block;
+    font-size: 10px;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.merkliste-row-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.merkliste-row-price span {
+    display: block;
+    font-size: 10px;
+    color: #666;
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+.merkliste-remove-btn {
+    background: transparent;
+    border: 1px solid #2E2E2E;
+    color: #666;
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: border-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0; 
+}
+
+.merkliste-remove-btn:hover {
+    border-color: #CC0000;
+    color: #FF1A1A;
+}
+
+/* ── Leer-Zustand ── */
+.merkliste-empty {
+    text-align: center;
+    padding: 80px 0;
+    color: #888;
+}
+
+.merkliste-empty-heart {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+}
+
+.merkliste-empty-title {
+    font-size: 20px;
+    color: #ccc;
+    margin-bottom: 8px;
+}
+
+/* ── Footer / Zusammenfassung ── */
+.merkliste-footer {
+    margin-top: 32px;
+    padding: 24px;
+    background: #111;
+    border: 1px solid #2E2E2E;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.merkliste-footer-total-label {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.merkliste-footer-total-val {
+    font-size: 32px;
+    font-weight: 700;
+    color: #FF1A1A;
+}
+
+.merkliste-footer-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    
+}
+
+.merkliste-btn-primary {
+    background: #CC0000;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    box-sizing: border-box;
+    height: 44px;
+    padding: 0 28px;
+    line-height: 44px;
+    margin-top: 20px;
+ 
+}
+
+.merkliste-btn-primary:hover{
+    background-color: rgb(200, 20, 20);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
+}
+
+.merkliste-btn-booking{
+        background: #CC0000;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    box-sizing: border-box;
+    height: 44px;
+    padding: 0 28px;
+    line-height: 44px;
+    margin-top: 20px;
+    width: 160px; 
+}
+
+.merkliste-btn-ghost {
+    background: transparent;
+    color: #888;
+    border: 1px solid #2E2E2E;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.merkliste-btn-ghost:hover { border-color: #CC0000; color: #FF1A1A; }

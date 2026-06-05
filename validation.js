@@ -346,6 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVehicleForm();
     initBookingsPage();
     initBookingButton();
+    initBookingButtons();
     initAdminPage();
 });
 
@@ -361,206 +362,6 @@ function initNavAuthLink() {
         link.href = 'login.php';
     }
 }
-
-
-
-// fav logik: Lukas 
-
-const favorites = new Map(); // schlüssel: auto id, wert: auto daten
-let notTimer = null;
-
-function showNotification(message) {
-    let not = document.getElementById('favNot');
-    if (!not) {
-        not = document.createElement('div');
-        not.id = 'favNot';
-        not.className = 'fav-notification'; //css
-        document.body.appendChild(not);
-    }
-    not.textContent = message;
-    not.classList.add('show'); // später visibility show css regeln 
-    clearTimeout(notTimer);
-    notTimer = setTimeout(() => not.classList.remove('show'), 2500);
-}
-
-// Panel umschalten
-const favOvl = document.getElementById('favOvl'); //overlay element
-const favList = document.getElementById('favList'); // favliste selbst
-
-function togglePanel() {
-    if (!favOvl || !favList) return;
-    const isActive = favList.classList.toggle('active');
-    favOvl.classList.toggle('active', isActive);
-    document.body.style.overflow = isActive ? 'hidden' : ''; // kein scrollen der mainpage
-}
-
-window.togglePanel = togglePanel;
-
-favList?.addEventListener('click', e => e.stopPropagation()); // klicks in der fav liste sollen nicht panel schließen
-
-function getCarData(card) {
-    // sucht bild raus damit das in der fav liste angezeigt wird & oben ? damit kein fehler wenn favlist null oder undef ist zb 
-    const imageSrc = card.querySelector('img')?.src 
-    return {
-        id: card.dataset.id || ((card.querySelector('.car-make')?.textContent || '') + '-' + (card.querySelector('.car-model')?.textContent || '')).trim().replace(/\s+/g, '-').toLowerCase(),
-        make: card.dataset.make || card.querySelector('.car-make')?.textContent?.trim() || '',
-        model: card.dataset.model || card.querySelector('.car-model')?.textContent?.trim() || '',
-        year: card.dataset.year || card.querySelector('.car-year')?.textContent?.trim().split('·')[0]?.trim() || '',
-        fuel: card.dataset.fuel || card.querySelector('.car-year')?.textContent?.trim().split('·')[1]?.trim() || '',
-        km: card.dataset.km || card.querySelector('.car-spec .car-spec-val')?.textContent?.trim() || '',
-        price: card.dataset.price || card.querySelector('.car-price')?.textContent?.trim() || '0 €',
-        image: imageSrc
-    };
-}
-
-function renderList() {
-    const list = document.getElementById('favItems');
-    if (!list) return;
-    list.innerHTML = '';
-
-    // liste neu bauen wenn favs da sind, macht für jeden fav ein listenel
-    favorites.forEach((car, id) => {
-        const item = document.createElement('div');
-        item.className = 'fav-item'; //css
-        item.dataset.id = id;
-        item.innerHTML =
-            '<div class="fav-item-preview">' +
-                (car.image ? '<img src="' + car.image + '" alt="' + car.make + ' ' + car.model + '" />' : '') +
-            '</div>' +
-            '<div class="fav-item-info">' +
-                '<div class="fav-item-title">' + car.make + ' ' + car.model + '</div>' +
-                '<div class="fav-item-price">' + car.price + '</div>' +
-                '<div class="fav-item-meta">' + car.year + ' · ' + car.fuel + ' · ' + car.km + '</div>' +
-            '</div>' +
-            '<button class="fav-item-remove-btn" onclick="removeFav(\'' + id + '\')" title="Entfernen">✕</button>';
-        list.appendChild(item);
-    });
-    // lieber template literals? 
-}
-// favoriten zähler: -> ui update zur folge 
-function updateUI() {
-    const counter = favorites.size;
-    const count = document.getElementById('favCount');
-    const counterEl = document.getElementById('favListCount'); // count in fav liste drin 
-    const footer = document.getElementById('favListFooter');
-    const emptyEl = document.getElementById('favListEmpty');
-    const totalCostEl = document.getElementById('totalCostValue');
-
-    if (count) {
-        count.textContent = counter;
-        count.style.display = counter > 0 ? 'flex' : 'none';
-    }
-
-    if (counterEl) {
-
-    if (counter === 0) {
-        counterEl.textContent = '0 Fahrzeuge in den Favoriten';
-
-    } else if (counter === 1) {
-        counterEl.textContent = '1 Fahrzeug in den Favoriten';
-
-    } else {
-        counterEl.textContent =
-            counter + ' Fahrzeuge in den Favoriten';
-    }
-    
-}
-    if (emptyEl) emptyEl.style.display = counter === 0 ? 'flex' : 'none';
-    if (footer) footer.style.display = counter > 0 ? 'block' : 'none';
-
-    if (totalCostEl) {
-        const total = Array.from(favorites.values()).reduce((sum, car) => {
-            return sum + (parseInt(car.price.replace(/[^0-9]/g, ''), 10) || 0); //regex um alles außer zahlen zu entfernen, parseInt um in zahl umzuwandeln
-        }, 0);
-        totalCostEl.textContent = total.toLocaleString('de-DE') + ' €';
-    }
-
-    renderList();
-}
-
-function toggleFavorite(btn) {
-    // schau ob das herz in einer karte steckt
-    // sonst ist es der detail button
-    const card = btn.closest('.car-card');
-    const source = card || btn;
-
-    const car = getCarData(source);
-    if (!car.id) return;
-
-    if (favorites.has(car.id)) {
-        // war schon drin also raus damit
-        favorites.delete(car.id);
-        btn.textContent = '♡';
-        btn.classList.remove('active');
-        showNotification(car.make + ' ' + car.model + ' entfernt');
-    } else {
-        favorites.set(car.id, car);
-        btn.textContent = '♥';
-        btn.classList.add('active');
-        showNotification(car.make + ' ' + car.model + ' hinzugefügt');
-    }
-
-
-    updateUI();
-}
-
-function removeFav(id) {
-    const car = favorites.get(id);
-    if (!car) return;
-    favorites.delete(id);
-
-    const card = document.querySelector('.car-card[data-id="' + id + '"]');
-    if (card) {
-        const btn = card.querySelector('.car-fav');
-        if (btn) {
-            btn.textContent = '♡';
-            btn.classList.remove('active');
-        }
-    }
-    showNotification(car.make + ' ' + car.model + ' entfernt');
-    updateUI();
-}
-
-function clearAllFavs() {
-    favorites.clear();
-    document.querySelectorAll('.car-card .car-fav.active').forEach(btn => {
-        btn.textContent = '♡';
-        btn.classList.remove('active');
-    });
-
-    showNotification('Favoriten geleert');
-    updateUI();
-}
-
-// fav setup erst wenn seite geladen ist
-// dann die ganzen herz knöpfe anhängen
-// sonst gehts nicht richtig
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.car-fav').forEach(btn => {
-        btn.addEventListener('click', event => {
-            event.stopPropagation();
-            toggleFavorite(btn);
-            updateUI();
-        });
-    });
-
-    document.querySelectorAll('.fav-list-btn').forEach(btn => {
-        btn.addEventListener('click', event => {
-            event.stopPropagation();
-            toggleFavorite(btn);
-            updateUI();
-        });
-    });
-
-    document.getElementById('clearFavListBtn')?.addEventListener('click', clearAllFavs);
-    updateUI();
-});
-
-
-
-
-
-// fav logik ende Lukas 
 
 /*Light Mode Toggle: Niclas */
 function toggleMode() {
@@ -888,6 +689,39 @@ function initBookingButton() {
     });
 }
 
+// hier für mehrere Buttons in der merkliste also nicht nur eine ID sondern class! quasi identische Funktion -Lukas  
+function initBookingButtons() {
+    var btns = document.querySelectorAll('.buchungsBtn');
+    if (!btns.length) return;
+
+    var loggedIn = localStorage.getItem('loggedIn') === 'true';
+    var username = localStorage.getItem('loggedInUser') || '';
+    var locked = loggedIn && isUserLocked(username);
+
+    btns.forEach(function(btn) {
+        var carId    = btn.dataset.carId;
+        var carName  = btn.dataset.carName;
+        var carPrice = btn.dataset.carPrice;
+
+        if (!loggedIn) {
+            btn.disabled = true;
+            btn.title = 'Bitte einloggen, um zu buchen.';
+            return;
+        }
+
+        if (locked) {
+            btn.disabled = true;
+            btn.title = 'Ihr Konto ist vom Administrator gesperrt.';
+            return;
+        }
+
+        btn.addEventListener('click', function() {
+            if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
+            createBooking(carId, carName, carPrice);
+            window.location.href = 'buchungen.php';
+        });
+    });
+}
 
 // ===== ADMIN (Tim) =====
 

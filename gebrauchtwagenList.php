@@ -1,4 +1,8 @@
 <?php
+session_start();
+?>
+
+<?php
 $data = json_decode(file_get_contents("items.json"), true);
 $fahrzeuge = $data["fahrzeuge"];
 ?>
@@ -87,7 +91,7 @@ $fahrzeuge = $data["fahrzeuge"];
 
             <div class="car-image">
                 <span class="car-badge-used">Gebraucht</span>
-                <button class="car-fav" type="button">♡</button>
+                <button class="car-fav" type="button" data-id="<?= $auto['iid'] ?>">♡</button>
 
                 <img
                     src="<?php echo $auto['imagepath']; ?>"
@@ -189,4 +193,5 @@ $fahrzeuge = $data["fahrzeuge"];
         </div>
     </footer>
     <script src="validation.js"></script>
+    <script src="favLogik.js"></script>
 </body>
