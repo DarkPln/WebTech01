@@ -102,6 +102,19 @@ $fahrzeuge = $data["fahrzeuge"];
     <button onclick="sortCarsByPriceDesc()">Preis absteigend</button>
 </div>
 
+<!-- Niclas: Suchfunktion nach Marke -->
+<div class="search-filter">
+    <h3>Fahrzeug suchen</h3>
+
+    <input
+        type="text"
+        id="carSearchInput"
+        placeholder="z.B. Audi oder C 220">
+
+    <button onclick="searchCars()">Suchen</button>
+    <button onclick="resetCarSearch()">Suche zurücksetzen</button>
+</div>
+
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
     <?php foreach ($fahrzeuge as $auto): ?>

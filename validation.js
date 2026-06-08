@@ -938,6 +938,8 @@ function initAdminPage() {
         }
     }
 }
+
+// Niclas: Funktionen für GebrauchtwagenList.php
 function filterByBudget() {
 
     const budget = Number(
@@ -993,5 +995,34 @@ function sortCarsByPriceDesc() {
 
     cars.forEach(car => {
         container.appendChild(car);
+    });
+}
+function searchCars() {
+    const searchTerm = document
+        .getElementById("carSearchInput")
+        .value
+        .toLowerCase();
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+        const make = car.dataset.make.toLowerCase();
+        const model = car.dataset.model.toLowerCase();
+
+        if (make.includes(searchTerm) || model.includes(searchTerm)) {
+            car.style.display = "";
+        } else {
+            car.style.display = "none";
+        }
+    });
+}
+
+function resetCarSearch() {
+    document.getElementById("carSearchInput").value = "";
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+        car.style.display = "";
     });
 }
