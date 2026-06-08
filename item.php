@@ -1,19 +1,16 @@
 <?php
 session_start();
-$data = json_decode(file_get_contents("items.json"), true);
-$fahrzeuge = $data["fahrzeuge"];
+require_once "db.php";
 
 if (!isset($_GET["pid"])) die("Parameter fehlt!");
 if (empty($_GET["pid"]))  die("Keine ID übergeben!");
 
-$pid      = $_GET["pid"];
-$fahrzeug = null;
+$pid  = (int)$_GET["pid"];
+$stmt = getDB()->prepare("SELECT * FROM cars WHERE iid = ?");
+$stmt->execute([$pid]);
+$fahrzeug = $stmt->fetch();
 
-foreach ($fahrzeuge as $auto) {
-    if ($auto["iid"] == $pid) { $fahrzeug = $auto; break; }
-}
-
-if ($fahrzeug === null) die("Fahrzeug wurde nicht gefunden!");
+if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
 ?>
 <!DOCTYPE html>
 <html lang="de">
