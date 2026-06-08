@@ -568,7 +568,9 @@ nav{
     text-decoration: none;
     font-size: 13px;
     text-transform: uppercase;
-
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-links a {
@@ -2490,13 +2492,15 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 .item-fav-btn.car-fav { 
     position: static; 
-    display: block;
+    display: flex;
     width: 100%;
     top: auto ;
     right: auto;
     height: 45px; 
-    font-size: 10px;
-    
+    font-size: 20px;
+    min-height: 30px;
+    text-align: center; 
+
 }
 
 .budget-filter {
