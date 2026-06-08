@@ -228,35 +228,13 @@ function initUserForm() {
     renderUserInserate();
 }
 
+// PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
 async function renderUserInserate() {
     var container = document.getElementById('userInserate');
     if (!container) return;
 
-    const r    = await fetch('api/listings/list.php');
-    const data = await r.json();
-    var inserate = data.listings || [];
-
-    if (inserate.length === 0) {
-        container.innerHTML = '<p style="color:#888; font-size:14px;">Sie haben noch keine Inserate eingereicht.</p>';
-        return;
-    }
-
-    inserate.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    container.innerHTML = inserate.map(function(ins) {
-        var date       = new Date(ins.createdAt).toLocaleDateString('de-DE');
-        var label      = INSERAT_STATUS_LABELS[ins.status] || ins.status;
-        var statusClass = ins.status === 'genehmigt' ? 'status-fertig'
-                        : ins.status === 'abgelehnt' ? 'status-abgelehnt'
-                        : 'status-in_bearbeitung';
-        return '<div class="buchung-card">' +
-            '<div class="buchung-header">' +
-                '<span class="buchung-car">' + escapeHtml(ins.make) + ' ' + escapeHtml(ins.model) + ' (' + escapeHtml(ins.year) + ')</span>' +
-                '<span class="buchung-status ' + statusClass + '">' + escapeHtml(label) + '</span>' +
-            '</div>' +
-            '<div class="buchung-meta">Preis: ' + escapeHtml(String(ins.price)) + ' € &nbsp;|&nbsp; Eingereicht: ' + date + '</div>' +
-            (ins.status === 'abgelehnt' ? '<div class="buchung-reason">Vom Administrator abgelehnt</div>' : '') +
-        '</div>';
-    }).join('');
+    const antwort       = await fetch('api/listings/list_html.php');
+    container.innerHTML = await antwort.text();
 }
 
 // ===== LOGOUT =====
@@ -420,25 +398,27 @@ function initVehicleForm() {
 
 // ===== BUCHUNGEN (Tim) =====
 
+// Sendet eine neue Buchung an den Server und gibt die Antwort zurück
 async function createBooking(carId, carName, carPrice) {
-    const r = await fetch('api/bookings/create.php', {
+    const antwort = await fetch('api/bookings/create.php', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ carId, carName, carPrice }),
+        body:    JSON.stringify({ carId, carName, carPrice })
     });
-    return r.json();
+    return antwort.json();
 }
 
-async function cancelBooking(bookingId) {
-    const r = await fetch('api/bookings/cancel.php', {
+// Markiert eine Buchung als storniert
+async function cancelBooking(buchungsId) {
+    const antwort = await fetch('api/bookings/cancel.php', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ id: bookingId }),
+        body:    JSON.stringify({ id: buchungsId })
     });
-    return r.json();
+    return antwort.json();
 }
 
-//schutz vor Cross-Site-Scripting (XSS) Angriffen
+// Verhindert XSS-Angriffe, indem HTML-Sonderzeichen in Text umgewandelt werden
 function escapeHtml(str) {
     return String(str)
         .replace(/&/g, '&amp;')
@@ -447,15 +427,8 @@ function escapeHtml(str) {
         .replace(/"/g, '&quot;');
 }
 
-var BUCHUNG_STATUS_LABELS = {
-    bestellt:        'Bestellt',
-    in_bearbeitung:  'In Bearbeitung',
-    versandt:        'Versandt, aber nicht erhalten',
-    fertig:          'Fertig',
-    storniert:       'Storniert',
-    abgelehnt:       'Abgelehnt',
-};
 
+// Buchungsseite initialisieren: Weiterleitung wenn nicht eingeloggt, sonst Buchungen anzeigen
 async function initBookingsPage() {
     var container = document.getElementById('buchungenContainer');
     if (!container) return;
@@ -465,55 +438,30 @@ async function initBookingsPage() {
         return;
     }
 
-    var displayEl = document.getElementById('buchungenUsername');
-    if (displayEl) displayEl.textContent = authState.username;
+    // Benutzernamen in der Seitenüberschrift anzeigen
+    var nutzernameAnzeige = document.getElementById('buchungenUsername');
+    if (nutzernameAnzeige) nutzernameAnzeige.textContent = authState.username;
 
     await renderBookingsPage();
 }
 
+// PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
 async function renderBookingsPage() {
     var container = document.getElementById('buchungenContainer');
     if (!container) return;
 
-    const r      = await fetch('api/bookings/list.php');
-    const data   = await r.json();
-    var bookings = data.bookings || [];
-
-    if (bookings.length === 0) {
-        container.innerHTML = '<p class="buchungen-empty">Sie haben noch keine Buchungen.<br><a href="gebrauchtwagenList.php" class="home-btn-primary" style="display:inline-block;margin-top:20px;">Fahrzeuge ansehen</a></p>';
-        return;
-    }
-
-    container.innerHTML = bookings.map(function(b) {
-        var date     = new Date(b.createdAt).toLocaleDateString('de-DE');
-        var canCancel = b.status === 'bestellt';
-        var label    = BUCHUNG_STATUS_LABELS[b.status] || b.status;
-        var html     = '<div class="buchung-card">' +
-            '<div class="buchung-header">' +
-                '<div class="buchung-car">' + escapeHtml(b.carName) + '</div>' +
-                '<span class="buchung-status status-' + escapeHtml(b.status) + '">' + escapeHtml(label) + '</span>' +
-            '</div>' +
-            '<div class="buchung-meta">' +
-                '<span>Preis: <strong>' + Number(b.carPrice).toLocaleString('de-DE') + ' €</strong></span>' +
-                '<span>Bestellt am: ' + date + '</span>' +
-            '</div>';
-        if (b.status === 'abgelehnt' && b.reason) {
-            html += '<div class="buchung-reason">Ablehnungsgrund: ' + escapeHtml(b.reason) + '</div>';
-        }
-        if (canCancel) {
-            html += '<button class="buchung-cancel-btn" onclick="handleCancelBooking(\'' + escapeHtml(b.id) + '\')">Buchung stornieren</button>';
-        }
-        html += '</div>';
-        return html;
-    }).join('');
+    const antwort       = await fetch('api/bookings/list_html.php');
+    container.innerHTML = await antwort.text();
 }
 
-async function handleCancelBooking(bookingId) {
+// Fragt den Nutzer nach Bestätigung und storniert dann die Buchung
+async function handleCancelBooking(buchungsId) {
     if (!confirm('Buchung wirklich stornieren?')) return;
-    const data = await cancelBooking(bookingId);
-    if (data.success) await renderBookingsPage();
+    const ergebnis = await cancelBooking(buchungsId);
+    if (ergebnis.success) await renderBookingsPage();
 }
 
+// Buchen-Button auf der Fahrzeugdetailseite einrichten (wird über die ID "buchungsBtn" gefunden)
 function initBookingButton() {
     var btn = document.getElementById('buchungsBtn');
     if (!btn) return;
@@ -521,39 +469,40 @@ function initBookingButton() {
     var carId    = btn.dataset.carId;
     var carName  = btn.dataset.carName;
     var carPrice = btn.dataset.carPrice;
-    var note     = document.getElementById('buchungsNote');
+    var hinweis  = document.getElementById('buchungsNote');
 
+    // Nicht eingeloggt: Button deaktivieren und Hinweis anzeigen
     if (!authState.loggedIn) {
         btn.disabled = true;
-        btn.title    = 'Bitte einloggen, um zu buchen.';
-        if (note) { note.textContent = 'Bitte einloggen, um dieses Fahrzeug zu buchen.'; note.style.display = 'block'; }
+        if (hinweis) { hinweis.textContent = 'Bitte einloggen, um dieses Fahrzeug zu buchen.'; hinweis.style.display = 'block'; }
         return;
     }
 
+    // Konto gesperrt: Button deaktivieren und Hinweis anzeigen
     if (authState.isLocked) {
         btn.disabled = true;
-        btn.title    = 'Ihr Konto ist vom Administrator gesperrt.';
-        if (note) { note.textContent = 'Ihr Konto ist vom Administrator gesperrt.'; note.style.display = 'block'; }
+        if (hinweis) { hinweis.textContent = 'Ihr Konto ist vom Administrator gesperrt.'; hinweis.style.display = 'block'; }
         return;
     }
 
     btn.addEventListener('click', async function() {
         if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
-        const data = await createBooking(carId, carName, carPrice);
-        if (data.success) {
+        const ergebnis = await createBooking(carId, carName, carPrice);
+        if (ergebnis.success) {
             window.location.href = 'buchungen.php';
         } else {
-            alert(data.message || 'Buchung fehlgeschlagen.');
+            alert(ergebnis.message || 'Buchung fehlgeschlagen.');
         }
     });
 }
 
-// Für mehrere Buttons in der Merkliste (class statt id) -Lukas
+// Buchen-Buttons in der Merkliste einrichten (werden über die CSS-Klasse "buchungsBtn" gefunden, da es mehrere gibt)
+// Lukas
 function initBookingButtons() {
-    var btns = document.querySelectorAll('.buchungsBtn');
-    if (!btns.length) return;
+    var buttons = document.querySelectorAll('.buchungsBtn');
+    if (!buttons.length) return;
 
-    btns.forEach(function(btn) {
+    buttons.forEach(function(btn) {
         var carId    = btn.dataset.carId;
         var carName  = btn.dataset.carName;
         var carPrice = btn.dataset.carPrice;
@@ -571,11 +520,11 @@ function initBookingButtons() {
 
         btn.addEventListener('click', async function() {
             if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
-            const data = await createBooking(carId, carName, carPrice);
-            if (data.success) {
+            const ergebnis = await createBooking(carId, carName, carPrice);
+            if (ergebnis.success) {
                 window.location.href = 'buchungen.php';
             } else {
-                alert(data.message || 'Buchung fehlgeschlagen.');
+                alert(ergebnis.message || 'Buchung fehlgeschlagen.');
             }
         });
     });
@@ -583,181 +532,114 @@ function initBookingButtons() {
 
 // ===== ADMIN (Tim) =====
 
+// Admin-Seite initialisieren: Dashboard zeigen wenn eingeloggt, sonst Login-Formular
 async function initAdminPage() {
-    var loginSection = document.getElementById('adminLoginSection');
+    var loginBereich = document.getElementById('adminLoginSection');
     var dashboard    = document.getElementById('adminDashboard');
-    if (!loginSection && !dashboard) return;
+    if (!loginBereich && !dashboard) return;
 
     if (authState.isAdmin) {
-        if (loginSection) loginSection.style.display = 'none';
+        // Admin ist eingeloggt: Login verstecken, Dashboard anzeigen
+        if (loginBereich) loginBereich.style.display = 'none';
         if (dashboard)    dashboard.style.display    = 'block';
+
+        // Alle drei Bereiche mit Daten aus der Datenbank befüllen
         await renderAdminOrders();
         await renderAdminUsers();
         await renderAdminInserate();
 
+        // Tab-Wechsel einrichten: aktiven Tab und Inhalt hervorheben
         document.querySelectorAll('.admin-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
                 tab.classList.add('active');
-                var target = document.getElementById(tab.dataset.target);
-                if (target) target.classList.add('active');
+                var zielBereich = document.getElementById(tab.dataset.target);
+                if (zielBereich) zielBereich.classList.add('active');
             });
         });
     } else {
-        if (loginSection) loginSection.style.display = 'flex';
+        // Admin ist nicht eingeloggt: Login anzeigen, Dashboard verstecken
+        if (loginBereich) loginBereich.style.display = 'flex';
         if (dashboard)    dashboard.style.display    = 'none';
 
-        var form = document.getElementById('adminLoginForm');
-        if (form) {
-            form.addEventListener('submit', async function(e) {
+        var formular = document.getElementById('adminLoginForm');
+        if (formular) {
+            formular.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                var u   = document.getElementById('adminUsername').value.trim();
-                var p   = document.getElementById('adminPassword').value;
-                var err = document.getElementById('adminLoginError');
+                var benutzername  = document.getElementById('adminUsername').value.trim();
+                var passwort      = document.getElementById('adminPassword').value;
+                var fehlerAnzeige = document.getElementById('adminLoginError');
 
-                const r    = await fetch('api/auth/login.php', {
+                const antwort  = await fetch('api/auth/login.php', {
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify({ username: u, password: p }),
+                    body:    JSON.stringify({ username: benutzername, password: passwort })
                 });
-                const data = await r.json();
+                const ergebnis = await antwort.json();
 
-                if (data.success && data.isAdmin) {
+                if (ergebnis.success && ergebnis.isAdmin) {
+                    // Seite neu laden damit die Session erkannt wird
                     window.location.reload();
                 } else {
-                    if (err) { err.textContent = 'Falscher Benutzername oder Passwort.'; err.style.display = 'block'; }
+                    if (fehlerAnzeige) { fehlerAnzeige.textContent = 'Falscher Benutzername oder Passwort.'; fehlerAnzeige.style.display = 'block'; }
                 }
             });
         }
     }
 }
 
-function renderOrderList(containerId, bookings) {
-    var container = document.getElementById(containerId);
-    if (!container) return;
-    if (bookings.length === 0) {
-        container.innerHTML = '<p class="admin-empty">Keine Aufträge.</p>';
-        return;
-    }
-    container.innerHTML = bookings.map(function(b) {
-        var date    = new Date(b.createdAt).toLocaleDateString('de-DE');
-        var label   = BUCHUNG_STATUS_LABELS[b.status] || b.status;
-        var actions = '';
-        if (b.status === 'bestellt') {
-            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'in_bearbeitung\')">In Bearbeitung</button>';
-            actions += '<button class="btn-reject" onclick="adminRejectOrder(\'' + b.id + '\')">Ablehnen</button>';
-        } else if (b.status === 'in_bearbeitung') {
-            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'versandt\')">Als versandt markieren</button>';
-            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'fertig\')">Fertigstellen</button>';
-            actions += '<button class="btn-reject" onclick="adminRejectOrder(\'' + b.id + '\')">Ablehnen</button>';
-        } else if (b.status === 'versandt') {
-            actions += '<button onclick="adminSetStatus(\'' + b.id + '\', \'fertig\')">Als erhalten markieren</button>';
-        }
-        return '<div class="admin-order-card">' +
-            '<div class="admin-order-header">' +
-                '<div class="admin-order-car">' + escapeHtml(b.carName) + '</div>' +
-                '<span class="buchung-status status-' + escapeHtml(b.status) + '">' + escapeHtml(label) + '</span>' +
-            '</div>' +
-            '<div class="admin-order-meta">' +
-                '<span>Nutzer: <strong>' + escapeHtml(b.userId) + '</strong></span>' +
-                '<span>Preis: <strong>' + Number(b.carPrice).toLocaleString('de-DE') + ' €</strong></span>' +
-                '<span>Datum: ' + date + '</span>' +
-            '</div>' +
-            (b.reason ? '<div class="buchung-reason">Grund: ' + escapeHtml(b.reason) + '</div>' : '') +
-            (actions   ? '<div class="admin-order-actions">' + actions + '</div>' : '') +
-        '</div>';
-    }).join('');
-}
-
+// Alle vier Auftrags-Tabs parallel vom Server laden und befüllen
 async function renderAdminOrders() {
-    const r      = await fetch('api/admin/orders.php');
-    const data   = await r.json();
-    var bookings = (data.bookings || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    renderOrderList('adminOrdersNew',        bookings.filter(b => b.status === 'bestellt'));
-    renderOrderList('adminOrdersProcessing', bookings.filter(b => b.status === 'in_bearbeitung' || b.status === 'versandt'));
-    renderOrderList('adminOrdersRejected',   bookings.filter(b => b.status === 'abgelehnt' || b.status === 'storniert'));
-    renderOrderList('adminOrdersCompleted',  bookings.filter(b => b.status === 'fertig'));
+    const bereiche   = ['new', 'processing', 'rejected', 'completed'];
+    const containerIds = ['adminOrdersNew', 'adminOrdersProcessing', 'adminOrdersRejected', 'adminOrdersCompleted'];
+
+    // Promise.all schickt alle vier Anfragen gleichzeitig ab
+    const antworten = await Promise.all(
+        bereiche.map(b => fetch('api/admin/orders_html.php?bereich=' + b).then(r => r.text()))
+    );
+
+    bereiche.forEach((_, i) => {
+        document.getElementById(containerIds[i]).innerHTML = antworten[i];
+    });
 }
 
-var INSERAT_STATUS_LABELS = {
-    eingereicht: 'Eingereicht',
-    genehmigt:   'Genehmigt',
-    abgelehnt:   'Abgelehnt',
-};
-
+// PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
 async function renderAdminInserate() {
     var container = document.getElementById('adminInserate');
     if (!container) return;
 
-    const r    = await fetch('api/admin/listings.php');
-    const data = await r.json();
-    var inserate = (data.listings || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-    if (inserate.length === 0) {
-        container.innerHTML = '<p class="admin-empty">Keine eingereichten Inserate.</p>';
-        return;
-    }
-    container.innerHTML = inserate.map(function(ins) {
-        var date       = new Date(ins.createdAt).toLocaleDateString('de-DE');
-        var label      = INSERAT_STATUS_LABELS[ins.status] || ins.status;
-        var statusClass = ins.status === 'genehmigt' ? 'status-fertig' : ins.status === 'abgelehnt' ? 'status-abgelehnt' : 'status-in_bearbeitung';
-        var actions    = ins.status === 'eingereicht'
-            ? '<button onclick="adminApproveInserat(\'' + ins.id + '\')">Genehmigen</button>' +
-              '<button class="btn-reject" onclick="adminRejectInserat(\'' + ins.id + '\')">Ablehnen</button>'
-            : '';
-        return '<div class="admin-order-card">' +
-            '<div class="admin-order-header">' +
-                '<div class="admin-order-car">' + escapeHtml(ins.make) + ' ' + escapeHtml(ins.model) + ' (' + escapeHtml(ins.year) + ')</div>' +
-                '<span class="buchung-status ' + statusClass + '">' + escapeHtml(label) + '</span>' +
-            '</div>' +
-            '<div class="admin-order-meta">' +
-                '<span>Von: <strong>' + escapeHtml(ins.name) + '</strong></span>' +
-                '<span>Nutzer: <strong>' + escapeHtml(ins.userId) + '</strong></span>' +
-                '<span>Preis: <strong>' + Number(ins.price).toLocaleString('de-DE') + ' €</strong></span>' +
-                '<span>Datum: ' + date + '</span>' +
-            '</div>' +
-            '<div class="admin-order-meta" style="margin-top:-8px;">' +
-                '<span>' + escapeHtml(ins.km) + ' km</span>' +
-                '<span>' + escapeHtml(ins.fuel) + '</span>' +
-                '<span>' + escapeHtml(ins.type) + '</span>' +
-                '<span>' + escapeHtml(ins.condition) + '</span>' +
-            '</div>' +
-            (ins.desc ? '<div style="font-size:13px;color:#bdbdbd;margin-bottom:8px;text-align:left;">' + escapeHtml(ins.desc) + '</div>' : '') +
-            (actions  ? '<div class="admin-order-actions">' + actions + '</div>' : '') +
-        '</div>';
-    }).join('');
+    const antwort          = await fetch('api/admin/inserate_html.php');
+    container.innerHTML    = await antwort.text();
 }
 
+// Inserat genehmigen und Liste neu laden
 async function adminApproveInserat(id) {
-    await fetch('api/admin/listings.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status: 'genehmigt' }) });
+    await fetch('api/admin/listings.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id, status: 'genehmigt' })
+    });
     await renderAdminInserate();
 }
 
+// Inserat ablehnen und Liste neu laden
 async function adminRejectInserat(id) {
-    await fetch('api/admin/listings.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status: 'abgelehnt' }) });
+    await fetch('api/admin/listings.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id, status: 'abgelehnt' })
+    });
     await renderAdminInserate();
 }
 
+// PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
 async function renderAdminUsers() {
     var container = document.getElementById('adminUsersList');
     if (!container) return;
 
-    const r    = await fetch('api/admin/users.php');
-    const data = await r.json();
-    var users  = data.users || [];
-
-    if (users.length === 0) {
-        container.innerHTML = '<p class="admin-empty">Keine registrierten Nutzer.</p>';
-        return;
-    }
-    container.innerHTML = users.map(function(u) {
-        return '<div class="admin-user-row">' +
-            '<span class="admin-user-name">' + escapeHtml(u.username) + '</span>' +
-            '<span class="admin-user-status ' + (u.locked ? 'user-locked' : 'user-active') + '">' + (u.locked ? 'Gesperrt' : 'Aktiv') + '</span>' +
-            '<button class="' + (u.locked ? 'btn-unlock' : 'btn-lock') + '" onclick="adminToggleLock(\'' + escapeHtml(u.username) + '\')">' + (u.locked ? 'Entsperren' : 'Sperren') + '</button>' +
-        '</div>';
-    }).join('');
+    const antwort       = await fetch('api/admin/users_html.php');
+    container.innerHTML = await antwort.text();
 }
 
 async function adminSetStatus(bookingId, status) {
