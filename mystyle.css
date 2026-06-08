@@ -2522,7 +2522,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 .filter-btn {
     width: auto !important;
-    min-width: 100px;
+    min-width: 200px;
 
     padding: 8px 14px;
     margin: 5px;
@@ -2530,7 +2530,20 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     display: inline-block;
 
     font-size: 14px;
+
+    background: transparent;
+    border: 1px solid rgb(227, 27, 27);
+    color: rgb(227, 27, 27);
+
+
 }
+
+.filter-section{
+    text-transform: uppercase;
+    letter-spacing: 3px; 
+    font-family: var(--font-display, sans-serif);
+}
+
 .filter-button-row {
     display: flex;
     justify-content: center;

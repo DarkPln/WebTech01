@@ -77,7 +77,8 @@ $fahrzeuge = $data["fahrzeuge"];
     <br>
 
 <!-- Niclas: Budget-Filter mit Schieberegler -->
- <div class="budget-filter">
+<div class ="filter-section">
+<div class="budget-filter">
     <h3>Maximales Budget</h3>
 
     <div class="slider-container">
@@ -139,6 +140,7 @@ $fahrzeuge = $data["fahrzeuge"];
         </button>
     </div>
 </div>
+</div> 
 
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
