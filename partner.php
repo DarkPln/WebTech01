@@ -13,18 +13,7 @@
         $heroText   = "Auto24 arbeitet mit führenden Finanz-, Versicherungs- und Automobilpartnern zusammen, um Ihnen den bestmöglichen Service zu bieten.";
     ?>
 
-    <nav>
-        <a href="index.php" class="nav-logo">Auto<span>24</span></a>
-        <ul class="nav-links">
-            <li><a href="index.php">Neuwagen</a></li>
-            <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-            <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
-        </ul>
-        <div class="nav-right">
-            <a href="login.php" class="nav-auth-link" id="navAuthLink">Login</a>
-            <button class="mode-btn" onclick="toggleMode()">Light</button>
-        </div>
-    </nav>
+    <?php require_once 'nav.php'; ?>
 
     <main class="home-main">
 
@@ -118,41 +107,7 @@
 
     </main>
 
-    <footer>
-        <div class="footer-top">
-            <div class="footer-logo-dsc">
-                <div class="footer-logo">Auto<span>24</span></div>
-                <div class="footer-dsc">Deutschlands praktische Fahrzeugbörse für Neu- und Gebrauchtwagen. Unkompliziert, sicher und schnell.</div>
-            </div>
-            <div>
-                <div class="footer-heading">Fahrzeuge</div>
-                <ul class="footer-links">
-                    <li><a href="#">Neuwagen</a></li>
-                    <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-                    <li><a href="#">Elektrofahrzeuge</a></li>
-                    <li><a href="#">Sonderangebote</a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="footer-heading">Kundenservice</div>
-                <ul class="footer-links">
-                    <li><a href="fahrzeug-verkaufen.php">Fahrzeug verkaufen</a></li>
-                    <li><a href="faq.php">Hilfe &amp; FAQ</a></li>
-                    <li><a href="finanzierung.php">Finanzierung</a></li>
-                    <li><a href="versicherung.php">Versicherung</a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="footer-heading">Unternehmen</div>
-                <ul class="footer-links">
-                    <li><a href="about.php">Über uns</a></li>
-                    <li><a href="datenschutz.php">Datenschutz</a></li>
-                    <li><a href="agb.php">AGB</a></li>
-                    <li><a href="partner.php">Partner</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    <?php require_once 'footer.php'; ?>
 
     <script src="validation.js"></script>
 </body>

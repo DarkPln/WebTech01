@@ -79,19 +79,7 @@ $endbetrag = $total - $rabattBetrag;
 </head>
 <body>
 
-<nav>
-    <a href="index.php" class="nav-logo">Auto<span>24</span></a>
-    <ul class="nav-links">
-        <li><a href="index.php">Neuwagen</a></li>
-        <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-        <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
-    </ul>
-    <div class="nav-right">
-        <a href="merkliste.php" class="nFav-btn">
-            ♡ Merkliste (<?= count($favorites) ?>)
-        </a>
-    </div>
-</nav>
+<?php require_once 'nav.php'; ?>
 
 <div class="merkliste-wrap">
 
