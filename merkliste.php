@@ -171,28 +171,26 @@ $endbetrag = $total - $rabattBetrag;
 
         <!-- Zusammenfassung -->
         <div class="merkliste-footer">
-            <div>
-            <!--Rabattberechnung-->
-                
-            <div class="merkliste-footer-total-label">Gesamtwert</div>
-            <div class="merkliste-footer-total-val">
-                <?= number_format($total, 0, ',', '.') ?> €
+            <div class="merkliste-summary">
+                <div class="merkliste-summary-row">
+                    <span class="merkliste-summary-label">Gesamtwert</span>
+                    <span class="merkliste-summary-val"><?= number_format($total, 0, ',', '.') ?> €</span>
+                </div>
+                <?php if ($rabattProzent > 0): ?>
+                <div class="merkliste-summary-row">
+                    <span class="merkliste-summary-label">Rabatt (<?= $rabattProzent ?> %)</span>
+                    <span class="merkliste-summary-val merkliste-summary-discount">−<?= number_format($rabattBetrag, 0, ',', '.') ?> €</span>
+                </div>
+                <?php endif; ?>
+                <div class="merkliste-summary-sep"></div>
+                <div class="merkliste-summary-row">
+                    <span class="merkliste-summary-label merkliste-summary-label--total">Endbetrag</span>
+                    <span class="merkliste-summary-val merkliste-summary-val--total"><?= number_format($endbetrag, 0, ',', '.') ?> €</span>
+                </div>
             </div>
-
-            <div class="merkliste-footer-total-label">Rabatt</div>
-            <div class="merkliste-footer-total-val">
-                <?= $rabattProzent ?> %
-                (-<?= number_format($rabattBetrag, 0, ',', '.') ?> €)
-            </div>
-
-            <div class="merkliste-footer-total-label">Endbetrag</div>
-            <div class="merkliste-footer-total-val">
-                <?= number_format($endbetrag, 0, ',', '.') ?> €
-            </div>
-        </div>
         <div class="merkliste-footer-btns">
 
-            <a href="gebrauchtwagenList.php" class="merkliste-btn-primary" style="display:inline-flex; align-items:center;">Weiter suchen</a>
+            <a href="gebrauchtwagenList.php" class="merkliste-btn-primary">Weiter suchen</a>
                 <form method="POST" action="merkliste.php" style="margin:0">
                     <input type="hidden" name="clear_all" value="1">
                     <button class="merkliste-btn-ghost" type="submit">Alle entfernen</button>
