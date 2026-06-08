@@ -76,6 +76,23 @@ $fahrzeuge = $data["fahrzeuge"];
     <br>
     <br>
 
+<!-- Budget-Filter -->
+<div class="budget-filter">
+    <h3>Fahrzeuge nach Budget filtern</h3>
+
+    <input
+        type="number"
+        id="budgetInput"
+        placeholder="Maximalpreis in €">
+
+    <button onclick="filterByBudget()">
+        Fahrzeuge anzeigen
+    </button>
+
+    <button onclick="resetBudgetFilter()">
+        Filter zurücksetzen
+    </button>
+</div>
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
     <?php foreach ($fahrzeuge as $auto): ?>

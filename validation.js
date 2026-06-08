@@ -938,3 +938,39 @@ function initAdminPage() {
         }
     }
 }
+function filterByBudget() {
+
+    const budget = Number(
+        document.getElementById("budgetInput").value
+    );
+
+    if (budget <= 0) {
+        alert("Bitte ein gültiges Budget eingeben.");
+        return;
+    }
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+
+        const price = Number(
+            car.dataset.price
+        );
+
+        if (price <= budget) {
+            car.style.display = "";
+        } else {
+            car.style.display = "none";
+        }
+    });
+}
+function resetBudgetFilter() {
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+        car.style.display = "";
+    });
+
+    document.getElementById("budgetInput").value = "";
+}
