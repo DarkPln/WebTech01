@@ -76,6 +76,70 @@ $fahrzeuge = $data["fahrzeuge"];
     <br>
     <br>
 
+<!-- Niclas: Budget-Filter mit Schieberegler -->
+ <div class="budget-filter">
+    <h3>Maximales Budget</h3>
+
+    <div class="slider-container">
+
+        <input
+            type="range"
+            id="budgetInput"
+            min="50000"
+            max="100000"
+            step="1000"
+            value="100000"
+            oninput="updateBudgetLabel()">
+
+        <div id="budgetValue">
+            100.000 €
+        </div>
+        <div class="filter-button-row">
+            <button class="filter-btn" onclick="filterByBudget()">
+             Anwenden
+             </button>
+
+             <button class="filter-btn" onclick="resetBudgetFilter()">
+             Reset
+            </button>
+            </div>   
+        </div>     
+</div>
+<!-- Niclas: Sortier-Buttons -->
+<div class="sort-filter">
+    <h3>Fahrzeuge sortieren</h3>
+
+    <div class="filter-button-row">
+        <button class="filter-btn" onclick="sortCarsByPriceAsc()">
+            Preis ↑
+        </button>
+
+        <button class="filter-btn" onclick="sortCarsByPriceDesc()">
+            Preis ↓
+        </button>
+    </div>
+</div>
+
+<!-- Niclas: Suchfunktion nach Marke -->
+<div class="search-filter">
+    <h3>Fahrzeug suchen</h3>
+
+    <input
+        type="text"
+        id="carSearchInput"
+        placeholder="z.B. Audi oder C 220">
+
+    <div class="filter-button-row">
+        <button class="filter-btn" onclick="searchCars()">
+            Suchen
+        </button>
+
+        <button class="filter-btn" onclick="resetCarSearch()">
+            Reset
+        </button>
+    </div>
+</div>
+
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
     <?php foreach ($fahrzeuge as $auto): ?>

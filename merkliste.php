@@ -35,6 +35,18 @@ foreach ($favorites as $iid) {
 }
 
 $total = array_sum(array_column($gemerkteAutos, 'preis'));
+$anzahl = count($gemerkteAutos);
+
+if ($anzahl >= 3) {
+    $rabattProzent = 20;
+} elseif ($anzahl >= 2) {
+    $rabattProzent = 10;
+} else {
+    $rabattProzent = 0;
+}
+
+$rabattBetrag = $total * ($rabattProzent / 100);
+$endbetrag = $total - $rabattBetrag;
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -151,12 +163,27 @@ $total = array_sum(array_column($gemerkteAutos, 'preis'));
         <!-- Zusammenfassung -->
         <div class="merkliste-footer">
             <div>
-                <div class="merkliste-footer-total-label">Gesamtwert</div>
-                <div class="merkliste-footer-total-val"><?= number_format($total, 0, ',', '.') ?> €</div>
+            <!--Rabattberechnung-->
+                
+            <div class="merkliste-footer-total-label">Gesamtwert</div>
+            <div class="merkliste-footer-total-val">
+                <?= number_format($total, 0, ',', '.') ?> €
             </div>
-            <div class="merkliste-footer-btns">
 
-                <a href="gebrauchtwagenList.php" class="merkliste-btn-primary" style="display:inline-flex; align-items:center;">Weiter suchen</a>
+            <div class="merkliste-footer-total-label">Rabatt</div>
+            <div class="merkliste-footer-total-val">
+                <?= $rabattProzent ?> %
+                (-<?= number_format($rabattBetrag, 0, ',', '.') ?> €)
+            </div>
+
+            <div class="merkliste-footer-total-label">Endbetrag</div>
+            <div class="merkliste-footer-total-val">
+                <?= number_format($endbetrag, 0, ',', '.') ?> €
+            </div>
+        </div>
+        <div class="merkliste-footer-btns">
+
+            <a href="gebrauchtwagenList.php" class="merkliste-btn-primary" style="display:inline-flex; align-items:center;">Weiter suchen</a>
                 <form method="POST" action="merkliste.php" style="margin:0">
                     <input type="hidden" name="clear_all" value="1">
                     <button class="merkliste-btn-ghost" type="submit">Alle entfernen</button>

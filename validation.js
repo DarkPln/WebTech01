@@ -938,3 +938,102 @@ function initAdminPage() {
         }
     }
 }
+
+// Niclas: Funktionen für GebrauchtwagenList.php
+function updateBudgetLabel() {
+
+    const value = Number(
+        document.getElementById("budgetInput").value
+    );
+
+    document.getElementById("budgetValue").textContent =
+        value.toLocaleString("de-DE") + " €";
+}
+function filterByBudget() {
+
+    const budget = Number(
+        document.getElementById("budgetInput").value
+    );
+
+    if (budget <= 0) {
+        alert("Bitte ein gültiges Budget eingeben.");
+        return;
+    }
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+
+        const price = Number(
+            car.dataset.price
+        );
+
+        if (price <= budget) {
+            car.style.display = "";
+        } else {
+            car.style.display = "none";
+        }
+    });
+}
+function resetBudgetFilter() {
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+        car.style.display = "";
+    });
+
+    document.getElementById("budgetInput").value = 100000;
+
+    updateBudgetLabel();
+}
+function sortCarsByPriceAsc() {
+    const container = document.getElementById("carLayout");
+    const cars = Array.from(container.querySelectorAll(".car-card"));
+
+    cars.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
+
+    cars.forEach(car => {
+        container.appendChild(car);
+    });
+}
+
+function sortCarsByPriceDesc() {
+    const container = document.getElementById("carLayout");
+    const cars = Array.from(container.querySelectorAll(".car-card"));
+
+    cars.sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price));
+
+    cars.forEach(car => {
+        container.appendChild(car);
+    });
+}
+function searchCars() {
+    const searchTerm = document
+        .getElementById("carSearchInput")
+        .value
+        .toLowerCase();
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+        const make = car.dataset.make.toLowerCase();
+        const model = car.dataset.model.toLowerCase();
+
+        if (make.includes(searchTerm) || model.includes(searchTerm)) {
+            car.style.display = "";
+        } else {
+            car.style.display = "none";
+        }
+    });
+}
+
+function resetCarSearch() {
+    document.getElementById("carSearchInput").value = "";
+
+    const cars = document.querySelectorAll(".car-card");
+
+    cars.forEach(car => {
+        car.style.display = "";
+    });
+}
