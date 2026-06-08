@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Buchungen des eingeloggten Nutzers laden, neueste zuerst
+$uid     = $_SESSION['user_id'];
 $abfrage = getDB()->prepare(
     'SELECT booking_key AS id, car_name AS carName, car_price AS carPrice,
             status, reason, created_at AS createdAt
@@ -17,8 +18,9 @@ $abfrage = getDB()->prepare(
      WHERE user_id = ?
      ORDER BY created_at DESC'
 );
-$abfrage->execute([$_SESSION['user_id']]);
-$buchungen = $abfrage->fetchAll();
+$abfrage->bind_param('i', $uid);
+$abfrage->execute();
+$buchungen = $abfrage->get_result()->fetch_all(MYSQLI_ASSOC);
 
 if (empty($buchungen)): ?>
 

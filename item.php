@@ -6,9 +6,11 @@ if (!isset($_GET["pid"])) die("Parameter fehlt!");
 if (empty($_GET["pid"]))  die("Keine ID übergeben!");
 
 $pid  = (int)$_GET["pid"];
-$stmt = getDB()->prepare("SELECT * FROM cars WHERE iid = ?");
-$stmt->execute([$pid]);
-$fahrzeug = $stmt->fetch();
+$db   = getDB();
+$stmt = $db->prepare("SELECT * FROM cars WHERE iid = ?");
+$stmt->bind_param('i', $pid);
+$stmt->execute();
+$fahrzeug = $stmt->get_result()->fetch_assoc();
 
 if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
 ?>

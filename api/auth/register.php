@@ -14,13 +14,16 @@ if (strlen($username) < 5 || strlen($password) < 10) {
 
 $db   = getDB();
 $stmt = $db->prepare('SELECT id FROM users WHERE username = ?');
-$stmt->execute([$username]);
+$stmt->bind_param('s', $username);
+$stmt->execute();
 
-if ($stmt->fetch()) {
+if ($stmt->get_result()->fetch_assoc()) {
     echo json_encode(['success' => false, 'message' => 'Benutzername bereits vergeben']);
     exit;
 }
 
-$db->prepare('INSERT INTO users (username, password) VALUES (?, ?)')->execute([$username, $password]);
+$ins = $db->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
+$ins->bind_param('ss', $username, $password);
+$ins->execute();
 
 echo json_encode(['success' => true]);

@@ -10,11 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($useDB) {
         $db = getDB();
         if (isset($_POST['remove_id'])) {
-            $db->prepare('DELETE FROM favorites WHERE user_id = ? AND car_id = ?')
-               ->execute([$userId, (int)$_POST['remove_id']]);
+            $removeId = (int)$_POST['remove_id'];
+            $stmt = $db->prepare('DELETE FROM favorites WHERE user_id = ? AND car_id = ?');
+            $stmt->bind_param('ii', $userId, $removeId);
+            $stmt->execute();
         }
         if (isset($_POST['clear_all'])) {
-            $db->prepare('DELETE FROM favorites WHERE user_id = ?')->execute([$userId]);
+            $stmt = $db->prepare('DELETE FROM favorites WHERE user_id = ?');
+            $stmt->bind_param('i', $userId);
+            $stmt->execute();
         }
     } else {
         if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
@@ -35,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Favoriten laden: DB (eingeloggt) oder Session (Gast)
 if ($useDB) {
     $stmt = getDB()->prepare('SELECT car_id FROM favorites WHERE user_id = ?');
-    $stmt->execute([$userId]);
-    $favorites = array_column($stmt->fetchAll(), 'car_id');
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $favorites = array_column($stmt->get_result()->fetch_all(MYSQLI_ASSOC), 'car_id');
 } else {
     $favorites = $_SESSION['favorites'] ?? [];
 }
@@ -121,7 +126,7 @@ $endbetrag = $total - $rabattBetrag;
             <div class="merkliste-row">
 
                 <!-- Checkbox -->
-                <input type="checkbox" class="merkliste-checkbox" 
+                <input type="checkbox" class="merkliste-checkbox"
                 data-car-id="<?= $auto['iid'] ?>"
                 data-car-name="<?= htmlspecialchars($auto['name']) ?>"
                 data-car-price="<?= (int)$auto['preis'] ?>">
@@ -150,7 +155,7 @@ $endbetrag = $total - $rabattBetrag;
                 </div>
 
                 <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
-            
+
                 <!-- Entfernen -->
                 <form method="POST" action="merkliste.php">
                     <input type="hidden" name="remove_id" value="<?= $auto['iid'] ?>">

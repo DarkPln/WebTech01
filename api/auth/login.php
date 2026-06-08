@@ -27,8 +27,9 @@ if ($username === 'TestUser' && $password === 'TestPass123') {
 
 $db   = getDB();
 $stmt = $db->prepare('SELECT id, username, password, is_locked, is_admin FROM users WHERE username = ?');
-$stmt->execute([$username]);
-$user = $stmt->fetch();
+$stmt->bind_param('s', $username);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
 
 if (!$user || $user['password'] !== $password) {
     echo json_encode(['success' => false, 'message' => 'Falscher Benutzername oder Passwort']);

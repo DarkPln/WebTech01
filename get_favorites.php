@@ -8,8 +8,9 @@ $useDB  = ($userId !== null && $userId > 0);
 
 if ($useDB) {
     $stmt = getDB()->prepare('SELECT car_id FROM favorites WHERE user_id = ?');
-    $stmt->execute([$userId]);
-    $ids = array_column($stmt->fetchAll(), 'car_id');
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $ids = array_column($stmt->get_result()->fetch_all(MYSQLI_ASSOC), 'car_id');
 } else {
     if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
     $ids = array_values($_SESSION['favorites']);
@@ -17,10 +18,13 @@ if ($useDB) {
 
 $cars = [];
 if (!empty($ids)) {
-    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $intIds       = array_map('intval', $ids);
+    $placeholders = implode(',', array_fill(0, count($intIds), '?'));
+    $types        = str_repeat('i', count($intIds));
     $stmt = getDB()->prepare("SELECT iid, marke, modell, baujahr, kraftstoff, kilometerstand, preis, imagepath FROM cars WHERE iid IN ($placeholders)");
-    $stmt->execute(array_map('intval', $ids));
-    $cars = $stmt->fetchAll();
+    $stmt->bind_param($types, ...$intIds);
+    $stmt->execute();
+    $cars = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
 echo json_encode(['success' => true, 'favorites' => $ids, 'cars' => $cars]);

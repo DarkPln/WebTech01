@@ -10,9 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 $isLocked = false;
 if ($_SESSION['user_id'] > 0) {
     require_once '../../db.php';
-    $stmt = getDB()->prepare('SELECT is_locked FROM users WHERE id = ?');
-    $stmt->execute([$_SESSION['user_id']]);
-    $row = $stmt->fetch();
+    $userId = $_SESSION['user_id'];
+    $stmt   = getDB()->prepare('SELECT is_locked FROM users WHERE id = ?');
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $row      = $stmt->get_result()->fetch_assoc();
     $isLocked = $row ? (bool)$row['is_locked'] : false;
 }
 

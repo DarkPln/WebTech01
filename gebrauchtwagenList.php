@@ -4,8 +4,8 @@ session_start();
 
 <?php
 require_once "db.php";
-$stmt = getDB()->query("SELECT * FROM cars WHERE kategorie = 'gebrauchtwagen' ORDER BY id ASC");
-$fahrzeuge = $stmt->fetchAll();
+$result    = getDB()->query("SELECT * FROM cars WHERE kategorie = 'gebrauchtwagen' ORDER BY id ASC");
+$fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="de">

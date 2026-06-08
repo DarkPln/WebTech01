@@ -24,9 +24,11 @@ if (!$fahrzeugId) {
 
 // Prüfen ob das Konto vom Administrator gesperrt wurde
 if ($_SESSION['user_id'] > 0) {
+    $uid     = $_SESSION['user_id'];
     $abfrage = getDB()->prepare('SELECT is_locked FROM users WHERE id = ?');
-    $abfrage->execute([$_SESSION['user_id']]);
-    $nutzer = $abfrage->fetch();
+    $abfrage->bind_param('i', $uid);
+    $abfrage->execute();
+    $nutzer = $abfrage->get_result()->fetch_assoc();
     if ($nutzer && $nutzer['is_locked']) {
         echo json_encode(['success' => false, 'message' => 'Ihr Konto ist gesperrt']);
         exit;
@@ -35,18 +37,15 @@ if ($_SESSION['user_id'] > 0) {
 
 // Eindeutigen Schlüssel für diese Buchung erstellen (z.B. b_1718000000_3fa2c1)
 $schluessel = 'b_' . time() . '_' . bin2hex(random_bytes(3));
+$uid        = $_SESSION['user_id'];
+$uname      = $_SESSION['username'];
 
 // Buchung in der Datenbank speichern
-getDB()->prepare(
+$ins = getDB()->prepare(
     'INSERT INTO bookings (booking_key, user_id, username, car_id, car_name, car_price)
      VALUES (?, ?, ?, ?, ?, ?)'
-)->execute([
-    $schluessel,
-    $_SESSION['user_id'],
-    $_SESSION['username'],
-    $fahrzeugId,
-    $fahrzeugName,
-    $fahrzeugPreis
-]);
+);
+$ins->bind_param('siissd', $schluessel, $uid, $uname, $fahrzeugId, $fahrzeugName, $fahrzeugPreis);
+$ins->execute();
 
 echo json_encode(['success' => true, 'id' => $schluessel]);

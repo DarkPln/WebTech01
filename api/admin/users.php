@@ -12,14 +12,15 @@ $db     = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    $stmt = $db->query('SELECT username, is_locked AS locked FROM users ORDER BY created_at ASC');
-    echo json_encode(['success' => true, 'users' => $stmt->fetchAll()]);
+    $result = $db->query('SELECT username, is_locked AS locked FROM users ORDER BY created_at ASC');
+    echo json_encode(['success' => true, 'users' => $result->fetch_all(MYSQLI_ASSOC)]);
 } else {
     $input    = json_decode(file_get_contents('php://input'), true) ?? [];
     $username = $input['username'] ?? '';
 
-    $db->prepare('UPDATE users SET is_locked = NOT is_locked WHERE username = ?')
-       ->execute([$username]);
+    $stmt = $db->prepare('UPDATE users SET is_locked = NOT is_locked WHERE username = ?');
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
 
     echo json_encode(['success' => true]);
 }

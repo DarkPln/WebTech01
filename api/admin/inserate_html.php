@@ -10,7 +10,7 @@ if (empty($_SESSION['is_admin'])) {
 }
 
 // Alle Inserate aus der Datenbank laden, neueste zuerst
-$abfrage = getDB()->query(
+$result  = getDB()->query(
     'SELECT listing_key AS id, username AS userId, contact_name AS name,
             make, model, year, price, km, fuel, type,
             cond AS `condition`, description AS `desc`,
@@ -18,7 +18,7 @@ $abfrage = getDB()->query(
      FROM listings
      ORDER BY created_at DESC'
 );
-$inserate = $abfrage->fetchAll();
+$inserate = $result->fetch_all(MYSQLI_ASSOC);
 
 if (empty($inserate)): ?>
 
