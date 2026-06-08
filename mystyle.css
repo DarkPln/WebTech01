@@ -1,37 +1,24 @@
 body {
     background-color: #0a0a0a;
-    
     margin: 0;
     padding: 0;
-    color:rgb(250, 250, 250);
+    color: rgb(250, 250, 250);
     text-align: center;
-
     font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-style: normal;
-
 }
 
-th{
-    background-color: lightgray;
-}
+/* ===== TYPOGRAFIE ===== */
 
-/* ===== TYPOGRAFIE - Einheitliches Schriftbild ===== */
-/* Angepasst von: tim */
-/* CSS-Kaskade: Diese Regeln gelten global für alle HTML-Elemente des Typs p, h1, h2, h3.
-   Spezifischere Selektoren (z.B. .auth-card p) überschreiben diese Basis-Regeln.
-   font-family, font-weight und letter-spacing sorgen für ein einheitliches Schriftbild. */
-
-/* Absätze - Standard-Textgröße */
-p{
+p {
     text-align: center;
     font-size: 16px;
     line-height: 1.6;
     margin: 15px 0;
 }
 
-/* Hauptüberschrift */
-h1{
+h1 {
     font-family: 'DM Sans', sans-serif;
     font-size: 36px;
     font-weight: 700;
@@ -39,36 +26,26 @@ h1{
     letter-spacing: 0.5px;
 }
 
-/* Sekundäre Überschrift */
-h2{
+h2 {
     font-family: 'DM Sans', sans-serif;
     font-size: 28px;
     font-weight: 600;
     margin: 18px 0;
 }
 
-/* Tertiäre Überschrift */
-h3{
+h3 {
     font-family: 'DM Sans', sans-serif;
     font-size: 22px;
     font-weight: 600;
     margin: 15px 0;
 }
 
-a:hover{
+a:hover {
     color: rgb(164, 18, 18);
 }
 
 /* ===== FORMULAR-STYLING ===== */
-/* Angepasst von: tim */
-/* Verbesserte Rahmen, Abstände und einheitliches Design */
-/* Attribut-Selektor input[type="text"] greift gezielt auf Inputs nach ihrem type-Attribut zu –
-   sauberer als Klassen, da HTML-Semantik genutzt wird.
-   transition: all 0.3s ease animiert Zustandsänderungen (z.B. Fokus-Farbe) weich über 0,3s.
-   box-sizing: border-box zählt Padding und Border zur Gesamtbreite (width) mit –
-   verhindert, dass Inputs breiter werden als ihr Container. */
 
-/* Labels für Formularfelder */
 label {
     display: block;
     font-family: 'DM Sans', sans-serif;
@@ -83,7 +60,6 @@ label {
     margin-right: auto;
 }
 
-/* Eingabefelder - Einheitliche Gestaltung mit angepassten Rändern und Abständen */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -107,7 +83,6 @@ select {
     transition: all 0.3s ease;
 }
 
-/* Fokus-Zustand für Eingabefelder - Rote Akzentfarbe */
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
@@ -121,7 +96,6 @@ select:focus {
     box-shadow: 0 0 0 3px rgba(227, 27, 27, 0.1);
 }
 
-/* Platzhaltertext */
 input[type="text"]::placeholder,
 input[type="password"]::placeholder,
 input[type="email"]::placeholder,
@@ -132,7 +106,6 @@ textarea::placeholder {
     font-style: italic;
 }
 
-/* Buttons - Submit, Reset und Standard-Buttons */
 input[type="submit"],
 input[type="reset"],
 button {
@@ -154,7 +127,6 @@ button {
     letter-spacing: 0.5px;
 }
 
-/* Hover-Effekt für Submit-Buttons */
 input[type="submit"]:hover,
 button:hover {
     background-color: rgb(200, 20, 20);
@@ -162,40 +134,33 @@ button:hover {
     box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
 }
 
-/* Reset-Button - Graues Design zur Unterscheidung */
 input[type="reset"] {
     background-color: #333333;
     color: rgb(220, 220, 220);
     text-transform: none;
 }
 
-/* Hover-Effekt für Reset-Button */
 input[type="reset"]:hover {
     background-color: #444444;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(68, 68, 68, 0.3);
 }
 
-/* Textbereich-Spezifikationen */
 textarea {
     min-height: 120px;
     resize: vertical;
 }
 
-/* Absätze in Formularen - Reduzierte Abstände */
 form p {
     margin: 5px 0;
 }
 
-/* BR-Tags nach Labels - Kein zusätzlicher Abstand */
 label + br {
     display: none;
 }
 
-/* ===== CHECKBOX UND RADIO-BUTTON STYLING ===== */
-/* Angepasst von: tim */
+/* ===== CHECKBOX UND RADIO ===== */
 
-/* Checkbox Styling */
 input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -204,7 +169,6 @@ input[type="checkbox"] {
     accent-color: rgb(227, 27, 27);
 }
 
-/* Radio-Button Styling */
 input[type="radio"] {
     width: 18px;
     height: 18px;
@@ -213,7 +177,6 @@ input[type="radio"] {
     accent-color: rgb(227, 27, 27);
 }
 
-/* Labels für Checkboxen und Radio-Buttons */
 input[type="checkbox"] + label,
 input[type="radio"] + label {
     display: inline;
@@ -221,8 +184,7 @@ input[type="radio"] + label {
     cursor: pointer;
 }
 
-/* ===== SELECT-DROPDOWN VERBESSERUNGEN ===== */
-/* Angepasst von: tim */
+/* ===== SELECT ===== */
 
 select {
     cursor: pointer;
@@ -238,9 +200,7 @@ select:disabled {
 }
 
 /* ===== FORMULAR-ZUSTÄNDE ===== */
-/* Angepasst von: tim */
 
-/* Deaktivierte Felder */
 input:disabled,
 textarea:disabled,
 select:disabled,
@@ -251,7 +211,6 @@ button:disabled {
     border-color: #2a2a2a;
 }
 
-/* Ungültige Eingaben */
 input:invalid:not(:focus):not(:placeholder-shown),
 textarea:invalid:not(:focus):not(:placeholder-shown),
 select:invalid:not(:focus) {
@@ -259,22 +218,18 @@ select:invalid:not(:focus) {
     background-color: rgba(227, 27, 27, 0.05);
 }
 
-/* Gültige Eingaben */
 input:valid:not(:focus):not(:placeholder-shown),
 textarea:valid:not(:focus):not(:placeholder-shown) {
     border-color: #2ecc71;
 }
 
-/* ===== ACCESSIBILITY-VERBESSERUNGEN ===== */
-/* Angepasst von: tim */
+/* ===== ACCESSIBILITY ===== */
 
-/* Fokus für Tastaturnavigation */
 *:focus-visible {
     outline: 3px solid rgb(227, 27, 27);
     outline-offset: 2px;
 }
 
-/* Größere Klickbereiche für Buttons */
 button,
 input[type="submit"],
 input[type="reset"] {
@@ -282,16 +237,13 @@ input[type="reset"] {
 }
 
 /* ===== HILFSKLASSEN ===== */
-/* Angepasst von: tim */
 
-/* Demo-Hinweis */
 .demo-hint {
     font-size: 12px;
     color: #888888;
     font-style: italic;
 }
 
-/* Fehlermeldung */
 .error-message {
     color: rgb(227, 27, 27);
     font-size: 14px;
@@ -302,8 +254,6 @@ input[type="reset"] {
     text-align: center;
 }
 
-
-/* Erfolgsmeldung */
 .success-message {
     color: #2ecc71;
     font-size: 14px;
@@ -313,23 +263,13 @@ input[type="reset"] {
     text-align: center;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-/* Angepasst von: tim */
+/* ===== RESPONSIVE ===== */
 
-/* Tablets und kleinere Bildschirme */
 @media screen and (max-width: 768px) {
-    h1 {
-        font-size: 28px;
-    }
-    
-    h2 {
-        font-size: 22px;
-    }
-    
-    h3 {
-        font-size: 18px;
-    }
-    
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+
     input[type="text"],
     input[type="password"],
     input[type="email"],
@@ -343,77 +283,50 @@ input[type="reset"] {
         max-width: 100%;
         font-size: 16px;
     }
-    
-    label {
-        max-width: 100%;
-    }
-    
+
+    label { max-width: 100%; }
+
     .footer-top {
         grid-template-columns: 1fr;
         gap: 20px;
     }
 }
 
-/* Smartphones */
 @media screen and (max-width: 480px) {
-    body {
-        padding: 5px;
-    }
-    
-    h1 {
-        font-size: 24px;
-    }
-    
-    h2 {
-        font-size: 20px;
-    }
-    
-    p {
-        font-size: 14px;
-    }
-    
-    footer {
-        padding: 30px 1rem 20px;
-    }
- 
-    
-
+    body { padding: 5px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    p { font-size: 14px; }
+    footer { padding: 30px 1rem 20px; }
 }
 
-/* Formular-Styling abgeschlossen - tim */
+/* ===== FOOTER ===== */
 
 footer {
     border-top: 1px solid rgba(211, 211, 211, 0.311);
     margin-top: 0;
-    padding: 50px 64 30px; 
+    padding: 30px 64px;
     background-color: rgba(20, 17, 17, 0.618);
     text-align: center;
-    padding-top: 30px;
-
 }
- 
-.footer-top{
+
+.footer-top {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 15px; 
+    gap: 15px;
     padding-bottom: 30px;
-    border-bottom: 1px solid rgba(211, 211, 211, 0.311) 
+    border-bottom: 1px solid rgba(211, 211, 211, 0.311);
 }
 
-.footer-bot{
-padding-top: 15px;
-display: flex;
-font-size: 12px; 
-align-items: center; 
-justify-content: center;
-flex-wrap: wrap;
-padding-bottom: 15px;
-
+.footer-bot {
+    padding-top: 15px;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 15px;
 }
-
-/* Footer-Bot Links Container; flex items in nächste Zeiel oder nicht*/
-/* Lukas */
-
 
 .footer-bot-links {
     display: flex;
@@ -422,114 +335,105 @@ padding-bottom: 15px;
 }
 
 .footer-heading {
-    font-size: 10px; 
+    font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: lightgray; 
+    color: lightgray;
     margin-bottom: 20px;
 }
 
-
-
-.footer-logo{
+.footer-logo {
     font-size: 36px;
     letter-spacing: 2px;
     color: white;
     margin-bottom: 12px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
-.footer-logo span{
-    color: rgb(227, 27, 27); 
+.footer-logo span {
+    color: rgb(227, 27, 27);
 }
 
-.footer-top a{
+.footer-top a {
     text-decoration: none;
     color: rgba(211, 211, 211, 0.792);
     font-size: 11px;
     text-transform: uppercase;
-    
 }
 
-.footer-top a:hover{
-    color: rgb(227, 27, 27); 
+.footer-top a:hover {
+    color: rgb(227, 27, 27);
 }
 
-.footer-logo-dsc{
+.footer-logo-dsc {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-
-.footer-dsc{
+.footer-dsc {
     font-size: 14px;
     color: lightgray;
     max-width: 300px;
 }
 
-.footer-logo{
-    text-transform: uppercase;
-}
-
-.footer-bot a{
+.footer-bot a {
     text-decoration: none;
     color: white;
-    
 }
 
-.footer-bot a:hover{
-    color: rgb(227, 27, 27); 
+.footer-bot a:hover {
+    color: rgb(227, 27, 27);
 }
 
-/* Lukas */
+/* ===== LISTEN ===== */
 
-ul{
+ul {
     list-style-type: none;
     padding: 0;
     margin: 10px 0;
     text-align: center;
 }
 
-li{
+li {
     list-style-type: none;
     text-align: center;
     margin: 5px 0;
 }
 
+/* ===== NAVIGATION ===== */
 
-nav{
+nav {
     position: fixed;
-    top: 0; 
-    left: 0; 
+    top: 0;
+    left: 0;
     width: 100%;
-    z-index: 100;  
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 65px; /* oben unten links rechts */
+    padding: 10px 65px;
     background-color: rgba(20, 17, 17, 0.618);
     border-bottom: 1px solid darkred;
     backdrop-filter: blur(12px);
     height: 64px;
     box-sizing: border-box;
-    /* padding und margin sind in box sonst außerhalb! adjustment anordnung der elemente bzw width */ 
 }
 
-.nav-right{
+.nav-right {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.nav-logo{
-    font-size: 28px;
+.nav-logo {
+    font-size: 36px;
     letter-spacing: 2px;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 36px;
     text-decoration: none;
     cursor: pointer;
 }
@@ -557,8 +461,8 @@ nav{
     color: rgb(227, 27, 27);
 }
 
-.nav-logo span{
-    color: rgb(227, 27, 27); 
+.nav-logo span {
+    color: rgb(227, 27, 27);
 }
 
 .nav-links {
@@ -568,7 +472,6 @@ nav{
     text-decoration: none;
     font-size: 13px;
     text-transform: uppercase;
-
 }
 
 .nav-links a {
@@ -578,18 +481,12 @@ nav{
     text-transform: uppercase;
 }
 
-/* Lukas */
-
-a{
-    display: block; 
-    text-align: center; 
-  
+a {
+    display: block;
+    text-align: center;
 }
 
-/* Formular-Styling abgeschlossen - tim */
-
-/*Formular-Styling Gitter - Niclas */
-
+/* ===== AUTO-GRID ===== */
 
 .cars-grid {
     display: grid;
@@ -619,7 +516,6 @@ a{
     overflow: hidden;
 }
 
-
 .mode-btn {
     background: transparent;
     border: 1px solid rgb(227, 27, 27);
@@ -648,10 +544,7 @@ a{
     height: 100%;
     object-fit: cover;
     display: block;
-    
 }
-
-
 
 .car-badge-new,
 .car-badge-used {
@@ -677,20 +570,13 @@ a{
     border: 1px solid #444444;
 }
 
-.car-image {
-    position: relative;
-}
-
 .car-fav {
     position: absolute;
     top: 12px;
     right: 12px;
     width: 50px;
     height: 16px;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 20px;
     display: grid;
     place-items: center;
     border: none;
@@ -700,13 +586,10 @@ a{
     z-index: 2;
     transition: transform .15s ease, background .15s ease;
     justify-content: center;
-    margin-right: 0px;
-    margin-top: 0px;
+    margin: 0;
 }
 
-
 button.car-fav {
-    
     font-size: 25px;
     color: #751f15;
 }
@@ -787,13 +670,6 @@ button.car-fav {
     font-weight: bold;
 }
 
-.car-price-detail {
-    font-size: 40px;
-    color: white;
-    font-weight: bold;
-
-}
-
 .car-price-note {
     font-size: 11px;
     color: #888888;
@@ -809,18 +685,6 @@ button.car-fav {
     padding: 8px 16px;
     width: auto;
     margin: 0;
-
-}
-
-.car-description {
-    padding: 0 20px 20px;
-    color: #ffffff;
-    font-size: 14px;
-}
-
-.car-description p {
-    text-align: left;
-    font-size: 20px;
 }
 
 .car-btn:hover {
@@ -828,7 +692,11 @@ button.car-fav {
     color: white;
 }
 
-/* ===== Index - Auto24 von Niclas ===== */
+.car-footer a {
+    text-decoration: none;
+}
+
+/* ===== STARTSEITE ===== */
 
 .home-main {
     padding-top: 64px;
@@ -898,9 +766,9 @@ button.car-fav {
     letter-spacing: 1px;
 }
 
-.finance-teaser h2{
+.finance-teaser h2 {
     text-transform: uppercase;
-    letter-spacing: 3px; 
+    letter-spacing: 3px;
     font-family: var(--font-display, sans-serif);
 }
 
@@ -950,11 +818,6 @@ button.car-fav {
     transform: translateY(-4px);
 }
 
-.home-category-icon {
-    font-size: 36px;
-    margin-bottom: 12px;
-}
-
 .home-category-card p {
     color: #bdbdbd;
     font-size: 14px;
@@ -979,11 +842,7 @@ button.car-fav {
     color: lightgray;
 }
 
-.car-footer a{
-    text-decoration: none;
-}
-
-/* Lukas: Favoritenliste */
+/* ===== FAVORITENLISTE (Lukas) ===== */
 
 .nFav-btn {
     background: transparent;
@@ -993,17 +852,14 @@ button.car-fav {
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 3.5px 14px;
-    padding-bottom: 6px; 
+    padding: 3.5px 14px 6px;
     border-radius: 4px;
     width: auto;
     min-height: 0;
     margin: 0;
     transition: background 0.2s;
     white-space: nowrap;
-    
 }
-
 
 .nFav-btn:hover {
     background: rgba(227, 27, 27, 0.15);
@@ -1016,28 +872,12 @@ button.car-fav {
     background: rgba(227, 27, 27, 0.15);
 }
 
-.nFav-count {
-    font-size: 12px;
-    color: #888888;
-    margin-left: 8px;
-    position: absolute;
-    top: -6px; right: -6px;
-    background: #CC0000;
-    color: white;
-    font-size: 10px;
-    min-width: 17px; 
-    height: 17px; 
-    border-radius: 10px;
-    font-weight: bold;
-    padding: 0 4px; 
-}
-
 .fav-ovl {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.65); 
+    background: rgba(0, 0, 0, 0.65);
     visibility: hidden;
-    opacity: 0; /* unsichtbar und nicht klickbar*/
+    opacity: 0;
     pointer-events: none;
     transition: opacity .2s ease, visibility .2s ease;
     z-index: 900;
@@ -1058,7 +898,7 @@ button.car-fav {
     transform: translateX(100%);
     transition: transform .25s ease;
     background: #111;
-    color: #f5f5f5; 
+    color: #f5f5f5;
     box-shadow: -14px 0 40px rgba(0, 0, 0, 0.35);
     z-index: 910;
     display: flex;
@@ -1109,26 +949,9 @@ button.car-fav {
     border-bottom: none;
 }
 
-.fav-item-preview {
-    width: 100px;
-    min-height: 55px;
-    display: grid;
-    place-items: center;
-}
-
-.fav-item-preview img {
-    width: 100%;
-    max-height: 70px;
-    height: auto;
-    object-fit: contain;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: #111;
-}
-
-.fav-item-title {
-    font-size: 14px;
-    font-weight: 700;
+.fav-item-meta {
+    font-size: 12px;
+    color: #bdbdbd;
 }
 
 .fav-item-price {
@@ -1136,21 +959,13 @@ button.car-fav {
     color: #f5f5f5;
 }
 
-.fav-item-meta {
-    font-size: 12px;
-    color: #bdbdbd;
-}
-
 .fav-item-remove-btn {
-    
     border: none;
     background: transparent;
     color: #c00;
     font-size: 14px;
     cursor: pointer;
     padding: 2px 4px;
-    top: 10px;
-    right: 10px;
     width: 28px;
     height: 28px;
 }
@@ -1164,13 +979,11 @@ button.car-fav {
     flex: 1;
 }
 
-.open-full-favs-btn{
-
-    border: 1px solid rgb(227, 27, 27);
-    background: transparent;
-    color:  rgb(227, 27, 27);
+.open-full-favs-btn {
     border: none;
-    padding: 12px 28px;
+    color: rgb(227, 27, 27);
+    background: transparent;
+    padding: 0 28px;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -1181,24 +994,21 @@ button.car-fav {
     transition: background 0.2s;
     box-sizing: border-box;
     height: 44px;
-    padding: 0 28px;
     line-height: 44px;
     margin-bottom: 10px;
 }
 
-.open-full-favs-btn:hover{
+.open-full-favs-btn:hover {
     background-color: rgb(200, 20, 20);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
 }
 
-.clear-fav-list-btn{
-
-    border: 1px solid rgb(227, 27, 27);
-    background: transparent;
-    color:  rgb(227, 27, 27);
+.clear-fav-list-btn {
     border: none;
-    padding: 12px 28px;
+    color: rgb(227, 27, 27);
+    background: transparent;
+    padding: 0 28px;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -1209,12 +1019,11 @@ button.car-fav {
     transition: background 0.2s;
     box-sizing: border-box;
     height: 44px;
-    padding: 0 28px;
     line-height: 44px;
     margin-top: 20px;
 }
 
-.total-cost-row{
+.total-cost-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1222,13 +1031,9 @@ button.car-fav {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     font-size: 16px;
     font-weight: 700;
-    
 }
 
-
-/* Lukas: Favoritenliste Ende */
-
-/* ===== AUTH-SEITEN (login, registration, user, logout) ===== */
+/* ===== AUTH-SEITEN ===== */
 
 .auth-section {
     min-height: calc(100vh - 64px);
@@ -1285,9 +1090,8 @@ button.car-fav {
     margin-right: auto;
 }
 
-/* ===== Tim - ÜBER UNS SEITE - about.html ===== */
+/* ===== ÜBER UNS SEITE (Tim) ===== */
 
-/* Dienstleistungs-Grid: 4 kompakte Spalten */
 .about-services-section {
     padding: 40px 4rem;
 }
@@ -1316,11 +1120,6 @@ button.car-fav {
     transform: translateY(-3px);
 }
 
-.about-service-icon {
-    font-size: 24px;
-    margin-bottom: 8px;
-}
-
 .about-service-card h3 {
     font-size: 15px;
     margin: 6px 0;
@@ -1332,7 +1131,6 @@ button.car-fav {
     margin: 0;
 }
 
-/* Kontakt-Bereich */
 .about-contact-wrapper {
     max-width: 600px;
     margin: 30px auto;
@@ -1355,7 +1153,6 @@ button.car-fav {
     color: rgb(227, 27, 27);
 }
 
-/* Team-Bereich */
 .about-team-intro {
     max-width: 700px;
     margin: 20px auto 40px;
@@ -1377,25 +1174,20 @@ button.car-fav {
 }
 
 @media screen and (max-width: 600px) {
-    .about-service-grid {
-        grid-template-columns: 1fr;
-    }
+    .about-service-grid { grid-template-columns: 1fr; }
 }
 
 @media screen and (max-width: 480px) {
-    .about-services-section {
-        padding: 30px 1rem;
-    }
+    .about-services-section { padding: 30px 1rem; }
 }
 
-/* ===== LIGHT MODE – vollständig (Niclas / Tim) ===== */
+/* ===== LIGHT MODE (Niclas / Tim) ===== */
 
 body.light-mode {
     background-color: #f2f2f2;
     color: #1a1a1a;
 }
 
-/* Navigation */
 body.light-mode nav {
     background-color: rgba(255,255,255,0.95);
     border-bottom-color: #e0e0e0;
@@ -1409,8 +1201,6 @@ body.light-mode .nav-auth-link {
     border-color: rgb(200,20,20);
 }
 
-
-/* Footer */
 body.light-mode footer {
     background-color: #e8e8e8;
     border-top-color: #d0d0d0;
@@ -1421,7 +1211,6 @@ body.light-mode .footer-bot a { color: #333; }
 body.light-mode .footer-heading { color: #777; }
 body.light-mode .footer-dsc { color: #666; }
 
-/* Formulare & Inputs */
 body.light-mode label { color: #333; }
 
 body.light-mode input[type="text"],
@@ -1466,16 +1255,12 @@ body.light-mode select {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23333333" d="M1 1l5 5 5-5"/></svg>');
 }
 
-/* Auth-Karten & Sektionen */
 body.light-mode .auth-section {
     background:
         radial-gradient(circle at 30% 60%, rgba(200,20,20,0.07), transparent 40%),
         linear-gradient(135deg, #f2f2f2 0%, #fce8e8 50%, #f2f2f2 100%);
 }
-body.light-mode .auth-card {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode .auth-card { background: #ffffff; border-color: #ddd; }
 body.light-mode .auth-card h2 { color: #555; }
 body.light-mode .auth-card p { color: #444; }
 body.light-mode .demo-hint { color: #888; }
@@ -1483,7 +1268,6 @@ body.light-mode .field-error { color: rgb(200,20,20); }
 body.light-mode .success-message { color: #1a8a1a; }
 body.light-mode .error-message { color: rgb(200,20,20); }
 
-/* Hero */
 body.light-mode .home-hero {
     background:
         radial-gradient(circle at 70% 40%, rgba(200,20,20,0.1), transparent 35%),
@@ -1492,26 +1276,14 @@ body.light-mode .home-hero {
 }
 body.light-mode .home-hero p { color: #555; }
 
-/* Kategorie-Karten */
-body.light-mode .home-category-card {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode .home-category-card { background: #ffffff; border-color: #ddd; }
 body.light-mode .home-category-card:hover { border-color: #c00; }
 body.light-mode .home-category-card p { color: #555; }
 
-/* About-Sektion */
-body.light-mode .home-about {
-    background: #e8e8e8;
-    border-color: #d0d0d0;
-}
+body.light-mode .home-about { background: #e8e8e8; border-color: #d0d0d0; }
 body.light-mode .home-about p { color: #555; }
 
-/* Auto-Karten */
-body.light-mode .car-card {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode .car-card { background: #ffffff; border-color: #ddd; }
 body.light-mode .car-card:hover { border-color: #c00; }
 body.light-mode .car-image { background: #eee; }
 body.light-mode .car-model { color: #1a1a1a; }
@@ -1522,88 +1294,46 @@ body.light-mode .car-spec-val { color: #1a1a1a; }
 body.light-mode .car-spec-key { color: #888; }
 body.light-mode .car-price { color: #1a1a1a; }
 body.light-mode .car-price-note { color: #888; }
-body.light-mode .car-badge-used {
-    background: #ddd;
-    border-color: #bbb;
-    color: #444;
-}
-body.light-mode .car-description p { color: #333; }
+body.light-mode .car-badge-used { background: #ddd; border-color: #bbb; color: #444; }
 
-/* Auth-Karte auf item.php */
-body.light-mode .auth-card p { color: #333; }
-body.light-mode .auth-card p strong { color: #1a1a1a; }
-
-/* Favoritenliste */
-body.light-mode .fav-list {
-    background: #ffffff;
-    color: #1a1a1a;
-}
-body.light-mode .fav-item {
-    border-bottom-color: rgba(0,0,0,0.1);
-}
-body.light-mode .fav-item-title { color: #1a1a1a; }
+body.light-mode .fav-list { background: #ffffff; color: #1a1a1a; }
+body.light-mode .fav-item { border-bottom-color: rgba(0,0,0,0.1); }
 body.light-mode .fav-item-price { color: #1a1a1a; }
 body.light-mode .fav-item-meta { color: #666; }
 body.light-mode .fav-list-header { border-bottom: 1px solid #eee; }
 
-/* Buchungs-Karten */
-body.light-mode .buchung-card {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode .buchung-card { background: #ffffff; border-color: #ddd; }
 body.light-mode .buchung-card:hover { border-color: #bbb; }
 body.light-mode .buchung-car { color: #1a1a1a; }
 body.light-mode .buchung-meta { color: #555; }
 
-/* Admin-Karten */
-body.light-mode .admin-order-card {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode .admin-order-card { background: #ffffff; border-color: #ddd; }
 body.light-mode .admin-order-card:hover { border-color: #bbb; }
 body.light-mode .admin-order-car { color: #1a1a1a; }
 body.light-mode .admin-order-meta { color: #555; }
-body.light-mode .admin-user-row {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode .admin-user-row { background: #ffffff; border-color: #ddd; }
 body.light-mode .admin-user-name { color: #1a1a1a; }
 body.light-mode .admin-tabs { border-bottom-color: #ddd; }
 body.light-mode .admin-tab { color: #777; }
 body.light-mode .admin-tab:hover { background: rgba(0,0,0,0.04); color: #333; }
-body.light-mode .admin-tab.active {
-    background: #ffffff;
-    border-color: #ddd;
-    color: #1a1a1a;
-}
+body.light-mode .admin-tab.active { background: #ffffff; border-color: #ddd; color: #1a1a1a; }
 body.light-mode .admin-page-sub { color: #666; }
 
-/* Partner- & Service-Karten */
 body.light-mode .about-service-card,
-body.light-mode .home-category-card {
-    background: #ffffff;
-    border-color: #ddd;
-}
-body.light-mode .about-contact-card {
-    background: #f8f8f8;
-    border-color: #ddd;
-}
+body.light-mode .home-category-card { background: #ffffff; border-color: #ddd; }
+body.light-mode .about-contact-card { background: #f8f8f8; border-color: #ddd; }
 body.light-mode .about-contact-card p { color: #333; }
 
-/* FAQ */
-body.light-mode details {
-    background: #ffffff;
-    border-color: #ddd;
-}
+body.light-mode details { background: #ffffff; border-color: #ddd; }
 body.light-mode summary { color: #1a1a1a; }
 
-/* Typo & Links */
 body.light-mode p { color: #444; }
 body.light-mode h1, body.light-mode h2, body.light-mode h3 { color: #1a1a1a; }
 body.light-mode a { color: #1a1a1a; }
 body.light-mode a:hover { color: rgb(200,20,20); }
 
-/* Layout-Umschaltung */
+/* ===== LAYOUT-UMSCHALTUNG (Niclas) ===== */
+
 .cars-grid.vertical-layout {
     grid-template-columns: 1fr;
     max-width: 420px;
@@ -1628,14 +1358,14 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     white-space: nowrap;
 }
 
-.status-bestellt      { background: #1a3a7a; color: #aac4ff; border: 1px solid #2255cc; }
-.status-in_bearbeitung{ background: #4a3000; color: #ffc96e; border: 1px solid #cc8800; }
-.status-versandt      { background: #2e1a5a; color: #c9a8ff; border: 1px solid #7744cc; }
-.status-fertig        { background: #0a3a0a; color: #80e680; border: 1px solid #228822; }
-.status-storniert     { background: #222;    color: #888;    border: 1px solid #444; }
-.status-abgelehnt     { background: #3a0a0a; color: #ff8888; border: 1px solid #882222; }
+.status-bestellt       { background: #1a3a7a; color: #aac4ff; border: 1px solid #2255cc; }
+.status-in_bearbeitung { background: #4a3000; color: #ffc96e; border: 1px solid #cc8800; }
+.status-versandt       { background: #2e1a5a; color: #c9a8ff; border: 1px solid #7744cc; }
+.status-fertig         { background: #0a3a0a; color: #80e680; border: 1px solid #228822; }
+.status-storniert      { background: #222;    color: #888;    border: 1px solid #444; }
+.status-abgelehnt      { background: #3a0a0a; color: #ff8888; border: 1px solid #882222; }
 
-/* ===== BUCHUNGEN SEITE (Nutzer) ===== */
+/* ===== BUCHUNGEN SEITE ===== */
 
 .buchungen-wrapper {
     width: 100%;
@@ -1717,15 +1447,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     box-shadow: none;
 }
 
-/* ===== BOOKING BUTTON (item.php) ===== */
-
-.buchungs-note {
-    font-size: 13px;
-    color: #ff9999;
-    margin-top: 6px;
-    display: none;
-}
-
 /* ===== ADMIN SEITE ===== */
 
 .admin-nav {
@@ -1805,7 +1526,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     text-align: left;
 }
 
-/* Admin tabs */
 .admin-tabs {
     display: flex;
     gap: 2px;
@@ -1857,7 +1577,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     display: block;
 }
 
-/* Admin order cards */
 .admin-order-card {
     background: #111;
     border: 1px solid #2e2e2e;
@@ -1919,15 +1638,9 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     transform: none;
 }
 
-.btn-reject {
-    background: #5a0000 !important;
-    border-color: #8B0000 !important;
-}
-.btn-reject:hover {
-    background: #7a0000 !important;
-}
+.btn-reject { background: #5a0000 !important; border-color: #8B0000 !important; }
+.btn-reject:hover { background: #7a0000 !important; }
 
-/* Admin user list */
 .admin-user-row {
     display: flex;
     align-items: center;
@@ -1973,9 +1686,9 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     transform: none;
 }
 
-.btn-lock   { background: #5a0000 !important; }
+.btn-lock       { background: #5a0000 !important; }
 .btn-lock:hover { background: #7a0000 !important; }
-.btn-unlock { background: #0a3a0a !important; }
+.btn-unlock     { background: #0a3a0a !important; }
 .btn-unlock:hover { background: #145014 !important; }
 
 .admin-empty {
@@ -1985,27 +1698,28 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     font-size: 14px;
 }
 
-.merkliste-wrap {
-            max-width: 900px;
-            margin: 100px auto 60px;
-            padding: 0 24px;
-        }
+/* ===== MERKLISTE (Lukas) ===== */
 
- .merkliste-title {
-            font-family: var(--font-display, sans-serif);
-            font-size: 36px;
-            letter-spacing: 3px;
-            color: var(--white-pure, #fff);
-            margin-bottom: 6px;
-        }
+.merkliste-wrap {
+    max-width: 900px;
+    margin: 100px auto 60px;
+    padding: 0 24px;
+}
+
+.merkliste-title {
+    font-family: var(--font-display, sans-serif);
+    font-size: 36px;
+    letter-spacing: 3px;
+    color: var(--white-pure, #fff);
+    margin-bottom: 6px;
+}
 
 .merkliste-sub {
-            font-size: 13px;
-            color: var(--gray-light, #888);
-            margin-bottom: 32px;
-        }
+    font-size: 13px;
+    color: var(--gray-light, #888);
+    margin-bottom: 32px;
+}
 
-        /* ── Tabellen-Header ── */
 .merkliste-header {
     display: grid;
     grid-template-columns: 30px 180px 1fr 100px 110px 120px;
@@ -2018,7 +1732,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     color: #888;
 }
 
- /* ── Eine Zeile ── */
 .merkliste-row {
     display: grid;
     grid-template-columns: 30px 180px 1fr 100px 110px 120px;
@@ -2043,11 +1756,11 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 }
 
 .merkliste-row-info-make {
-        font-size: 14px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #CC0000;
-        margin-bottom: 3px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #CC0000;
+    margin-bottom: 3px;
 }
 
 .merkliste-row-info-model {
@@ -2103,7 +1816,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 0; 
+    margin-top: 0;
 }
 
 .merkliste-remove-btn:hover {
@@ -2111,7 +1824,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     color: #FF1A1A;
 }
 
-/* ── Leer-Zustand ── */
 .merkliste-empty {
     text-align: center;
     padding: 80px 0;
@@ -2130,7 +1842,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     margin-bottom: 8px;
 }
 
-/* ── Footer / Zusammenfassung ── */
 .merkliste-footer {
     margin-top: 32px;
     padding: 24px;
@@ -2162,14 +1873,12 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    
 }
 
 .merkliste-btn-primary {
     background: #CC0000;
     color: #fff;
     border: none;
-    padding: 12px 28px;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -2183,20 +1892,18 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     padding: 0 28px;
     line-height: 44px;
     margin-top: 20px;
- 
 }
 
-.merkliste-btn-primary:hover{
+.merkliste-btn-primary:hover {
     background-color: rgb(200, 20, 20);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
 }
 
-.merkliste-btn-booking{
-        background: #CC0000;
+.merkliste-btn-booking {
+    background: #CC0000;
     color: #fff;
     border: none;
-    padding: 12px 28px;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -2210,7 +1917,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     padding: 0 28px;
     line-height: 44px;
     margin-top: 20px;
-    width: 160px; 
+    width: 160px;
 }
 
 .merkliste-btn-ghost {
@@ -2229,6 +1936,8 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 .merkliste-btn-ghost:hover { border-color: #CC0000; color: #FF1A1A; }
 
+/* ===== FAHRZEUGDETAIL ===== */
+
 .item-wrap {
     max-width: 1100px;
     margin: 90px auto 60px;
@@ -2240,20 +1949,18 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     text-align: left;
 }
 
-/* Bild */
 .item-img-wrap {
     position: relative;
     border-radius: 6px;
-    overflow: visible; 
+    overflow: visible;
     border: 1px solid #2E2E2E;
-    
 }
 
 .item-img-wrap img {
     width: 600px;
     height: 300px;
     object-fit: cover;
-    transform: scale(0.95); 
+    transform: scale(0.95);
     padding: 20px;
 }
 
@@ -2289,6 +1996,8 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     transition: background 0.2s, color 0.2s;
     max-width: none;
     min-height: 0;
+    text-align: center;
+    justify-content: center;
 }
 
 .item-fav-btn:hover {
@@ -2302,7 +2011,16 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     color: white;
 }
 
-/* Specs unter Bild */
+.item-fav-btn.car-fav {
+    position: static;
+    display: block;
+    width: 100%;
+    top: auto;
+    right: auto;
+    height: 45px;
+    font-size: 10px;
+}
+
 .item-specs-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2333,9 +2051,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     letter-spacing: 1px;
     margin-top: 3px;
 }
-
-/* Rechte Seite */
-.item-info { }
 
 .item-make {
     font-size: 12px;
@@ -2387,7 +2102,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 .item-detail-label { color: #888; }
 .item-detail-val   { color: white; font-weight: 500; }
 
-/* Preis + Buttons */
 .item-price-box {
     background: #111;
     border: 1px solid #2E2E2E;
@@ -2476,28 +2190,11 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 }
 
 @media (max-width: 800px) {
-    .item-wrap {
-        grid-template-columns: 1fr;
-    }
+    .item-wrap { grid-template-columns: 1fr; }
     .item-img-wrap img { height: 260px; }
 }
 
-.item-fav-btn {
-    text-align: center; 
-    justify-content: center;
-    text-justify: center;
-}
-
-.item-fav-btn.car-fav { 
-    position: static; 
-    display: block;
-    width: 100%;
-    top: auto ;
-    right: auto;
-    height: 45px; 
-    font-size: 10px;
-    
-}
+/* ===== BUDGET-FILTER (Niclas) ===== */
 
 .budget-filter {
     text-align: center;
@@ -2523,24 +2220,18 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 .filter-btn {
     width: auto !important;
     min-width: 200px;
-
     padding: 8px 14px;
     margin: 5px;
-
     display: inline-block;
-
     font-size: 14px;
-
     background: transparent;
     border: 1px solid rgb(227, 27, 27);
     color: rgb(227, 27, 27);
-
-
 }
 
-.filter-section{
+.filter-section {
     text-transform: uppercase;
-    letter-spacing: 3px; 
+    letter-spacing: 3px;
     font-family: var(--font-display, sans-serif);
 }
 

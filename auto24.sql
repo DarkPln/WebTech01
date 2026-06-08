@@ -1,6 +1,4 @@
 -- Auto24 Datenbankschema
--- Ausführen in phpMyAdmin: http://localhost/phpmyadmin
--- Datenbank erstellen, Tabellen anlegen, Fahrzeuge einfügen
 
 CREATE DATABASE IF NOT EXISTS auto24
     CHARACTER SET utf8mb4
@@ -87,7 +85,6 @@ CREATE TABLE IF NOT EXISTS listings (
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- ===== Fahrzeuge aus items.json einfügen =====
 INSERT INTO cars (iid, name, beschreibung, imagepath, preis, kategorie, unterkategorie, marke, modell, baujahr, kraftstoff, kilometerstand, leistung_ps, antrieb) VALUES
 (1,  'Audi A8L',              'Der Audi A8L ist die Langversion des A8 von Audi. Mit dem S-Line Quattro Antrieb und 510 PS ist er ein echter Sportwagen.',           'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg/1920px-Audi_A8_50_TDI_%28D5%29_%E2%80%93_Frontansicht%2C_24._Dezember_2017%2C_Velbert.jpg', 89900,  'gebrauchtwagen', 'limousine', 'Audi',          'A8L',            2024, 'Benzin', 40000, 510, 'S-Line Quattro'),
 (2,  'Audi SQ7',              'Der Audi SQ7 ist ein sportlicher SUV mit Quattro Allradantrieb und 250 PS. Perfekt für Familie und Abenteuer.',                        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Audi_SQ7_FL_IMG_3595.jpg/1920px-Audi_SQ7_FL_IMG_3595.jpg',                                                                                                                                 75000,  'gebrauchtwagen', 'suv',       'Audi',          'SQ7',            2021, 'Benzin', 28400, 250, 'Quattro'),
