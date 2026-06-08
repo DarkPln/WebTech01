@@ -26,11 +26,11 @@ if ($username === 'TestUser' && $password === 'TestPass123') {
 }
 
 $db   = getDB();
-$stmt = $db->prepare('SELECT id, username, password_hash, is_locked, is_admin FROM users WHERE username = ?');
+$stmt = $db->prepare('SELECT id, username, password, is_locked, is_admin FROM users WHERE username = ?');
 $stmt->execute([$username]);
 $user = $stmt->fetch();
 
-if (!$user || !password_verify($password, $user['password_hash'])) {
+if (!$user || $user['password'] !== $password) {
     echo json_encode(['success' => false, 'message' => 'Falscher Benutzername oder Passwort']);
     exit;
 }

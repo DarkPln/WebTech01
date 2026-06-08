@@ -1,24 +1,45 @@
 <?php
 session_start();
+require_once 'db.php';
+
+$userId = $_SESSION['user_id'] ?? null;
+$useDB  = ($userId !== null && $userId > 0);
 
 // POST: einzeln entfernen oder alle leeren
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
-
-    if (isset($_POST['remove_id'])) {
-        $rid = (int)$_POST['remove_id'];
-        $_SESSION['favorites'] = array_values(
-            array_filter($_SESSION['favorites'], fn($id) => $id !== $rid)
-        );
-    }
-    if (isset($_POST['clear_all'])) {
-        $_SESSION['favorites'] = [];
+    if ($useDB) {
+        $db = getDB();
+        if (isset($_POST['remove_id'])) {
+            $db->prepare('DELETE FROM favorites WHERE user_id = ? AND car_id = ?')
+               ->execute([$userId, (int)$_POST['remove_id']]);
+        }
+        if (isset($_POST['clear_all'])) {
+            $db->prepare('DELETE FROM favorites WHERE user_id = ?')->execute([$userId]);
+        }
+    } else {
+        if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
+        if (isset($_POST['remove_id'])) {
+            $rid = (int)$_POST['remove_id'];
+            $_SESSION['favorites'] = array_values(
+                array_filter($_SESSION['favorites'], fn($id) => $id !== $rid)
+            );
+        }
+        if (isset($_POST['clear_all'])) {
+            $_SESSION['favorites'] = [];
+        }
     }
     header('Location: merkliste.php');
     exit;
 }
 
-$favorites = $_SESSION['favorites'] ?? [];
+// Favoriten laden: DB (eingeloggt) oder Session (Gast)
+if ($useDB) {
+    $stmt = getDB()->prepare('SELECT car_id FROM favorites WHERE user_id = ?');
+    $stmt->execute([$userId]);
+    $favorites = array_column($stmt->fetchAll(), 'car_id');
+} else {
+    $favorites = $_SESSION['favorites'] ?? [];
+}
 
 $json     = file_get_contents('items.json');
 $data     = json_decode($json, true);
