@@ -974,3 +974,24 @@ function resetBudgetFilter() {
 
     document.getElementById("budgetInput").value = "";
 }
+function sortCarsByPriceAsc() {
+    const container = document.getElementById("carLayout");
+    const cars = Array.from(container.querySelectorAll(".car-card"));
+
+    cars.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
+
+    cars.forEach(car => {
+        container.appendChild(car);
+    });
+}
+
+function sortCarsByPriceDesc() {
+    const container = document.getElementById("carLayout");
+    const cars = Array.from(container.querySelectorAll(".car-card"));
+
+    cars.sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price));
+
+    cars.forEach(car => {
+        container.appendChild(car);
+    });
+}

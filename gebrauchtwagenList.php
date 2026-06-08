@@ -76,7 +76,7 @@ $fahrzeuge = $data["fahrzeuge"];
     <br>
     <br>
 
-<!-- Budget-Filter -->
+<!-- Niclas: Budget-Filter -->
 <div class="budget-filter">
     <h3>Fahrzeuge nach Budget filtern</h3>
 
@@ -93,6 +93,15 @@ $fahrzeuge = $data["fahrzeuge"];
         Filter zurücksetzen
     </button>
 </div>
+
+<!-- Niclas: Sortier-Buttons -->
+<div class="sort-filter">
+    <h3>Fahrzeuge sortieren</h3>
+
+    <button onclick="sortCarsByPriceAsc()">Preis aufsteigend</button>
+    <button onclick="sortCarsByPriceDesc()">Preis absteigend</button>
+</div>
+
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
     <?php foreach ($fahrzeuge as $auto): ?>
