@@ -274,3 +274,5 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Merkliste Checkbox-Buchung initialisieren
     initMerklisteBuchung();
 });
+
+
