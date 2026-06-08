@@ -25,9 +25,8 @@ if ($stmt->fetch()) {
     exit;
 }
 
-$hash = password_hash($newPassword, PASSWORD_DEFAULT);
-$db->prepare('UPDATE users SET username = ?, password_hash = ? WHERE id = ?')
-   ->execute([$newUsername, $hash, $_SESSION['user_id']]);
+$db->prepare('UPDATE users SET username = ?, password = ? WHERE id = ?')
+   ->execute([$newUsername, $newPassword, $_SESSION['user_id']]);
 
 $_SESSION['username'] = $newUsername;
 echo json_encode(['success' => true, 'username' => $newUsername]);

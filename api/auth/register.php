@@ -21,7 +21,6 @@ if ($stmt->fetch()) {
     exit;
 }
 
-$hash = password_hash($password, PASSWORD_DEFAULT);
-$db->prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)')->execute([$username, $hash]);
+$db->prepare('INSERT INTO users (username, password) VALUES (?, ?)')->execute([$username, $password]);
 
 echo json_encode(['success' => true]);

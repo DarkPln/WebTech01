@@ -208,7 +208,7 @@ function initMerklisteBuchung() {
     });
 
     buchungBtn.addEventListener('click', function() {
-        const loggedIn = localStorage.getItem('loggedIn') === 'true';
+        const loggedIn = (typeof authState !== 'undefined') && authState.loggedIn;
         if (!loggedIn) {
             alert('Bitte einloggen um zu buchen.');
             window.location.href = 'login.php';
