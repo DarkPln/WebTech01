@@ -19,18 +19,15 @@ if (strlen($newUsername) < 5 || strlen($newPassword) < 10) {
 
 $db     = getDB();
 $userId = $_SESSION['user_id'];
+$eUser  = $db->real_escape_string($newUsername);
+$ePass  = $db->real_escape_string($newPassword);
 
-$stmt = $db->prepare('SELECT id FROM users WHERE username = ? AND id != ?');
-$stmt->bind_param('si', $newUsername, $userId);
-$stmt->execute();
-if ($stmt->get_result()->fetch_assoc()) {
+if ($db->query("SELECT id FROM users WHERE username = '$eUser' AND id != $userId")->fetch_assoc()) {
     echo json_encode(['success' => false, 'message' => 'Benutzername bereits vergeben']);
     exit;
 }
 
-$upd = $db->prepare('UPDATE users SET username = ?, password = ? WHERE id = ?');
-$upd->bind_param('ssi', $newUsername, $newPassword, $userId);
-$upd->execute();
+$db->query("UPDATE users SET username = '$eUser', password = '$ePass' WHERE id = $userId");
 
 $_SESSION['username'] = $newUsername;
 echo json_encode(['success' => true, 'username' => $newUsername]);

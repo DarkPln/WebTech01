@@ -1,8 +1,8 @@
-// ── FAVORITEN LOGIK ──
+// Favoriten Logik Lukas 
 const favorites   = new Set();
 const favCarData  = {};          // id → { make, model, year, fuel, km, price, imgSrc }
 
-// ── PANEL ÖFFNEN / SCHLIESSEN ──
+// panel öffnen/schliessen 
 async function togglePanel() {
     const panel   = document.getElementById('favList');
     const overlay = document.getElementById('favOvl');

@@ -25,9 +25,10 @@ if ($method === 'GET') {
     $status     = $input['status'] ?? '';
     $reason     = $input['reason'] ?? '';
 
-    $stmt = $db->prepare('UPDATE bookings SET status = ?, reason = ?, updated_at = NOW() WHERE booking_key = ?');
-    $stmt->bind_param('sss', $status, $reason, $bookingKey);
-    $stmt->execute();
+    $eStatus     = $db->real_escape_string($status);
+    $eReason     = $db->real_escape_string($reason);
+    $eBookingKey = $db->real_escape_string($bookingKey);
+    $db->query("UPDATE bookings SET status = '$eStatus', reason = '$eReason', updated_at = NOW() WHERE booking_key = '$eBookingKey'");
 
     echo json_encode(['success' => true]);
 }

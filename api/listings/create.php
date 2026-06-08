@@ -23,15 +23,28 @@ $name     = $input['name']      ?? '';
 $email    = $input['email']     ?? '';
 $phone    = $input['phone']     ?? '';
 
-$stmt = getDB()->prepare(
-    'INSERT INTO listings
+$db         = getDB();
+$userIdSql  = $userId === null ? 'NULL' : (int)$userId;
+$eKey       = $db->real_escape_string($key);
+$eUsername  = $db->real_escape_string($username);
+$eMake      = $db->real_escape_string($make);
+$eModel     = $db->real_escape_string($model);
+$eYear      = $db->real_escape_string($year);
+$eKm        = $db->real_escape_string($km);
+$eFuel      = $db->real_escape_string($fuel);
+$eGearbox   = $db->real_escape_string($gearbox);
+$ePower     = $db->real_escape_string($power);
+$eType      = $db->real_escape_string($type);
+$eCond      = $db->real_escape_string($cond);
+$eDesc      = $db->real_escape_string($desc);
+$eName      = $db->real_escape_string($name);
+$eEmail     = $db->real_escape_string($email);
+$ePhone     = $db->real_escape_string($phone);
+
+$db->query(
+    "INSERT INTO listings
         (listing_key, user_id, username, make, model, year, km, fuel, gearbox, power, type, cond, price, description, contact_name, email, phone)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+     VALUES ('$eKey', $userIdSql, '$eUsername', '$eMake', '$eModel', '$eYear', '$eKm', '$eFuel', '$eGearbox', '$ePower', '$eType', '$eCond', $price, '$eDesc', '$eName', '$eEmail', '$ePhone')"
 );
-$stmt->bind_param(
-    'si' . str_repeat('s', 10) . 'd' . str_repeat('s', 4),
-    $key, $userId, $username, $make, $model, $year, $km, $fuel, $gearbox, $power, $type, $cond, $price, $desc, $name, $email, $phone
-);
-$stmt->execute();
 
 echo json_encode(['success' => true, 'id' => $key]);

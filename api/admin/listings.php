@@ -25,9 +25,9 @@ if ($method === 'GET') {
     $key    = $input['id']     ?? '';
     $status = $input['status'] ?? '';
 
-    $stmt = $db->prepare('UPDATE listings SET status = ? WHERE listing_key = ?');
-    $stmt->bind_param('ss', $status, $key);
-    $stmt->execute();
+    $eStatus = $db->real_escape_string($status);
+    $eKey    = $db->real_escape_string($key);
+    $db->query("UPDATE listings SET status = '$eStatus' WHERE listing_key = '$eKey'");
 
     echo json_encode(['success' => true]);
 }

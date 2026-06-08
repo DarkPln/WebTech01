@@ -18,9 +18,8 @@ if ($method === 'GET') {
     $input    = json_decode(file_get_contents('php://input'), true) ?? [];
     $username = $input['username'] ?? '';
 
-    $stmt = $db->prepare('UPDATE users SET is_locked = NOT is_locked WHERE username = ?');
-    $stmt->bind_param('s', $username);
-    $stmt->execute();
+    $eUsername = $db->real_escape_string($username);
+    $db->query("UPDATE users SET is_locked = NOT is_locked WHERE username = '$eUsername'");
 
     echo json_encode(['success' => true]);
 }
