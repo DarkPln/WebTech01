@@ -94,24 +94,30 @@ $fahrzeuge = $data["fahrzeuge"];
         <div id="budgetValue">
             100.000 €
         </div>
+        <div class="filter-button-row">
+            <button class="filter-btn" onclick="filterByBudget()">
+             Anwenden
+             </button>
 
-        <button class="filter-btn" onclick="filterByBudget()">
-            Anwenden
-        </button>
-
-        <button class="filter-btn" onclick="resetBudgetFilter()">
-            Reset
-        </button>
-
-    </div> 
-</div>        
-
+             <button class="filter-btn" onclick="resetBudgetFilter()">
+             Reset
+            </button>
+            </div>   
+        </div>     
+</div>
 <!-- Niclas: Sortier-Buttons -->
 <div class="sort-filter">
     <h3>Fahrzeuge sortieren</h3>
 
-    <button onclick="sortCarsByPriceAsc()">Preis aufsteigend</button>
-    <button onclick="sortCarsByPriceDesc()">Preis absteigend</button>
+    <div class="filter-button-row">
+        <button class="filter-btn" onclick="sortCarsByPriceAsc()">
+            Preis ↑
+        </button>
+
+        <button class="filter-btn" onclick="sortCarsByPriceDesc()">
+            Preis ↓
+        </button>
+    </div>
 </div>
 
 <!-- Niclas: Suchfunktion nach Marke -->
@@ -123,8 +129,15 @@ $fahrzeuge = $data["fahrzeuge"];
         id="carSearchInput"
         placeholder="z.B. Audi oder C 220">
 
-    <button onclick="searchCars()">Suchen</button>
-    <button onclick="resetCarSearch()">Suche zurücksetzen</button>
+    <div class="filter-button-row">
+        <button class="filter-btn" onclick="searchCars()">
+            Suchen
+        </button>
+
+        <button class="filter-btn" onclick="resetCarSearch()">
+            Reset
+        </button>
+    </div>
 </div>
 
 <div id = "carLayout" class="cars-grid horizontal-layout">
