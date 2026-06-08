@@ -76,23 +76,35 @@ $fahrzeuge = $data["fahrzeuge"];
     <br>
     <br>
 
-<!-- Niclas: Budget-Filter -->
-<div class="budget-filter">
-    <h3>Fahrzeuge nach Budget filtern</h3>
+<!-- Niclas: Budget-Filter mit Schieberegler -->
+ <div class="budget-filter">
+    <h3>Maximales Budget</h3>
 
-    <input
-        type="number"
-        id="budgetInput"
-        placeholder="Maximalpreis in €">
+    <div class="slider-container">
 
-    <button onclick="filterByBudget()">
-        Fahrzeuge anzeigen
-    </button>
+        <input
+            type="range"
+            id="budgetInput"
+            min="50000"
+            max="100000"
+            step="1000"
+            value="100000"
+            oninput="updateBudgetLabel()">
 
-    <button onclick="resetBudgetFilter()">
-        Filter zurücksetzen
-    </button>
-</div>
+        <div id="budgetValue">
+            100.000 €
+        </div>
+
+        <button class="filter-btn" onclick="filterByBudget()">
+            Anwenden
+        </button>
+
+        <button class="filter-btn" onclick="resetBudgetFilter()">
+            Reset
+        </button>
+
+    </div> 
+</div>        
 
 <!-- Niclas: Sortier-Buttons -->
 <div class="sort-filter">

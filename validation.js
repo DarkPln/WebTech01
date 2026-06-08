@@ -940,6 +940,15 @@ function initAdminPage() {
 }
 
 // Niclas: Funktionen für GebrauchtwagenList.php
+function updateBudgetLabel() {
+
+    const value = Number(
+        document.getElementById("budgetInput").value
+    );
+
+    document.getElementById("budgetValue").textContent =
+        value.toLocaleString("de-DE") + " €";
+}
 function filterByBudget() {
 
     const budget = Number(
@@ -974,7 +983,9 @@ function resetBudgetFilter() {
         car.style.display = "";
     });
 
-    document.getElementById("budgetInput").value = "";
+    document.getElementById("budgetInput").value = 100000;
+
+    updateBudgetLabel();
 }
 function sortCarsByPriceAsc() {
     const container = document.getElementById("carLayout");
