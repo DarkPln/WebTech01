@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_admin     TINYINT(1)   NOT NULL DEFAULT 0,
     created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
+ 
 -- Fahrzeugkatalog (aus items.json)
 CREATE TABLE IF NOT EXISTS cars (
     id              INT AUTO_INCREMENT PRIMARY KEY,
