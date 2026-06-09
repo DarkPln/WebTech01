@@ -2,8 +2,7 @@
 <nav>
     <a href="index.php" class="nav-logo">Auto<span>24</span></a>
     <ul class="nav-links">
-        <li><a href="index.php">Neuwagen</a></li>
-        <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
+        <li><a href="gebrauchtwagenList.php">Auto kaufen</a></li>
         <li><a href="fahrzeug-verkaufen.php">Auto verkaufen</a></li>
     </ul>
     <div class="nav-right">
