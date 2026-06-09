@@ -161,6 +161,7 @@ async function toggleFavorite(btn) {
         btn.innerHTML         = '&#9825;';
         btn.style.color       = '';
         btn.style.borderColor = '';
+        showNotification(`<strong>${card.dataset.make} ${card.dataset.model}</strong> aus Merkliste entfernt`);
     } else {
         favorites.add(id);
         btn.innerHTML         = '&#9829;';
@@ -190,6 +191,8 @@ async function toggleFavorite(btn) {
 async function removeFav(id) {
     id = parseInt(id, 10);
     if (!favorites.has(id)) return;
+
+    const d = getCarData(id);
     favorites.delete(id);
 
     const card = document.querySelector(`.car-card[data-id="${id}"]`);
@@ -198,6 +201,7 @@ async function removeFav(id) {
         if (btn) { btn.innerHTML = '&#9825;'; btn.style.color = ''; }
     }
 
+    if (d) showNotification(`<strong>${d.make} ${d.model}</strong> aus Merkliste entfernt`);
     updateUI();
     await sendFavAction('toggle', id);
 }
