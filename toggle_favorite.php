@@ -2,6 +2,8 @@
 session_start();
 header('Content-Type: application/json');
 
+// Lukas toggle favorties an/aus
+
 $input  = json_decode(file_get_contents('php://input'), true) ?? [];
 $action = $input['action'] ?? '';
 $carId  = isset($input['carId']) ? (int)$input['carId'] : null;

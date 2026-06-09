@@ -4,14 +4,14 @@ session_start();
 
 <?php
 require_once "db.php";
-$result    = getDB()->query("SELECT * FROM cars WHERE kategorie = 'gebrauchtwagen' ORDER BY id ASC");
+$result    = getDB()->query("SELECT * FROM cars ORDER BY id ASC");
 $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset = "UTF-8">
-    <title> Gebrauchtwagen Liste</title>
+    <title>Fahrzeug Liste</title>
     <link rel="stylesheet" href="mystyle.css">
 </head>
 
@@ -103,7 +103,7 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
             data-price="<?php echo $auto['preis']; ?>">
 
             <div class="car-image">
-                <span class="car-badge-used">Gebraucht</span>
+                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebraucht'; ?></span>
                 <button class="car-fav" type="button" data-id="<?= $auto['iid'] ?>">♡</button>
 
                 <img
