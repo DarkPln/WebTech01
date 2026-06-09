@@ -307,15 +307,11 @@ function setHorizontalLayout() {
 }
 
 /*Preisberechnung mit Steuern */
-function getTotalPrice(priceWOTax) {
-    return priceWOTax * 1.19;
-}
-
 function calculatePrice() {
     const input = document.getElementById("priceInput");
     const value = Number(input.value);
     if (value <= 0) { alert("Bitte gültigen Preis eingeben"); return; }
-    const total = getTotalPrice(value);
+    const total = value * 1.19;
     document.getElementById("priceWithoutTax").textContent = "Preis ohne Steuer: " + value.toFixed(2) + " €";
     document.getElementById("priceWithTax").textContent    = "Preis mit 19% Steuer: " + total.toFixed(2) + " €";
 }
@@ -418,16 +414,6 @@ async function cancelBooking(buchungsId) {
     return antwort.json();
 }
 
-// Verhindert XSS-Angriffe, indem HTML-Sonderzeichen in Text umgewandelt werden
-function escapeHtml(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-}
-
-
 // Buchungsseite initialisieren: Weiterleitung wenn nicht eingeloggt, sonst Buchungen anzeigen
 async function initBookingsPage() {
     var container = document.getElementById('buchungenContainer');
@@ -461,71 +447,58 @@ async function handleCancelBooking(buchungsId) {
     if (ergebnis.success) await renderBookingsPage();
 }
 
-// Buchen-Button auf der Fahrzeugdetailseite einrichten (wird über die ID "buchungsBtn" gefunden)
+// Gemeinsamer Click-Handler für alle Buchen-Buttons
+async function handleBuchungsKlick(carId, carName, carPrice) {
+    if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
+    const ergebnis = await createBooking(carId, carName, carPrice);
+    if (ergebnis.success) {
+        window.location.href = 'buchungen.php';
+    } else {
+        alert(ergebnis.message || 'Buchung fehlgeschlagen.');
+    }
+}
+
+// Prüft Auth-Status und gibt eine Hinweismeldung zurück, falls Buchen nicht erlaubt ist
+function getBuchungsHinweis() {
+    if (!authState.loggedIn) return 'Bitte einloggen, um dieses Fahrzeug zu buchen.';
+    if (authState.isLocked)  return 'Ihr Konto ist vom Administrator gesperrt.';
+    return null;
+}
+
+// Buchen-Button auf der Fahrzeugdetailseite (ID "buchungsBtn")
 function initBookingButton() {
     var btn = document.getElementById('buchungsBtn');
     if (!btn) return;
 
-    var carId    = btn.dataset.carId;
-    var carName  = btn.dataset.carName;
-    var carPrice = btn.dataset.carPrice;
-    var hinweis  = document.getElementById('buchungsNote');
+    var hinweis = document.getElementById('buchungsNote');
+    var fehler  = getBuchungsHinweis();
 
-    // Nicht eingeloggt: Button deaktivieren und Hinweis anzeigen
-    if (!authState.loggedIn) {
+    if (fehler) {
         btn.disabled = true;
-        if (hinweis) { hinweis.textContent = 'Bitte einloggen, um dieses Fahrzeug zu buchen.'; hinweis.style.display = 'block'; }
+        if (hinweis) { hinweis.textContent = fehler; hinweis.style.display = 'block'; }
         return;
     }
 
-    // Konto gesperrt: Button deaktivieren und Hinweis anzeigen
-    if (authState.isLocked) {
-        btn.disabled = true;
-        if (hinweis) { hinweis.textContent = 'Ihr Konto ist vom Administrator gesperrt.'; hinweis.style.display = 'block'; }
-        return;
-    }
-
-    btn.addEventListener('click', async function() {
-        if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
-        const ergebnis = await createBooking(carId, carName, carPrice);
-        if (ergebnis.success) {
-            window.location.href = 'buchungen.php';
-        } else {
-            alert(ergebnis.message || 'Buchung fehlgeschlagen.');
-        }
+    btn.addEventListener('click', function() {
+        handleBuchungsKlick(btn.dataset.carId, btn.dataset.carName, btn.dataset.carPrice);
     });
 }
 
-// Buchen-Buttons in der Merkliste einrichten (werden über die CSS-Klasse "buchungsBtn" gefunden, da es mehrere gibt)
-// Lukas
+// Buchen-Buttons in der Merkliste (Klasse "buchungsBtn", mehrere möglich) – Lukas
 function initBookingButtons() {
     var buttons = document.querySelectorAll('.buchungsBtn');
     if (!buttons.length) return;
 
+    var fehler = getBuchungsHinweis();
+
     buttons.forEach(function(btn) {
-        var carId    = btn.dataset.carId;
-        var carName  = btn.dataset.carName;
-        var carPrice = btn.dataset.carPrice;
-
-        if (!authState.loggedIn) {
+        if (fehler) {
             btn.disabled = true;
-            btn.title    = 'Bitte einloggen, um zu buchen.';
+            btn.title    = fehler;
             return;
         }
-        if (authState.isLocked) {
-            btn.disabled = true;
-            btn.title    = 'Ihr Konto ist vom Administrator gesperrt.';
-            return;
-        }
-
-        btn.addEventListener('click', async function() {
-            if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
-            const ergebnis = await createBooking(carId, carName, carPrice);
-            if (ergebnis.success) {
-                window.location.href = 'buchungen.php';
-            } else {
-                alert(ergebnis.message || 'Buchung fehlgeschlagen.');
-            }
+        btn.addEventListener('click', function() {
+            handleBuchungsKlick(btn.dataset.carId, btn.dataset.carName, btn.dataset.carPrice);
         });
     });
 }

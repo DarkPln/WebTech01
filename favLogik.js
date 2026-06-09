@@ -12,39 +12,14 @@ function togglePanel() {
     document.body.style.overflow = isOpen ? '' : 'hidden';
 }
 
-// ── NOTIFICATION ──
-let notTimer = null;
-function showNotification(message) {
-    let not = document.getElementById('favNot');
-    if (!not) {
-        not = document.createElement('div');
-        not.id = 'favNot';
-        not.className = 'fav-notification';
-        document.body.appendChild(not);
-    }
-    not.innerHTML = message;
-    not.classList.add('show');
-    clearTimeout(notTimer);
-    notTimer = setTimeout(() => not.classList.remove('show'), 3000);
-}
-
 // ── AJAX AN PHP SCHICKEN ──
-async function sendToggle(carId) {
-    const response = await fetch('toggle_favorite.php', {
+async function sendFavAction(action, carId) {
+    const body = carId !== undefined ? { action, carId } : { action };
+    await fetch('toggle_favorite.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'toggle', carId: carId })
+        body: JSON.stringify(body)
     });
-    return await response.json();
-}
-
-async function sendClear() {
-    const response = await fetch('toggle_favorite.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'clear' })
-    });
-    return await response.json();
 }
 
 // ── UI AKTUALISIEREN ──
@@ -131,33 +106,22 @@ async function toggleFavorite(btn) {
     const card = btn.closest('.car-card');
     if (!card) return;
 
-    const id    = parseInt(card.dataset.id, 10);
-    const make  = card.dataset.make  || '';
-    const model = card.dataset.model || '';
+    const id = parseInt(card.dataset.id, 10);
 
     if (favorites.has(id)) {
         favorites.delete(id);
         btn.innerHTML         = '&#9825;';
         btn.style.color       = '';
         btn.style.borderColor = '';
-        showNotification(`<strong>${make} ${model}</strong> aus Merkliste entfernt`);
     } else {
         favorites.add(id);
         btn.innerHTML         = '&#9829;';
         btn.style.color       = 'red';
         btn.style.borderColor = 'red';
-        showNotification(`<strong>${make} ${model}</strong> zur Merkliste hinzugefügt`);
-    }
-
-    const countEl = document.getElementById('favCount');
-    if (countEl) {
-        countEl.style.animation = 'none';
-        countEl.offsetHeight;
-        countEl.style.animation = '';
     }
 
     updateUI();
-    await sendToggle(id);
+    await sendFavAction('toggle', id);
 }
 
 // ── EINZELN ENTFERNEN ──
@@ -173,7 +137,7 @@ async function removeFav(id) {
     }
 
     updateUI();
-    await sendToggle(id);
+    await sendFavAction('toggle', id);
 }
 
 // ── ALLE ENTFERNEN ──
@@ -186,9 +150,8 @@ async function clearAllFavs() {
         }
     });
     favorites.clear();
-    showNotification('Alle Fahrzeuge aus der Merkliste entfernt');
     updateUI();
-    await sendClear();
+    await sendFavAction('clear');
 }
 
 // ── MERKLISTE: CHECKBOX-BUCHUNG ──
