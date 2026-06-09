@@ -9,8 +9,8 @@ if (empty($_SESSION['is_admin'])) {
     exit;
 }
 
-$abfrage = getDB()->query('SELECT username, is_locked AS locked FROM users ORDER BY created_at ASC');
-$nutzer  = $abfrage->fetchAll();
+$result = getDB()->query('SELECT username, is_locked AS locked FROM users ORDER BY created_at ASC');
+$nutzer = $result->fetch_all(MYSQLI_ASSOC);
 
 if (empty($nutzer)): ?>
 
@@ -21,8 +21,8 @@ if (empty($nutzer)): ?>
     <?php foreach ($nutzer as $eintrag): ?>
 
         <?php
-        $name      = htmlspecialchars($eintrag['username']);
-        $gesperrt  = (bool)$eintrag['locked'];
+        $name     = htmlspecialchars($eintrag['username']);
+        $gesperrt = (bool)$eintrag['locked'];
         ?>
 
         <div class="admin-user-row">

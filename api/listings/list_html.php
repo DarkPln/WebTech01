@@ -9,14 +9,15 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$abfrage = getDB()->prepare(
-    'SELECT listing_key AS id, make, model, year, price, status, created_at AS createdAt
+$db      = getDB();
+$uid     = $_SESSION['user_id'];
+$uname   = $db->real_escape_string($_SESSION['username']);
+$inserate = $db->query(
+    "SELECT listing_key AS id, make, model, year, price, status, created_at AS createdAt
      FROM listings
-     WHERE user_id = ? OR username = ?
-     ORDER BY created_at DESC'
-);
-$abfrage->execute([$_SESSION['user_id'], $_SESSION['username']]);
-$inserate = $abfrage->fetchAll();
+     WHERE user_id = $uid OR username = '$uname'
+     ORDER BY created_at DESC"
+)->fetch_all(MYSQLI_ASSOC);
 
 if (empty($inserate)): ?>
 

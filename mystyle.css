@@ -1852,30 +1852,96 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     border: 1px solid #2E2E2E;
     border-radius: 4px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
+    flex-direction: column;
+    gap: 24px;
 }
 
-.merkliste-footer-total-label {
-    font-size: 12px;
-    color: #888;
+.merkliste-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 300px;
+}
+
+.merkliste-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 48px;
+}
+
+.merkliste-summary-label {
+    font-size: 11px;
+    color: #666;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 4px;
 }
 
-.merkliste-footer-total-val {
-    font-size: 32px;
+.merkliste-summary-val {
+    font-size: 15px;
+    font-weight: 600;
+    color: #d0d0d0;
+}
+
+.merkliste-summary-discount {
+    color: #5cba72;
+}
+
+.merkliste-summary-sep {
+    border: none;
+    border-top: 1px solid #2e2e2e;
+    margin: 4px 0;
+}
+
+.merkliste-summary-label--total {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.merkliste-summary-val--total {
+    font-size: 30px;
     font-weight: 700;
     color: #FF1A1A;
 }
 
+body.light-mode .merkliste-summary-val {
+    color: #222;
+}
+body.light-mode .merkliste-summary-label--total {
+    color: #444;
+}
+body.light-mode .merkliste-summary-sep {
+    border-top-color: #ddd;
+}
+
 .merkliste-footer-btns {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.merkliste-footer-btns > a,
+.merkliste-footer-btns > button,
+.merkliste-footer-btns > form {
+    flex: 1;
+    margin: 0;
+}
+
+.merkliste-footer-btns > form {
+    display: flex;
+}
+
+.merkliste-footer-btns > form > button {
+    flex: 1;
+}
+
+.merkliste-footer-btns .merkliste-btn-primary,
+.merkliste-footer-btns .merkliste-btn-booking,
+.merkliste-footer-btns .merkliste-btn-ghost {
+    margin-top: 0;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .merkliste-btn-primary {
@@ -1894,7 +1960,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     height: 44px;
     padding: 0 28px;
     line-height: 44px;
-    margin-top: 20px;
 }
 
 .merkliste-btn-primary:hover {
@@ -1917,10 +1982,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     transition: background 0.2s;
     box-sizing: border-box;
     height: 44px;
-    padding: 0 28px;
     line-height: 44px;
-    margin-top: 20px;
-    width: 160px;
 }
 
 .merkliste-btn-ghost {
@@ -2260,4 +2322,52 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     justify-content: center;
     gap: 10px;
     margin-top: 15px;
+}
+
+/* ===== FAV TOAST NOTIFICATION ===== */
+
+.fav-notification {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #1a1a1a;
+    border: 1px solid rgba(204, 0, 0, 0.5);
+    border-left: 4px solid rgb(204, 0, 0);
+    color: #f0f0f0;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 14px 18px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    min-width: 260px;
+    max-width: 360px;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+}
+
+.fav-notification::before {
+    content: '♡';
+    font-size: 18px;
+    color: rgb(204, 0, 0);
+    flex-shrink: 0;
+}
+
+.fav-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+body.light-mode .fav-notification {
+    background: #ffffff;
+    border-color: rgba(200, 20, 20, 0.4);
+    border-left-color: rgb(200, 20, 20);
+    color: #1a1a1a;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }

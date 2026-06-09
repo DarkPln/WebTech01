@@ -3,8 +3,9 @@ session_start();
 ?>
 
 <?php
-$data = json_decode(file_get_contents("items.json"), true);
-$fahrzeuge = $data["fahrzeuge"];
+require_once "db.php";
+$result    = getDB()->query("SELECT * FROM cars WHERE kategorie = 'gebrauchtwagen' ORDER BY id ASC");
+$fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="de">

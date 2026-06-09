@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($useDB) {
         $db = getDB();
         if (isset($_POST['remove_id'])) {
-            $db->prepare('DELETE FROM favorites WHERE user_id = ? AND car_id = ?')
-               ->execute([$userId, (int)$_POST['remove_id']]);
+            $removeId = (int)$_POST['remove_id'];
+            $db->query("DELETE FROM favorites WHERE user_id = $userId AND car_id = $removeId");
         }
         if (isset($_POST['clear_all'])) {
-            $db->prepare('DELETE FROM favorites WHERE user_id = ?')->execute([$userId]);
+            $db->query("DELETE FROM favorites WHERE user_id = $userId");
         }
     } else {
         if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
@@ -34,9 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Favoriten laden: DB (eingeloggt) oder Session (Gast)
 if ($useDB) {
-    $stmt = getDB()->prepare('SELECT car_id FROM favorites WHERE user_id = ?');
-    $stmt->execute([$userId]);
-    $favorites = array_column($stmt->fetchAll(), 'car_id');
+    $favorites = array_column(getDB()->query("SELECT car_id FROM favorites WHERE user_id = $userId")->fetch_all(MYSQLI_ASSOC), 'car_id');
 } else {
     $favorites = $_SESSION['favorites'] ?? [];
 }
@@ -121,7 +119,7 @@ $endbetrag = $total - $rabattBetrag;
             <div class="merkliste-row">
 
                 <!-- Checkbox -->
-                <input type="checkbox" class="merkliste-checkbox" 
+                <input type="checkbox" class="merkliste-checkbox"
                 data-car-id="<?= $auto['iid'] ?>"
                 data-car-name="<?= htmlspecialchars($auto['name']) ?>"
                 data-car-price="<?= (int)$auto['preis'] ?>">
@@ -150,7 +148,7 @@ $endbetrag = $total - $rabattBetrag;
                 </div>
 
                 <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
-            
+
                 <!-- Entfernen -->
                 <form method="POST" action="merkliste.php">
                     <input type="hidden" name="remove_id" value="<?= $auto['iid'] ?>">
@@ -171,28 +169,26 @@ $endbetrag = $total - $rabattBetrag;
 
         <!-- Zusammenfassung -->
         <div class="merkliste-footer">
-            <div>
-            <!--Rabattberechnung-->
-                
-            <div class="merkliste-footer-total-label">Gesamtwert</div>
-            <div class="merkliste-footer-total-val">
-                <?= number_format($total, 0, ',', '.') ?> €
+            <div class="merkliste-summary">
+                <div class="merkliste-summary-row">
+                    <span class="merkliste-summary-label">Gesamtwert</span>
+                    <span class="merkliste-summary-val"><?= number_format($total, 0, ',', '.') ?> €</span>
+                </div>
+                <?php if ($rabattProzent > 0): ?>
+                <div class="merkliste-summary-row">
+                    <span class="merkliste-summary-label">Rabatt (<?= $rabattProzent ?> %)</span>
+                    <span class="merkliste-summary-val merkliste-summary-discount">−<?= number_format($rabattBetrag, 0, ',', '.') ?> €</span>
+                </div>
+                <?php endif; ?>
+                <div class="merkliste-summary-sep"></div>
+                <div class="merkliste-summary-row">
+                    <span class="merkliste-summary-label merkliste-summary-label--total">Endbetrag</span>
+                    <span class="merkliste-summary-val merkliste-summary-val--total"><?= number_format($endbetrag, 0, ',', '.') ?> €</span>
+                </div>
             </div>
-
-            <div class="merkliste-footer-total-label">Rabatt</div>
-            <div class="merkliste-footer-total-val">
-                <?= $rabattProzent ?> %
-                (-<?= number_format($rabattBetrag, 0, ',', '.') ?> €)
-            </div>
-
-            <div class="merkliste-footer-total-label">Endbetrag</div>
-            <div class="merkliste-footer-total-val">
-                <?= number_format($endbetrag, 0, ',', '.') ?> €
-            </div>
-        </div>
         <div class="merkliste-footer-btns">
 
-            <a href="gebrauchtwagenList.php" class="merkliste-btn-primary" style="display:inline-flex; align-items:center;">Weiter suchen</a>
+            <a href="gebrauchtwagenList.php" class="merkliste-btn-primary">Weiter suchen</a>
                 <form method="POST" action="merkliste.php" style="margin:0">
                     <input type="hidden" name="clear_all" value="1">
                     <button class="merkliste-btn-ghost" type="submit">Alle entfernen</button>

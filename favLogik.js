@@ -1,8 +1,9 @@
-// ── FAVORITEN LOGIK ──
-const favorites = new Set();
+// Favoriten Logik Lukas 
+const favorites   = new Set();
+const favCarData  = {};          // id → { make, model, year, fuel, km, price, imgSrc }
 
-// ── PANEL ÖFFNEN / SCHLIESSEN ──
-function togglePanel() {
+// panel öffnen/schliessen 
+async function togglePanel() {
     const panel   = document.getElementById('favList');
     const overlay = document.getElementById('favOvl');
     if (!panel) return;
@@ -10,6 +11,20 @@ function togglePanel() {
     panel.classList.toggle('active', !isOpen);
     overlay.classList.toggle('active', !isOpen);
     document.body.style.overflow = isOpen ? '' : 'hidden';
+
+    if (!isOpen) {
+        // Panel öffnet: Autodaten von Server holen und Panel frisch rendern
+        try {
+            const res  = await fetch('get_favorites.php');
+            const data = await res.json();
+            if (Array.isArray(data.cars)) {
+                data.cars.forEach(car => {
+                    favCarData[parseInt(car.iid, 10)] = car;
+                });
+            }
+        } catch (e) {}
+        renderList();
+    }
 }
 
 // ── AJAX AN PHP SCHICKEN ──
@@ -50,16 +65,42 @@ function updateUI() {
     if (counter > 0) {
         let total = 0;
         favorites.forEach(id => {
-            const card = document.querySelector(`.car-card[data-id="${id}"]`);
-            if (card) {
-                total += parseInt((card.dataset.price || '0').replace(/[^0-9]/g, ''), 10) || 0;
-            }
+            const d = getCarData(id);
+            if (d) total += parseInt((d.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
         });
         const totalEl = document.getElementById('totalCostValue');
         if (totalEl) totalEl.textContent = total.toLocaleString('de-DE') + ' €';
     }
 
     renderList();
+}
+
+// ── AUTO-DATEN HOLEN (DOM-Card oder gespeicherte Server-Daten) ──
+function getCarData(id) {
+    const card = document.querySelector(`.car-card[data-id="${id}"]`);
+    if (card) {
+        const img = card.querySelector('.car-img');
+        return {
+            imgSrc: img ? img.src : '',
+            make:   card.dataset.make  || '',
+            model:  card.dataset.model || '',
+            year:   card.dataset.year  || '',
+            fuel:   card.dataset.fuel  || '',
+            km:     card.dataset.km    || '',
+            price:  card.dataset.price || '',
+        };
+    }
+    const d = favCarData[id];
+    if (!d) return null;
+    return {
+        imgSrc: d.imagepath || '',
+        make:   d.marke     || '',
+        model:  d.modell    || '',
+        year:   d.baujahr   || '',
+        fuel:   d.kraftstoff || '',
+        km:     Number(d.kilometerstand || 0).toLocaleString('de-DE') + ' km',
+        price:  d.preis     || '',
+    };
 }
 
 // ── PANEL-LISTE RENDERN ──
@@ -69,31 +110,22 @@ function renderList() {
     list.innerHTML = '';
 
     favorites.forEach(id => {
-        const card = document.querySelector(`.car-card[data-id="${id}"]`);
-        if (!card) return;
+        const d = getCarData(id);
+        if (!d) return;
 
         const item = document.createElement('div');
-        item.className = 'fav-item';
+        item.className  = 'fav-item';
         item.dataset.id = id;
-
-        const img    = card.querySelector('.car-img');
-        const imgSrc = img ? img.src : '';
-        const make   = card.dataset.make  || '';
-        const model  = card.dataset.model || '';
-        const year   = card.dataset.year  || '';
-        const fuel   = card.dataset.fuel  || '';
-        const km     = card.dataset.km    || '';
-        const price  = card.dataset.price || '';
 
         item.innerHTML = `
             <div class="fav-item-thumbnail">
-                <img src="${imgSrc}" alt="${make} ${model}" width="80" height="56" style="object-fit:cover; border-radius:3px;">
+                <img src="${d.imgSrc}" alt="${d.make} ${d.model}" width="80" height="56" style="object-fit:cover; border-radius:3px;">
             </div>
             <div class="fav-item-info">
-                <div class="fav-item-make">${make}</div>
-                <div class="fav-item-model">${model}</div>
-                <div class="fav-item-meta">${year} · ${fuel} · ${km}</div>
-                <div class="fav-item-price">${Number(price).toLocaleString('de-DE')} €</div>
+                <div class="fav-item-make">${d.make}</div>
+                <div class="fav-item-model">${d.model}</div>
+                <div class="fav-item-meta">${d.year} · ${d.fuel} · ${d.km}</div>
+                <div class="fav-item-price">${Number(d.price).toLocaleString('de-DE')} €</div>
             </div>
             <button class="fav-item-remove-btn" onclick="removeFav(${id})" title="Entfernen">&#x2715;</button>
         `;
@@ -118,6 +150,27 @@ async function toggleFavorite(btn) {
         btn.innerHTML         = '&#9829;';
         btn.style.color       = 'red';
         btn.style.borderColor = 'red';
+        showNotification(`<strong>${make} ${model}</strong> zur Merkliste hinzugefügt`);
+        // Daten cachen falls noch nicht vorhanden (z.B. auf item.php)
+        if (!favCarData[id]) {
+            const img = card.querySelector('.car-img');
+            favCarData[id] = {
+                imagepath:      img ? img.getAttribute('src') : '',
+                marke:          card.dataset.make   || '',
+                modell:         card.dataset.model  || '',
+                baujahr:        card.dataset.year   || '',
+                kraftstoff:     card.dataset.fuel   || '',
+                kilometerstand: (card.dataset.km || '').replace(/[^0-9]/g, ''),
+                preis:          card.dataset.price  || '',
+            };
+        }
+    }
+
+    const countEl = document.getElementById('favCount');
+    if (countEl) {
+        countEl.style.animation = 'none';
+        countEl.offsetHeight;
+        countEl.style.animation = '';
     }
 
     updateUI();
@@ -201,6 +254,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
         const res  = await fetch('get_favorites.php');
         const data = await res.json();
+
+        if (Array.isArray(data.cars)) {
+            data.cars.forEach(car => {
+                favCarData[parseInt(car.iid, 10)] = car;
+            });
+        }
 
         if (data.favorites && data.favorites.length > 0) {
             data.favorites.forEach(id => {

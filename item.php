@@ -5,10 +5,8 @@ require_once "db.php";
 if (!isset($_GET["pid"])) die("Parameter fehlt!");
 if (empty($_GET["pid"]))  die("Keine ID übergeben!");
 
-$pid  = (int)$_GET["pid"];
-$stmt = getDB()->prepare("SELECT * FROM cars WHERE iid = ?");
-$stmt->execute([$pid]);
-$fahrzeug = $stmt->fetch();
+$pid      = (int)$_GET["pid"];
+$fahrzeug = getDB()->query("SELECT * FROM cars WHERE iid = $pid")->fetch_assoc();
 
 if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
 ?>

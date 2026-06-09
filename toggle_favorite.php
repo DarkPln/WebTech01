@@ -14,7 +14,7 @@ if ($useDB) {
     $db = getDB();
 
     if ($action === 'clear') {
-        $db->prepare('DELETE FROM favorites WHERE user_id = ?')->execute([$userId]);
+        $db->query("DELETE FROM favorites WHERE user_id = $userId");
         echo json_encode(['success' => true, 'status' => 'cleared', 'favorites' => []]);
         exit;
     }
@@ -24,20 +24,15 @@ if ($useDB) {
         exit;
     }
 
-    $stmt = $db->prepare('SELECT id FROM favorites WHERE user_id = ? AND car_id = ?');
-    $stmt->execute([$userId, $carId]);
-
-    if ($stmt->fetch()) {
-        $db->prepare('DELETE FROM favorites WHERE user_id = ? AND car_id = ?')->execute([$userId, $carId]);
+    if ($db->query("SELECT id FROM favorites WHERE user_id = $userId AND car_id = $carId")->fetch_assoc()) {
+        $db->query("DELETE FROM favorites WHERE user_id = $userId AND car_id = $carId");
         $status = 'removed';
     } else {
-        $db->prepare('INSERT INTO favorites (user_id, car_id) VALUES (?, ?)')->execute([$userId, $carId]);
+        $db->query("INSERT INTO favorites (user_id, car_id) VALUES ($userId, $carId)");
         $status = 'added';
     }
 
-    $stmt = $db->prepare('SELECT car_id FROM favorites WHERE user_id = ?');
-    $stmt->execute([$userId]);
-    $favorites = array_column($stmt->fetchAll(), 'car_id');
+    $favorites = array_column($db->query("SELECT car_id FROM favorites WHERE user_id = $userId")->fetch_all(MYSQLI_ASSOC), 'car_id');
 
     echo json_encode(['success' => true, 'status' => $status, 'favorites' => $favorites]);
 } else {

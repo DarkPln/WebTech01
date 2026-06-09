@@ -12,8 +12,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Buchungen des aktuellen Nutzers laden, neueste zuerst
-$abfrage = getDB()->prepare(
-    'SELECT booking_key AS id,
+$uid    = $_SESSION['user_id'];
+$result = getDB()->query(
+    "SELECT booking_key AS id,
             car_id      AS carId,
             car_name    AS carName,
             car_price   AS carPrice,
@@ -22,9 +23,8 @@ $abfrage = getDB()->prepare(
             created_at  AS createdAt,
             updated_at  AS updatedAt
      FROM bookings
-     WHERE user_id = ?
-     ORDER BY created_at DESC'
+     WHERE user_id = $uid
+     ORDER BY created_at DESC"
 );
-$abfrage->execute([$_SESSION['user_id']]);
 
-echo json_encode(['success' => true, 'bookings' => $abfrage->fetchAll()]);
+echo json_encode(['success' => true, 'bookings' => $result->fetch_all(MYSQLI_ASSOC)]);
