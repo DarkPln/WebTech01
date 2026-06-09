@@ -7,10 +7,10 @@
         <div>
             <div class="footer-heading">Fahrzeuge</div>
             <ul class="footer-links">
-                <li><a href="#">Neuwagen</a></li>
-                <li><a href="gebrauchtwagenList.php">Gebrauchtwagen</a></li>
-                <li><a href="#">Elektrofahrzeuge</a></li>
-                <li><a href="#">Sonderangebote</a></li>
+                <li><a href="gebrauchtwagenList.php?filter=neuwagen">Neuwagen</a></li>
+                <li><a href="gebrauchtwagenList.php?filter=gebrauchtwagen">Gebrauchtwagen</a></li>
+                <li><a href="gebrauchtwagenList.php?filter=elektro">Elektrofahrzeuge</a></li>
+                <li><a href="gebrauchtwagenList.php?filter=sonderangebot">Sonderangebote</a></li>
             </ul>
         </div>
         <div>

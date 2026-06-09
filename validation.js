@@ -248,6 +248,7 @@ async function initLogout() {
 // ===== INITIALISIERUNG =====
 
 document.addEventListener('DOMContentLoaded', async () => {
+    applyUrlFilter();
     await initLogout();
     await loadAuthState();
     initNavAuthLink();
@@ -626,6 +627,23 @@ async function adminLogout() {
 }
 
 // Niclas: Funktionen für GebrauchtwagenList.php
+function applyUrlFilter() {
+    const filter = new URLSearchParams(window.location.search).get('filter');
+    if (!filter) return;
+
+    document.querySelectorAll('.car-card').forEach(card => {
+        let visible;
+        switch (filter) {
+            case 'neuwagen':       visible = card.dataset.kategorie === 'neuwagen'; break;
+            case 'gebrauchtwagen': visible = card.dataset.kategorie === 'gebrauchtwagen'; break;
+            case 'elektro':        visible = card.dataset.fuel === 'Elektro'; break;
+            case 'sonderangebot':  visible = Number(card.dataset.price) <= 60000; break;
+            default:               visible = true;
+        }
+        card.style.display = visible ? '' : 'none';
+    });
+}
+
 function updateBudgetLabel() {
     const value = Number(document.getElementById("budgetInput").value);
     document.getElementById("budgetValue").textContent = value.toLocaleString("de-DE") + " €";

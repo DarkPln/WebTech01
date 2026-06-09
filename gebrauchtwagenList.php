@@ -100,7 +100,8 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
             data-fuel="<?php echo $auto['kraftstoff']; ?>"
             data-km="<?php echo $auto['kilometerstand']; ?> km"
             data-drive="<?php echo $auto['antrieb']; ?>"
-            data-price="<?php echo $auto['preis']; ?>">
+            data-price="<?php echo $auto['preis']; ?>"
+            data-kategorie="<?php echo $auto['kategorie']; ?>">
 
             <div class="car-image">
                 <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebraucht'; ?></span>
