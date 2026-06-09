@@ -586,22 +586,11 @@ async function renderAdminInserate() {
     container.innerHTML    = await antwort.text();
 }
 
-// Inserat genehmigen und Liste neu laden
-async function adminApproveInserat(id) {
+async function adminSetInseratStatus(id, status) {
     await fetch('api/admin/listings.php', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ id, status: 'genehmigt' })
-    });
-    await renderAdminInserate();
-}
-
-// Inserat ablehnen und Liste neu laden
-async function adminRejectInserat(id) {
-    await fetch('api/admin/listings.php', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ id, status: 'abgelehnt' })
+        body:    JSON.stringify({ id, status })
     });
     await renderAdminInserate();
 }
@@ -615,16 +604,15 @@ async function renderAdminUsers() {
     container.innerHTML = await antwort.text();
 }
 
-async function adminSetStatus(bookingId, status) {
-    await fetch('api/admin/orders.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: bookingId, status, reason: '' }) });
+async function adminSetStatus(bookingId, status, reason) {
+    await fetch('api/admin/orders.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: bookingId, status, reason: reason || '' }) });
     await renderAdminOrders();
 }
 
 async function adminRejectOrder(bookingId) {
     var reason = prompt('Bitte geben Sie einen Ablehnungsgrund an (z.B. nicht verfügbare Items):');
     if (reason === null) return;
-    await fetch('api/admin/orders.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: bookingId, status: 'abgelehnt', reason: reason || 'Kein Grund angegeben' }) });
-    await renderAdminOrders();
+    await adminSetStatus(bookingId, 'abgelehnt', reason || 'Kein Grund angegeben');
 }
 
 async function adminToggleLock(username) {
@@ -657,17 +645,12 @@ function resetBudgetFilter() {
     updateBudgetLabel();
 }
 
-function sortCarsByPriceAsc() {
+function sortCarsByPrice(asc) {
     const container = document.getElementById("carLayout");
     Array.from(container.querySelectorAll(".car-card"))
-        .sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price))
-        .forEach(car => container.appendChild(car));
-}
-
-function sortCarsByPriceDesc() {
-    const container = document.getElementById("carLayout");
-    Array.from(container.querySelectorAll(".car-card"))
-        .sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price))
+        .sort((a, b) => asc
+            ? Number(a.dataset.price) - Number(b.dataset.price)
+            : Number(b.dataset.price) - Number(a.dataset.price))
         .forEach(car => container.appendChild(car));
 }
 

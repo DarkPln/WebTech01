@@ -8,25 +8,19 @@
         <script src="validation.js"></script>
     </head>
     <body>
-        <?php
-            $pageTitle   = "Registrierung";
-            $pageSubtext = "Erstellen Sie ein neues Auto24-Konto.";
-            $pwGenLabel  = "Passwort generieren:";
-            $pwGenHint   = "Geben Sie ein Stichwort ein, um ein sicheres Passwort zu generieren:";
-        ?>
         <?php require_once 'nav.php'; ?>
 
         <main class="home-main">
             <section class="auth-section">
                 <div class="auth-card">
-                    <label><?php echo $pwGenLabel; ?></label>
-                        <p><?php echo $pwGenHint; ?></p>
+                    <label>Passwort generieren:</label>
+                        <p>Geben Sie ein Stichwort ein, um ein sicheres Passwort zu generieren:</p>
                         <input type="string" id="pwInput">
                         <button onclick="generatePassword()">Generieren</button>
                         <p id="generatedPassword"></p>
 
-                    <h1><?php echo $pageTitle; ?></h1>
-                    <p><?php echo $pageSubtext; ?></p>
+                    <h1>Registrierung</h1>
+                    <p>Erstellen Sie ein neues Auto24-Konto.</p>
 
                     <div id="reg-error" class="error-message" style="display:none;"></div>
 

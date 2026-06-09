@@ -9,10 +9,6 @@
 </head>
 
 <body>
-    <?php
-        $pageTitle   = "Abgemeldet";
-        $pageSubtext = "Sie wurden erfolgreich abgemeldet.";
-    ?>
     <?php require_once 'nav.php'; ?>
 
     <div id="logoutPage"></div>
@@ -20,8 +16,8 @@
     <main class="home-main">
         <section class="auth-section">
             <div class="auth-card">
-                <h1><?php echo $pageTitle; ?></h1>
-                <p><?php echo $pageSubtext; ?></p>
+                <h1>Abgemeldet</h1>
+                <p>Sie wurden erfolgreich abgemeldet.</p>
                 <p><a href="login.php">Zum Login</a></p>
                 <p><a href="index.php">Zur Hauptseite</a></p>
             </div>

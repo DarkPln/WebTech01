@@ -8,17 +8,13 @@
     <script src="validation.js"></script>
 </head>
 <body>
-    <?php
-        $pageTitle   = "Login";
-        $pageSubtext = "Bitte loggen Sie sich mit Ihrem Account ein.";
-    ?>
     <?php require_once 'nav.php'; ?>
 
     <main class="home-main">
         <section class="auth-section">
             <div class="auth-card">
-                <h1><?php echo $pageTitle; ?></h1>
-                <p><?php echo $pageSubtext; ?></p>
+                <h1>Login</h1>
+                <p>Bitte loggen Sie sich mit Ihrem Account ein.</p>
                 <p class="demo-hint">Demo: Benutzername <strong>TestUser</strong>, Passwort <strong>TestPass123</strong></p>
 
                 <div id="successMessage" class="success-message" style="display:none;"></div>

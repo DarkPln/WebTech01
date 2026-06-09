@@ -17,11 +17,6 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 
 <!-- Lukas: Navigation -->
 <body>
-    <?php
-        $financeHeadline = "Kauffinanzierung";
-        $financeHint    = "Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).";
-    ?>
-
     <?php $showFav = true; require_once 'nav.php'; ?>
 
     <br>
@@ -63,11 +58,11 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
     <h3>Fahrzeuge sortieren</h3>
 
     <div class="filter-button-row">
-        <button class="filter-btn" onclick="sortCarsByPriceAsc()">
+        <button class="filter-btn" onclick="sortCarsByPrice(true)">
             Preis ↑
         </button>
 
-        <button class="filter-btn" onclick="sortCarsByPriceDesc()">
+        <button class="filter-btn" onclick="sortCarsByPrice(false)">
             Preis ↓
         </button>
     </div>
@@ -162,8 +157,8 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 </div>
 
 <section class="finance-teaser">
-    <h2><?php echo $financeHeadline; ?></h2>
-    <p><?php echo $financeHint; ?></p>
+    <h2>Kauffinanzierung</h2>
+    <p>Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).</p>
     <a href="finanzierung.php" class="home-btn-primary" style="display:inline-block; margin: 16px auto;">Zum Finanzierungsrechner</a>
 </section>
 

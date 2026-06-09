@@ -27,6 +27,22 @@ async function togglePanel() {
     }
 }
 
+// ── TOAST NOTIFICATION ──
+let notTimer = null;
+
+function showNotification(msg) {
+    let el = document.querySelector('.fav-notification');
+    if (!el) {
+        el = document.createElement('div');
+        el.className = 'fav-notification';
+        document.body.appendChild(el);
+    }
+    el.innerHTML = msg;
+    el.classList.add('show');
+    clearTimeout(notTimer);
+    notTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
 // ── AJAX AN PHP SCHICKEN ──
 async function sendFavAction(action, carId) {
     const body = carId !== undefined ? { action, carId } : { action };
@@ -150,7 +166,7 @@ async function toggleFavorite(btn) {
         btn.innerHTML         = '&#9829;';
         btn.style.color       = 'red';
         btn.style.borderColor = 'red';
-        showNotification(`<strong>${make} ${model}</strong> zur Merkliste hinzugefügt`);
+        showNotification(`<strong>${card.dataset.make} ${card.dataset.model}</strong> zur Merkliste hinzugefügt`);
         // Daten cachen falls noch nicht vorhanden (z.B. auf item.php)
         if (!favCarData[id]) {
             const img = card.querySelector('.car-img');
@@ -164,13 +180,6 @@ async function toggleFavorite(btn) {
                 preis:          card.dataset.price  || '',
             };
         }
-    }
-
-    const countEl = document.getElementById('favCount');
-    if (countEl) {
-        countEl.style.animation = 'none';
-        countEl.offsetHeight;
-        countEl.style.animation = '';
     }
 
     updateUI();

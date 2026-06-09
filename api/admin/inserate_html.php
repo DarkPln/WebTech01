@@ -74,8 +74,8 @@ if (empty($inserate)): ?>
 
             <?php if ($ins['status'] === 'eingereicht'): ?>
                 <div class="admin-order-actions">
-                    <button onclick="adminApproveInserat('<?= $ins['id'] ?>')">Genehmigen</button>
-                    <button class="btn-reject" onclick="adminRejectInserat('<?= $ins['id'] ?>')">Ablehnen</button>
+                    <button onclick="adminSetInseratStatus('<?= $ins['id'] ?>', 'genehmigt')">Genehmigen</button>
+                    <button class="btn-reject" onclick="adminSetInseratStatus('<?= $ins['id'] ?>', 'abgelehnt')">Ablehnen</button>
                 </div>
             <?php endif; ?>
 
