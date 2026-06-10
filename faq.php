@@ -25,6 +25,7 @@
             </div>
         </section>
 
+        <!-- Hinweis: Teile des Inhalts dieser Seite, insbesondere Texte, wurden mithilfe von KI-Tools (u.a. Claude) erstellt. -->
         <div class="faq-section">
 
             <div class="faq-category">

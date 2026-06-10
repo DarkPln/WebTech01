@@ -17,6 +17,7 @@
 
     <?php require_once 'nav.php'; ?>
 
+    <!-- Hinweis: Teile des Inhalts dieser Seite, insbesondere Texte, wurden mithilfe von KI-Tools (u.a. Claude) erstellt. -->
     <main class="content-main">
         <div class="content-section">
             <div class="home-badge"><?php echo $lastUpdated; ?></div>

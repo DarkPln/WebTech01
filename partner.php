@@ -25,8 +25,9 @@
             </div>
         </section>
 
+        <!-- Hinweis: Teile des Inhalts dieser Seite, insbesondere Texte, wurden mithilfe von KI-Tools (u.a. Claude) erstellt. -->
         <section class="home-section">
-            <h2>Finanzierungspartner</h2>
+<h2>Finanzierungspartner</h2>
             <div class="partner-grid">
                 <div class="partner-card">
                     <div class="partner-card-logo">Auto24 Bank</div>
