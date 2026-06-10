@@ -136,6 +136,8 @@ function initLoginForm() {
     username.addEventListener('input', () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
     password.addEventListener('input', () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
 
+
+    // bei erfolgreicher registrierung: 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('registered') === '1' && successMessage) {
         successMessage.textContent = 'Registrierung erfolgreich! Bitte jetzt einloggen.';
@@ -145,7 +147,7 @@ function initLoginForm() {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (loginBtn.disabled) return;
-
+Y
         const r    = await fetch('api/auth/login.php', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -347,6 +349,83 @@ function initVehicleForm() {
     var form = document.getElementById('vehicleForm');
     if (!form) return;
 
+    var uploadArea    = document.getElementById('uploadArea');
+    var fileInput     = document.getElementById('sell-images');
+    var previewGrid   = document.getElementById('imagePreviewGrid');
+    var uploadCount   = document.getElementById('uploadCount');
+    var selectedFiles = [];
+
+    function updateCount() {
+        if (!uploadCount) return;
+        if (selectedFiles.length === 0) {
+            uploadCount.style.display = 'none';
+        } else {
+            uploadCount.style.display = 'block';
+            uploadCount.textContent = selectedFiles.length + ' von 10 Foto(s) ausgewählt';
+        }
+    }
+
+    function renderPreviews() {
+        if (!previewGrid) return;
+        previewGrid.innerHTML = '';
+        selectedFiles.forEach(function(file, i) {
+            var item = document.createElement('div');
+            item.className = 'image-preview-item';
+
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.alt = file.name;
+
+            var removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-img';
+            removeBtn.textContent = '×';
+            removeBtn.addEventListener('click', function() {
+                selectedFiles.splice(i, 1);
+                renderPreviews();
+                updateCount();
+            });
+
+            item.appendChild(img);
+            item.appendChild(removeBtn);
+            previewGrid.appendChild(item);
+        });
+        updateCount();
+    }
+
+    function addFiles(newFiles) {
+        var allowed = ['image/jpeg', 'image/png', 'image/webp'];
+        newFiles.forEach(function(file) {
+            if (!allowed.includes(file.type)) return;
+            if (file.size > 5 * 1024 * 1024) { alert(file.name + ' ist zu groß (max. 5 MB).'); return; }
+            if (selectedFiles.length >= 10) { alert('Maximal 10 Fotos erlaubt.'); return; }
+            selectedFiles.push(file);
+        });
+        renderPreviews();
+    }
+
+    if (uploadArea && fileInput) {
+        uploadArea.addEventListener('click', function() { fileInput.click(); });
+
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', function() {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            addFiles(Array.from(e.dataTransfer.files));
+        });
+
+        fileInput.addEventListener('change', function() {
+            addFiles(Array.from(fileInput.files));
+            fileInput.value = '';
+        });
+    }
+
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -357,32 +436,30 @@ function initVehicleForm() {
         });
         if (!valid) return;
 
-        var inserat = {
-            make:      document.getElementById('sell-make').value.trim(),
-            model:     document.getElementById('sell-model').value.trim(),
-            year:      document.getElementById('sell-year').value,
-            km:        document.getElementById('sell-km').value,
-            fuel:      document.getElementById('sell-fuel').value,
-            gearbox:   document.getElementById('sell-gearbox').value,
-            power:     document.getElementById('sell-power').value,
-            type:      document.getElementById('sell-type').value,
-            condition: document.getElementById('sell-condition').value,
-            price:     document.getElementById('sell-price').value,
-            desc:      document.getElementById('sell-desc').value.trim(),
-            name:      document.getElementById('sell-name').value.trim(),
-            email:     document.getElementById('sell-email').value.trim(),
-            phone:     document.getElementById('sell-phone').value.trim(),
-        };
+        var fd = new FormData();
+        fd.append('make',      document.getElementById('sell-make').value.trim());
+        fd.append('model',     document.getElementById('sell-model').value.trim());
+        fd.append('year',      document.getElementById('sell-year').value);
+        fd.append('km',        document.getElementById('sell-km').value);
+        fd.append('fuel',      document.getElementById('sell-fuel').value);
+        fd.append('gearbox',   document.getElementById('sell-gearbox').value);
+        fd.append('power',     document.getElementById('sell-power').value);
+        fd.append('type',      document.getElementById('sell-type').value);
+        fd.append('condition', document.getElementById('sell-condition').value);
+        fd.append('price',     document.getElementById('sell-price').value);
+        fd.append('desc',      document.getElementById('sell-desc').value.trim());
+        fd.append('name',      document.getElementById('sell-name').value.trim());
+        fd.append('email',     document.getElementById('sell-email').value.trim());
+        fd.append('phone',     document.getElementById('sell-phone').value.trim());
+        selectedFiles.forEach(function(file) { fd.append('images[]', file); });
 
-        const r    = await fetch('api/listings/create.php', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify(inserat),
-        });
+        const r    = await fetch('api/listings/create.php', { method: 'POST', body: fd });
         const data = await r.json();
 
         if (data.success) {
             form.reset();
+            selectedFiles = [];
+            renderPreviews();
             form.style.display = 'none';
             var success = document.getElementById('vehicleSuccess');
             if (success) {

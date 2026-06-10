@@ -19,6 +19,7 @@ if ($useDB) {
     $ids = array_values($_SESSION['favorites']);
 }
 
+// wenn ids da sind, dann die autos zu den ids raussuchen, sonst leeres array
 $cars = [];
 if (!empty($ids)) {
     $in   = implode(',', array_map('intval', $ids));

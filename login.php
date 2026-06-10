@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Login - Auto24</title>
     <link rel="stylesheet" href="mystyle.css">
-    <script src="validation.js"></script>
 </head>
 <body>
     <?php require_once 'nav.php'; ?>
@@ -44,7 +43,8 @@
     </main>
 
     <?php require_once 'footer.php'; ?>
-
+    
+<script src="validation.js"></script>
 </body>
 </html>
 <!-- Niclas -->

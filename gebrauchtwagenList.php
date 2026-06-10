@@ -104,7 +104,7 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
             data-kategorie="<?php echo $auto['kategorie']; ?>">
 
             <div class="car-image">
-                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebraucht'; ?></span>
+                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebrauchtwagen'; ?></span>
                 <button class="car-fav" type="button" data-id="<?= $auto['iid'] ?>">♡</button>
 
                 <img

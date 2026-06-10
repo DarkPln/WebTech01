@@ -116,6 +116,19 @@
                     <label for="sell-desc">Fahrzeugbeschreibung</label>
                     <textarea id="sell-desc" name="desc" placeholder="Beschreiben Sie Ihr Fahrzeug: Ausstattung, Besonderheiten, Mängel, Wartungshistorie …"></textarea>
 
+                    <h2>Fotos</h2>
+
+                    <div class="upload-area" id="uploadArea">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                        </svg>
+                        <p><strong>Bilder hier ablegen</strong> oder klicken zum Auswählen</p>
+                        <p>JPG, PNG, WEBP &ndash; max. 5 MB pro Bild, bis zu 10 Fotos</p>
+                    </div>
+                    <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp" multiple style="display:none">
+                    <div class="image-preview-grid" id="imagePreviewGrid"></div>
+                    <p class="upload-count" id="uploadCount" style="display:none;"></p>
+
                     <h2>Kontaktdaten</h2>
 
                     <label for="sell-name">Name *</label>

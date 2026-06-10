@@ -13,7 +13,7 @@ async function togglePanel() {
     document.body.style.overflow = isOpen ? '' : 'hidden';
 
     if (!isOpen) {
-        // Panel öffnet: Autodaten von Server holen und Panel frisch rendern
+        // panel öffnet: Autodaten von Server holen und Panel  rendern
         try {
             const res  = await fetch('get_favorites.php');
             const data = await res.json();
@@ -27,7 +27,7 @@ async function togglePanel() {
     }
 }
 
-// ── TOAST NOTIFICATION ──
+// Notification 
 let notTimer = null;
 
 function showNotification(msg) {
@@ -43,8 +43,8 @@ function showNotification(msg) {
     notTimer = setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-// ── AJAX AN PHP SCHICKEN ──
-async function sendFavAction(action, carId) {
+// wird dann in ToggleFavorite und removefav aufgerufen um serverseitig die session/db zu aktualisieren
+async function sendFavAction(action, carId) { 
     const body = carId !== undefined ? { action, carId } : { action };
     await fetch('toggle_favorite.php', {
         method: 'POST',
