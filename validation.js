@@ -751,15 +751,34 @@ function sortCarsByPrice(asc) {
 }
 
 function searchCars() {
+    applyAllFilters();
+}
+
+function updateYearLabel() {
+    const value = Number(document.getElementById("yearInput").value);
+    document.getElementById("yearValue").textContent = value;
+}
+
+function applyAllFilters() {
+    const budget     = Number(document.getElementById("budgetInput").value);
+    const year       = Number(document.getElementById("yearInput").value);
     const searchTerm = document.getElementById("carSearchInput").value.toLowerCase();
+
     document.querySelectorAll(".car-card").forEach(car => {
-        car.style.display =
-            (car.dataset.make.toLowerCase().includes(searchTerm) || car.dataset.model.toLowerCase().includes(searchTerm))
-            ? "" : "none";
+        const matchesBudget = Number(car.dataset.price) <= budget;
+        const matchesYear   = Number(car.dataset.year) >= year;
+        const matchesSearch = searchTerm === "" ||
+            car.dataset.make.toLowerCase().includes(searchTerm) ||
+            car.dataset.model.toLowerCase().includes(searchTerm);
+        car.style.display = (matchesBudget && matchesYear && matchesSearch) ? "" : "none";
     });
 }
 
-function resetCarSearch() {
+function resetAllFilters() {
+    document.getElementById("budgetInput").value = 150000;
+    updateBudgetLabel();
+    document.getElementById("yearInput").value = 1980;
+    updateYearLabel();
     document.getElementById("carSearchInput").value = "";
     document.querySelectorAll(".car-card").forEach(car => { car.style.display = ""; });
 }
