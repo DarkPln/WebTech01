@@ -14,6 +14,7 @@ async function initAdminPage() {
         await renderAdminOrders();
         await renderAdminUsers();
         await renderAdminInserate();
+        await renderAdminCars();
 
         document.querySelectorAll('.admin-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
@@ -90,6 +91,30 @@ async function adminToggleLock(username) {
         body:    JSON.stringify({ username })
     });
     await renderAdminUsers();
+}
+
+async function renderAdminCars() {
+    var container = document.getElementById('adminCars');
+    if (!container) return;
+    const antwort       = await fetch('api/admin/cars_html.php');
+    container.innerHTML = await antwort.text();
+}
+
+async function adminDeleteCar(iid, btn) {
+    if (!confirm('Fahrzeug dauerhaft löschen?')) return;
+    btn.disabled = true;
+    const res  = await fetch('api/admin/cars.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ iid })
+    });
+    const data = await res.json();
+    if (data.success) {
+        await renderAdminCars();
+    } else {
+        alert(data.message || 'Löschen fehlgeschlagen');
+        btn.disabled = false;
+    }
 }
 
 async function adminLogout() {
