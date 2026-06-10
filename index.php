@@ -54,7 +54,7 @@
             <div class="car-carousel-track" id="carouselTrack" data-repeat="<?php echo $carouselRepeat; ?>">
                 <?php for ($r = 0; $r < $carouselRepeat; $r++): ?>
                     <?php foreach ($carouselCars as $c): ?>
-                    <a href="item.php?id=<?php echo (int)$c['iid']; ?>" class="carousel-card">
+                    <a href="item.php?pid=<?php echo (int)$c['iid']; ?>" class="carousel-card">
                         <div class="carousel-card-img">
                             <img src="<?php echo htmlspecialchars($c['imagepath']); ?>"
                                  alt="<?php echo htmlspecialchars($c['marke'] . ' ' . $c['modell']); ?>"
