@@ -19,9 +19,32 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 <body>
     <?php $showFav = true; require_once 'nav.php'; ?>
 
-    <br>
-    <br>
-    <br>
+    <!-- Toggle Button + Live-Suche -->
+    <div class="search-config-bar">
+        <div class="search-col">
+            <button class="search-toggle-btn" id="searchToggleBtn" onclick="toggleSearchConfig()" title="Suchkonfigurator öffnen/schließen">
+                <svg class="search-toggle-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 14h1v-3l2-4h8l2 4v3h1"/>
+                    <path d="M3 14v2h15v-2"/>
+                    <circle cx="6.5" cy="16" r="1.8"/>
+                    <circle cx="14.5" cy="16" r="1.8"/>
+                    <circle cx="20" cy="6.5" r="3"/>
+                    <line x1="22.2" y1="8.7" x2="24" y2="10.5"/>
+                </svg>
+                <span class="search-toggle-label">Suche</span>
+                <svg class="search-toggle-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+        </div>
+        <div class="search-col search-col--mid">
+            <input type="text" id="carSearchInput" class="search-bar-inline" placeholder="Marke oder Modell suchen..." oninput="searchCars()">
+        </div>
+        <div class="search-col"></div>
+    </div>
+
+    <!-- Aufklappbarer Suchkonfigurator -->
+    <div class="search-configurator" id="searchConfigurator">
 
 <!-- Niclas: Budget-Filter mit Schieberegler -->
 <div class ="filter-section">
@@ -42,16 +65,7 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
         <div id="budgetValue">
             150.000 €
         </div>
-        <div class="filter-button-row">
-            <button class="filter-btn" onclick="filterByBudget()">
-             Anwenden
-             </button>
-
-             <button class="filter-btn" onclick="resetBudgetFilter()">
-             Reset
-            </button>
-            </div>   
-        </div>     
+    </div>
 </div>
 <!-- Niclas: Sortier-Buttons -->
 <div class="sort-filter">
@@ -68,26 +82,39 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
     </div>
 </div>
 
-<!-- Niclas: Suchfunktion nach Marke -->
-<div class="search-filter">
-    <h3>Fahrzeug suchen</h3>
+<!-- Niclas: Filter-Buttons für Baujahr -->
+<div class="year-filter">
+    <h3>Baujahr ab</h3>
 
-    <input
-        type="text"
-        id="carSearchInput"
-        placeholder="z.B. Audi oder C 220">
+    <div class="slider-container">
 
-    <div class="filter-button-row">
-        <button class="filter-btn" onclick="searchCars()">
-            Suchen
-        </button>
+        <input
+            type="range"
+            id="yearInput"
+            min="1980"
+            max="2026"
+            step="1"
+            value="1980"
+            oninput="updateYearLabel()">
 
-        <button class="filter-btn" onclick="resetCarSearch()">
-            Reset
-        </button>
+        <div id="yearValue">
+            1980
+        </div>
     </div>
 </div>
-</div> 
+
+<div class="filter-button-row configurator-actions">
+    <button class="filter-btn" onclick="applyAllFilters()">
+        Anwenden
+    </button>
+
+    <button class="filter-btn" onclick="resetAllFilters()">
+        Reset
+    </button>
+</div>
+</div>
+
+    </div><!-- Ende search-configurator -->
 
 <div id = "carLayout" class="cars-grid horizontal-layout">
 
@@ -167,4 +194,12 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
 <?php require_once 'footer.php'; ?>
     <script src="validation.js"></script>
     <script src="favLogik.js"></script>
+    <script>
+        function toggleSearchConfig() {
+            const config = document.getElementById('searchConfigurator');
+            const btn = document.getElementById('searchToggleBtn');
+            config.classList.toggle('open');
+            btn.classList.toggle('active');
+        }
+    </script>
 </body>
