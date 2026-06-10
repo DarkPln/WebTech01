@@ -763,11 +763,11 @@ button.car-fav {
 }
 
 .home-hero {
-    min-height: 520px;
+    min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 80px 4rem;
+    padding: 40px 4rem;
     background:
         radial-gradient(circle at 70% 40%, rgba(227, 27, 27, 0.25), transparent 35%),
         linear-gradient(135deg, #0a0a0a 0%, #180505 50%, #0a0a0a 100%);
@@ -789,12 +789,12 @@ button.car-fav {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .home-hero h1 {
-    font-size: 56px;
-    margin-bottom: 20px;
+    font-size: 44px;
+    margin-bottom: 12px;
 }
 
 .home-hero h1 span {
@@ -803,9 +803,9 @@ button.car-fav {
 
 .home-hero p {
     max-width: 650px;
-    margin: 0 auto 35px;
+    margin: 0 auto 20px;
     color: lightgray;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .home-buttons {
@@ -905,7 +905,7 @@ button.car-fav {
 /* ===== FAHRZEUG-CAROUSEL (Startseite) ===== */
 
 .car-carousel-section {
-    padding: 120px 0 100px;
+    padding: 48px 0 60px;
     border-top: 1px solid #1e1e1e;
     border-bottom: 1px solid #1e1e1e;
     overflow: hidden;
@@ -913,7 +913,7 @@ button.car-fav {
 
 .car-carousel-heading {
     text-align: center;
-    margin-bottom: 72px;
+    margin-bottom: 32px;
     padding: 0 2rem;
 }
 
@@ -932,7 +932,7 @@ button.car-fav {
 }
 
 .car-carousel-heading h2 {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 700;
     margin: 0;
     letter-spacing: 0.5px;
