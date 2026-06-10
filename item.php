@@ -11,6 +11,9 @@ $res      = mysqli_query($db, "SELECT * FROM cars WHERE iid = $pid");
 $fahrzeug = mysqli_fetch_assoc($res);
 
 if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
+
+$soldRes  = mysqli_query($db, "SELECT COUNT(*) AS cnt FROM bookings WHERE car_id = $pid AND status IN ('in_bearbeitung', 'versandt', 'fertig')");
+$isSold   = (int)mysqli_fetch_assoc($soldRes)['cnt'] > 0;
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -146,10 +149,11 @@ if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
             class="item-btn-primary"
             data-car-id="<?= htmlspecialchars($fahrzeug['iid']) ?>"
             data-car-name="<?= htmlspecialchars($fahrzeug['name']) ?>"
-            data-car-price="<?= (int)$fahrzeug['preis'] ?>">
-            Jetzt buchen
+            data-car-price="<?= (int)$fahrzeug['preis'] ?>"
+            <?= $isSold ? 'disabled' : '' ?>>
+            <?= $isSold ? 'Bereits reserviert' : 'Jetzt buchen' ?>
         </button>
-        <p id="buchungsNote" class="item-buchungs-note"></p>
+        <p id="buchungsNote" class="item-buchungs-note" <?= $isSold ? 'style="display:block;"' : '' ?>><?= $isSold ? 'Dieses Fahrzeug ist bereits reserviert und nicht mehr verfügbar.' : '' ?></p>
 
         <a href="gebrauchtwagenList.php" class="item-btn-secondary">
             ← Zurück zur Liste

@@ -182,6 +182,9 @@ function initUserForm() {
     var displayName = document.getElementById('display-username');
     if (displayName) displayName.textContent = authState.username;
 
+    var adminLink = document.getElementById('adminDashboardLink');
+    if (adminLink && authState.isAdmin) adminLink.style.display = 'inline-block';
+
     // --- Tab switching ---
     document.querySelectorAll('.admin-tab[data-target]').forEach(function(tab) {
         tab.addEventListener('click', function() {
@@ -829,33 +832,7 @@ async function initAdminPage() {
             });
         });
     } else {
-        // Admin ist nicht eingeloggt: Login anzeigen, Dashboard verstecken
-        if (loginBereich) loginBereich.style.display = 'flex';
-        if (dashboard)    dashboard.style.display    = 'none';
-
-        var formular = document.getElementById('adminLoginForm');
-        if (formular) {
-            formular.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                var benutzername  = document.getElementById('adminUsername').value.trim();
-                var passwort      = document.getElementById('adminPassword').value;
-                var fehlerAnzeige = document.getElementById('adminLoginError');
-
-                const antwort  = await fetch('api/auth/login.php', {
-                    method:  'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify({ username: benutzername, password: passwort })
-                });
-                const ergebnis = await antwort.json();
-
-                if (ergebnis.success && ergebnis.isAdmin) {
-                    // Seite neu laden damit die Session erkannt wird
-                    window.location.reload();
-                } else {
-                    if (fehlerAnzeige) { fehlerAnzeige.textContent = 'Falscher Benutzername oder Passwort.'; fehlerAnzeige.style.display = 'block'; }
-                }
-            });
-        }
+        window.location.href = 'login.php';
     }
 }
 

@@ -5,7 +5,15 @@ session_start();
 <?php
 require_once "db.php";
 $db        = getDB();
-$result    = mysqli_query($db, "SELECT * FROM cars ORDER BY id ASC");
+$result    = mysqli_query($db,
+    "SELECT * FROM cars
+     WHERE iid NOT IN (
+         SELECT car_id FROM bookings
+         WHERE status IN ('in_bearbeitung', 'versandt', 'fertig')
+         AND car_id IS NOT NULL
+     )
+     ORDER BY id ASC"
+);
 $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>

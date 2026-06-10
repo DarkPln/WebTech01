@@ -24,29 +24,6 @@
 
 <main class="admin-main">
 
-    <!-- ===== LOGIN ===== -->
-    <section id="adminLoginSection" class="auth-section">
-        <div class="auth-card">
-            <h1>Admin <span style="color:rgb(227,27,27);">Login</span></h1>
-            <h2 style="color:#bdbdbd; font-size:16px; margin-top:0;">Verwaltungsbereich</h2>
-            <p class="demo-hint" style="display:block;">Demo: <strong>admin</strong> / <strong>Admin1234</strong></p>
-
-            <div id="adminLoginError" class="error-message" style="display:none;"></div>
-
-            <form id="adminLoginForm">
-                <label for="adminUsername">Benutzername:</label>
-                <input type="text" id="adminUsername" name="adminUsername" required autocomplete="username">
-
-                <label for="adminPassword">Passwort:</label>
-                <input type="password" id="adminPassword" name="adminPassword" required autocomplete="current-password">
-
-                <button type="submit">Einloggen</button>
-            </form>
-
-            <p><a href="index.php" style="color:#888; font-size:13px;">← Zurück zur Website</a></p>
-        </div>
-    </section>
-
     <!-- ===== DASHBOARD ===== -->
     <div id="adminDashboard" style="display:none;">
         <div class="admin-container">

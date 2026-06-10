@@ -759,6 +759,7 @@ button.car-fav {
 
 .home-main {
     padding-top: 64px;
+    min-height: calc(100vh - 64px);
 }
 
 .home-hero {
@@ -2888,17 +2889,37 @@ body.light-mode .upload-area p strong { color: #333; }
     color: rgb(227,27,27);
 }
 
-.user-logout-link {
+.user-admin-link {
     font-size: 13px;
-    color: #666;
+    color: #888;
     text-decoration: none;
     border: 1px solid #2e2e2e;
     padding: 6px 14px;
     border-radius: 6px;
-    transition: color 0.2s, border-color 0.2s;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 
-.user-logout-link:hover { color: #ccc; border-color: #555; }
+.user-admin-link:hover { color: #fff; background: rgba(255,255,255,0.06); border-color: #555; }
+
+body.light-mode .user-admin-link { border-color: #ccc; color: #555; }
+body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; background: rgba(0,0,0,0.04); }
+
+.user-logout-link {
+    font-size: 13px;
+    color: rgb(227, 27, 27);
+    text-decoration: none;
+    border: 1px solid rgb(227, 27, 27);
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.user-logout-link:hover { color: #fff; background: rgb(200, 20, 20); border-color: rgb(200, 20, 20); }
+
+.user-dashboard input:valid:not(:focus):not(:placeholder-shown):not([type="submit"]):not([type="reset"]):not([type="button"]),
+.user-dashboard textarea:valid:not(:focus):not(:placeholder-shown) {
+    border-color: #333333;
+}
 
 /* Profile two-column grid */
 .user-profile-grid {
@@ -3018,8 +3039,8 @@ body.light-mode .upload-area p strong { color: #333; }
 .msg-mark-read-btn:hover { color: #ccc; border-color: #555; transform: none; box-shadow: none; }
 
 /* Light mode overrides */
-body.light-mode .user-logout-link { border-color: #ddd; color: #555; }
-body.light-mode .user-logout-link:hover { color: #111; border-color: #aaa; }
+body.light-mode .user-logout-link { border-color: rgb(200, 20, 20); color: rgb(200, 20, 20); }
+body.light-mode .user-logout-link:hover { color: #fff; background: rgb(200, 20, 20); border-color: rgb(200, 20, 20); }
 body.light-mode .user-section-title { color: #777; border-bottom-color: #ddd; }
 body.light-mode .msg-card { background: #fff; border-color: #ddd; }
 body.light-mode .msg-card.unread { background: #fff8f8; }
