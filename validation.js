@@ -816,10 +816,11 @@ async function initAdminPage() {
         if (loginBereich) loginBereich.style.display = 'none';
         if (dashboard)    dashboard.style.display    = 'block';
 
-        // Alle drei Bereiche mit Daten aus der Datenbank befüllen
+        // Alle Bereiche mit Daten aus der Datenbank befüllen
         await renderAdminOrders();
         await renderAdminUsers();
         await renderAdminInserate();
+        await renderAdminCars();
 
         // Tab-Wechsel einrichten: aktiven Tab und Inhalt hervorheben
         document.querySelectorAll('.admin-tab').forEach(function(tab) {
@@ -870,6 +871,25 @@ async function adminSetInseratStatus(id, status) {
 }
 
 // PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
+async function renderAdminCars() {
+    var container = document.getElementById('adminCars');
+    if (!container) return;
+
+    const antwort       = await fetch('api/admin/cars_html.php');
+    container.innerHTML = await antwort.text();
+}
+
+async function adminDeleteCar(iid, btn) {
+    if (!confirm('Fahrzeug wirklich dauerhaft löschen?')) return;
+    btn.disabled = true;
+    await fetch('api/admin/cars.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ iid })
+    });
+    await renderAdminCars();
+}
+
 async function renderAdminUsers() {
     var container = document.getElementById('adminUsersList');
     if (!container) return;

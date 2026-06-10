@@ -38,6 +38,7 @@
                 <button class="admin-tab" data-target="tabAbgeschlossen">Abgeschlossen</button>
                 <button class="admin-tab" data-target="tabNutzer">Nutzer verwalten</button>
                 <button class="admin-tab" data-target="tabInserate">Inserate</button>
+                <button class="admin-tab" data-target="tabFahrzeuge">Fahrzeuge</button>
             </div>
 
             <!-- Tab: Neue Aufträge -->
@@ -77,6 +78,15 @@
             <div id="tabInserate" class="admin-tab-content">
                 <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Eingereichte Inserate</h3>
                 <div id="adminInserate"></div>
+            </div>
+
+            <!-- Tab: Fahrzeuge -->
+            <div id="tabFahrzeuge" class="admin-tab-content">
+                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Fahrzeuge verwalten</h3>
+                <p style="text-align:left; font-size:13px; color:#666; margin-bottom:20px;">
+                    Gelöschte Fahrzeuge werden dauerhaft aus der Fahrzeugliste entfernt.
+                </p>
+                <div id="adminCars"></div>
             </div>
         </div>
     </div>
