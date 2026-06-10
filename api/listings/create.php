@@ -21,6 +21,7 @@ $eKm       = $db->real_escape_string($input['km']        ?? '');
 $eFuel     = $db->real_escape_string($input['fuel']      ?? '');
 $eGearbox  = $db->real_escape_string($input['gearbox']   ?? '');
 $ePower    = $db->real_escape_string($input['power']     ?? '');
+$eAntrieb  = $db->real_escape_string($input['antrieb']  ?? '');
 $eType     = $db->real_escape_string($input['type']      ?? '');
 $eCond     = $db->real_escape_string($input['condition'] ?? '');
 $eDesc     = $db->real_escape_string($input['desc']      ?? '');
@@ -30,8 +31,8 @@ $ePhone    = $db->real_escape_string($input['phone']     ?? '');
 
 $db->query(
     "INSERT INTO listings
-        (listing_key, user_id, username, make, model, year, km, fuel, gearbox, power, type, cond, price, description, contact_name, email, phone)
-     VALUES ('$eKey', $uid, '$eUsername', '$eMake', '$eModel', '$eYear', '$eKm', '$eFuel', '$eGearbox', '$ePower', '$eType', '$eCond', $price, '$eDesc', '$eName', '$eEmail', '$ePhone')"
+        (listing_key, user_id, username, make, model, year, km, fuel, gearbox, power, antrieb, type, cond, price, description, contact_name, email, phone)
+     VALUES ('$eKey', $uid, '$eUsername', '$eMake', '$eModel', '$eYear', '$eKm', '$eFuel', '$eGearbox', '$ePower', '$eAntrieb', '$eType', '$eCond', $price, '$eDesc', '$eName', '$eEmail', '$ePhone')"
 );
 
 echo json_encode(['success' => true, 'id' => $key]);

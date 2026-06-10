@@ -365,6 +365,7 @@ function initVehicleForm() {
             fuel:      document.getElementById('sell-fuel').value,
             gearbox:   document.getElementById('sell-gearbox').value,
             power:     document.getElementById('sell-power').value,
+            antrieb:   document.getElementById('sell-antrieb').value,
             type:      document.getElementById('sell-type').value,
             condition: document.getElementById('sell-condition').value,
             price:     document.getElementById('sell-price').value,
