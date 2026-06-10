@@ -106,6 +106,12 @@ textarea::placeholder {
     font-style: italic;
 }
 
+/* Spezifische Breite für das Suchfeld nach Automarke */
+#carSearchInput {
+    max-width: 600px; /* Erhöht die maximale Breite (statt 400px) */
+    width: 100%;
+}
+
 input[type="submit"],
 input[type="reset"],
 button {
