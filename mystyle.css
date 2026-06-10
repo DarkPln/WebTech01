@@ -850,6 +850,130 @@ button.car-fav {
     color: lightgray;
 }
 
+/* ===== FAHRZEUG-CAROUSEL (Startseite) ===== */
+
+.car-carousel-section {
+    padding: 120px 0 100px;
+    border-top: 1px solid #1e1e1e;
+    border-bottom: 1px solid #1e1e1e;
+    overflow: hidden;
+}
+
+.car-carousel-heading {
+    text-align: center;
+    margin-bottom: 72px;
+    padding: 0 2rem;
+}
+
+.carousel-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgb(227, 27, 27);
+    border: 1px solid rgba(227, 27, 27, 0.45);
+    background: rgba(227, 27, 27, 0.08);
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+}
+
+.car-carousel-heading h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.car-carousel-heading h2 span {
+    color: rgb(227, 27, 27);
+}
+
+.car-carousel-viewport {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.car-carousel-viewport.dragging {
+    cursor: grabbing;
+}
+
+.car-carousel-track {
+    display: flex;
+    gap: 40px;
+    will-change: transform;
+    padding: 8px 0 20px;
+}
+
+.carousel-card {
+    flex: 0 0 480px;
+    background: #111;
+    border: 1px solid #2e2e2e;
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, transform 0.2s;
+    pointer-events: auto;
+}
+
+.carousel-card:hover {
+    border-color: rgb(227, 27, 27);
+    transform: translateY(-5px);
+}
+
+.carousel-card-img {
+    width: 480px;
+    height: 310px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.carousel-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    transition: transform 0.35s;
+}
+
+.carousel-card:hover .carousel-card-img img {
+    transform: scale(1.04);
+}
+
+.carousel-card-body {
+    padding: 24px 28px 28px;
+    text-align: left;
+}
+
+.carousel-card-make {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: rgb(227, 27, 27);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.carousel-card-model {
+    font-size: 28px;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin: 8px 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.carousel-card-price {
+    font-size: 22px;
+    color: #aaa;
+    font-weight: 500;
+}
+
 /* ===== FAVORITENLISTE (Lukas) ===== */
 
 .nFav-btn {
