@@ -82,7 +82,7 @@ function updateUI() {
         let total = 0;
         favorites.forEach(id => {
             const d = getCarData(id);
-            if (d) total += parseInt((d.price || '0').toString().replace(/[^0-9]/g, ''), 10) || 0;
+            if (d) total += Math.round(parseFloat((d.price || '0').toString())) || 0;
         });
         const totalEl = document.getElementById('totalCostValue');
         if (totalEl) totalEl.textContent = total.toLocaleString('de-DE') + ' €';
