@@ -141,6 +141,20 @@ button:hover {
     box-shadow: 0 4px 12px rgba(227, 27, 27, 0.3);
 }
 
+/* Buttons, die den Hover-Transform der Basis-Regel nicht verwenden */
+.mode-btn:hover,
+.nFav-btn:hover,
+.buchung-cancel-btn:hover,
+.admin-logout-btn:hover,
+.admin-tab:hover,
+.item-fav-btn:hover,
+.item-btn-primary:hover,
+.item-btn-secondary:hover,
+.image-preview-item .remove-img:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 input[type="reset"] {
     background-color: #333333;
     color: rgb(220, 220, 220);
@@ -539,8 +553,6 @@ a {
 
 .mode-btn:hover {
     background: rgba(227, 27, 27, 0.15);
-    transform: none;
-    box-shadow: none;
 }
 
 .car-img {
@@ -859,8 +871,6 @@ button.car-fav {
 
 .nFav-btn:hover {
     background: rgba(227, 27, 27, 0.15);
-    transform: none;
-    box-shadow: none;
 }
 
 .nFav-btn.has-items {
@@ -1418,8 +1428,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 .buchung-cancel-btn:hover {
     background: rgba(139,0,0,0.2);
-    transform: none;
-    box-shadow: none;
 }
 
 /* ===== ADMIN SEITE ===== */
@@ -1465,8 +1473,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 .admin-logout-btn:hover {
     background: rgba(139,0,0,0.2);
-    transform: none;
-    box-shadow: none;
 }
 
 .admin-main {
@@ -1525,8 +1531,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 .admin-tab:hover {
     color: #ccc;
     background: rgba(255,255,255,0.04);
-    transform: none;
-    box-shadow: none;
 }
 
 .admin-tab.active {
@@ -1589,7 +1593,8 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     margin-top: 4px;
 }
 
-.admin-order-actions button {
+.admin-order-actions button,
+.admin-user-row button {
     max-width: none;
     width: auto;
     padding: 6px 16px;
@@ -1600,7 +1605,8 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     letter-spacing: 0;
 }
 
-.admin-order-actions button:hover {
+.admin-order-actions button:hover,
+.admin-user-row button:hover {
     transform: none;
 }
 
@@ -1636,20 +1642,6 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 .user-active { color: #6be46b; }
 .user-locked { color: #ff7070; }
 
-.admin-user-row button {
-    max-width: none;
-    width: auto;
-    padding: 6px 16px;
-    font-size: 12px;
-    margin: 0;
-    min-height: 0;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.admin-user-row button:hover {
-    transform: none;
-}
 
 .btn-lock       { background: #5a0000 !important; }
 .btn-lock:hover { background: #7a0000 !important; }
@@ -2004,8 +1996,6 @@ body.light-mode .merkliste-summary-sep {
 
 .item-fav-btn:hover {
     background: rgba(204,0,0,0.15);
-    transform: none;
-    box-shadow: none;
 }
 
 .item-fav-btn.active {
@@ -2137,8 +2127,6 @@ body.light-mode .merkliste-summary-sep {
 
 .item-btn-primary:hover {
     background: #FF1A1A;
-    transform: none;
-    box-shadow: none;
 }
 
 .item-btn-secondary {
@@ -2164,8 +2152,6 @@ body.light-mode .merkliste-summary-sep {
 .item-btn-secondary:hover {
     border-color: #CC0000;
     color: #FF1A1A;
-    transform: none;
-    box-shadow: none;
 }
 
 .item-buchungs-note {
@@ -2371,8 +2357,6 @@ body.light-mode .fav-notification {
 
 .image-preview-item .remove-img:hover {
     background: rgba(180, 0, 0, 0.85);
-    transform: none;
-    box-shadow: none;
 }
 
 .upload-count {
