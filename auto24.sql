@@ -10,7 +10,10 @@ USE auto24;
 CREATE TABLE IF NOT EXISTS users (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     username     VARCHAR(100) NOT NULL UNIQUE,
-    password      VARCHAR(255) NOT NULL,
+    password     VARCHAR(255) NOT NULL,
+    email        VARCHAR(200) DEFAULT NULL,
+    phone        VARCHAR(50)  DEFAULT NULL,
+    city         VARCHAR(100) DEFAULT NULL,
     is_locked    TINYINT(1)   NOT NULL DEFAULT 0,
     is_admin     TINYINT(1)   NOT NULL DEFAULT 0,
     created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -117,3 +120,14 @@ INSERT INTO cars (iid, name, beschreibung, imagepath, preis, kategorie, unterkat
 (23, 'Kia EV6 GT',                  'Der Kia EV6 GT ist das Topmodell unter den Elektro-Crossovern. 585 PS, 0–100 km/h in 3,5 Sekunden und koreanisches Design, das alle Blicke auf sich zieht.',                                    'https://upload.wikimedia.org/wikipedia/commons/6/67/Kia_EV6_Auto_Zuerich_2021_IMG_0435.jpg',                          55900,  'gebrauchtwagen', 'suv',        'Kia',    'EV6 GT',              2023, 'Elektro', 18700, 585, 'AWD'),
 (24, 'CUPRA Leon VZ',               'Der CUPRA Leon VZ ist die sportlichste Version des Leon. 300 PS, Torque Vectoring AWD und exklusives CUPRA Design – kompaktes Fahrerlebnis auf höchstem Niveau.',                                'https://upload.wikimedia.org/wikipedia/commons/e/e9/Cupra_Leon_Mk4_IMG_0036.jpg',                                                                                                                      31900,  'gebrauchtwagen', 'kompakt',    'CUPRA',  'Leon VZ',             2022, 'Benzin',  29000, 300, 'AWD'),
 (25, 'Mazda CX-5 Skyactiv-D 184',  'Der Mazda CX-5 mit Skyactiv-D 184 Dieselmotor überzeugt durch elegantes Kodo-Design, 184 PS und i-Activ AWD. Japanische Zuverlässigkeit zum vernünftigen Preis.',                               'https://upload.wikimedia.org/wikipedia/commons/f/f3/Mazda_CX-5_SKYACTIV-G_165_Newground_%28II%2C_Facelift%29_%E2%80%93_f_14042024.jpg',                                                            38900,  'gebrauchtwagen', 'suv',        'Mazda',  'CX-5 Skyactiv-D 184', 2022, 'Diesel',  42000, 184, 'i-Activ AWD');
+
+-- Nachrichten (Inbox für eingeloggte Nutzer)
+CREATE TABLE IF NOT EXISTS messages (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    user_id    INT          NOT NULL,
+    title      VARCHAR(200) NOT NULL,
+    body       TEXT,
+    is_read    TINYINT(1)   NOT NULL DEFAULT 0,
+    created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_messages_user (user_id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
