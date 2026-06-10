@@ -33,14 +33,14 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
         <input
             type="range"
             id="budgetInput"
-            min="50000"
-            max="100000"
+            min="30000"
+            max="150000"
             step="1000"
-            value="100000"
+            value="150000"
             oninput="updateBudgetLabel()">
 
         <div id="budgetValue">
-            100.000 €
+            150.000 €
         </div>
         <div class="filter-button-row">
             <button class="filter-btn" onclick="filterByBudget()">
@@ -104,7 +104,7 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
             data-kategorie="<?php echo $auto['kategorie']; ?>">
 
             <div class="car-image">
-                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebrauchtwagen'; ?></span>
+                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebraucht'; ?></span>
                 <button class="car-fav" type="button" data-id="<?= $auto['iid'] ?>">♡</button>
 
                 <img

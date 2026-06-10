@@ -737,7 +737,7 @@ function filterByBudget() {
 
 function resetBudgetFilter() {
     document.querySelectorAll(".car-card").forEach(car => { car.style.display = ""; });
-    document.getElementById("budgetInput").value = 100000;
+    document.getElementById("budgetInput").value = 150000;
     updateBudgetLabel();
 }
 
