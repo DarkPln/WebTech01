@@ -16,17 +16,17 @@ $buchungsKey = $eingabe['id'] ?? '';
 $uid         = $_SESSION['user_id'];
 
 $db           = getDB();
-$eBuchungsKey = $db->real_escape_string($buchungsKey);
+$eBuchungsKey = mysqli_real_escape_string($db, $buchungsKey);
 
 // Status nur ändern wenn die Buchung diesem Nutzer gehört und noch "bestellt" ist
-$db->query(
+mysqli_query($db,
     "UPDATE bookings
      SET status = 'storniert', updated_at = NOW()
      WHERE booking_key = '$eBuchungsKey' AND user_id = $uid AND status = 'bestellt'"
 );
 
 // affected_rows gibt zurück wie viele Zeilen geändert wurden (0 = nichts gefunden)
-if ($db->affected_rows === 0) {
+if (mysqli_affected_rows($db) === 0) {
     echo json_encode(['success' => false, 'message' => 'Buchung nicht gefunden oder nicht stornierbar']);
     exit;
 }

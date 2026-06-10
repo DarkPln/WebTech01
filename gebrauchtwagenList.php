@@ -4,8 +4,9 @@ session_start();
 
 <?php
 require_once "db.php";
-$result    = getDB()->query("SELECT * FROM cars ORDER BY id ASC");
-$fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
+$db        = getDB();
+$result    = mysqli_query($db, "SELECT * FROM cars ORDER BY id ASC");
+$fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -104,7 +105,7 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
             data-kategorie="<?php echo $auto['kategorie']; ?>">
 
             <div class="car-image">
-                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebraucht'; ?></span>
+                <span class="car-badge-used"><?php echo strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebrauchtwagen'; ?></span>
                 <button class="car-fav" type="button" data-id="<?= $auto['iid'] ?>">♡</button>
 
                 <img
@@ -156,12 +157,6 @@ $fahrzeuge = $result->fetch_all(MYSQLI_ASSOC);
     <?php endforeach; ?>
     
 </div>
-
-<section class="finance-teaser">
-    <h2>Kauffinanzierung</h2>
-    <p>Geben Sie den gewünschten Finanzierungsbetrag ein, um die monatlichen Raten zu berechnen (5% Zins).</p>
-    <a href="finanzierung.php" class="home-btn-primary" style="display:inline-block; margin: 16px auto;">Zum Finanzierungsrechner</a>
-</section>
 
 
 <?php require_once 'footer.php'; ?>

@@ -6,7 +6,9 @@ if (!isset($_GET["pid"])) die("Parameter fehlt!");
 if (empty($_GET["pid"]))  die("Keine ID übergeben!");
 
 $pid      = (int)$_GET["pid"];
-$fahrzeug = getDB()->query("SELECT * FROM cars WHERE iid = $pid")->fetch_assoc();
+$db       = getDB();
+$res      = mysqli_query($db, "SELECT * FROM cars WHERE iid = $pid");
+$fahrzeug = mysqli_fetch_assoc($res);
 
 if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
 ?>
@@ -93,6 +95,30 @@ if (!$fahrzeug) die("Fahrzeug wurde nicht gefunden!");
             <div class="item-price-label">Preis</div>
             <div class="item-price"><?= number_format($fahrzeug['preis'], 0, ',', '.') ?> €</div>
             <div class="item-price-note">inkl. MwSt.</div>
+        </div>
+
+        <!-- Finanzierungsrechner -->
+        <div class="item-financing">
+            <button class="item-financing-toggle" id="financingToggle" type="button">
+                <span>Finanzierung berechnen</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <div class="item-financing-body" id="financingBody">
+                <div class="item-financing-grid">
+                    <div>
+                        <label for="itemFinancingAmount">Betrag (€)</label>
+                        <input type="number" id="itemFinancingAmount" value="<?= (int)$fahrzeug['preis'] ?>" min="1000" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="itemLoanTerm">Laufzeit (Monate)</label>
+                        <input type="number" id="itemLoanTerm" value="24" min="12" max="48" autocomplete="off">
+                    </div>
+                </div>
+                <button type="button" onclick="calculateItemFinancing()" class="item-financing-btn">Berechnen</button>
+                <div class="item-financing-result" id="itemFinancingResult"></div>
+            </div>
         </div>
 
     <div class="car-card"

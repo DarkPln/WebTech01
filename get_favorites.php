@@ -13,7 +13,9 @@ $useDB  = ($userId !== null && $userId > 0);
 
 
 if ($useDB) {
-    $ids = array_column(getDB()->query("SELECT car_id FROM favorites WHERE user_id = $userId")->fetch_all(MYSQLI_ASSOC), 'car_id');
+    $db     = getDB();
+    $favRes = mysqli_query($db, "SELECT car_id FROM favorites WHERE user_id = $userId");
+    $ids    = array_column(mysqli_fetch_all($favRes, MYSQLI_ASSOC), 'car_id');
 } else {
     if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
     $ids = array_values($_SESSION['favorites']);
@@ -22,8 +24,10 @@ if ($useDB) {
 // wenn ids da sind, dann die autos zu den ids raussuchen, sonst leeres array
 $cars = [];
 if (!empty($ids)) {
+    $db   = getDB();
     $in   = implode(',', array_map('intval', $ids));
-    $cars = getDB()->query("SELECT iid, marke, modell, baujahr, kraftstoff, kilometerstand, preis, imagepath FROM cars WHERE iid IN ($in)")->fetch_all(MYSQLI_ASSOC);
+    $cRes = mysqli_query($db, "SELECT iid, marke, modell, baujahr, kraftstoff, kilometerstand, preis, imagepath FROM cars WHERE iid IN ($in)");
+    $cars = mysqli_fetch_all($cRes, MYSQLI_ASSOC);
 }
 
 echo json_encode(['success' => true, 'favorites' => $ids, 'cars' => $cars]);

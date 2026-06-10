@@ -11,13 +11,14 @@ if (!isset($_SESSION['user_id'])) {
 
 $db      = getDB();
 $uid     = $_SESSION['user_id'];
-$uname   = $db->real_escape_string($_SESSION['username']);
-$inserate = $db->query(
+$uname   = mysqli_real_escape_string($db, $_SESSION['username']);
+$res     = mysqli_query($db,
     "SELECT listing_key AS id, make, model, year, price, status, created_at AS createdAt
      FROM listings
      WHERE user_id = $uid OR username = '$uname'
      ORDER BY created_at DESC"
-)->fetch_all(MYSQLI_ASSOC);
+);
+$inserate = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 if (empty($inserate)): ?>
 

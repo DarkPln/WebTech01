@@ -26,14 +26,15 @@ if (!isset($filterMap[$bereich])) {
     exit;
 }
 
-$result    = getDB()->query(
+$db        = getDB();
+$result    = mysqli_query($db,
     'SELECT booking_key AS id, username AS userId, car_name AS carName,
             car_price AS carPrice, status, reason, created_at AS createdAt
      FROM bookings
      WHERE ' . $filterMap[$bereich] . '
      ORDER BY created_at DESC'
 );
-$buchungen = $result->fetch_all(MYSQLI_ASSOC);
+$buchungen = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 if (empty($buchungen)): ?>
 

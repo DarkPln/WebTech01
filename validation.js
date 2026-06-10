@@ -168,66 +168,185 @@ function initLoginForm() {
     loginBtn.disabled = true;
 }
 
-// ===== NUTZERBEREICH =====
+// ===== NUTZERBEREICH (Dashboard) =====
 
 function initUserForm() {
-    if (!document.getElementById('userForm')) return;
+    if (!document.getElementById('tabProfil')) return;
 
     if (!authState.loggedIn) {
         window.location.href = 'login.php';
         return;
     }
 
-    const usernameInput   = document.getElementById('username');
-    const passwordInput   = document.getElementById('password');
-    const passwordConfirm = document.getElementById('password_confirm');
-    const saveBtn         = document.getElementById('saveBtn');
-    const displayName     = document.getElementById('display-username');
-    const saveSuccess     = document.getElementById('saveSuccess');
+    // --- Header ---
+    var displayName = document.getElementById('display-username');
+    if (displayName) displayName.textContent = authState.username;
+
+    // --- Tab switching ---
+    document.querySelectorAll('.admin-tab[data-target]').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            var panel = document.getElementById(tab.dataset.target);
+            if (panel) panel.classList.add('active');
+
+            if (tab.dataset.target === 'tabNachrichten') loadMessages();
+            if (tab.dataset.target === 'tabBuchungen')   renderBookingsPage();
+            if (tab.dataset.target === 'tabInserate')    renderUserInserate();
+        });
+    });
+
+    // --- Profile form ---
+    var profileForm   = document.getElementById('profileForm');
+    var usernameInput = document.getElementById('username');
+    var emailInput    = document.getElementById('email');
+    var phoneInput    = document.getElementById('phone');
+    var cityInput     = document.getElementById('city');
+    var profileSave   = document.getElementById('profileSaveBtn');
+    var profileOk     = document.getElementById('profileSuccess');
+    var profileErr    = document.getElementById('profileError');
 
     if (usernameInput) usernameInput.value = authState.username;
-    if (displayName)   displayName.textContent = authState.username;
+    if (emailInput && authState.email) emailInput.value = authState.email;
+    if (phoneInput && authState.phone) phoneInput.value = authState.phone;
+    if (cityInput  && authState.city)  cityInput.value  = authState.city;
 
-    function checkFormValidity() {
-        saveBtn.disabled =
-            validateUsername(usernameInput.value).length > 0 ||
+    function checkProfileValidity() {
+        profileSave.disabled = validateUsername(usernameInput.value).length > 0;
+    }
+
+    usernameInput.addEventListener('input', () => {
+        validateField(usernameInput, validateUsername);
+        if (profileErr) profileErr.style.display = 'none';
+        checkProfileValidity();
+    });
+
+    profileForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (profileSave.disabled) return;
+        const r    = await fetch('api/auth/update.php', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({
+                username: usernameInput.value.trim(),
+                email:    emailInput ? emailInput.value.trim() : '',
+                phone:    phoneInput ? phoneInput.value.trim() : '',
+                city:     cityInput  ? cityInput.value.trim()  : '',
+            }),
+        });
+        const data = await r.json();
+        if (data.success) {
+            authState.username = data.username;
+            if (displayName) displayName.textContent = data.username;
+            if (emailInput) authState.email = emailInput.value.trim();
+            if (phoneInput) authState.phone = phoneInput.value.trim();
+            if (cityInput)  authState.city  = cityInput.value.trim();
+            showMsg(profileOk, 'Profil gespeichert!');
+        } else {
+            showMsg(profileErr, data.message || 'Fehler beim Speichern.');
+        }
+    });
+
+    checkProfileValidity();
+
+    // --- Password form ---
+    var passwordForm    = document.getElementById('passwordForm');
+    var passwordInput   = document.getElementById('password');
+    var passwordConfirm = document.getElementById('password_confirm');
+    var passwordSave    = document.getElementById('passwordSaveBtn');
+    var passwordOk      = document.getElementById('passwordSuccess');
+    var passwordErr     = document.getElementById('passwordError');
+
+    function checkPasswordValidity() {
+        passwordSave.disabled =
             validatePassword(passwordInput.value).length > 0 ||
             validatePasswordMatch(passwordInput.value, passwordConfirm.value).length > 0;
     }
 
-    usernameInput.addEventListener('input', () => { validateField(usernameInput, validateUsername); checkFormValidity(); });
     passwordInput.addEventListener('input', () => {
         validateField(passwordInput, validatePassword);
         if (passwordConfirm.value.length > 0)
             validateField(passwordConfirm, validatePasswordMatch, passwordInput.value);
-        checkFormValidity();
+        if (passwordErr) passwordErr.style.display = 'none';
+        checkPasswordValidity();
     });
-    passwordConfirm.addEventListener('input', () => { validateField(passwordConfirm, validatePasswordMatch, passwordInput.value); checkFormValidity(); });
+    passwordConfirm.addEventListener('input', () => {
+        validateField(passwordConfirm, validatePasswordMatch, passwordInput.value);
+        checkPasswordValidity();
+    });
 
-    document.getElementById('userForm').addEventListener('submit', async (e) => {
+    passwordForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (saveBtn.disabled) return;
-
+        if (passwordSave.disabled) return;
         const r    = await fetch('api/auth/update.php', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ username: usernameInput.value.trim(), password: passwordInput.value }),
+            body:    JSON.stringify({
+                username: authState.username,
+                password: passwordInput.value,
+                email:    authState.email || '',
+                phone:    authState.phone || '',
+            }),
         });
         const data = await r.json();
-
         if (data.success) {
-            authState.username = data.username;
-            if (displayName) displayName.textContent = data.username;
-            if (saveSuccess) {
-                saveSuccess.textContent = 'Änderungen erfolgreich gespeichert!';
-                saveSuccess.style.display = 'block';
-                setTimeout(() => saveSuccess.style.display = 'none', 3000);
-            }
+            passwordInput.value   = '';
+            passwordConfirm.value = '';
+            checkPasswordValidity();
+            showMsg(passwordOk, 'Passwort erfolgreich geändert!');
+        } else {
+            showMsg(passwordErr, data.message || 'Fehler beim Ändern.');
         }
     });
 
-    saveBtn.disabled = true;
+    checkPasswordValidity();
+
+    // --- Unread badge + mark-all-read ---
+    loadUnreadBadge();
+    var markBtn = document.getElementById('markAllReadBtn');
+    if (markBtn) {
+        markBtn.addEventListener('click', async () => {
+            await fetch('api/messages/mark_read.php', { method: 'POST' });
+            await loadMessages();
+            loadUnreadBadge();
+        });
+    }
+
+    // --- Initial load for default tab ---
     renderUserInserate();
+}
+
+function showMsg(el, text) {
+    if (!el) return;
+    el.textContent = text;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 3500);
+}
+
+async function loadUnreadBadge() {
+    var badge = document.getElementById('msgBadge');
+    if (!badge) return;
+    try {
+        const r    = await fetch('api/messages/unread_count.php');
+        const data = await r.json();
+        if (data.count > 0) {
+            badge.textContent = data.count;
+            badge.style.display = 'inline-flex';
+        } else {
+            badge.style.display = 'none';
+        }
+    } catch (e) {
+        badge.style.display = 'none';
+    }
+}
+
+async function loadMessages() {
+    var container = document.getElementById('messagesContainer');
+    if (!container) return;
+    const r = await fetch('api/messages/list_html.php');
+    container.innerHTML = await r.text();
+    loadUnreadBadge();
 }
 
 // PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
@@ -261,6 +380,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initBookingsPage();
     initBookingButton();
     initBookingButtons();
+    initItemFinancing();
     await initAdminPage();
 });
 
@@ -330,6 +450,32 @@ function calculateFinancing() {
     document.getElementById("financingResult2").textContent = "Gesamtbetrag: " + total.toFixed(2) + " €";
 }
 
+/* Finanzierungsrechner auf der Detailseite */
+function initItemFinancing() {
+    var toggle = document.getElementById('financingToggle');
+    var body   = document.getElementById('financingBody');
+    if (!toggle || !body) return;
+    toggle.addEventListener('click', function() {
+        var open = body.classList.toggle('open');
+        toggle.classList.toggle('open', open);
+    });
+}
+
+function calculateItemFinancing() {
+    var value    = Number(document.getElementById('itemFinancingAmount').value);
+    var loanTerm = Number(document.getElementById('itemLoanTerm').value);
+    var result   = document.getElementById('itemFinancingResult');
+    if (!result) return;
+    if (value <= 0)              { result.textContent = 'Bitte gültigen Betrag eingeben.'; return; }
+    if (loanTerm < 12 || loanTerm > 48) { result.textContent = 'Laufzeit muss zwischen 12 und 48 Monaten liegen.'; return; }
+    var total   = value * 1.05;
+    var monthly = (total / loanTerm).toFixed(2).replace('.', ',');
+    var gesamt  = total.toFixed(2).replace('.', ',');
+    result.innerHTML =
+        '<strong>' + monthly + ' €</strong> / Monat' +
+        '<br><span class="financing-sub">Gesamtbetrag: ' + gesamt + ' € &nbsp;·&nbsp; inkl. 5 % Finanzierungskosten</span>';
+}
+
 /*Passwort Generator: Niclas */
 function generatePassword() {
     const input   = document.getElementById("pwInput");
@@ -345,9 +491,20 @@ function generatePassword() {
 
 // ===== INSERATE (Tim) =====
 
+function checkVehicleField(f) {
+    if (f.value.trim()) f.classList.add('field-ok');
+    else                f.classList.remove('field-ok');
+}
+
 function initVehicleForm() {
     var form = document.getElementById('vehicleForm');
     if (!form) return;
+
+    // Live-Feedback: Feld grün sobald ausgefüllt
+    form.querySelectorAll('[required]').forEach(function(f) {
+        f.addEventListener('input',  function() { checkVehicleField(f); });
+        f.addEventListener('change', function() { checkVehicleField(f); });
+    });
 
     var uploadArea    = document.getElementById('uploadArea');
     var fileInput     = document.getElementById('sell-images');
@@ -361,7 +518,7 @@ function initVehicleForm() {
             uploadCount.style.display = 'none';
         } else {
             uploadCount.style.display = 'block';
-            uploadCount.textContent = selectedFiles.length + ' von 10 Foto(s) ausgewählt';
+            uploadCount.textContent = 'Foto ausgewählt: ' + selectedFiles[0].name;
         }
     }
 
@@ -398,7 +555,7 @@ function initVehicleForm() {
         newFiles.forEach(function(file) {
             if (!allowed.includes(file.type)) return;
             if (file.size > 5 * 1024 * 1024) { alert(file.name + ' ist zu groß (max. 5 MB).'); return; }
-            if (selectedFiles.length >= 10) { alert('Maximal 10 Fotos erlaubt.'); return; }
+            if (selectedFiles.length >= 1) { selectedFiles = []; }  // nur 1 Bild erlaubt, vorheriges ersetzen
             selectedFiles.push(file);
         });
         renderPreviews();
@@ -429,12 +586,45 @@ function initVehicleForm() {
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        var valid = true;
+        var submitBtn = document.getElementById('vehicleSubmitBtn');
+        var errorDiv  = document.getElementById('vehicleError');
+        if (errorDiv) errorDiv.style.display = 'none';
+
+        // Pflichtfelder prüfen
+        var valid        = true;
+        var firstInvalid = null;
         form.querySelectorAll('[required]').forEach(function(f) {
-            if (!f.value.trim()) { f.classList.add('invalid'); valid = false; }
-            else f.classList.remove('invalid');
+            if (!f.value.trim()) {
+                f.classList.add('invalid');
+                f.classList.remove('field-ok');
+                valid = false;
+                if (!firstInvalid) firstInvalid = f;
+            } else {
+                f.classList.remove('invalid');
+                f.classList.add('field-ok');
+            }
         });
-        if (!valid) return;
+
+        if (!valid) {
+            if (errorDiv) {
+                errorDiv.textContent = 'Bitte füllen Sie alle Pflichtfelder (*) aus.';
+                errorDiv.style.display = 'block';
+            }
+            if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        if (selectedFiles.length === 0) {
+            if (errorDiv) {
+                errorDiv.textContent = 'Bitte laden Sie ein Foto des Fahrzeugs hoch.';
+                errorDiv.style.display = 'block';
+            }
+            document.getElementById('uploadArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        // Ladezustand
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.value = 'Wird eingereicht …'; }
 
         var fd = new FormData();
         fd.append('make',      document.getElementById('sell-make').value.trim());
@@ -454,19 +644,35 @@ function initVehicleForm() {
         fd.append('phone',     document.getElementById('sell-phone').value.trim());
         selectedFiles.forEach(function(file) { fd.append('images[]', file); });
 
-        const r    = await fetch('api/listings/create.php', { method: 'POST', body: fd });
-        const data = await r.json();
+        try {
+            const r    = await fetch('api/listings/create.php', { method: 'POST', body: fd });
+            const data = await r.json();
 
-        if (data.success) {
-            form.reset();
-            selectedFiles = [];
-            renderPreviews();
-            form.style.display = 'none';
-            var success = document.getElementById('vehicleSuccess');
-            if (success) {
-                success.textContent = 'Ihr Inserat wurde erfolgreich eingereicht und wird innerhalb von 24 Stunden geprüft.';
-                success.style.display = 'block';
+            if (data.success) {
+                form.reset();
+                selectedFiles = [];
+                renderPreviews();
+                form.style.display = 'none';
+                var successDiv = document.getElementById('vehicleSuccess');
+                if (successDiv) {
+                    successDiv.textContent = 'Ihr Inserat wurde erfolgreich eingereicht und wird innerhalb von 24 Stunden geprüft.';
+                    successDiv.style.display = 'block';
+                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } else {
+                if (errorDiv) {
+                    errorDiv.textContent = data.message || 'Einreichen fehlgeschlagen. Bitte versuchen Sie es erneut.';
+                    errorDiv.style.display = 'block';
+                    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
+        } catch (err) {
+            if (errorDiv) {
+                errorDiv.textContent = 'Netzwerkfehler – bitte Seite neu laden und erneut versuchen.';
+                errorDiv.style.display = 'block';
+            }
+        } finally {
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.value = 'Inserat einreichen'; }
         }
     });
 }

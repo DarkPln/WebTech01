@@ -22,6 +22,7 @@
             <div class="sell-form-card">
 
                 <div id="vehicleSuccess" class="success-message" style="display:none;"></div>
+                <div id="vehicleError"   class="error-message"   style="display:none;"></div>
 
                 <form id="vehicleForm" novalidate>
 
@@ -74,12 +75,12 @@
 
                     <div class="sell-form-grid">
                         <div>
-                            <label for="sell-power">Leistung (PS)</label>
-                            <input type="number" id="sell-power" name="power" placeholder="z. B. 150" min="1">
+                            <label for="sell-power">Leistung (PS) *</label>
+                            <input type="number" id="sell-power" name="power" placeholder="z. B. 150" min="1" required>
                         </div>
                         <div>
-                            <label for="sell-antrieb">Antrieb</label>
-                            <select id="sell-antrieb" name="antrieb">
+                            <label for="sell-antrieb">Antrieb *</label>
+                            <select id="sell-antrieb" name="antrieb" required>
                                 <option value="">– bitte wählen –</option>
                                 <option value="Frontantrieb">Frontantrieb (FWD)</option>
                                 <option value="Hinterradantrieb">Hinterradantrieb (RWD)</option>
@@ -122,29 +123,29 @@
                     <label for="sell-desc">Fahrzeugbeschreibung</label>
                     <textarea id="sell-desc" name="desc" placeholder="Beschreiben Sie Ihr Fahrzeug: Ausstattung, Besonderheiten, Mängel, Wartungshistorie …"></textarea>
 
-                    <h2>Fotos</h2>
+                    <h2>Fotos *</h2>
 
                     <div class="upload-area" id="uploadArea">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
                         </svg>
-                        <p><strong>Bilder hier ablegen</strong> oder klicken zum Auswählen</p>
-                        <p>JPG, PNG, WEBP &ndash; max. 5 MB pro Bild, bis zu 10 Fotos</p>
+                        <p><strong>Bild hier ablegen</strong> oder klicken zum Auswählen</p>
+                        <p>JPG, PNG, WEBP &ndash; max. 5 MB &ndash; 1 Foto (Pflichtfeld)</p>
                     </div>
-                    <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp" multiple style="display:none">
+                    <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp" style="display:none">
                     <div class="image-preview-grid" id="imagePreviewGrid"></div>
                     <p class="upload-count" id="uploadCount" style="display:none;"></p>
 
                     <h2>Kontaktdaten</h2>
 
                     <label for="sell-name">Name *</label>
-                    <input type="text" id="sell-name" name="name" placeholder="Vor- und Nachname" required>
+                    <input type="text" id="sell-name" name="name" placeholder="Vor- und Nachname" required autocomplete="name">
 
                     <label for="sell-email">E-Mail-Adresse *</label>
-                    <input type="email" id="sell-email" name="email" placeholder="ihre@email.de" required>
+                    <input type="email" id="sell-email" name="email" placeholder="ihre@email.de" required autocomplete="email">
 
                     <label for="sell-phone">Telefonnummer</label>
-                    <input type="tel" id="sell-phone" name="phone" placeholder="z. B. 0841 123456">
+                    <input type="tel" id="sell-phone" name="phone" placeholder="z. B. 0841 123456" autocomplete="tel">
 
                     <p class="demo-hint">* Pflichtfelder. Ihr Inserat wird nach Einreichung geprüft und innerhalb von 24 Stunden freigeschaltet.</p>
 

@@ -9,8 +9,9 @@ if (empty($_SESSION['is_admin'])) {
     exit;
 }
 
-$result = getDB()->query('SELECT username, is_locked AS locked FROM users ORDER BY created_at ASC');
-$nutzer = $result->fetch_all(MYSQLI_ASSOC);
+$db     = getDB();
+$result = mysqli_query($db, 'SELECT username, is_locked AS locked FROM users ORDER BY created_at ASC');
+$nutzer = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 if (empty($nutzer)): ?>
 

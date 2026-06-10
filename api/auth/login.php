@@ -25,8 +25,10 @@ if ($username === 'TestUser' && $password === 'TestPass123') {
     exit;
 }
 
-$db   = getDB();
-$user = $db->query("SELECT id, username, password, is_locked, is_admin FROM users WHERE username = '" . $db->real_escape_string($username) . "'")->fetch_assoc();
+$db     = getDB();
+$eUser  = mysqli_real_escape_string($db, $username);
+$res    = mysqli_query($db, "SELECT id, username, password, is_locked, is_admin FROM users WHERE username = '$eUser'");
+$user   = mysqli_fetch_assoc($res);
 
 if (!$user || $user['password'] !== $password) {
     echo json_encode(['success' => false, 'message' => 'Falscher Benutzername oder Passwort']);

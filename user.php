@@ -3,58 +3,105 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Nutzerbereich</title>
+    <title>Mein Konto – Auto24</title>
     <link rel="stylesheet" href="mystyle.css">
-    <script src="validation.js"></script>
 </head>
-
 <body>
-    <?php
-        $pageTitle    = "Nutzerbereich";
-        $sectionTitle = "Persönliche Informationen";
-        $saveLabel    = "Änderungen speichern";
-        $logoutText   = "Abmelden";
-    ?>
     <?php require_once 'nav.php'; ?>
 
     <main class="home-main">
-        <section class="auth-section">
-            <div class="auth-card">
+        <div class="user-dashboard">
 
-                <h1>Willkommen, <span id="display-username" style="color: rgb(227,27,7);"></span></h1>
-                <h2><?php echo $sectionTitle; ?></h2>
+            <!-- Header -->
+            <div class="user-dashboard-header">
+                <h1>Willkommen, <span id="display-username"></span></h1>
+                <a href="logout.php" class="user-logout-link">Abmelden</a>
+            </div>
 
-                <div id="saveSuccess" class="success-message" style="display:none;"></div>
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-target="tabProfil">Profil</button>
+                <button class="admin-tab" data-target="tabNachrichten">
+                    Nachrichten<span class="tab-badge" id="msgBadge" style="display:none;"></span>
+                </button>
+                <button class="admin-tab" data-target="tabBuchungen">Buchungen</button>
+                <button class="admin-tab" data-target="tabInserate">Inserate</button>
+            </div>
 
-                <form id="userForm">
-                    <label for="username">Benutzername:</label>
-                    <input type="text" id="username" name="username" required autocomplete="username">
-                    <span class="field-error" id="username-error"></span>
+            <!-- Tab: Profil -->
+            <div id="tabProfil" class="admin-tab-content active">
 
-                    <label for="password">Neues Passwort:</label>
-                    <input type="password" id="password" name="password" required autocomplete="new-password">
-                    <span class="field-error" id="password-error"></span>
+                <div id="profileSuccess" class="success-message" style="display:none;"></div>
+                <div id="profileError"   class="error-message"   style="display:none;"></div>
 
-                    <label for="password_confirm">Passwort bestätigen:</label>
-                    <input type="password" id="password_confirm" name="password_confirm" required autocomplete="new-password">
-                    <span class="field-error" id="password_confirm-error"></span>
-
-                    <input type="submit" value="<?php echo $saveLabel; ?>" id="saveBtn">
+                <p class="user-section-title">Kontoinformationen</p>
+                <form id="profileForm">
+                    <div class="user-profile-grid">
+                        <div>
+                            <label for="username">Benutzername <span style="color:rgb(227,27,7)">*</span></label>
+                            <input type="text" id="username" name="username" required autocomplete="username">
+                            <span class="field-error" id="username-error"></span>
+                        </div>
+                        <div>
+                            <label for="email">E-Mail <span style="color:#666;font-size:12px;">(optional)</span></label>
+                            <input type="email" id="email" name="email" autocomplete="email" placeholder="z.B. max@muster.de">
+                        </div>
+                        <div>
+                            <label for="phone">Telefon <span style="color:#666;font-size:12px;">(optional)</span></label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="z.B. +49 170 1234567">
+                        </div>
+                        <div>
+                            <label for="city">Wohnort <span style="color:#666;font-size:12px;">(optional)</span></label>
+                            <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="z.B. München">
+                        </div>
+                    </div>
+                    <input type="submit" value="Profil speichern" id="profileSaveBtn">
                 </form>
 
-                <p><a href="buchungen.php" style="color: rgb(227,27,27); font-weight:600;">Meine Buchungen ansehen</a></p>
-
-                <hr style="margin:24px 0; border-color:#333;">
-                <h2 style="margin-bottom:12px;">Meine Inserate</h2>
-                <div id="userInserate"></div>
-
-                <p style="margin-top:20px;"><a href="logout.php"><?php echo $logoutText; ?></a></p>
+                <p class="user-section-title">Passwort ändern</p>
+                <div id="passwordSuccess" class="success-message" style="display:none;"></div>
+                <div id="passwordError"   class="error-message"   style="display:none;"></div>
+                <form id="passwordForm">
+                    <div class="user-profile-grid">
+                        <div>
+                            <label for="password">Neues Passwort <span style="color:rgb(227,27,7)">*</span></label>
+                            <input type="password" id="password" name="password" autocomplete="new-password">
+                            <span class="field-error" id="password-error"></span>
+                        </div>
+                        <div>
+                            <label for="password_confirm">Passwort bestätigen <span style="color:rgb(227,27,7)">*</span></label>
+                            <input type="password" id="password_confirm" name="password_confirm" autocomplete="new-password">
+                            <span class="field-error" id="password_confirm-error"></span>
+                        </div>
+                    </div>
+                    <input type="submit" value="Passwort ändern" id="passwordSaveBtn">
+                </form>
             </div>
-        </section>
+
+            <!-- Tab: Nachrichten -->
+            <div id="tabNachrichten" class="admin-tab-content">
+                <div class="msg-actions">
+                    <button class="msg-mark-read-btn" id="markAllReadBtn">Alle als gelesen markieren</button>
+                </div>
+                <div id="messagesContainer"></div>
+            </div>
+
+            <!-- Tab: Buchungen -->
+            <div id="tabBuchungen" class="admin-tab-content">
+                <div id="buchungenContainer"></div>
+            </div>
+
+            <!-- Tab: Inserate -->
+            <div id="tabInserate" class="admin-tab-content">
+                <div id="userInserate"></div>
+            </div>
+
+        </div>
     </main>
 
     <?php require_once 'footer.php'; ?>
 
+    <script src="validation.js"></script>
 </body>
 </html>
 <!-- Tim -->

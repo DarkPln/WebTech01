@@ -11,10 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = getDB();
         if (isset($_POST['remove_id'])) {
             $removeId = (int)$_POST['remove_id'];
-            $db->query("DELETE FROM favorites WHERE user_id = $userId AND car_id = $removeId");
+            mysqli_query($db, "DELETE FROM favorites WHERE user_id = $userId AND car_id = $removeId");
         }
         if (isset($_POST['clear_all'])) {
-            $db->query("DELETE FROM favorites WHERE user_id = $userId");
+            mysqli_query($db, "DELETE FROM favorites WHERE user_id = $userId");
         }
     } else {
         if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
@@ -34,7 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Favoriten laden: DB (eingeloggt) oder Session (Gast)
 if ($useDB) {
-    $favorites = array_column(getDB()->query("SELECT car_id FROM favorites WHERE user_id = $userId")->fetch_all(MYSQLI_ASSOC), 'car_id');
+    $db       = getDB();
+    $favRes   = mysqli_query($db, "SELECT car_id FROM favorites WHERE user_id = $userId");
+    $favorites = array_column(mysqli_fetch_all($favRes, MYSQLI_ASSOC), 'car_id');
 } else {
     $favorites = $_SESSION['favorites'] ?? [];
 }

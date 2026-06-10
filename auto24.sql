@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS listings (
     contact_name VARCHAR(100),
     email        VARCHAR(200),
     phone        VARCHAR(50),
+    images       TEXT,
     status       ENUM('eingereicht','genehmigt','abgelehnt') NOT NULL DEFAULT 'eingereicht',
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

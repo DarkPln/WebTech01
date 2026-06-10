@@ -10,13 +10,13 @@ if (!isset($_SESSION['user_id'])) {
 
 $db    = getDB();
 $uid   = $_SESSION['user_id'];
-$uname = $db->real_escape_string($_SESSION['username']);
+$uname = mysqli_real_escape_string($db, $_SESSION['username']);
 
-$result = $db->query(
+$result = mysqli_query($db,
     "SELECT listing_key AS id, username AS userId, make, model, year, price, status, created_at AS createdAt
      FROM listings
      WHERE user_id = $uid OR username = '$uname'
      ORDER BY created_at DESC"
 );
 
-echo json_encode(['success' => true, 'listings' => $result->fetch_all(MYSQLI_ASSOC)]);
+echo json_encode(['success' => true, 'listings' => mysqli_fetch_all($result, MYSQLI_ASSOC)]);

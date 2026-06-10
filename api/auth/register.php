@@ -12,15 +12,16 @@ if (strlen($username) < 5 || strlen($password) < 10) {
     exit;
 }
 
-$db       = getDB();
-$eUser    = $db->real_escape_string($username);
-$ePass    = $db->real_escape_string($password);
+$db    = getDB();
+$eUser = mysqli_real_escape_string($db, $username);
+$ePass = mysqli_real_escape_string($db, $password);
 
-if ($db->query("SELECT id FROM users WHERE username = '$eUser'")->fetch_assoc()) {
+$chkRes = mysqli_query($db, "SELECT id FROM users WHERE username = '$eUser'");
+if (mysqli_fetch_assoc($chkRes)) {
     echo json_encode(['success' => false, 'message' => 'Benutzername bereits vergeben']);
     exit;
 }
 
-$db->query("INSERT INTO users (username, password) VALUES ('$eUser', '$ePass')");
+mysqli_query($db, "INSERT INTO users (username, password) VALUES ('$eUser', '$ePass')");
 
 echo json_encode(['success' => true]);

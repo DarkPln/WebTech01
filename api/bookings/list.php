@@ -13,7 +13,8 @@ if (!isset($_SESSION['user_id'])) {
 
 // Buchungen des aktuellen Nutzers laden, neueste zuerst
 $uid    = $_SESSION['user_id'];
-$result = getDB()->query(
+$db     = getDB();
+$result = mysqli_query($db,
     "SELECT booking_key AS id,
             car_id      AS carId,
             car_name    AS carName,
@@ -27,4 +28,4 @@ $result = getDB()->query(
      ORDER BY created_at DESC"
 );
 
-echo json_encode(['success' => true, 'bookings' => $result->fetch_all(MYSQLI_ASSOC)]);
+echo json_encode(['success' => true, 'bookings' => mysqli_fetch_all($result, MYSQLI_ASSOC)]);

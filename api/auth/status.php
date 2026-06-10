@@ -8,11 +8,22 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $isLocked = false;
+$email    = null;
+$phone    = null;
+$city     = null;
+
 if ($_SESSION['user_id'] > 0) {
     require_once '../../db.php';
-    $userId   = $_SESSION['user_id'];
-    $row      = getDB()->query("SELECT is_locked FROM users WHERE id = $userId")->fetch_assoc();
-    $isLocked = $row ? (bool)$row['is_locked'] : false;
+    $userId = (int)$_SESSION['user_id'];
+    $db     = getDB();
+    $res    = mysqli_query($db, "SELECT is_locked, email, phone, city FROM users WHERE id = $userId");
+    $row    = mysqli_fetch_assoc($res);
+    if ($row) {
+        $isLocked = (bool)$row['is_locked'];
+        $email    = $row['email'];
+        $phone    = $row['phone'];
+        $city     = $row['city'];
+    }
 }
 
 echo json_encode([
@@ -20,4 +31,7 @@ echo json_encode([
     'username' => $_SESSION['username'],
     'isAdmin'  => (bool)($_SESSION['is_admin'] ?? false),
     'isLocked' => $isLocked,
+    'email'    => $email,
+    'phone'    => $phone,
+    'city'     => $city,
 ]);
