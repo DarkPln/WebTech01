@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 require_once "db.php";
 
@@ -164,7 +164,14 @@ $isSold   = (int)mysqli_fetch_assoc($soldRes)['cnt'] > 0;
 
 
 
+<script src="js/favLogik.js"></script>
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/user.js"></script>
+<script src="js/buchung.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/inserat.js"></script>
+<script src="js/utils.js"></script>
 <script src="validation.js"></script>
-<script src="favLogik.js"></script>
 </body>
 </html>

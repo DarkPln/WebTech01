@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 ?>
 
@@ -195,8 +195,7 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 
 <?php require_once 'footer.php'; ?>
-    <script src="validation.js"></script>
-    <script src="favLogik.js"></script>
+    <script src="js/favLogik.js"></script>
     <script>
         function toggleSearchConfig() {
             const config = document.getElementById('searchConfigurator');
