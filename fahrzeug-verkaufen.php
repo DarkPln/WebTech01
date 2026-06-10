@@ -7,20 +7,14 @@
     <link rel="stylesheet" href="mystyle.css">
 </head>
 <body>
-    <?php
-        $pageTitle    = "Fahrzeug inserieren";
-        $pageSubtext  = "Füllen Sie das Formular aus – wir prüfen Ihr Inserat und schalten es innerhalb von 24 Stunden frei.";
-        $submitLabel  = "Inserat einreichen";
-    ?>
-
     <?php require_once 'nav.php'; ?>
 
     <main class="sell-main">
         <section class="home-hero">
             <div class="home-hero-content">
                 <div class="home-badge">Kostenlos inserieren</div>
-                <h1><?php echo $pageTitle; ?></h1>
-                <p><?php echo $pageSubtext; ?></p>
+                <h1>Fahrzeug inserieren</h1>
+                <p>Füllen Sie das Formular aus – wir prüfen Ihr Inserat und schalten es innerhalb von 24 Stunden frei.</p>
             </div>
         </section>
 
@@ -84,6 +78,18 @@
                             <input type="number" id="sell-power" name="power" placeholder="z. B. 150" min="1">
                         </div>
                         <div>
+                            <label for="sell-antrieb">Antrieb</label>
+                            <select id="sell-antrieb" name="antrieb">
+                                <option value="">– bitte wählen –</option>
+                                <option value="Frontantrieb">Frontantrieb (FWD)</option>
+                                <option value="Hinterradantrieb">Hinterradantrieb (RWD)</option>
+                                <option value="Allradantrieb">Allradantrieb (AWD/4x4)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="sell-form-grid">
+                        <div>
                             <label for="sell-type">Fahrzeugtyp *</label>
                             <select id="sell-type" name="type" required>
                                 <option value="">– bitte wählen –</option>
@@ -142,7 +148,7 @@
 
                     <p class="demo-hint">* Pflichtfelder. Ihr Inserat wird nach Einreichung geprüft und innerhalb von 24 Stunden freigeschaltet.</p>
 
-                    <input type="submit" value="<?php echo $submitLabel; ?>" id="vehicleSubmitBtn">
+                    <input type="submit" value="Inserat einreichen" id="vehicleSubmitBtn">
 
                 </form>
             </div>

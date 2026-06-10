@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS listings (
     fuel         VARCHAR(50),
     gearbox      VARCHAR(50),
     power        VARCHAR(20),
+    antrieb      VARCHAR(50),
     type         VARCHAR(50),
     cond         VARCHAR(50),
     price        DECIMAL(12,2),
