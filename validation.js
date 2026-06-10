@@ -147,7 +147,7 @@ function initLoginForm() {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (loginBtn.disabled) return;
-Y
+
         const r    = await fetch('api/auth/login.php', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
