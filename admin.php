@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Admin-Dashboard – Tim
 // Demo-Zugangsdaten: admin / Admin123!
 ?>
@@ -93,6 +93,13 @@
 
 </main>
 
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/user.js"></script>
+<script src="js/buchung.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/inserat.js"></script>
+<script src="js/utils.js"></script>
 <script src="validation.js"></script>
 </body>
 </html>

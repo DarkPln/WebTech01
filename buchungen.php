@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Nutzer-Buchungsübersicht – Tim
 ?>
 <!DOCTYPE html>
@@ -36,6 +36,5 @@
 
 <?php require_once 'footer.php'; ?>
 
-<script src="validation.js"></script>
 </body>
 </html>

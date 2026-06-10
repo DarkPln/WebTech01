@@ -1,4 +1,4 @@
-<footer>
+﻿<footer>
     <div class="footer-top">
         <div class="footer-logo-dsc">
             <div class="footer-logo">Auto<span>24</span></div>
@@ -33,3 +33,12 @@
         </div>
     </div>
 </footer>
+
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/user.js"></script>
+<script src="js/buchung.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/inserat.js"></script>
+<script src="js/utils.js"></script>
+<script src="validation.js"></script>

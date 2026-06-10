@@ -1,11 +1,10 @@
-<!-- Tim -->
+﻿<!-- Tim -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>Abgemeldet</title>
     <link rel="stylesheet" href="mystyle.css">
-    <script src="validation.js"></script>
 </head>
 
 <body>
