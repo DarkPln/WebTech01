@@ -444,6 +444,7 @@ function initVehicleForm() {
         fd.append('fuel',      document.getElementById('sell-fuel').value);
         fd.append('gearbox',   document.getElementById('sell-gearbox').value);
         fd.append('power',     document.getElementById('sell-power').value);
+        fd.append('antrieb',   document.getElementById('sell-antrieb').value);
         fd.append('type',      document.getElementById('sell-type').value);
         fd.append('condition', document.getElementById('sell-condition').value);
         fd.append('price',     document.getElementById('sell-price').value);
