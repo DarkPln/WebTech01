@@ -1555,6 +1555,14 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     margin-top: 8px;
 }
 
+.buchung-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
 .buchung-cancel-btn {
     border: 1px solid #8B0000;
     color: #FF4444;
@@ -1562,7 +1570,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     max-width: 200px;
     width: auto;
     padding: 8px 18px;
-    margin: 12px 0 0 0;
+    margin: 0;
     min-height: 0;
     text-transform: none;
     letter-spacing: 0;
@@ -3016,7 +3024,7 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
 .msg-card-header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: 12px;
     margin-bottom: 4px;
 }
@@ -3024,6 +3032,35 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
 .msg-card-title {
     font-weight: 600;
     font-size: 14px;
+    flex: 1;
+}
+
+.msg-download-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 4px 10px !important;
+    margin: 0 0 0 10px !important;
+    font-size: 11px !important;
+    font-weight: 600;
+    color: rgb(204, 0, 0) !important;
+    border: 1px solid rgba(204, 0, 0, 0.4) !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s !important;
+    flex-shrink: 0;
+}
+
+.msg-download-btn:hover {
+    background: rgba(204, 0, 0, 0.1) !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .msg-card.unread .msg-card-title::before {
