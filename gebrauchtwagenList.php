@@ -50,7 +50,7 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <!-- Niclas: Budget-Filter mit Schieberegler -->
 <div class ="filter-section">
 <div class="budget-filter">
-    <h3>Maximales Budget</h3>
+    <h5>Maximales Budget</h5>
 
     <div class="slider-container">
 
@@ -70,7 +70,7 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </div>
 <!-- Niclas: Sortier-Buttons -->
 <div class="sort-filter">
-    <h3>Fahrzeuge sortieren</h3>
+    <h5>Fahrzeuge sortieren</h5>
 
     <div class="filter-button-row">
         <button class="filter-btn" onclick="sortCarsByPrice(true)">
@@ -85,7 +85,7 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 <!-- Niclas: Filter-Buttons für Baujahr -->
 <div class="year-filter">
-    <h3>Baujahr ab</h3>
+    <h5>Baujahr ab</h5>
 
     <div class="slider-container">
 
@@ -103,17 +103,79 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
     </div>
 </div>
-
-<div class="filter-button-row configurator-actions">
-    <button class="filter-btn" onclick="applyAllFilters()">
-        Anwenden
-    </button>
-
-    <button class="filter-btn" onclick="resetAllFilters()">
-        Reset
-    </button>
 </div>
 </div>
+<!--Niclas: Filter-Buttons Antrieb-->
+<div class="filter-section">
+    <h5>Antriebsart</h5>
+    <div class="filter-button-row">
+        <button class="filter-btn" onclick="toggleDriveFilter('Frontantrieb')">
+            Frontantrieb
+        </button>
+
+        <button class="filter-btn" onclick="toggleDriveFilter('Allrad')">
+            Allrad
+        </button>
+
+        <button class="filter-btn" onclick="toggleDriveFilter('Heckantrieb')">
+            Heckantrieb
+        </button>
+    </div>
+    </div>
+
+<!-- Niclas: Filter-Buttons Leistung -->
+<div class="filter-section">
+    <h5>Leistung ab (PS)</h5>
+    <div class="slider-container">
+
+        <input
+            type="range"
+            id="powerInput"
+            min="50"
+            max="1000"
+            step="1"
+            value="1000"
+            oninput="updatePowerLabel()">
+
+        <div id="powerValue">
+            1000 PS
+        </div>
+    </div>
+    </div>
+
+    <!--Niclas: Filter-Buttons Zustand-->
+<div class="filter-section">
+    <h5>Zustand</h5>
+    <div class="filter-button-row">
+        <button class="filter-btn" onclick="toggleDriveFilter('Gebrauchtwagen')">
+            Gebrauchtwagen
+        </button>
+
+        <button class="filter-btn" onclick="toggleDriveFilter('Neuwagen')">
+            Neuwagen
+        </button>
+    </div>
+    </div>
+
+<!-- Niclas: Filter-Buttons Kilometerstand -->
+<div class="filter-section">
+    <h5>Kilometerstand bis</h5>
+    <div class="slider-container">
+
+        <input
+            type="range"
+            id="kmInput"
+            min="0"
+            max="600000"
+            step="100"
+            value="600000"
+            oninput="updateKmLabel()">
+
+        <div id="kmValue">
+            600.000 km
+        </div>
+    </div>
+    </div>
 
     </div><!-- Ende search-configurator -->
 

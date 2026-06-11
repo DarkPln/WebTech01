@@ -2539,7 +2539,7 @@ input[type="range"]::-moz-range-thumb {
 
 .filter-btn {
     width: auto !important;
-    min-width: 200px;
+    min-width: 2000px;
     padding: 8px 14px;
     margin: 5px;
     display: inline-block;
