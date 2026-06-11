@@ -115,7 +115,7 @@
                         <option value="schlecht">Mit Mängeln</option>
                     </select>
 
-                    <h2>Preis &amp; Beschreibung</h2>
+                    <h2>Preis & Beschreibung</h2>
 
                     <label for="sell-price">Wunschpreis (€) *</label>
                     <input type="number" id="sell-price" name="price" placeholder="z. B. 18500" min="1" required>
@@ -123,14 +123,14 @@
                     <label for="sell-desc">Fahrzeugbeschreibung</label>
                     <textarea id="sell-desc" name="desc" placeholder="Beschreiben Sie Ihr Fahrzeug: Ausstattung, Besonderheiten, Mängel, Wartungshistorie …"></textarea>
 
-                    <h2>Fotos *</h2>
+                    <h2>Foto</h2>
 
                     <div class="upload-area" id="uploadArea">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
                         </svg>
                         <p><strong>Bild hier ablegen</strong> oder klicken zum Auswählen</p>
-                        <p>JPG, PNG, WEBP &ndash; max. 5 MB &ndash; 1 Foto (Pflichtfeld)</p>
+                        <p>JPG, PNG, WEBP – max. 5 MB – 1 Foto (Pflichtfeld)</p>
                     </div>
                     <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp" style="display:none">
                     <div class="image-preview-grid" id="imagePreviewGrid"></div>

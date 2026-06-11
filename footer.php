@@ -17,7 +17,7 @@
             <div class="footer-heading">Kundenservice</div>
             <ul class="footer-links">
                 <li><a href="fahrzeug-verkaufen.php">Fahrzeug verkaufen</a></li>
-                <li><a href="faq.php">Hilfe &amp; FAQ</a></li>
+                <li><a href="faq.php">Hilfe & FAQ</a></li>
                 <li><a href="finanzierung.php">Finanzierung</a></li>
                 <li><a href="versicherung.php">Versicherung</a></li>
             </ul>
