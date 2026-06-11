@@ -26,7 +26,7 @@ async function initAdminPage() {
             });
         });
     } else {
-        window.location.href = 'login.php';
+        window.location.href = BASE_URL + '/auth/login';
     }
 }
 
@@ -36,7 +36,7 @@ async function renderAdminOrders() {
     const containerIds = ['adminOrdersNew', 'adminOrdersProcessing', 'adminOrdersRejected', 'adminOrdersCompleted'];
 
     const antworten = await Promise.all(
-        bereiche.map(b => fetch('api/admin/orders_html.php?bereich=' + b).then(r => r.text()))
+        bereiche.map(b => fetch(BASE_URL + '/api/admin/orders-html?bereich=' + b).then(r => r.text()))
     );
 
     bereiche.forEach((_, i) => {
@@ -48,12 +48,12 @@ async function renderAdminOrders() {
 async function renderAdminInserate() {
     var container = document.getElementById('adminInserate');
     if (!container) return;
-    const antwort       = await fetch('api/admin/inserate_html.php');
+    const antwort       = await fetch(BASE_URL + '/api/admin/listings-html');
     container.innerHTML = await antwort.text();
 }
 
 async function adminSetInseratStatus(id, status) {
-    await fetch('api/admin/listings.php', {
+    await fetch(BASE_URL + '/api/admin/listings', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ id, status })
@@ -65,12 +65,12 @@ async function adminSetInseratStatus(id, status) {
 async function renderAdminUsers() {
     var container = document.getElementById('adminUsersList');
     if (!container) return;
-    const antwort       = await fetch('api/admin/users_html.php');
+    const antwort       = await fetch(BASE_URL + '/api/admin/users-html');
     container.innerHTML = await antwort.text();
 }
 
 async function adminSetStatus(bookingId, status, reason) {
-    await fetch('api/admin/orders.php', {
+    await fetch(BASE_URL + '/api/admin/orders', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ id: bookingId, status, reason: reason || '' })
@@ -85,7 +85,7 @@ async function adminRejectOrder(bookingId) {
 }
 
 async function adminToggleLock(username) {
-    await fetch('api/admin/users.php', {
+    await fetch(BASE_URL + '/api/admin/users', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ username })
@@ -96,14 +96,14 @@ async function adminToggleLock(username) {
 async function renderAdminCars() {
     var container = document.getElementById('adminCars');
     if (!container) return;
-    const antwort       = await fetch('api/admin/cars_html.php');
+    const antwort       = await fetch(BASE_URL + '/api/admin/cars-html');
     container.innerHTML = await antwort.text();
 }
 
 async function adminDeleteCar(iid, btn) {
     if (!confirm('Fahrzeug dauerhaft löschen?')) return;
     btn.disabled = true;
-    const res  = await fetch('api/admin/cars.php', {
+    const res  = await fetch(BASE_URL + '/api/admin/cars', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ iid })
@@ -118,6 +118,6 @@ async function adminDeleteCar(iid, btn) {
 }
 
 async function adminLogout() {
-    await fetch('api/auth/logout.php', { method: 'POST' });
+    await fetch(BASE_URL + '/api/auth/logout', { method: 'POST' });
     window.location.reload();
 }

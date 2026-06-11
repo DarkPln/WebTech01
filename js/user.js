@@ -12,7 +12,7 @@ async function loadUnreadBadge() {
     var badge = document.getElementById('msgBadge');
     if (!badge) return;
     try {
-        const r    = await fetch('api/messages/unread_count.php');
+        const r    = await fetch(BASE_URL + '/api/messages/unread-count');
         const data = await r.json();
         if (data.count > 0) {
             badge.textContent = data.count;
@@ -28,7 +28,7 @@ async function loadUnreadBadge() {
 async function loadMessages() {
     var container = document.getElementById('messagesContainer');
     if (!container) return;
-    const r = await fetch('api/messages/list_html.php');
+    const r = await fetch(BASE_URL + '/api/messages/list-html');
     container.innerHTML = await r.text();
     loadUnreadBadge();
 }
@@ -37,7 +37,7 @@ async function loadMessages() {
 async function renderUserInserate() {
     var container = document.getElementById('userInserate');
     if (!container) return;
-    const antwort       = await fetch('api/listings/list_html.php');
+    const antwort       = await fetch(BASE_URL + '/api/listings/list-html');
     container.innerHTML = await antwort.text();
 }
 
@@ -45,7 +45,7 @@ function initUserForm() {
     if (!document.getElementById('tabProfil')) return;
 
     if (!authState.loggedIn) {
-        window.location.href = 'login.php';
+        window.location.href = BASE_URL + '/auth/login';
         return;
     }
 
@@ -99,7 +99,7 @@ function initUserForm() {
     profileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (profileSave.disabled) return;
-        const r    = await fetch('api/auth/update.php', {
+        const r    = await fetch(BASE_URL + '/api/auth/update', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({
@@ -153,7 +153,7 @@ function initUserForm() {
     passwordForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (passwordSave.disabled) return;
-        const r    = await fetch('api/auth/update.php', {
+        const r    = await fetch(BASE_URL + '/api/auth/update', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({
@@ -181,7 +181,7 @@ function initUserForm() {
     var markBtn = document.getElementById('markAllReadBtn');
     if (markBtn) {
         markBtn.addEventListener('click', async () => {
-            await fetch('api/messages/mark_read.php', { method: 'POST' });
+            await fetch(BASE_URL + '/api/messages/mark-read', { method: 'POST' });
             await loadMessages();
             loadUnreadBadge();
         });

@@ -2830,14 +2830,16 @@ body.light-mode .fav-notification {
 }
 
 .image-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
     margin-bottom: 16px;
 }
 
 .image-preview-item {
     position: relative;
+    width: 130px;
     aspect-ratio: 4 / 3;
     border-radius: 6px;
     overflow: hidden;
@@ -2884,7 +2886,7 @@ body.light-mode .fav-notification {
     font-size: 12px;
     color: #666;
     margin-bottom: 16px;
-    text-align: right;
+    text-align: center;
 }
 
 body.light-mode .upload-area {

@@ -3,7 +3,7 @@
 
 // Sendet eine neue Buchung an den Server und gibt die Antwort zurück
 async function createBooking(carId, carName, carPrice) {
-    const antwort = await fetch('api/bookings/create.php', {
+    const antwort = await fetch(BASE_URL + '/api/bookings/create', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ carId, carName, carPrice })
@@ -13,7 +13,7 @@ async function createBooking(carId, carName, carPrice) {
 
 // Markiert eine Buchung als storniert
 async function cancelBooking(buchungsId) {
-    const antwort = await fetch('api/bookings/cancel.php', {
+    const antwort = await fetch(BASE_URL + '/api/bookings/cancel', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ id: buchungsId })
@@ -33,7 +33,7 @@ async function handleBuchungsKlick(carId, carName, carPrice) {
     if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
     const ergebnis = await createBooking(carId, carName, carPrice);
     if (ergebnis.success) {
-        window.location.href = 'buchungen.php';
+        window.location.href = BASE_URL + '/bookings';
     } else {
         alert(ergebnis.message || 'Buchung fehlgeschlagen.');
     }
@@ -90,7 +90,7 @@ async function initBookingsPage() {
     if (!container) return;
 
     if (!authState.loggedIn) {
-        window.location.href = 'login.php';
+        window.location.href = BASE_URL + '/auth/login';
         return;
     }
 
@@ -104,6 +104,6 @@ async function initBookingsPage() {
 async function renderBookingsPage() {
     var container = document.getElementById('buchungenContainer');
     if (!container) return;
-    const antwort       = await fetch('api/bookings/list_html.php');
+    const antwort       = await fetch(BASE_URL + '/api/bookings/list-html');
     container.innerHTML = await antwort.text();
 }

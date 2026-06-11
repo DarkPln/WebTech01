@@ -47,7 +47,7 @@ let authState = { loggedIn: false, username: '', isAdmin: false, isLocked: false
 
 async function loadAuthState() {
     try {
-        const r = await fetch('api/auth/status.php');
+        const r = await fetch(BASE_URL + '/api/auth/status');
         authState = await r.json();
     } catch (e) {
         authState = { loggedIn: false };

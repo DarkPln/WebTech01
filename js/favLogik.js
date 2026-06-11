@@ -15,7 +15,7 @@ async function togglePanel() {
     if (!isOpen) {
         // panel öffnet: Autodaten von Server holen und Panel  rendern
         try {
-            const res  = await fetch('get_favorites.php');
+            const res  = await fetch(BASE_URL + '/api/favorites/get');
             const data = await res.json();
             if (Array.isArray(data.cars)) {
                 data.cars.forEach(car => {
@@ -46,7 +46,7 @@ function showNotification(msg) {
 // wird dann in ToggleFavorite und removefav aufgerufen um serverseitig die session/db zu aktualisieren
 async function sendFavAction(action, carId) { 
     const body = carId !== undefined ? { action, carId } : { action };
-    await fetch('toggle_favorite.php', {
+    await fetch(BASE_URL + '/api/favorites/toggle', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -240,7 +240,7 @@ function initMerklisteBuchung() {
         const loggedIn = (typeof authState !== 'undefined') && authState.loggedIn;
         if (!loggedIn) {
             alert('Bitte einloggen um zu buchen.');
-            window.location.href = 'login.php';
+            window.location.href = BASE_URL + '/auth/login';
             return;
         }
 
@@ -256,7 +256,7 @@ function initMerklisteBuchung() {
             createBooking(cb.dataset.carId, cb.dataset.carName, cb.dataset.carPrice);
         });
 
-        window.location.href = 'buchungen.php';
+        window.location.href = BASE_URL + '/bookings';
     });
 }
 
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Session-Daten holen
     try {
-        const res  = await fetch('get_favorites.php');
+        const res  = await fetch(BASE_URL + '/api/favorites/get');
         const data = await res.json();
 
         if (Array.isArray(data.cars)) {

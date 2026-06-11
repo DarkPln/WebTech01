@@ -89,7 +89,7 @@ function initVehicleForm() {
 
         fileInput.addEventListener('change', function() {
             addFiles(Array.from(fileInput.files));
-            fileInput.value = '';
+            fileInput.value = ''; // damit beim selben bild nochmal feuert 
         });
     }
 
@@ -98,18 +98,18 @@ function initVehicleForm() {
 
         var submitBtn = document.getElementById('vehicleSubmitBtn');
         var errorDiv  = document.getElementById('vehicleError');
-        if (errorDiv) errorDiv.style.display = 'none';
+        if (errorDiv) errorDiv.style.display = 'none'; // wenn von vorher noch da dann verstecken 
 
         var valid        = true;
-        var firstInvalid = null;
+        var firstInvalid = null; // scroll hierhin; siehe unten 
         form.querySelectorAll('[required]').forEach(function(f) {
             if (!f.value.trim()) {
                 f.classList.add('invalid');
                 f.classList.remove('field-ok');
                 valid = false;
-                if (!firstInvalid) firstInvalid = f;
+                if (!firstInvalid) firstInvalid = f; // rot setzen 
             } else {
-                f.classList.remove('invalid');
+                f.classList.remove('invalid'); // grün setzen
                 f.classList.add('field-ok');
             }
         });
@@ -153,7 +153,7 @@ function initVehicleForm() {
         selectedFiles.forEach(function(file) { fd.append('images[]', file); });
 
         try {
-            const r    = await fetch('api/listings/create.php', { method: 'POST', body: fd });
+            const r    = await fetch(BASE_URL + '/api/listings/create', { method: 'POST', body: fd });
             const data = await r.json();
 
             if (data.success) {

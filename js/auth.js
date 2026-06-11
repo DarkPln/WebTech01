@@ -5,10 +5,10 @@ function initNavAuthLink() {
     if (!link) return;
     if (authState.loggedIn) {
         link.textContent = authState.username || 'Konto';
-        link.href = 'user.php';
+        link.href = BASE_URL + '/user';
     } else {
         link.textContent = 'Login';
-        link.href = 'login.php';
+        link.href = BASE_URL + '/auth/login';
     }
 }
 
@@ -39,7 +39,7 @@ function initLoginForm() {
         e.preventDefault();
         if (loginBtn.disabled) return;
 
-        const r    = await fetch('api/auth/login.php', {
+        const r    = await fetch(BASE_URL + '/api/auth/login', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ username: username.value.trim(), password: password.value }),
@@ -47,7 +47,7 @@ function initLoginForm() {
         const data = await r.json();
 
         if (data.success) {
-            window.location.href = data.isAdmin ? 'admin.php' : 'user.php';
+            window.location.href = data.isAdmin ? BASE_URL + '/admin' : BASE_URL + '/user';
         } else {
             if (errorMessage) {
                 errorMessage.textContent = data.message || 'Falscher Benutzername oder Passwort.';
@@ -98,7 +98,7 @@ function initRegistrationForm() {
         e.preventDefault();
         if (submitBtn.disabled) return;
 
-        const r    = await fetch('api/auth/register.php', {
+        const r    = await fetch(BASE_URL + '/api/auth/register', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ username: benutzername.value.trim(), password: passwort.value }),
@@ -106,7 +106,7 @@ function initRegistrationForm() {
         const data = await r.json();
 
         if (data.success) {
-            window.location.href = 'login.php?registered=1';
+            window.location.href = BASE_URL + '/auth/login?registered=1';
         } else {
             if (errorMessage) {
                 errorMessage.textContent = data.message || 'Registrierung fehlgeschlagen.';
@@ -120,6 +120,6 @@ function initRegistrationForm() {
 
 async function initLogout() {
     if (!document.getElementById('logoutPage')) return;
-    await fetch('api/auth/logout.php', { method: 'POST' });
+    await fetch(BASE_URL + '/api/auth/logout', { method: 'POST' });
     authState = { loggedIn: false, username: '', isAdmin: false, isLocked: false };
 }

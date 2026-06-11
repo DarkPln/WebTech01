@@ -1,112 +1,94 @@
-﻿<!-- Niclas -->
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>Willkommen bei unserer Web-Anwendung "Auto24"-Startseite</title>
-    <link rel="stylesheet" href="mystyle.css">
-</head>
-<body>
-    <?php
-        require_once 'db.php';
+<?php
 
-        $heroBadge    = "Ihre Fahrzeugbörse";
-        $heroHeadline = "Willkommen bei";
-        $heroText     = "Entdecken Sie die besten Angebote für Neu- und Gebrauchtwagen. Kaufen, verkaufen und vergleichen Sie Fahrzeuge einfach, sicher und schnell.";
-        $cat1Title    = "Auto kaufen";
-        $cat1Text     = "Finden Sie passende Fahrzeuge aus verschiedenen Kategorien.";
-        $cat2Title    = "Auto verkaufen";
-        $cat2Text     = "Inserieren Sie Ihr Fahrzeug schnell und unkompliziert.";
-        $cat3Title    = "Login-Bereich";
-        $cat3Text     = "Melden Sie sich an, um Inserate zu verwalten.";
-        $aboutHeadline = "Über uns";
-        $aboutText    = "Auto24 ist eine moderne Online-Plattform für den Kauf und Verkauf von Fahrzeugen. Unser Ziel ist es, eine benutzerfreundliche und sichere Umgebung zu schaffen, in der Käufer und Verkäufer schnell zusammenfinden.";
+// ── Constants ────────────────────────────────────────────────────────────────
+define('BASE_PATH', __DIR__ . '/');
+define('BASE_URL',  '/WebTech01');
+define('VIEW_PATH', BASE_PATH . 'app/views/');
 
-        $carRes       = getDB()->query("SELECT iid, marke, modell, preis, imagepath, baujahr FROM cars ORDER BY id ASC");
-        $carouselCars = $carRes ? $carRes->fetch_all(MYSQLI_ASSOC) : [];
-        $carouselRepeat = empty($carouselCars) ? 0 : max(3, (int)ceil(18 / count($carouselCars)));
-    ?>
-    <?php require_once 'nav.php'; ?>
-    <main class="home-main">
+// ── Session ──────────────────────────────────────────────────────────────────
+session_start();
 
-    <section class="home-hero">
-        <div class="home-hero-content">
-            <div class="home-badge"><?php echo $heroBadge; ?></div>
+// ── Core autoloader ──────────────────────────────────────────────────────────
+foreach (['Database', 'Model', 'Controller', 'Router'] as $class) {
+    require BASE_PATH . "core/{$class}.php";
+}
 
-            <h1><?php echo $heroHeadline; ?> <span>Auto24</span></h1>
+// ── Models ───────────────────────────────────────────────────────────────────
+foreach (['Car', 'User', 'Listing', 'Booking', 'Message', 'Favorite'] as $class) {
+    require BASE_PATH . "app/models/{$class}.php";
+}
 
-            <p><?php echo $heroText; ?></p>
+// ── Controllers ──────────────────────────────────────────────────────────────
+foreach ([
+    'HomeController', 'AuthController', 'CarController',
+    'ListingController', 'BookingController', 'AdminController',
+    'MessageController', 'FavoriteController', 'PageController',
+    'MerklisteController',
+] as $class) {
+    require BASE_PATH . "app/controllers/{$class}.php";
+}
 
-            <div class="home-buttons">
-                <a href="gebrauchtwagenList.php" class="home-btn-primary">Autos ansehen</a>
-                <a href="fahrzeug-verkaufen.php" class="home-btn-secondary">Auto verkaufen</a>
-            </div>
-        </div>
-    </section>
+// ── Static assets pass-through (images, CSS, JS) ─────────────────────────────
+// .htaccess handles this — PHP never sees requests for real files/dirs.
 
-    <?php if (!empty($carouselCars)): ?>
-    <section class="car-carousel-section">
-        <div class="car-carousel-heading">
-            <div class="carousel-label">Unser Angebot</div>
-            <h2>Aktuelle <span>Fahrzeuge</span></h2>
-        </div>
-        <div class="car-carousel-viewport">
-            <div class="car-carousel-track" id="carouselTrack" data-repeat="<?php echo $carouselRepeat; ?>">
-                <?php for ($r = 0; $r < $carouselRepeat; $r++): ?>
-                    <?php foreach ($carouselCars as $c): ?>
-                    <a href="item.php?pid=<?php echo (int)$c['iid']; ?>" class="carousel-card">
-                        <div class="carousel-card-img">
-                            <img src="<?php echo htmlspecialchars($c['imagepath']); ?>"
-                                 alt="<?php echo htmlspecialchars($c['marke'] . ' ' . $c['modell']); ?>"
-                                 loading="lazy">
-                        </div>
-                        <div class="carousel-card-body">
-                            <div class="carousel-card-make"><?php echo htmlspecialchars(strtoupper($c['marke'])); ?></div>
-                            <div class="carousel-card-model"><?php echo htmlspecialchars($c['modell']); ?></div>
-                            <div class="carousel-card-price"><?php echo number_format((float)$c['preis'], 0, ',', '.'); ?> €</div>
-                        </div>
-                    </a>
-                    <?php endforeach; ?>
-                <?php endfor; ?>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
+// ── Router ───────────────────────────────────────────────────────────────────
+$router = new Router();
 
-    <section class="home-section">
-        <h2>Unsere Kategorien</h2>
+// Pages
+$router->get('/',                [HomeController::class,     'index']);
+$router->get('/cars',            [CarController::class,      'list']);
+$router->get('/cars/{id}',       [CarController::class,      'detail']);
+$router->get('/auth/login',      [AuthController::class,     'loginView']);
+$router->get('/auth/register',   [AuthController::class,     'registerView']);
+$router->get('/auth/logout',     [AuthController::class,     'logoutView']);
+$router->get('/listings/sell',   [ListingController::class,  'sellView']);
+$router->get('/user',            [AuthController::class,     'userView']);
+$router->get('/admin',           [AuthController::class,     'adminView']);
+$router->get('/bookings',        [BookingController::class,  'index']);
+$router->get('/merkliste',       [MerklisteController::class,'index']);
+$router->post('/merkliste/remove', [MerklisteController::class,'remove']);
 
-        <div class="home-category-grid">
-            <div class="home-category-card">
-                <h3><?php echo $cat1Title; ?></h3>
-                <p><?php echo $cat1Text; ?></p>
-                <a href="gebrauchtwagenList.php">Autos kaufen</a>
-            </div>
+// Static pages — must be registered after all specific routes
+$router->get('/{page}', [PageController::class, 'show']);
 
-            <div class="home-category-card">
-                <h3><?php echo $cat2Title; ?></h3>
-                <p><?php echo $cat2Text; ?></p>
-                <a href="fahrzeug-verkaufen.php">Autos verkaufen</a>
-            </div>
+// Auth API
+$router->get('/api/auth/status',    [AuthController::class, 'status']);
+$router->post('/api/auth/login',    [AuthController::class, 'login']);
+$router->post('/api/auth/logout',   [AuthController::class, 'logout']);
+$router->post('/api/auth/register', [AuthController::class, 'register']);
+$router->post('/api/auth/update',   [AuthController::class, 'update']);
 
-            <div class="home-category-card">
-                <h3><?php echo $cat3Title; ?></h3>
-                <p><?php echo $cat3Text; ?></p>
-                <a href="login.php">Zum Login</a>
-            </div>
-        </div>
-    </section>
+// Listings API
+$router->post('/api/listings/create',   [ListingController::class, 'create']);
+$router->get('/api/listings/list',      [ListingController::class, 'list']);
+$router->get('/api/listings/list-html', [ListingController::class, 'listHtml']);
 
-    <section class="home-about">
-        <h2><?php echo $aboutHeadline; ?></h2>
-        <p><?php echo $aboutText; ?></p>
-        <a href="about.php" class="home-btn-secondary">Mehr erfahren</a>
-    </section>
+// Bookings API
+$router->post('/api/bookings/create',   [BookingController::class, 'create']);
+$router->post('/api/bookings/cancel',   [BookingController::class, 'cancel']);
+$router->get('/api/bookings/list',      [BookingController::class, 'listJson']);
+$router->get('/api/bookings/list-html', [BookingController::class, 'listHtml']);
 
-</main>
+// Messages API
+$router->get('/api/messages/list-html',   [MessageController::class, 'listHtml']);
+$router->post('/api/messages/mark-read',  [MessageController::class, 'markRead']);
+$router->get('/api/messages/unread-count',[MessageController::class, 'unreadCount']);
 
-    <?php require_once 'footer.php'; ?>
-    <script src="js/carousel.js"></script>
-</body>
-</html>
-<!-- Niclas -->
+// Favorites API
+$router->post('/api/favorites/toggle', [FavoriteController::class, 'toggle']);
+$router->get('/api/favorites/get',     [FavoriteController::class, 'get']);
+
+// Admin API
+$router->get('/api/admin/listings',      [AdminController::class, 'getListings']);
+$router->post('/api/admin/listings',     [AdminController::class, 'updateListing']);
+$router->get('/api/admin/listings-html', [AdminController::class, 'listingsHtml']);
+$router->get('/api/admin/orders',        [AdminController::class, 'getOrders']);
+$router->post('/api/admin/orders',       [AdminController::class, 'updateOrder']);
+$router->get('/api/admin/orders-html',   [AdminController::class, 'ordersHtml']);
+$router->get('/api/admin/users',         [AdminController::class, 'getUsers']);
+$router->post('/api/admin/users',        [AdminController::class, 'updateUser']);
+$router->get('/api/admin/users-html',    [AdminController::class, 'usersHtml']);
+$router->post('/api/admin/cars',         [AdminController::class, 'deleteCar']);
+$router->get('/api/admin/cars-html',     [AdminController::class, 'carsHtml']);
+
+$router->dispatch();
