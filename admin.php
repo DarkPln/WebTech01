@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Admin-Dashboard – Tim
 // Demo-Zugangsdaten: admin / Admin123!
 ?>
@@ -24,29 +24,6 @@
 
 <main class="admin-main">
 
-    <!-- ===== LOGIN ===== -->
-    <section id="adminLoginSection" class="auth-section">
-        <div class="auth-card">
-            <h1>Admin <span style="color:rgb(227,27,27);">Login</span></h1>
-            <h2 style="color:#bdbdbd; font-size:16px; margin-top:0;">Verwaltungsbereich</h2>
-            <p class="demo-hint" style="display:block;">Demo: <strong>admin</strong> / <strong>Admin1234</strong></p>
-
-            <div id="adminLoginError" class="error-message" style="display:none;"></div>
-
-            <form id="adminLoginForm">
-                <label for="adminUsername">Benutzername:</label>
-                <input type="text" id="adminUsername" name="adminUsername" required autocomplete="username">
-
-                <label for="adminPassword">Passwort:</label>
-                <input type="password" id="adminPassword" name="adminPassword" required autocomplete="current-password">
-
-                <button type="submit">Einloggen</button>
-            </form>
-
-            <p><a href="index.php" style="color:#888; font-size:13px;">← Zurück zur Website</a></p>
-        </div>
-    </section>
-
     <!-- ===== DASHBOARD ===== -->
     <div id="adminDashboard" style="display:none;">
         <div class="admin-container">
@@ -61,6 +38,7 @@
                 <button class="admin-tab" data-target="tabAbgeschlossen">Abgeschlossen</button>
                 <button class="admin-tab" data-target="tabNutzer">Nutzer verwalten</button>
                 <button class="admin-tab" data-target="tabInserate">Inserate</button>
+                <button class="admin-tab" data-target="tabFahrzeuge">Fahrzeuge</button>
             </div>
 
             <!-- Tab: Neue Aufträge -->
@@ -101,11 +79,27 @@
                 <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Eingereichte Inserate</h3>
                 <div id="adminInserate"></div>
             </div>
+
+            <!-- Tab: Fahrzeuge -->
+            <div id="tabFahrzeuge" class="admin-tab-content">
+                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Fahrzeuge verwalten</h3>
+                <p style="text-align:left; font-size:13px; color:#666; margin-bottom:20px;">
+                    Gelöschte Fahrzeuge werden dauerhaft aus der Fahrzeugliste entfernt.
+                </p>
+                <div id="adminCars"></div>
+            </div>
         </div>
     </div>
 
 </main>
 
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/user.js"></script>
+<script src="js/buchung.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/inserat.js"></script>
+<script src="js/utils.js"></script>
 <script src="validation.js"></script>
 </body>
 </html>

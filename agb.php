@@ -1,4 +1,4 @@
-<!-- Tim -->
+﻿<!-- Tim -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -83,7 +83,6 @@
 
     <?php require_once 'footer.php'; ?>
 
-    <script src="validation.js"></script>
 </body>
 </html>
 <!-- Tim -->

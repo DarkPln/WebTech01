@@ -1,11 +1,19 @@
-<?php
+﻿<?php
 session_start();
 ?>
 
 <?php
 require_once "db.php";
 $db        = getDB();
-$result    = mysqli_query($db, "SELECT * FROM cars ORDER BY id ASC");
+$result    = mysqli_query($db,
+    "SELECT * FROM cars
+     WHERE iid NOT IN (
+         SELECT car_id FROM bookings
+         WHERE status IN ('in_bearbeitung', 'versandt', 'fertig')
+         AND car_id IS NOT NULL
+     )
+     ORDER BY id ASC"
+);
 $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -249,8 +257,7 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 
 <?php require_once 'footer.php'; ?>
-    <script src="validation.js"></script>
-    <script src="favLogik.js"></script>
+    <script src="js/favLogik.js"></script>
     <script>
         function toggleSearchConfig() {
             const config = document.getElementById('searchConfigurator');

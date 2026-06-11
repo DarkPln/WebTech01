@@ -1,4 +1,4 @@
-<!-- Tim -->
+﻿<!-- Tim -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -15,7 +15,10 @@
             <!-- Header -->
             <div class="user-dashboard-header">
                 <h1>Willkommen, <span id="display-username"></span></h1>
-                <a href="logout.php" class="user-logout-link">Abmelden</a>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <a href="admin.php" id="adminDashboardLink" class="user-admin-link" style="display:none;">Admin Dashboard</a>
+                    <a href="logout.php" class="user-logout-link">Abmelden</a>
+                </div>
             </div>
 
             <!-- Tabs -->
@@ -101,7 +104,6 @@
 
     <?php require_once 'footer.php'; ?>
 
-    <script src="validation.js"></script>
 </body>
 </html>
 <!-- Tim -->
