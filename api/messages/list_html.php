@@ -24,16 +24,27 @@ if (empty($rows)) {
 }
 
 foreach ($rows as $m) {
-    $cls   = $m['is_read'] ? 'msg-card' : 'msg-card unread';
-    $title = htmlspecialchars($m['title']);
-    $body  = htmlspecialchars($m['body'] ?? '');
-    $date  = date('d.m.Y, H:i', strtotime($m['created_at']));
-    $id    = (int)$m['id'];
+    $cls      = $m['is_read'] ? 'msg-card' : 'msg-card unread';
+    $title    = htmlspecialchars($m['title']);
+    $titleAttr = htmlspecialchars($m['title'], ENT_QUOTES);
+    $body     = htmlspecialchars($m['body'] ?? '');
+    $bodyAttr = htmlspecialchars($m['body'] ?? '', ENT_QUOTES);
+    $date     = date('d.m.Y, H:i', strtotime($m['created_at']));
+    $id       = (int)$m['id'];
     echo "
 <div class=\"$cls\" data-id=\"$id\">
     <div class=\"msg-card-header\">
         <span class=\"msg-card-title\">$title</span>
         <span class=\"msg-card-date\">$date</span>
+        <button class=\"msg-download-btn\"
+                data-title=\"$titleAttr\"
+                data-body=\"$bodyAttr\"
+                data-date=\"$date\"
+                onclick=\"downloadMsgPDF(this)\"
+                title=\"Als PDF herunterladen\">
+            <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" y1=\"15\" x2=\"12\" y2=\"3\"/></svg>
+            PDF
+        </button>
     </div>" . ($body !== '' ? "<p class=\"msg-card-body\">$body</p>" : '') . "
 </div>";
 }
