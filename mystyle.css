@@ -2540,11 +2540,18 @@ input[type="range"]::-moz-range-thumb {
 
 .filter-btn {
     width: auto !important;
-    min-width: 2000px;
+    min-width: 0 !important;
+    max-width: none !important;
     padding: 8px 14px;
     margin: 5px;
     display: inline-block;
     font-size: 14px;
+}
+
+.filter-btn.active {
+    background-color: rgb(204, 0, 0) !important;
+    color: #fff !important;
+    border-color: rgb(204, 0, 0) !important;
 }
 
 .filter-section {
@@ -2558,6 +2565,87 @@ input[type="range"]::-moz-range-thumb {
     justify-content: center;
     gap: 10px;
     margin-top: 15px;
+}
+
+/* Kompakte Darstellung innerhalb des Suchkonfigurators */
+.configurator-grid {
+    display: flex;
+    padding: 14px 20px 6px;
+    gap: 0;
+}
+
+.configurator-col {
+    flex: 1;
+    padding: 0 14px;
+    border-right: 1px solid rgba(204, 0, 0, 0.15);
+}
+
+.configurator-col:last-child {
+    border-right: none;
+}
+
+.search-configurator .filter-section {
+    margin: 0 0 12px;
+    padding: 0;
+    text-align: center;
+}
+
+.search-configurator .filter-section h5 {
+    margin: 0 0 6px;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.search-configurator .filter-button-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.search-configurator .filter-btn {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 180px !important;
+    text-align: center;
+    letter-spacing: 1px;
+    display: block !important;
+}
+
+.search-configurator .slider-container {
+    max-width: 100%;
+    margin: 4px auto 0;
+}
+
+.search-configurator #budgetValue,
+.search-configurator #yearValue,
+.search-configurator #powerValue,
+.search-configurator #kmValue {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.configurator-actions {
+    text-align: center;
+    padding: 10px 20px 14px;
+    border-top: 1px solid rgba(204, 0, 0, 0.15);
+    margin-top: 4px;
+}
+
+.configurator-actions .filter-btn {
+    width: 130px !important;
+    display: inline-block !important;
+    margin: 0 6px !important;
+}
+
+.no-results-msg {
+    text-align: center;
+    color: #aaa;
+    font-size: 18px;
+    padding: 60px 20px;
+    letter-spacing: 0.5px;
 }
 
 /* ===== SUCHKONFIGURATOR TOGGLE ===== */

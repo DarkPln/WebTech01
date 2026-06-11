@@ -140,6 +140,15 @@ function sortCarsByPrice(asc) {
         .forEach(car => container.appendChild(car));
 }
 
+function sortCarsByYear(asc) {
+    const container = document.getElementById("carLayout");
+    Array.from(container.querySelectorAll(".car-card"))
+        .sort((a, b) => asc
+            ? Number(a.dataset.year) - Number(b.dataset.year)
+            : Number(b.dataset.year) - Number(a.dataset.year))
+        .forEach(car => container.appendChild(car));
+}
+
 function searchCars() {
     applyAllFilters();
 }
@@ -149,26 +158,108 @@ function updateYearLabel() {
     document.getElementById("yearValue").textContent = value;
 }
 
-function applyAllFilters() {
-    const budget     = Number(document.getElementById("budgetInput").value);
-    const year       = Number(document.getElementById("yearInput").value);
-    const searchTerm = document.getElementById("carSearchInput").value.toLowerCase();
+function updatePowerLabel() {
+    const value = Number(document.getElementById("powerInput").value);
+    document.getElementById("powerValue").textContent = value + " PS";
+}
 
-    document.querySelectorAll(".car-card").forEach(car => {
-        const matchesBudget = Number(car.dataset.price) <= budget;
-        const matchesYear   = Number(car.dataset.year) >= year;
-        const matchesSearch = searchTerm === "" ||
-            car.dataset.make.toLowerCase().includes(searchTerm) ||
-            car.dataset.model.toLowerCase().includes(searchTerm);
-        car.style.display = (matchesBudget && matchesYear && matchesSearch) ? "" : "none";
+function updateKmLabel() {
+    const value = Number(document.getElementById("kmInput").value);
+    document.getElementById("kmValue").textContent = value.toLocaleString("de-DE") + " km";
+}
+
+const activeFilters = { drive: new Set(), condition: new Set(), fuel: new Set() };
+
+const driveNormMap = {
+    // Allrad
+    'allrad': 'Allrad', 'awd': 'Allrad', '4wd': 'Allrad', '4x4': 'Allrad',
+    'allradantrieb': 'Allrad', 'permanentallrad': 'Allrad',
+    'quattro': 'Allrad',           // Audi
+    'xdrive': 'Allrad',            // BMW
+    'x drive': 'Allrad',           // BMW
+    '4matic': 'Allrad',            // Mercedes
+    '4motion': 'Allrad',           // VW
+    'syncro': 'Allrad',            // VW (ältere Modelle)
+    '4drive': 'Allrad',            // Škoda
+    'awd system': 'Allrad',
+    'e-four': 'Allrad',            // Toyota Hybrid AWD
+    'symmetrical awd': 'Allrad',   // Subaru
+    'torsen': 'Allrad',            // Audi
+    'superselect': 'Allrad',       // Mitsubishi
+    'terrain control': 'Allrad',   // Land Rover
+    'grip control': 'Allrad',      // Peugeot
+    'intelligrip': 'Allrad',       // Opel/Vauxhall
+    'haldex': 'Allrad',
+    // Frontantrieb
+    'frontantrieb': 'Frontantrieb', 'fwd': 'Frontantrieb',
+    'vorderradantrieb': 'Frontantrieb', 'front': 'Frontantrieb',
+    // Heckantrieb
+    'heckantrieb': 'Heckantrieb', 'rwd': 'Heckantrieb',
+    'hinterradantrieb': 'Heckantrieb', 'heck': 'Heckantrieb',
+    'propulsion': 'Heckantrieb',   // BMW (älteres Marketing)
+};
+
+function normalizeDrive(raw) {
+    return driveNormMap[raw.toLowerCase().trim()] || raw;
+}
+
+const filterMap = {
+    Frontantrieb: 'drive', Allrad: 'drive', Heckantrieb: 'drive',
+    Gebrauchtwagen: 'condition', Neuwagen: 'condition',
+    Benzin: 'fuel', Diesel: 'fuel', Elektro: 'fuel', Hybrid: 'fuel', Wasserstoff: 'fuel'
+};
+
+function toggleDriveFilter(value) {
+    const group = filterMap[value];
+    if (!group) return;
+    const set = activeFilters[group];
+    if (set.has(value)) {
+        set.delete(value);
+    } else {
+        set.add(value);
+    }
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        if (btn.textContent.trim() === value) btn.classList.toggle("active", set.has(value));
     });
 }
 
+function applyAllFilters() {
+    const budget     = Number(document.getElementById("budgetInput").value);
+    const year       = Number(document.getElementById("yearInput").value);
+    const power      = Number(document.getElementById("powerInput").value);
+    const km         = Number(document.getElementById("kmInput").value);
+    const searchTerm = document.getElementById("carSearchInput").value.toLowerCase();
+
+    document.querySelectorAll(".car-card").forEach(car => {
+        const carCondition = car.dataset.kategorie === 'neuwagen' ? 'Neuwagen' : 'Gebrauchtwagen';
+
+        const ok =
+            Number(car.dataset.price) <= budget &&
+            Number(car.dataset.year)  >= year &&
+            Number(car.dataset.power) >= power &&
+            Number(car.dataset.km)    <= km &&
+            (searchTerm === "" || car.dataset.make.toLowerCase().includes(searchTerm) || car.dataset.model.toLowerCase().includes(searchTerm)) &&
+            (activeFilters.drive.size     === 0 || activeFilters.drive.has(normalizeDrive(car.dataset.drive))) &&
+            (activeFilters.fuel.size      === 0 || activeFilters.fuel.has(car.dataset.fuel)) &&
+            (activeFilters.condition.size === 0 || activeFilters.condition.has(carCondition));
+
+        car.style.display = ok ? "" : "none";
+    });
+
+    const anyVisible = document.querySelector(".car-card:not([style*='none'])");
+    const msg = document.getElementById("noResultsMsg");
+    if (msg) msg.style.display = anyVisible ? "none" : "block";
+}
+
 function resetAllFilters() {
-    document.getElementById("budgetInput").value = 150000;
-    updateBudgetLabel();
-    document.getElementById("yearInput").value = 1980;
-    updateYearLabel();
+    document.getElementById("budgetInput").value = 150000;  updateBudgetLabel();
+    document.getElementById("yearInput").value   = 1980;    updateYearLabel();
+    document.getElementById("powerInput").value  = 50;      updatePowerLabel();
+    document.getElementById("kmInput").value     = 600000;  updateKmLabel();
     document.getElementById("carSearchInput").value = "";
+    activeFilters.drive.clear();
+    activeFilters.condition.clear();
+    activeFilters.fuel.clear();
+    document.querySelectorAll(".filter-btn.active").forEach(btn => btn.classList.remove("active"));
     document.querySelectorAll(".car-card").forEach(car => { car.style.display = ""; });
 }

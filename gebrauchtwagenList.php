@@ -55,135 +55,92 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Aufklappbarer Suchkonfigurator -->
     <div class="search-configurator" id="searchConfigurator">
 
-<!-- Niclas: Budget-Filter mit Schieberegler -->
-<div class ="filter-section">
-<div class="budget-filter">
-    <h5>Maximales Budget</h5>
+<div class="configurator-grid">
 
-    <div class="slider-container">
-
-        <input
-            type="range"
-            id="budgetInput"
-            min="30000"
-            max="150000"
-            step="1000"
-            value="150000"
-            oninput="updateBudgetLabel()">
-
-        <div id="budgetValue">
-            150.000 €
+    <!-- Spalte 1: Budget + Sortierung -->
+    <div class="configurator-col">
+        <div class="filter-section">
+            <h5>Maximales Budget</h5>
+            <div class="slider-container">
+                <input type="range" id="budgetInput" min="30000" max="150000" step="1000" value="150000" oninput="updateBudgetLabel()">
+                <div id="budgetValue">150.000 €</div>
+            </div>
+        </div>
+        <div class="filter-section">
+            <h5>Fahrzeuge sortieren</h5>
+            <div class="filter-button-row">
+                <button class="filter-btn" onclick="sortCarsByPrice(true)">Preis ↑</button>
+                <button class="filter-btn" onclick="sortCarsByPrice(false)">Preis ↓</button>
+                <button class="filter-btn" onclick="sortCarsByYear(true)">Älteste zuerst</button>
+                <button class="filter-btn" onclick="sortCarsByYear(false)">Neueste zuerst</button>
+            </div>
         </div>
     </div>
-</div>
-<!-- Niclas: Sortier-Buttons -->
-<div class="sort-filter">
-    <h5>Fahrzeuge sortieren</h5>
 
-    <div class="filter-button-row">
-        <button class="filter-btn" onclick="sortCarsByPrice(true)">
-            Preis ↑
-        </button>
-
-        <button class="filter-btn" onclick="sortCarsByPrice(false)">
-            Preis ↓
-        </button>
-    </div>
-</div>
-
-<!-- Niclas: Filter-Buttons für Baujahr -->
-<div class="year-filter">
-    <h5>Baujahr ab</h5>
-
-    <div class="slider-container">
-
-        <input
-            type="range"
-            id="yearInput"
-            min="1980"
-            max="2026"
-            step="1"
-            value="1980"
-            oninput="updateYearLabel()">
-
-        <div id="yearValue">
-            1980
+    <!-- Spalte 2: Baujahr + Antriebsart -->
+    <div class="configurator-col">
+        <div class="filter-section">
+            <h5>Baujahr ab</h5>
+            <div class="slider-container">
+                <input type="range" id="yearInput" min="1980" max="2026" step="1" value="1980" oninput="updateYearLabel()">
+                <div id="yearValue">1980</div>
+            </div>
+        </div>
+        <div class="filter-section">
+            <h5>Antriebsart</h5>
+            <div class="filter-button-row">
+                <button class="filter-btn" onclick="toggleDriveFilter('Frontantrieb')">Frontantrieb</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Allrad')">Allrad</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Heckantrieb')">Heckantrieb</button>
+            </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-<!--Niclas: Filter-Buttons Antrieb-->
-<div class="filter-section">
-    <h5>Antriebsart</h5>
-    <div class="filter-button-row">
-        <button class="filter-btn" onclick="toggleDriveFilter('Frontantrieb')">
-            Frontantrieb
-        </button>
 
-        <button class="filter-btn" onclick="toggleDriveFilter('Allrad')">
-            Allrad
-        </button>
-
-        <button class="filter-btn" onclick="toggleDriveFilter('Heckantrieb')">
-            Heckantrieb
-        </button>
-    </div>
-    </div>
-
-<!-- Niclas: Filter-Buttons Leistung -->
-<div class="filter-section">
-    <h5>Leistung ab (PS)</h5>
-    <div class="slider-container">
-
-        <input
-            type="range"
-            id="powerInput"
-            min="50"
-            max="1000"
-            step="1"
-            value="1000"
-            oninput="updatePowerLabel()">
-
-        <div id="powerValue">
-            1000 PS
+    <!-- Spalte 3: Leistung + Zustand -->
+    <div class="configurator-col">
+        <div class="filter-section">
+            <h5>Leistung ab (PS)</h5>
+            <div class="slider-container">
+                <input type="range" id="powerInput" min="50" max="1000" step="1" value="50" oninput="updatePowerLabel()">
+                <div id="powerValue">50 PS</div>
+            </div>
+        </div>
+        <div class="filter-section">
+            <h5>Zustand</h5>
+            <div class="filter-button-row">
+                <button class="filter-btn" onclick="toggleDriveFilter('Gebrauchtwagen')">Gebrauchtwagen</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Neuwagen')">Neuwagen</button>
+            </div>
         </div>
     </div>
-    </div>
 
-    <!--Niclas: Filter-Buttons Zustand-->
-<div class="filter-section">
-    <h5>Zustand</h5>
-    <div class="filter-button-row">
-        <button class="filter-btn" onclick="toggleDriveFilter('Gebrauchtwagen')">
-            Gebrauchtwagen
-        </button>
-
-        <button class="filter-btn" onclick="toggleDriveFilter('Neuwagen')">
-            Neuwagen
-        </button>
-    </div>
-    </div>
-
-<!-- Niclas: Filter-Buttons Kilometerstand -->
-<div class="filter-section">
-    <h5>Kilometerstand bis</h5>
-    <div class="slider-container">
-
-        <input
-            type="range"
-            id="kmInput"
-            min="0"
-            max="600000"
-            step="100"
-            value="600000"
-            oninput="updateKmLabel()">
-
-        <div id="kmValue">
-            600.000 km
+    <!-- Spalte 4: Kilometerstand + Kraftstoff -->
+    <div class="configurator-col">
+        <div class="filter-section">
+            <h5>Kilometerstand bis</h5>
+            <div class="slider-container">
+                <input type="range" id="kmInput" min="0" max="600000" step="100" value="600000" oninput="updateKmLabel()">
+                <div id="kmValue">600.000 km</div>
+            </div>
+        </div>
+        <div class="filter-section">
+            <h5>Kraftstoff</h5>
+            <div class="filter-button-row">
+                <button class="filter-btn" onclick="toggleDriveFilter('Benzin')">Benzin</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Diesel')">Diesel</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Elektro')">Elektro</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Hybrid')">Hybrid</button>
+                <button class="filter-btn" onclick="toggleDriveFilter('Wasserstoff')">Wasserstoff</button>
+            </div>
         </div>
     </div>
-    </div>
+
+</div>
+
+<div class="configurator-actions">
+    <button class="filter-btn" onclick="applyAllFilters()">Anwenden</button>
+    <button class="filter-btn" onclick="resetAllFilters()">Reset</button>
+</div>
 
     </div><!-- Ende search-configurator -->
 
@@ -196,9 +153,10 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
             data-model="<?php echo $auto['modell']; ?>"
             data-year="<?php echo $auto['baujahr']; ?>"
             data-fuel="<?php echo $auto['kraftstoff']; ?>"
-            data-km="<?php echo $auto['kilometerstand']; ?> km"
+            data-km="<?php echo $auto['kilometerstand']; ?>"
             data-drive="<?php echo $auto['antrieb']; ?>"
             data-price="<?php echo $auto['preis']; ?>"
+            data-power="<?php echo $auto['leistung_ps']; ?>"
             data-kategorie="<?php echo $auto['kategorie']; ?>">
 
             <div class="car-image">
@@ -252,7 +210,10 @@ $fahrzeuge = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </div>
         </div>
     <?php endforeach; ?>
-    
+</div>
+
+<div id="noResultsMsg" style="display:none;" class="no-results-msg">
+    Derzeit gibt es keine Fahrzeuge mit Ihrer Auswahl.
 </div>
 
 
