@@ -4,7 +4,6 @@
 // js/buchung.js, js/admin.js, js/inserat.js, js/utils.js
 
 document.addEventListener('DOMContentLoaded', async () => {
-    try { showJsNoticeIfNeeded(); } catch(e) {}
     applyUrlFilter();
     initLoginForm();
     initRegistrationForm();

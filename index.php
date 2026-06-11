@@ -106,7 +106,7 @@
 </main>
 
     <?php require_once 'footer.php'; ?>
-    <script src="carousel.js"></script>
+    <script src="js/carousel.js"></script>
 </body>
 </html>
 <!-- Niclas -->
