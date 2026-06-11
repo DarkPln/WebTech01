@@ -1,18 +1,7 @@
 <?php if (!isset($showFav)) $showFav = false; ?>
 
 <noscript>
-    <div style="position:fixed;inset:0;z-index:99999;background:rgba(10,10,10,0.97);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:'DM Sans',sans-serif;color:#fff;text-align:center;padding:2rem;">
-        <div style="font-size:52px;line-height:1;">⚠</div>
-        <div style="font-size:26px;font-weight:700;letter-spacing:0.5px;">JavaScript ist deaktiviert</div>
-        <div style="font-size:15px;color:#aaa;max-width:460px;line-height:1.7;">
-            <strong style="color:#fff;">Auto24</strong> benötigt JavaScript für alle Funktionen —
-            Login, Buchungen, Merkliste und mehr.<br>
-            Bitte aktiviere JavaScript in deinen Browser-Einstellungen und lade die Seite neu.
-        </div>
-        <div style="margin-top:12px;border:1px solid rgba(227,27,27,0.5);background:rgba(227,27,27,0.08);color:rgb(227,27,27);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:6px 20px;border-radius:20px;">
-            Auto24 · Fahrzeugbörse
-        </div>
-    </div>
+    <div class="noscript-banner">Bitte JavaScript aktivieren, um Auto24 vollständig nutzen zu können.</div>
 </noscript>
 
 <nav>

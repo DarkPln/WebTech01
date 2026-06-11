@@ -49,13 +49,13 @@
 
             <!-- Tab: In Bearbeitung -->
             <div id="tabBearbeitung" class="admin-tab-content">
-                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Aufträge in Bearbeitung &amp; Versandt</h3>
+                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Aufträge in Bearbeitung & Versandt</h3>
                 <div id="adminOrdersProcessing"></div>
             </div>
 
             <!-- Tab: Abgelehnt / Storniert -->
             <div id="tabAbgelehnt" class="admin-tab-content">
-                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Abgelehnte &amp; stornierte Aufträge</h3>
+                <h3 style="text-align:left; color:#bdbdbd; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Abgelehnte & stornierte Aufträge</h3>
                 <div id="adminOrdersRejected"></div>
             </div>
 

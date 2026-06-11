@@ -1,16 +1,5 @@
 // ===== AUTH: LOGIN, REGISTRIERUNG, LOGOUT, NAV =====
 
-function showJsNoticeIfNeeded() {
-    if (sessionStorage.getItem('jsNoticeDismissed')) return;
-
-    var banner = document.createElement('div');
-    banner.className = 'js-notice-banner';
-    banner.innerHTML =
-        '<span>Für alle Funktionen von Auto24 bitte JavaScript aktivieren.</span>' +
-        '<button class="js-notice-close" onclick="this.parentElement.remove();sessionStorage.setItem(\'jsNoticeDismissed\',\'1\')">✕</button>';
-    document.body.prepend(banner);
-}
-
 function initNavAuthLink() {
     var link = document.getElementById('navAuthLink');
     if (!link) return;

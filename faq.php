@@ -3,12 +3,12 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Hilfe &amp; FAQ - Auto24</title>
+    <title>Hilfe & FAQ - Auto24</title>
     <link rel="stylesheet" href="mystyle.css">
 </head>
 <body>
     <?php
-        $pageTitle = "Hilfe &amp; FAQ";
+        $pageTitle = "Hilfe & FAQ";
         $heroBadge = "Häufige Fragen";
         $heroText  = "Hier finden Sie Antworten auf die häufigsten Fragen rund um den Kauf, Verkauf und die Nutzung von Auto24.";
     ?>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="faq-category">
-                <h2>Finanzierung &amp; Versicherung</h2>
+                <h2>Finanzierung & Versicherung</h2>
 
                 <details class="faq-item">
                     <summary>Wie funktioniert die Fahrzeugfinanzierung bei Auto24?</summary>
@@ -96,7 +96,7 @@
             </div>
 
             <div class="faq-category">
-                <h2>Konto &amp; Registrierung</h2>
+                <h2>Konto & Registrierung</h2>
 
                 <details class="faq-item">
                     <summary>Wie erstelle ich ein Konto?</summary>

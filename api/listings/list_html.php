@@ -50,7 +50,7 @@ if (empty($inserate)): ?>
                 <span class="buchung-status <?= $statusKlasse ?>"><?= $label ?></span>
             </div>
             <div class="buchung-meta">
-                Preis: <?= number_format($ins['price'], 0, ',', '.') ?> € &nbsp;|&nbsp; Eingereicht: <?= $datum ?>
+                Preis: <?= number_format($ins['price'], 0, ',', '.') ?> € | Eingereicht: <?= $datum ?>
             </div>
             <?php if ($ins['status'] === 'abgelehnt'): ?>
                 <div class="buchung-reason">Vom Administrator abgelehnt</div>
