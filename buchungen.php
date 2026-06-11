@@ -34,6 +34,7 @@
     </section>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <?php require_once 'footer.php'; ?>
 
 </body>
