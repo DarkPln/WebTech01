@@ -96,7 +96,10 @@ class AuthController extends Controller {
     }
 
     public function status(): void {
+        ob_start();
+
         if (!isset($_SESSION['user_id'])) {
+            ob_end_clean();
             $this->json(['loggedIn' => false]);
             return;
         }
@@ -108,15 +111,18 @@ class AuthController extends Controller {
             $userId = (int)$_SESSION['user_id'];
             $db     = Database::getInstance();
             $res    = mysqli_query($db, "SELECT is_locked, email, phone, city FROM users WHERE id = $userId");
-            $row    = mysqli_fetch_assoc($res);
-            if ($row) {
-                $isLocked = (bool)$row['is_locked'];
-                $email    = $row['email'];
-                $phone    = $row['phone'];
-                $city     = $row['city'];
+            if ($res) {
+                $row = mysqli_fetch_assoc($res);
+                if ($row) {
+                    $isLocked = (bool)$row['is_locked'];
+                    $email    = $row['email'];
+                    $phone    = $row['phone'];
+                    $city     = $row['city'];
+                }
             }
         }
 
+        ob_end_clean();
         $this->json([
             'loggedIn' => true,
             'username' => $_SESSION['username'],

@@ -21,4 +21,14 @@ class CarController extends Controller {
         $showFav = true;
         $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav'));
     }
+
+    public function pdf(string $id): void {
+        $fahrzeug = Car::getById((int)$id);
+        if (!$fahrzeug) {
+            http_response_code(404);
+            echo 'Fahrzeug nicht gefunden';
+            return;
+        }
+        $this->render('cars/pdf', compact('fahrzeug'));
+    }
 }

@@ -105,6 +105,9 @@
         </button>
         <p id="buchungsNote" class="item-buchungs-note" <?= $isSold ? 'style="display:block;"' : '' ?>><?= $isSold ? 'Dieses Fahrzeug ist bereits reserviert und nicht mehr verfügbar.' : '' ?></p>
 
+        <a href="<?= BASE_URL ?>/cars/<?= $fahrzeug['iid'] ?>/pdf"
+           target="_blank"
+           class="item-btn-secondary">Fahrzeugdatenblatt (PDF)</a>
         <a href="<?= BASE_URL ?>/cars" class="item-btn-secondary">← Zurück zur Liste</a>
     </div>
 

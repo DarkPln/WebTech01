@@ -38,6 +38,7 @@ $router = new Router();
 $router->get('/',                [HomeController::class,     'index']);
 $router->get('/cars',            [CarController::class,      'list']);
 $router->get('/cars/{id}',       [CarController::class,      'detail']);
+$router->get('/cars/{id}/pdf',   [CarController::class,      'pdf']);
 $router->get('/auth/login',      [AuthController::class,     'loginView']);
 $router->get('/auth/register',   [AuthController::class,     'registerView']);
 $router->get('/auth/logout',     [AuthController::class,     'logoutView']);

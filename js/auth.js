@@ -26,8 +26,10 @@ function initLoginForm() {
         loginBtn.disabled = username.value.trim().length === 0 || password.value.length === 0;
     }
 
-    username.addEventListener('input', () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
-    password.addEventListener('input', () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
+    username.addEventListener('input',  () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
+    username.addEventListener('change', checkFormValidity);
+    password.addEventListener('input',  () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
+    password.addEventListener('change', checkFormValidity);
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('registered') === '1' && successMessage) {
@@ -56,7 +58,8 @@ function initLoginForm() {
         }
     });
 
-    loginBtn.disabled = true;
+    checkFormValidity();
+    setTimeout(checkFormValidity, 300);
 }
 
 function initRegistrationForm() {

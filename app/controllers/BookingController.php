@@ -76,9 +76,13 @@ class BookingController extends Controller {
         $uid      = (int)$_SESSION['user_id'];
         $db       = Database::getInstance();
         $res      = mysqli_query($db,
-            "SELECT booking_key AS id, car_name AS carName, car_price AS carPrice,
-                    status, reason, created_at AS createdAt
-             FROM bookings WHERE user_id = $uid ORDER BY created_at DESC"
+            "SELECT b.booking_key AS id, b.car_name AS carName, b.car_price AS carPrice,
+                    b.status, b.reason, b.created_at AS createdAt,
+                    c.imagepath
+             FROM bookings b
+             LEFT JOIN cars c ON c.id = b.car_id
+             WHERE b.user_id = $uid
+             ORDER BY b.created_at DESC"
         );
         $buchungen = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 
@@ -97,32 +101,33 @@ class BookingController extends Controller {
             return;
         }
 
-        foreach ($buchungen as $b) {
-            $datum   = date('d.m.Y', strtotime($b['createdAt']));
-            $label   = $statusLabels[$b['status']] ?? $b['status'];
-            $id      = htmlspecialchars($b['id']);
-            $status  = htmlspecialchars($b['status']);
-            $carName = htmlspecialchars($b['carName']);
-            $price   = number_format($b['carPrice'], 0, ',', '.');
-            $reason  = ($b['status'] === 'abgelehnt' && $b['reason'])
-                ? '<div class="buchung-reason">Ablehnungsgrund: ' . htmlspecialchars($b['reason']) . '</div>'
-                : '';
-            $cancelBtn = $b['status'] === 'bestellt'
-                ? "<button class=\"buchung-cancel-btn\" onclick=\"handleCancelBooking('$id')\">Buchung stornieren</button>"
-                : '';
-            echo "
-<div class=\"buchung-card\">
-    <div class=\"buchung-header\">
-        <div class=\"buchung-car\">$carName</div>
-        <span class=\"buchung-status status-$status\">$label</span>
+        foreach ($buchungen as $buchung) {
+            $datum    = date('d.m.Y', strtotime($buchung['createdAt']));
+            $label    = $statusLabels[$buchung['status']] ?? $buchung['status'];
+            $id       = htmlspecialchars($buchung['id']);
+            $status   = htmlspecialchars($buchung['status']);
+            $carName  = htmlspecialchars($buchung['carName']);
+            $price    = number_format($buchung['carPrice'], 0, ',', '.');
+            ?>
+<div class="buchung-card">
+    <div class="buchung-header">
+        <div class="buchung-car"><?= $carName ?></div>
+        <span class="buchung-status status-<?= $status ?>"><?= $label ?></span>
     </div>
-    <div class=\"buchung-meta\">
-        <span>Preis: <strong>$price €</strong></span>
-        <span>Bestellt am: $datum</span>
+    <div class="buchung-meta">
+        <span>Preis: <strong><?= $price ?> €</strong></span>
+        <span>Bestellt am: <?= $datum ?></span>
     </div>
-    $reason
-    $cancelBtn
-</div>";
+    <?php if ($buchung['status'] === 'abgelehnt' && $buchung['reason']): ?>
+    <div class="buchung-reason">Ablehnungsgrund: <?= htmlspecialchars($buchung['reason']) ?></div>
+    <?php endif; ?>
+    <?php if ($buchung['status'] === 'bestellt'): ?>
+    <div class="buchung-actions">
+        <button class="buchung-cancel-btn" onclick="handleCancelBooking('<?= $id ?>')">Buchung stornieren</button>
+    </div>
+    <?php endif; ?>
+</div>
+            <?php
         }
     }
 }

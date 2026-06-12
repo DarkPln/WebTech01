@@ -85,9 +85,11 @@ function initBookingButtons() {
 }
 
 // Buchungsseite initialisieren: Weiterleitung wenn nicht eingeloggt, sonst Buchungen anzeigen
+// Nur auf /bookings aktiv, nicht im User-Dashboard (dort lädt der Tab-Klick die Buchungen)
 async function initBookingsPage() {
     var container = document.getElementById('buchungenContainer');
     if (!container) return;
+    if (!document.getElementById('buchungenUsername')) return;
 
     if (!authState.loggedIn) {
         window.location.href = BASE_URL + '/auth/login';

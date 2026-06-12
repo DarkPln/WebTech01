@@ -12,30 +12,19 @@ class ListingController extends Controller {
 
         $uploadedImages = [];
         if (isset($_FILES['images']) && !empty($_FILES['images']['tmp_name'][0])) {
-            $key       = 'i_' . time() . '_' . bin2hex(random_bytes(3));
-            $uploadDir = BASE_PATH . 'uploads/listings/' . $key . '/';
-
-            if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
-                ob_end_clean();
-                $this->json(['success' => false, 'message' => 'Upload-Verzeichnis konnte nicht erstellt werden.']);
-                return;
-            }
-
             $allowed = ['image/jpeg', 'image/png', 'image/webp'];
             $maxSize = 5 * 1024 * 1024;
 
             foreach ($_FILES['images']['tmp_name'] as $i => $tmpName) {
                 if ($_FILES['images']['error'][$i] !== UPLOAD_ERR_OK) continue;
-                if (!in_array($_FILES['images']['type'][$i], $allowed, true)) continue;
+                $mime = mime_content_type($tmpName);
+                if (!in_array($mime, $allowed, true)) continue;
                 if ($_FILES['images']['size'][$i] > $maxSize) continue;
 
-                $origExt  = strtolower(pathinfo($_FILES['images']['name'][$i], PATHINFO_EXTENSION));
-                $safeExt  = in_array($origExt, ['jpg', 'jpeg', 'png', 'webp'], true) ? $origExt : 'jpg';
-                $filename = $i . '_' . bin2hex(random_bytes(4)) . '.' . $safeExt;
+                $data = file_get_contents($tmpName);
+                if ($data === false) continue;
 
-                if (move_uploaded_file($tmpName, $uploadDir . $filename)) {
-                    $uploadedImages[] = 'uploads/listings/' . $key . '/' . $filename;
-                }
+                $uploadedImages[] = 'data:' . $mime . ';base64,' . base64_encode($data);
                 break;
             }
         }
