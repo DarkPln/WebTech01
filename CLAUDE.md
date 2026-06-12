@@ -21,7 +21,7 @@ Auto24 is a PHP/JS car marketplace built on a custom MVC framework with a front 
 
 **Directory structure:**
 - `core/` — Framework: `Database.php` (mysqli singleton), `Model.php`, `Controller.php` (render/json/redirect/requireLogin), `Router.php`
-- `app/controllers/` — One controller per domain (Auth, Car, Listing, Booking, Admin, Message, Favorite, Merkliste, Page, Home)
+- `app/controllers/` — One controller per domain (Auth, Car, Listing, Booking, Admin, Message, Favorite, Merkliste, Page, Home); `MerklisteController` handles the saved-cars wishlist
 - `app/models/` — One model per table (Car, User, Listing, Booking, Message, Favorite)
 - `app/views/` — Views mirroring controller structure; `partials/nav.php` and `partials/footer.php` are shared
 - `js/` — All JS is loaded globally via `footer.php`; each file defines named functions that guard with early returns
@@ -39,10 +39,16 @@ All DB access goes through `Database::getInstance()` which returns a singleton `
 Session-based via PHP `$_SESSION`. Two hardcoded accounts in `AuthController::login()`: `admin`/`Admin1234` (admin) and `TestUser`/`TestPass123` (demo user). Passwords for real users are stored in plaintext in the DB.
 
 **Listing lifecycle (two-table system):**
-User submissions go into the `listings` table with `status = 'ausstehend'`. When an admin approves a listing, `AdminController` copies the record into the `cars` table and sends an inbox message to the user. Rejection only updates the status — no `cars` row is created.
+User submissions go into the `listings` table with `status = 'eingereicht'`. When an admin approves a listing, `AdminController` copies the record into the `cars` table and sends an inbox message to the user. Rejection only updates the status to `abgelehnt` — no `cars` row is created.
+
+**Image storage:**
+Listing/car images are stored as base64 data URLs (`data:image/jpeg;base64,...`) directly in the DB as `MEDIUMTEXT`. There is no `uploads/` folder. `listings.images` and `cars.imagepath` both hold the data URL string. The `ListingController::create()` method converts the uploaded file to base64 before storing.
+
+**PDF export:**
+`CarController::pdf()` serves a standalone print-friendly HTML page at `/cars/{id}/pdf`. It loads all vehicle data from the `cars` table and triggers `window.print()` via a button. No external PDF library — uses the browser's native print-to-PDF. A link to this page is shown on the car detail page.
 
 **Server-rendered HTML fragments:**
-Several controller methods return ready-made HTML instead of JSON (e.g. `ListingController::listHtml()`, `MessageController::listHtml()`). JS inserts this directly with `innerHTML` for dynamic tab content in the user and admin dashboards.
+Several controller methods return ready-made HTML instead of JSON (e.g. `ListingController::listHtml()`, `MessageController::listHtml()`, `BookingController::listHtml()`). JS inserts this directly with `innerHTML` for dynamic tab content in the user and admin dashboards.
 
 **Key data tables:**
 - `cars` — public vehicle listings (visible in the marketplace)

@@ -1,4 +1,4 @@
-﻿<!-- Tim -->
+<!-- Tim -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
