@@ -79,6 +79,8 @@
             </div>
         </div>
 
+
+    <div class="item-actions">  
         <div class="car-card"
             data-id="<?= $fahrzeug['iid'] ?>"
             data-make="<?= htmlspecialchars($fahrzeug['marke']) ?>"
@@ -94,6 +96,8 @@
             <button id="itemFavBtn" class="car-fav item-fav-btn">♡</button>
         </div>
 
+
+        
         <button
             id="buchungsBtn"
             class="item-btn-primary"
@@ -109,6 +113,7 @@
            target="_blank"
            class="item-btn-secondary">Fahrzeugdatenblatt (PDF)</a>
         <a href="<?= BASE_URL ?>/cars" class="item-btn-secondary">← Zurück zur Liste</a>
+        </div> 
     </div>
 
 </div>

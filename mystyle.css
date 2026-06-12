@@ -2245,7 +2245,6 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
     font-size: 14px;
     letter-spacing: 1.5px;
     border-radius: 4px;
-    margin-bottom: 10px;
     transition: background 0.2s, color 0.2s;
     max-width: none;
     min-height: 0;
@@ -2372,16 +2371,33 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
 }
 
 .item-btn-primary {
+
+
     background: #CC0000;
     color: white;
     border: none;
+
+    text-align: center;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 420px; 
+    margin: 0 auto;
+
     padding: 14px;
     font-size: 14px;
+    font-weight: 500;
     letter-spacing: 1.5px;
+    text-transform: uppercase;
     border-radius: 4px;
-    margin-bottom: 10px;
-    transition: background 0.2s;
-    max-width: 420px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: border-color 0.2s, color 0.2s;
 }
 
 .item-btn-primary:hover {
@@ -2391,6 +2407,7 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
 .item-btn-secondary {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     background: transparent;
     color: #888;
     border: 1px solid #2E2E2E;
@@ -2404,8 +2421,6 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
     text-decoration: none;
     text-align: center;
     transition: border-color 0.2s, color 0.2s;
-    max-width: 390px;
-    margin-bottom: 0;
 }
 
 .item-btn-secondary:hover {
@@ -2416,7 +2431,6 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
 .item-buchungs-note {
     font-size: 13px;
     color: #ff9999;
-    margin-top: 8px;
     display: none;
     text-align: center;
 }
@@ -2430,11 +2444,10 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
     position: static; 
     display: flex;
     width: 100%;
-    top: auto ;
-    right: auto;
-    height: 45px; 
+    max-height: 46px; 
+    height: 100%;
     font-size: 20px;
-    min-height: 30px;
+
     text-align: center; 
 
 }
@@ -3035,34 +3048,6 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
     flex: 1;
 }
 
-.msg-download-btn {
-    display: inline-flex !important;
-    align-items: center;
-    gap: 5px;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    padding: 4px 10px !important;
-    margin: 0 0 0 10px !important;
-    font-size: 11px !important;
-    font-weight: 600;
-    color: rgb(204, 0, 0) !important;
-    border: 1px solid rgba(204, 0, 0, 0.4) !important;
-    border-radius: 6px !important;
-    background: transparent !important;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    transition: background 0.2s, color 0.2s !important;
-    flex-shrink: 0;
-}
-
-.msg-download-btn:hover {
-    background: rgba(204, 0, 0, 0.1) !important;
-    transform: none !important;
-    box-shadow: none !important;
-}
-
 .msg-card.unread .msg-card-title::before {
     content: '● ';
     color: rgb(227,27,27);
@@ -3261,3 +3246,9 @@ body.light-mode .item-financing-toggle.open { color: #111; }
 body.light-mode .item-financing-body { border-top-color: #ddd; }
 body.light-mode .item-financing-result { color: #333; }
 body.light-mode .item-financing-result strong { color: #111; }
+
+.item-actions{
+    display: flex; 
+    flex-direction: column;
+    gap: 1rem; 
+}
