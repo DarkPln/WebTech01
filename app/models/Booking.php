@@ -34,34 +34,4 @@ class Booking extends Model {
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
-    public static function getAll(): array {
-        $db  = self::db();
-        $res = mysqli_query($db,
-            "SELECT b.*, u.username AS display_username
-             FROM bookings b LEFT JOIN users u ON b.user_id = u.id
-             ORDER BY b.created_at DESC"
-        );
-        return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
-    }
-
-    public static function getByStatus(array $statuses): array {
-        $db   = self::db();
-        $list = implode("','", array_map([self::class, 'escape'], $statuses));
-        $res  = mysqli_query($db, "SELECT * FROM bookings WHERE status IN ('$list') ORDER BY created_at DESC");
-        return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
-    }
-
-    public static function findByKey(string $key): ?array {
-        $db  = self::db();
-        $k   = self::escape($key);
-        $res = mysqli_query($db, "SELECT * FROM bookings WHERE booking_key = '$k'");
-        return $res ? mysqli_fetch_assoc($res) ?: null : null;
-    }
-
-    public static function updateStatus(string $key, string $status): bool {
-        $db = self::db();
-        $k  = self::escape($key);
-        $s  = self::escape($status);
-        return (bool)mysqli_query($db, "UPDATE bookings SET status = '$s', updated_at = NOW() WHERE booking_key = '$k'");
-    }
 }

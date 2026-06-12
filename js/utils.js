@@ -19,21 +19,6 @@ function toggleMode() {
     }
 })();
 
-/* Layout-Umschaltung: Niclas */
-function setVerticalLayout() {
-    const layout = document.getElementById("carLayout");
-    if (!layout) return;
-    layout.classList.remove("horizontal-layout");
-    layout.classList.add("vertical-layout");
-}
-
-function setHorizontalLayout() {
-    const layout = document.getElementById("carLayout");
-    if (!layout) return;
-    layout.classList.remove("vertical-layout");
-    layout.classList.add("horizontal-layout");
-}
-
 /* Preisberechnung mit Steuern */
 function calculatePrice() {
     const input = document.getElementById("priceInput");
@@ -115,20 +100,6 @@ function applyUrlFilter() {
 function updateBudgetLabel() {
     const value = Number(document.getElementById("budgetInput").value);
     document.getElementById("budgetValue").textContent = value.toLocaleString("de-DE") + " €";
-}
-
-function filterByBudget() {
-    const budget = Number(document.getElementById("budgetInput").value);
-    if (budget <= 0) { alert("Bitte ein gültiges Budget eingeben."); return; }
-    document.querySelectorAll(".car-card").forEach(car => {
-        car.style.display = Number(car.dataset.price) <= budget ? "" : "none";
-    });
-}
-
-function resetBudgetFilter() {
-    document.querySelectorAll(".car-card").forEach(car => { car.style.display = ""; });
-    document.getElementById("budgetInput").value = 150000;
-    updateBudgetLabel();
 }
 
 function sortCarsByPrice(asc) {
