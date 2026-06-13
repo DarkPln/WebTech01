@@ -1,4 +1,4 @@
-﻿<!-- Tim -->
+<!-- Tim -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -11,21 +11,21 @@
 <?php require VIEW_PATH . 'partials/nav.php'; ?>
 
 <main class="home-main">
-    <section class="auth-section" style="align-items:flex-start; padding-top: 60px;">
-        <div class="buchungen-wrapper" style="padding: 40px 20px; max-width: 720px; width:100%;">
+    <section class="auth-section auth-section--left">
+        <div class="buchungen-wrapper">
             <h1>Meine <span style="color: rgb(227,27,27);">Buchungen</span></h1>
-            <p style="text-align:left; color:#bdbdbd; margin-bottom:28px;">
-                Eingeloggt als: <strong id="buchungenUsername" style="color:white;"></strong>
+            <p class="buchungen-intro">
+                Eingeloggt als: <strong id="buchungenUsername"></strong>
             </p>
 
             <div id="buchungenContainer">
-                <p style="color:#888;">Buchungen werden geladen…</p>
+                <p class="buchungen-loading">Buchungen werden geladen…</p>
             </div>
 
-            <a href="<?= BASE_URL ?>/cars" class="home-btn-secondary" style="display:inline-block; margin-top: 30px;">
+            <a href="<?= BASE_URL ?>/cars" class="home-btn-secondary buchungen-cars-link">
                 Weitere Fahrzeuge ansehen
             </a>
-            <a href="<?= BASE_URL ?>/user" style="display:inline-block; margin-top:10px; color:#888; font-size:13px;">
+            <a href="<?= BASE_URL ?>/user" class="buchungen-back-link">
                 ← Zurück zum Profil
             </a>
         </div>

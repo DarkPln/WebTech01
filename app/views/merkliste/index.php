@@ -26,7 +26,7 @@
             <div class="merkliste-empty-title">Deine Merkliste ist leer</div>
             <p>Füge Fahrzeuge über das Herz-Symbol hinzu.</p>
             <br>
-            <a href="<?= BASE_URL ?>/cars" class="merkliste-btn-primary" style="display:inline-block; margin-top:8px;">Zur Fahrzeugsuche</a>
+            <a href="<?= BASE_URL ?>/cars" class="merkliste-btn-primary merkliste-empty-btn">Zur Fahrzeugsuche</a>
         </div>
     <?php else: ?>
         <div class="merkliste-header">
@@ -57,7 +57,7 @@
                     <span>inkl. MwSt.</span>
                 </div>
 
-                <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+                <div class="merkliste-row-actions">
                     <form method="POST" action="<?= BASE_URL ?>/merkliste/remove">
                         <input type="hidden" name="remove_id" value="<?= $auto['iid'] ?>">
                         <button class="merkliste-remove-btn" type="submit" title="Entfernen">&#x2715;</button>
@@ -90,7 +90,7 @@
             </div>
             <div class="merkliste-footer-btns">
                 <a href="<?= BASE_URL ?>/cars" class="merkliste-btn-primary">Weiter suchen</a>
-                <form method="POST" action="<?= BASE_URL ?>/merkliste/remove" style="margin:0">
+                <form method="POST" action="<?= BASE_URL ?>/merkliste/remove">
                     <input type="hidden" name="clear_all" value="1">
                     <button class="merkliste-btn-ghost" type="submit">Alle entfernen</button>
                 </form>

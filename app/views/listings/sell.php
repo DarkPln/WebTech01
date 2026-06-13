@@ -20,8 +20,8 @@
 
         <div class="sell-section">
             <div class="sell-form-card">
-                <div id="vehicleSuccess" class="success-message" style="display:none;"></div>
-                <div id="vehicleError"   class="error-message"   style="display:none;"></div>
+                <div id="vehicleSuccess" class="success-message"></div>
+                <div id="vehicleError"   class="error-message"></div>
 
                 <form id="vehicleForm" novalidate>
                     <h2>Fahrzeugdaten</h2>
@@ -106,9 +106,9 @@
                         <p><strong>Bild hier ablegen</strong> oder klicken zum Auswählen</p>
                         <p>JPG, PNG, WEBP – max. 5 MB – 1 Foto (Pflichtfeld)</p>
                     </div>
-                    <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp" style="display:none">
+                    <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp">
                     <div class="image-preview-grid" id="imagePreviewGrid"></div>
-                    <p class="upload-count" id="uploadCount" style="display:none;"></p>
+                    <p class="upload-count" id="uploadCount"></p>
 
                     <h2>Kontaktdaten</h2>
                     <label for="sell-name">Name *</label>

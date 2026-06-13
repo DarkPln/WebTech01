@@ -91,8 +91,8 @@
             data-drive="<?= htmlspecialchars($fahrzeug['antrieb']) ?>"
             data-price="<?= $fahrzeug['preis'] ?>"
             data-badge="Gebraucht"
-            style="background:none; border:none; padding:0; margin:0; overflow:visible;">
-            <img class="car-img" src="<?= htmlspecialchars($fahrzeug['imagepath']) ?>" style="display:none">
+            class="car-card--ghost">
+            <img class="car-img car-img--hidden" src="<?= htmlspecialchars($fahrzeug['imagepath']) ?>">
             <button id="itemFavBtn" class="car-fav item-fav-btn">♡</button>
         </div>
 

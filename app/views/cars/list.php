@@ -165,7 +165,7 @@
         <?php endforeach; ?>
     </div>
 
-    <div id="noResultsMsg" style="display:none;" class="no-results-msg">
+    <div id="noResultsMsg" class="no-results-msg">
         Derzeit gibt es keine Fahrzeuge mit Ihrer Auswahl.
     </div>
 

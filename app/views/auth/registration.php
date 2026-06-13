@@ -21,7 +21,7 @@
                 <h1>Registrierung</h1>
                 <p>Erstellen Sie ein neues Auto24-Konto.</p>
 
-                <div id="reg-error" class="error-message" style="display:none;"></div>
+                <div id="reg-error" class="error-message"></div>
 
                 <form id="registrationForm">
                     <label for="benutzername">Benutzername:</label>

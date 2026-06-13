@@ -15,7 +15,7 @@
         <?php if ($showFav): ?>
         <button class="nFav-btn" id="nFavBtn" onclick="togglePanel()">
             <span class="navFav-label">♡ Merkliste</span>
-            <span class="navFav-count" id="favCount" style="display:none">0</span>
+            <span class="navFav-count" id="favCount">0</span>
         </button>
         <?php endif; ?>
         <button class="mode-btn" onclick="toggleMode()">Light</button>
@@ -38,7 +38,7 @@
         </div>
         <div id="favItems"></div>
     </div>
-    <div class="fav-list-footer" id="favListFooter" style="display:none">
+    <div class="fav-list-footer" id="favListFooter">
         <div class="total-cost-row">
             <span class="total-cost-label">Gesamtkosten:</span>
             <span class="total-cost-value" id="totalCostValue">0 €</span>

@@ -16,7 +16,7 @@
                 <p>Bitte loggen Sie sich mit Ihrem Account ein.</p>
                 <p class="demo-hint">Demo: Benutzername <strong>TestUser</strong>, Passwort <strong>TestPass123</strong></p>
 
-                <div id="successMessage" class="success-message" style="display:none;"></div>
+                <div id="successMessage" class="success-message"></div>
 
                 <form id="loginForm">
                     <label for="username">Benutzername:</label>
@@ -27,7 +27,7 @@
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                     <span class="field-error" id="password-error"></span>
 
-                    <div id="errorMessage" class="error-message" style="display:none;"></div>
+                    <div id="errorMessage" class="error-message"></div>
                     <input type="submit" value="Einloggen" id="loginBtn">
                 </form>
 
