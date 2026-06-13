@@ -3,6 +3,8 @@
 class Database {
     private static ?mysqli $instance = null;
 
+
+    // sicherstellen dass man immer dieselbe verbindung hat insbes. für verbindung, sonst immer neufbau 
     public static function getInstance(): mysqli {
         if (self::$instance === null) {
             self::$instance = mysqli_connect('localhost', 'root', '', 'auto24');

@@ -1,6 +1,9 @@
 <?php
 
 abstract class Controller {
+
+
+        // seite wird gerendet vermittlung an view bzw an die php datei die displayed 
     protected function render(string $view, array $data = []): void {
         extract($data);
         $viewPath = BASE_PATH . 'app/views/' . $view . '.php';
@@ -18,17 +21,21 @@ abstract class Controller {
         echo json_encode($data);
     }
 
+
     protected function redirect(string $url): void {
         header('Location: ' . $url);
         exit;
     }
 
+    // muss eingeloggt sein
     protected function requireLogin(): void {
         if (empty($_SESSION['user_id']) && ($_SESSION['user_id'] ?? null) !== 0) {
             $this->redirect(BASE_URL . '/auth/login');
         }
     }
 
+
+    // adminzugriff 
     protected function requireAdmin(): void {
         if (empty($_SESSION['is_admin'])) {
             $this->json(['success' => false, 'message' => 'Kein Zugriff']);

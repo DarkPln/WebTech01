@@ -815,7 +815,11 @@ button.car-fav {
 
 .home-section,
 .home-about {
-    padding: 70px 4rem;
+    padding: 70px 4rem; 
+}
+
+.home-about {
+    margin-bottom: 55px; 
 }
 
 .home-category-grid {
