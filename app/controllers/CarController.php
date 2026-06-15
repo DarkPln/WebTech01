@@ -8,13 +8,12 @@ class CarController extends Controller {
     }
 
     public function detail(): void {
-        // Alle id=-Werte aus dem Query-String lesen (z.B. ?id=1&id=4&id=7)
-        preg_match_all('/(?:^|&)id=(\d+)/', $_SERVER['QUERY_STRING'] ?? '', $m);
-        $ids = array_values(array_unique(array_filter(array_map('intval', $m[1]))));
+        // Alle id=-Werte aus dem Query-String lesen (auch negative, z.B. ?id=1&id=-1)
+        preg_match_all('/(?:^|&)id=(-?\d+)/', $_SERVER['QUERY_STRING'] ?? '', $m);
+        $ids = array_values(array_unique(array_map('intval', $m[1])));
 
         if (empty($ids)) {
-            http_response_code(404);
-            echo 'Fahrzeug nicht gefunden';
+            $this->render('errors/vehicleNotFound');
             return;
         }
 
@@ -24,29 +23,31 @@ class CarController extends Controller {
             // Einzelansicht
             $fahrzeug = Car::getById($ids[0]);
             if (!$fahrzeug) {
-                http_response_code(404);
-                echo 'Fahrzeug nicht gefunden';
+                $this->render('errors/vehicleNotFound');
                 return;
             }
             $isSold      = Car::isBooked($ids[0]);
             $showFav     = true;
             $compareMode = false;
             $fahrzeuge   = [];
+            $notFoundIds = [];
             $currentIds  = $ids;
-            $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav', 'compareMode', 'fahrzeuge', 'alleCars', 'currentIds'));
+            $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav', 'compareMode', 'fahrzeuge', 'alleCars', 'currentIds', 'notFoundIds'));
         } else {
             // Vergleichsansicht (beliebig viele Fahrzeuge)
-            $fahrzeuge = [];
+            $fahrzeuge   = [];
+            $notFoundIds = [];
             foreach ($ids as $id) {
                 $car = Car::getById($id);
                 if ($car) {
                     $car['isSold'] = Car::isBooked($id);
                     $fahrzeuge[]   = $car;
+                } else {
+                    $notFoundIds[] = $id;
                 }
             }
             if (empty($fahrzeuge)) {
-                http_response_code(404);
-                echo 'Fahrzeuge nicht gefunden';
+                $this->render('errors/vehicleNotFound');
                 return;
             }
             $fahrzeug    = $fahrzeuge[0];
@@ -54,7 +55,7 @@ class CarController extends Controller {
             $showFav     = false;
             $compareMode = true;
             $currentIds  = array_column($fahrzeuge, 'iid');
-            $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav', 'compareMode', 'fahrzeuge', 'alleCars', 'currentIds'));
+            $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav', 'compareMode', 'fahrzeuge', 'alleCars', 'currentIds', 'notFoundIds'));
         }
     }
 

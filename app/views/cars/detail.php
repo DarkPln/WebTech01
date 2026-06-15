@@ -29,6 +29,13 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
         </p>
     </div>
 
+    <?php if (!empty($notFoundIds)): ?>
+    <div class="cmp-warning">
+        ⚠ Folgende ID<?= count($notFoundIds) > 1 ? 's' : '' ?> <?= count($notFoundIds) > 1 ? 'wurden' : 'wurde' ?> nicht gefunden und aus dem Vergleich entfernt:
+        <strong><?= implode(', ', array_map('intval', $notFoundIds)) ?></strong>
+    </div>
+    <?php endif; ?>
+
     <!-- Fahrzeugbilder -->
     <div class="cmp-images" style="grid-template-columns: repeat(<?= count($fahrzeuge) ?>, 1fr);">
         <?php foreach ($fahrzeuge as $f): ?>

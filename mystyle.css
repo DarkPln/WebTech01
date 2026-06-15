@@ -896,6 +896,16 @@ button.car-fav {
     margin: 0;
 }
 
+.cmp-warning {
+    background: rgba(204, 80, 0, 0.15);
+    border: 1px solid rgba(204, 80, 0, 0.5);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: #ffaa66;
+}
+
 .cmp-images {
     display: grid;
     grid-template-columns: 1fr 1fr;
