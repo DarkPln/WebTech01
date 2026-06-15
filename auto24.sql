@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS cars (
     iid             INT          NOT NULL UNIQUE,
     name            VARCHAR(200) NOT NULL,
     beschreibung    TEXT,
-    imagepath       TEXT,
+    imagepath       MEDIUMTEXT,
     preis           DECIMAL(12,2) NOT NULL,
     kategorie       VARCHAR(50),
     unterkategorie  VARCHAR(50),
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS listings (
     contact_name VARCHAR(100),
     email        VARCHAR(200),
     phone        VARCHAR(50),
-    images       TEXT,
+    images       MEDIUMTEXT,
     status       ENUM('eingereicht','genehmigt','abgelehnt') NOT NULL DEFAULT 'eingereicht',
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -7,8 +7,8 @@ class CarController extends Controller {
         $this->render('cars/list', compact('fahrzeuge', 'showFav'));
     }
 
-    public function detail(string $id): void {
-        $pid      = (int)$id;
+    public function detail(): void {
+        $pid      = (int)($_GET['id'] ?? 0);
         $fahrzeug = Car::getById($pid);
 
         if (!$fahrzeug) {
@@ -22,8 +22,8 @@ class CarController extends Controller {
         $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav'));
     }
 
-    public function pdf(string $id): void {
-        $fahrzeug = Car::getById((int)$id);
+    public function pdf(): void {
+        $fahrzeug = Car::getById((int)($_GET['id'] ?? 0));
         if (!$fahrzeug) {
             http_response_code(404);
             echo 'Fahrzeug nicht gefunden';

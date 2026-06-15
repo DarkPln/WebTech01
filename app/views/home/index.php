@@ -32,7 +32,7 @@
             <div class="car-carousel-track" id="carouselTrack" data-repeat="<?= $carouselRepeat ?>">
                 <?php for ($r = 0; $r < $carouselRepeat; $r++): ?>
                     <?php foreach ($carouselCars as $c): ?>
-                    <a href="<?= BASE_URL ?>/cars/<?= (int)$c['iid'] ?>" class="carousel-card">
+                    <a href="<?= BASE_URL ?>/cars/detail?id=<?= (int)$c['iid'] ?>" class="carousel-card">
                         <div class="carousel-card-img">
                             <img src="<?= htmlspecialchars($c['imagepath']) ?>"
                                  alt="<?= htmlspecialchars($c['marke'] . ' ' . $c['modell']) ?>"

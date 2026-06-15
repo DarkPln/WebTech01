@@ -156,7 +156,7 @@
                             <div class="car-price"><?= number_format($auto['preis'], 0, ',', '.') ?> €</div>
                             <div class="car-price-note">inkl. MwSt.</div>
                         </div>
-                        <a href="<?= BASE_URL ?>/cars/<?= $auto['iid'] ?>">
+                        <a href="<?= BASE_URL ?>/cars/detail?id=<?= $auto['iid'] ?>">
                             <button class="car-btn">Details</button>
                         </a>
                     </div>
