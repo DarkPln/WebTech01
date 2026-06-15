@@ -91,7 +91,7 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
                 </option>
                 <?php endforeach; ?>
             </select>
-            <button type="button" onclick="
+            <button class="item-compare-btn" type="button" onclick="
                 var sel = document.getElementById('cmpAddSelect');
                 if (sel.value) window.location.href = window.location.href + '&id=' + sel.value;
             ">Hinzufügen</button>

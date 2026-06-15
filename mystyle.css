@@ -997,6 +997,7 @@ button.car-fav {
     display: flex;
     gap: 8px;
     align-items: center;
+
 }
 
 .item-compare-row input,
@@ -1031,6 +1032,10 @@ button.car-fav {
 
 .item-compare-row button:hover {
     background: rgba(204,0,0,0.1);
+}
+
+.item-compare-btn{
+    margin-bottom: 0; 
 }
 
 /* ===== FAHRZEUG-CAROUSEL (Startseite) ===== */
