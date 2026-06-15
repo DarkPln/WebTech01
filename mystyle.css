@@ -867,6 +867,172 @@ button.car-fav {
     color: lightgray;
 }
 
+/* ===== FAHRZEUGVERGLEICH ===== */
+
+.cmp-wrap {
+    max-width: 1100px;
+    margin: 100px auto 80px;
+    padding: 0 24px;
+}
+
+.cmp-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cmp-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+
+.cmp-header h1 span {
+    color: rgb(227, 27, 27);
+}
+
+.cmp-subtitle {
+    color: #888;
+    font-size: 15px;
+    margin: 0;
+}
+
+.cmp-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+.cmp-img-col {
+    text-align: center;
+}
+
+.cmp-img-col img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #2e2e2e;
+    display: block;
+}
+
+.cmp-car-make {
+    font-size: 11px;
+    color: rgb(204, 0, 0);
+    letter-spacing: 1.5px;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.cmp-car-model {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 4px 0 2px;
+}
+
+.cmp-car-sub {
+    font-size: 13px;
+    color: #888;
+}
+
+.cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.cmp-table tr {
+    border-bottom: 1px solid #1e1e1e;
+}
+
+.cmp-table tr:hover {
+    background: #111;
+}
+
+.cmp-label {
+    padding: 14px 16px;
+    color: #888;
+    font-size: 14px;
+    font-weight: 400;
+    width: 22%;
+    white-space: nowrap;
+}
+
+.cmp-val {
+    padding: 14px 16px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.cmp-head {
+    font-weight: 600;
+    font-size: 13px;
+    color: #ccc;
+    padding-bottom: 16px;
+}
+
+.cmp-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Vergleichs-Eingabe auf Einzelseite */
+.item-compare-box {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+}
+
+.item-compare-box label {
+    display: block;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.item-compare-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.item-compare-row input,
+.item-compare-row select {
+    padding: 9px 12px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    min-width: 220px;
+}
+
+.item-compare-row select option {
+    background: #111;
+    color: #fff;
+}
+
+.item-compare-row button {
+    padding: 9px 18px;
+    background: transparent;
+    border: 1px solid rgb(204,0,0);
+    color: rgb(204,0,0);
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    min-height: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    width: auto;
+}
+
+.item-compare-row button:hover {
+    background: rgba(204,0,0,0.1);
+}
+
 /* ===== FAHRZEUG-CAROUSEL (Startseite) ===== */
 
 .car-carousel-section {

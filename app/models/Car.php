@@ -60,6 +60,12 @@ class Car extends Model {
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
+    public static function getAllBasic(): array {
+        $db  = self::db();
+        $res = mysqli_query($db, "SELECT iid, marke, modell, baujahr FROM cars ORDER BY marke, modell ASC");
+        return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
+    }
+
     public static function isBooked(int $id): bool {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT COUNT(*) AS cnt FROM bookings WHERE car_id = $id AND status IN ('in_bearbeitung','versandt','fertig')");

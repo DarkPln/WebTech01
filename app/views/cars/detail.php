@@ -1,14 +1,118 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($fahrzeug['name']) ?> – Auto24</title>
+    <title><?= $compareMode ? 'Fahrzeugvergleich' : htmlspecialchars($fahrzeug['name']) ?> – Auto24</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
 </head>
 <body>
 
 <?php require VIEW_PATH . 'partials/nav.php'; ?>
 
+<?php
+// IDs der aktuell verglichenen Fahrzeuge als JSON für JS
+$currentIdsJson = json_encode(array_map('intval', $currentIds));
+?>
+
+<?php if ($compareMode): ?>
+
+<!-- ═══════════════ VERGLEICHSANSICHT ═══════════════ -->
+<div class="cmp-wrap">
+
+    <div class="cmp-header">
+        <h1>Fahrzeug<span>vergleich</span></h1>
+        <p class="cmp-subtitle">
+            <?= implode(' &nbsp;vs.&nbsp; ', array_map(
+                fn($f) => htmlspecialchars($f['marke'] . ' ' . $f['modell']),
+                $fahrzeuge
+            )) ?>
+        </p>
+    </div>
+
+    <!-- Fahrzeugbilder -->
+    <div class="cmp-images" style="grid-template-columns: repeat(<?= count($fahrzeuge) ?>, 1fr);">
+        <?php foreach ($fahrzeuge as $f): ?>
+        <div class="cmp-img-col">
+            <a href="<?= BASE_URL ?>/cars/detail?id=<?= $f['iid'] ?>">
+                <img src="<?= htmlspecialchars($f['imagepath']) ?>"
+                     alt="<?= htmlspecialchars($f['name']) ?>">
+            </a>
+            <div class="cmp-car-make"><?= htmlspecialchars(strtoupper($f['marke'])) ?></div>
+            <div class="cmp-car-model"><?= htmlspecialchars($f['modell']) ?></div>
+            <div class="cmp-car-sub"><?= $f['baujahr'] ?> · <?= htmlspecialchars($f['kraftstoff']) ?></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Vergleichstabelle -->
+    <table class="cmp-table">
+        <thead>
+            <tr>
+                <th class="cmp-label"></th>
+                <?php foreach ($fahrzeuge as $f): ?>
+                <th class="cmp-val cmp-head"><?= htmlspecialchars($f['marke'] . ' ' . $f['modell']) ?></th>
+                <?php endforeach; ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $rows = [
+            ['Preis',          fn($f) => '<strong>' . number_format($f['preis'], 0, ',', '.') . ' €</strong>'],
+            ['Baujahr',        fn($f) => $f['baujahr']],
+            ['Kraftstoff',     fn($f) => htmlspecialchars($f['kraftstoff'])],
+            ['Kilometerstand', fn($f) => number_format($f['kilometerstand'], 0, ',', '.') . ' km'],
+            ['Leistung',       fn($f) => $f['leistung_ps'] . ' PS'],
+            ['Antrieb',        fn($f) => htmlspecialchars($f['antrieb'])],
+            ['Kategorie',      fn($f) => ucfirst(htmlspecialchars($f['unterkategorie']))],
+            ['Verfügbarkeit',  fn($f) => $f['isSold'] ? '<span style="color:#ff6666">Reserviert</span>' : '<span style="color:#66cc88">Verfügbar</span>'],
+        ];
+        foreach ($rows as [$label, $fn]):
+        ?>
+        <tr>
+            <td class="cmp-label"><?= $label ?></td>
+            <?php foreach ($fahrzeuge as $f): ?>
+            <td class="cmp-val"><?= $fn($f) ?></td>
+            <?php endforeach; ?>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <!-- Weiteres Fahrzeug hinzufügen -->
+    <div class="item-compare-box">
+        <label for="cmpAddSelect">Weiteres Fahrzeug zum Vergleich hinzufügen:</label>
+        <div class="item-compare-row">
+            <select id="cmpAddSelect">
+                <option value="">— Fahrzeug auswählen —</option>
+                <?php foreach ($alleCars as $c):
+                    if (in_array((int)$c['iid'], array_map('intval', $currentIds))) continue; ?>
+                <option value="<?= (int)$c['iid'] ?>">
+                    <?= htmlspecialchars($c['marke'] . ' ' . $c['modell'] . ' (' . $c['baujahr'] . ')') ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+            <button type="button" onclick="
+                var sel = document.getElementById('cmpAddSelect');
+                if (sel.value) window.location.href = window.location.href + '&id=' + sel.value;
+            ">Hinzufügen</button>
+        </div>
+    </div>
+
+    <!-- Aktionen -->
+    <div class="cmp-actions">
+        <?php foreach ($fahrzeuge as $f): ?>
+        <a href="<?= BASE_URL ?>/cars/detail?id=<?= $f['iid'] ?>" class="item-btn-primary">
+            <?= htmlspecialchars($f['marke'] . ' ' . $f['modell']) ?> buchen
+        </a>
+        <?php endforeach; ?>
+        <a href="<?= BASE_URL ?>/cars" class="item-btn-secondary">← Zurück zur Liste</a>
+    </div>
+
+</div>
+
+<?php else: ?>
+
+<!-- ═══════════════ EINZELANSICHT ═══════════════ -->
 <div class="item-wrap">
 
     <div>
@@ -79,44 +183,63 @@
             </div>
         </div>
 
+        <div class="item-actions">
+            <div class="car-card"
+                data-id="<?= $fahrzeug['iid'] ?>"
+                data-make="<?= htmlspecialchars($fahrzeug['marke']) ?>"
+                data-model="<?= htmlspecialchars($fahrzeug['modell']) ?>"
+                data-year="<?= $fahrzeug['baujahr'] ?>"
+                data-fuel="<?= htmlspecialchars($fahrzeug['kraftstoff']) ?>"
+                data-km="<?= number_format($fahrzeug['kilometerstand'], 0, ',', '.') ?> km"
+                data-drive="<?= htmlspecialchars($fahrzeug['antrieb']) ?>"
+                data-price="<?= $fahrzeug['preis'] ?>"
+                data-badge="Gebraucht"
+                class="car-card--ghost">
+                <img class="car-img car-img--hidden" src="<?= htmlspecialchars($fahrzeug['imagepath']) ?>">
+                <button id="itemFavBtn" class="car-fav item-fav-btn">♡</button>
+            </div>
 
-    <div class="item-actions">  
-        <div class="car-card"
-            data-id="<?= $fahrzeug['iid'] ?>"
-            data-make="<?= htmlspecialchars($fahrzeug['marke']) ?>"
-            data-model="<?= htmlspecialchars($fahrzeug['modell']) ?>"
-            data-year="<?= $fahrzeug['baujahr'] ?>"
-            data-fuel="<?= htmlspecialchars($fahrzeug['kraftstoff']) ?>"
-            data-km="<?= number_format($fahrzeug['kilometerstand'], 0, ',', '.') ?> km"
-            data-drive="<?= htmlspecialchars($fahrzeug['antrieb']) ?>"
-            data-price="<?= $fahrzeug['preis'] ?>"
-            data-badge="Gebraucht"
-            class="car-card--ghost">
-            <img class="car-img car-img--hidden" src="<?= htmlspecialchars($fahrzeug['imagepath']) ?>">
-            <button id="itemFavBtn" class="car-fav item-fav-btn">♡</button>
+            <button
+                id="buchungsBtn"
+                class="item-btn-primary"
+                data-car-id="<?= htmlspecialchars($fahrzeug['iid']) ?>"
+                data-car-name="<?= htmlspecialchars($fahrzeug['name']) ?>"
+                data-car-price="<?= (int)$fahrzeug['preis'] ?>"
+                <?= $isSold ? 'disabled' : '' ?>>
+                <?= $isSold ? 'Bereits reserviert' : 'Jetzt buchen' ?>
+            </button>
+            <p id="buchungsNote" class="item-buchungs-note" <?= $isSold ? 'style="display:block;"' : '' ?>><?= $isSold ? 'Dieses Fahrzeug ist bereits reserviert und nicht mehr verfügbar.' : '' ?></p>
+
+            <a href="<?= BASE_URL ?>/cars/pdf?id=<?= $fahrzeug['iid'] ?>"
+               target="_blank"
+               class="item-btn-secondary">Fahrzeugdatenblatt (PDF)</a>
+            <a href="<?= BASE_URL ?>/cars" class="item-btn-secondary">← Zurück zur Liste</a>
+
+            <!-- Vergleich mit Dropdown -->
+            <div class="item-compare-box">
+                <label for="compareSelect">Mit einem anderen Fahrzeug vergleichen:</label>
+                <div class="item-compare-row">
+                    <select id="compareSelect">
+                        <option value="">— Fahrzeug auswählen —</option>
+                        <?php foreach ($alleCars as $c):
+                            if ((int)$c['iid'] === (int)$fahrzeug['iid']) continue; ?>
+                        <option value="<?= (int)$c['iid'] ?>">
+                            <?= htmlspecialchars($c['marke'] . ' ' . $c['modell'] . ' (' . $c['baujahr'] . ')') ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="button" onclick="
+                        var sel = document.getElementById('compareSelect');
+                        if (sel.value) window.location.href = '<?= BASE_URL ?>/cars/detail?id=<?= $fahrzeug['iid'] ?>&id=' + sel.value;
+                    ">Vergleichen</button>
+                </div>
+            </div>
         </div>
-
-
-        
-        <button
-            id="buchungsBtn"
-            class="item-btn-primary"
-            data-car-id="<?= htmlspecialchars($fahrzeug['iid']) ?>"
-            data-car-name="<?= htmlspecialchars($fahrzeug['name']) ?>"
-            data-car-price="<?= (int)$fahrzeug['preis'] ?>"
-            <?= $isSold ? 'disabled' : '' ?>>
-            <?= $isSold ? 'Bereits reserviert' : 'Jetzt buchen' ?>
-        </button>
-        <p id="buchungsNote" class="item-buchungs-note" <?= $isSold ? 'style="display:block;"' : '' ?>><?= $isSold ? 'Dieses Fahrzeug ist bereits reserviert und nicht mehr verfügbar.' : '' ?></p>
-
-        <a href="<?= BASE_URL ?>/cars/pdf?id=<?= $fahrzeug['iid'] ?>"
-           target="_blank"
-           class="item-btn-secondary">Fahrzeugdatenblatt (PDF)</a>
-        <a href="<?= BASE_URL ?>/cars" class="item-btn-secondary">← Zurück zur Liste</a>
-        </div> 
     </div>
 
 </div>
+
+<?php endif; ?>
 
 <script src="<?= BASE_URL ?>/js/favLogik.js"></script>
 <?php require VIEW_PATH . 'partials/footer.php'; ?>
