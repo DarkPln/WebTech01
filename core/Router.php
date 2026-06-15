@@ -56,6 +56,11 @@ class Router {
         }
 
         http_response_code(404);
-        echo '404 – Seite nicht gefunden';
+        $viewPath = BASE_PATH . 'app/views/errors/404.php';
+        if (file_exists($viewPath)) {
+            require $viewPath;
+        } else {
+            echo '404 – Seite nicht gefunden';
+        }
     }
 }
