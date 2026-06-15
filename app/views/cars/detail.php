@@ -107,11 +107,6 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
 
     <!-- Aktionen -->
     <div class="cmp-actions">
-        <?php foreach ($fahrzeuge as $f): ?>
-        <a href="<?= BASE_URL ?>/cars/detail?id=<?= $f['iid'] ?>" class="item-btn-primary">
-            <?= htmlspecialchars($f['marke'] . ' ' . $f['modell']) ?> buchen
-        </a>
-        <?php endforeach; ?>
         <a href="<?= BASE_URL ?>/cars" class="item-btn-secondary">← Zurück zur Liste</a>
     </div>
 
