@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -221,7 +221,7 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
             <div class="item-compare-box">
                 <label for="compareSelect">Mit einem anderen Fahrzeug vergleichen:</label>
                 <div class="item-compare-row">
-                    <select id="compareSelect">
+                    <select class="choice-select" id="compareSelect">
                         <option value="">— Fahrzeug auswählen —</option>
                         <?php foreach ($alleCars as $c):
                             if ((int)$c['iid'] === (int)$fahrzeug['iid']) continue; ?>
@@ -230,7 +230,7 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
                         </option>
                         <?php endforeach; ?>
                     </select>
-                    <button type="button" onclick="
+                    <button class="compare-button" type="button" onclick="
                         var sel = document.getElementById('compareSelect');
                         if (sel.value) window.location.href = '<?= BASE_URL ?>/cars/detail?id=<?= $fahrzeug['iid'] ?>&id=' + sel.value;
                     ">Vergleichen</button>
