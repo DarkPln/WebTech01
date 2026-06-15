@@ -1006,8 +1006,7 @@ button.car-fav {
 .item-compare-row {
     display: flex;
     gap: 8px;
-    align-items: center;
-
+    align-items: stretch;
 }
 
 .item-compare-row input,
