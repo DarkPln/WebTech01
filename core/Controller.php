@@ -9,7 +9,7 @@ abstract class Controller {
         $viewPath = BASE_PATH . 'app/views/' . $view . '.php';
         if (!file_exists($viewPath)) {
             http_response_code(404);
-            echo '404 – View nicht gefunden: ' . htmlspecialchars($view);
+            require BASE_PATH . 'app/views/errors/404.php';
             return;
         }
         require $viewPath;

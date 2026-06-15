@@ -5,7 +5,7 @@ class PageController extends Controller {
         $allowed = ['faq', 'about', 'agb', 'datenschutz', 'finanzierung', 'partner', 'versicherung'];
         if (!in_array($page, $allowed, true)) {
             http_response_code(404);
-            echo '404';
+            require BASE_PATH . 'app/views/errors/404.php';
             return;
         }
         $this->render('pages/' . $page);
