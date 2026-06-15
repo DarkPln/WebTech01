@@ -4,6 +4,7 @@
 // js/buchung.js, js/admin.js, js/inserat.js, js/utils.js
 
 document.addEventListener('DOMContentLoaded', async () => {
+    initCookieBanner();
     applyUrlFilter();
     initLoginForm();
     initRegistrationForm();

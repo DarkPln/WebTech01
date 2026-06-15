@@ -41,5 +41,6 @@
 <script src="<?= BASE_URL ?>/js/buchung.js"></script>
 <script src="<?= BASE_URL ?>/js/admin.js"></script>
 <script src="<?= BASE_URL ?>/js/inserat.js"></script>
+<script src="<?= BASE_URL ?>/js/cookies.js"></script>
 <script src="<?= BASE_URL ?>/js/utils.js"></script>
 <script src="<?= BASE_URL ?>/validation.js"></script>

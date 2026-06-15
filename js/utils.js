@@ -5,18 +5,29 @@
 function toggleMode() {
     const isLight = document.body.classList.toggle("light-mode");
     localStorage.setItem('auto24_lightMode', isLight ? '1' : '0');
+    // Modus-Präferenz auch als Cookie speichern (falls Cookies akzeptiert)
+    if (typeof setCookie === 'function' && getCookie('auto24_consent') === 'accepted') {
+        setCookie('auto24_lightMode', isLight ? '1' : '0', 365);
+    }
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.textContent = isLight ? 'Dark' : 'Light';
     });
 }
 
 (function applyStoredMode() {
-    if (localStorage.getItem('auto24_lightMode') === '1') {
+    // PHP setzt light-mode bereits serverseitig via $_COOKIE (nav.php) — kein Flash.
+    // Dieser Fallback greift nur wenn kein Cookie vorhanden ist (z.B. Cookies abgelehnt),
+    // dann liest localStorage den zuletzt gespeicherten Wert.
+    if (!document.body.classList.contains('light-mode') &&
+        localStorage.getItem('auto24_lightMode') === '1') {
         document.body.classList.add('light-mode');
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.mode-btn').forEach(btn => { btn.textContent = 'Dark'; });
-        });
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLight = document.body.classList.contains('light-mode');
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.textContent = isLight ? 'Dark' : 'Light';
+        });
+    });
 })();
 
 /* Preisberechnung mit Steuern */

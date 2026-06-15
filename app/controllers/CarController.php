@@ -16,7 +16,7 @@ class CarController extends Controller {
             echo 'Fahrzeug nicht gefunden';
             return;
         }
-
+        
         $isSold  = Car::isBooked($pid);
         $showFav = true;
         $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav'));
