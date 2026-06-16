@@ -63,15 +63,19 @@ function initItemFinancing() {
 }
 
 function calculateItemFinancing() {
+    //Variablen Wert, Laufzeit und Ergebnis-Element holen:
     var value    = Number(document.getElementById('itemFinancingAmount').value);
     var loanTerm = Number(document.getElementById('itemLoanTerm').value);
     var result   = document.getElementById('itemFinancingResult');
+    //Behandlung von ungültigen Eingaben:
     if (!result) return;
     if (value <= 0)              { result.textContent = 'Bitte gültigen Betrag eingeben.'; return; }
     if (loanTerm < 12 || loanTerm > 48) { result.textContent = 'Laufzeit muss zwischen 12 und 48 Monaten liegen.'; return; }
+    //Variablen berechnen und Ergebnis anzeigen:
     var total   = value * 1.05;
     var monthly = (total / loanTerm).toFixed(2).replace('.', ',');
     var gesamt  = total.toFixed(2).replace('.', ',');
+    //Darstellung mit Monatsrate und Gesamtbetrag:
     result.innerHTML =
         '<strong>' + monthly + ' €</strong> / Monat' +
         '<br><span class="financing-sub">Gesamtbetrag: ' + gesamt + ' € &nbsp;·&nbsp; inkl. 5 % Finanzierungskosten</span>';
@@ -79,12 +83,16 @@ function calculateItemFinancing() {
 
 /* Passwort Generator: Niclas */
 function generatePassword() {
+    //Variablen für Eingabefeld, Zeichensatz und generiertes Passwort:
     const input   = document.getElementById("pwInput");
     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    //leere Zeichenketten-Variable für das Passwort erstellen:
     let password  = "";
+    //Algorithmus; Zufallsgenerator:
     for (let i = 0; i < 12; i++) {
         password += charset[Math.floor(Math.random() * charset.length)];
     }
+    //Generiertes Passwort in Eingabefeld und darunter anzeigen:
     input.value = password;
     const output = document.getElementById('generatedPassword');
     if (output) output.textContent = "Generiertes Passwort: " + password;
@@ -113,8 +121,10 @@ function updateBudgetLabel() {
     document.getElementById("budgetValue").textContent = value.toLocaleString("de-DE") + " €";
 }
 
+//Sortierfunktion für Preis (aufsteigend/absteigend):
 function sortCarsByPrice(asc) {
     const container = document.getElementById("carLayout");
+    //Sortiert Arrayelemente nach Werten:
     Array.from(container.querySelectorAll(".car-card"))
         .sort((a, b) => asc
             ? Number(a.dataset.price) - Number(b.dataset.price)
@@ -122,8 +132,10 @@ function sortCarsByPrice(asc) {
         .forEach(car => container.appendChild(car));
 }
 
+//Sortierfunktion für Baujahr (aufsteigend/absteigend):
 function sortCarsByYear(asc) {
     const container = document.getElementById("carLayout");
+    //Sortiert Arrayelemente nach Werten:
     Array.from(container.querySelectorAll(".car-card"))
         .sort((a, b) => asc
             ? Number(a.dataset.year) - Number(b.dataset.year)
@@ -131,10 +143,12 @@ function sortCarsByYear(asc) {
         .forEach(car => container.appendChild(car));
 }
 
+//Anwendung aller Filter:
 function searchCars() {
     applyAllFilters();
 }
 
+//Bei Änderung der Filter-Inputs, Anzeige aktualisieren:
 function updateYearLabel() {
     const value = Number(document.getElementById("yearInput").value);
     document.getElementById("yearValue").textContent = value;
