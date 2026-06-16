@@ -3126,14 +3126,14 @@ body.light-mode .upload-area {
 body.light-mode .upload-area p { color: #666; }
 body.light-mode .upload-area p strong { color: #333; }
 
-/* Pflichtfelder im Inserat-Formular standardmÃ¤ÃŸig rot umranden */
+/* Pflichtfelder im Inserat-Formular standardmäßig rot umranden */
 #vehicleForm input[required],
 #vehicleForm select[required],
 #vehicleForm textarea[required] {
     border-color: rgb(227, 27, 7);
 }
 
-/* GrÃ¼n sobald ausgefÃ¼llt (Klasse wird per JS gesetzt) */
+/* Grün sobald ausgefüllt (Klasse wird per JS gesetzt) */
 #vehicleForm input[required].field-ok,
 #vehicleForm select[required].field-ok,
 #vehicleForm textarea[required].field-ok {
