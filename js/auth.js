@@ -1,4 +1,4 @@
-// ===== AUTH: LOGIN, REGISTRIERUNG, LOGOUT, NAV =====
+// Tim
 
 function initNavAuthLink() {
     var link = document.getElementById('navAuthLink');

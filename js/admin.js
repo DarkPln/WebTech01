@@ -1,5 +1,4 @@
-// ===== ADMIN =====
-// Autor: tim
+//Tim
 
 // Admin-Seite initialisieren: Dashboard zeigen wenn eingeloggt, sonst zu Login weiterleiten
 async function initAdminPage() {

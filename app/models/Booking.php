@@ -1,3 +1,4 @@
+<!-- Tim -->
 <?php
 
 class Booking extends Model {

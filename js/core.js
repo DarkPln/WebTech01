@@ -1,6 +1,3 @@
-// ===== GEMEINSAME VALIDIERUNGSFUNKTIONEN =====
-// Autor: tim
-
 function validateUsername(value) {
     const errors = [];
     if (value.length < 5) errors.push('Mindestens 5 Zeichen erforderlich');
