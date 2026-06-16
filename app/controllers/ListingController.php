@@ -1,12 +1,16 @@
 <?php
-
+//Niclas: Controller für die Inserate, mit Logik für Inseratsseiten (Erstellen, Auflisten der eigenen Inserate)
 class ListingController extends Controller {
+    //Rendert die Seite zum Erstellen eines neuen Inserats (keine Logik):
     public function sellView(): void {
         $this->render('listings/sell');
     }
 
+    //prüft hochgeladende Bilder; erstellt neues Inserat in DB
     public function create(): void {
         ob_start();
+        //puffert PHP-Ausgabe, damit später mit ob_end_clean() die Ausgabe gelöscht werden kann 
+        //(z.B. Fehlermeldungen), bevor  $this->json() eine JSON-Antwort gesendet wird
         $userId   = $_SESSION['user_id'] ?? null;
         $username = $_SESSION['username'] ?? 'Gast';
 
@@ -26,19 +30,25 @@ class ListingController extends Controller {
 
                 $uploadedImages[] = 'data:' . $mime . ';base64,' . base64_encode($data);
                 break;
+                //nur das erste gültige Bild wird verarbeitet
             }
         }
 
         try {
             $listingKey = Listing::create($_POST, $uploadedImages, $userId, $username);
             ob_end_clean();
+            //Ausgabe kann gelöscht werden, da jetzt eine JSON-Antwort gesendet wird    
             $this->json(['success' => true, 'id' => $listingKey]);
+            //erfogreiche Erstellung Inserat: JSON-Antwort: true
         } catch (Throwable $e) {
             ob_end_clean();
             $this->json(['success' => false, 'message' => $e->getMessage()]);
         }
+        //bei Fehler
     }
 
+    //gibt alle Inserate des Nutzers zurück;
+    //Wird per AJAX aufgerufen
     public function list(): void {
         if (!isset($_SESSION['user_id'])) {
             $this->json(['success' => false, 'listings' => []]);
@@ -48,11 +58,14 @@ class ListingController extends Controller {
         $this->json(['success' => true, 'listings' => $listings]);
     }
 
+    //gibt HTML für die Auflistung der eigenen Inserate zurück (Status, Datum, Auto-Details);
     public function listHtml(): void {
+        //kein Rendern; gibt direkt HTML zurück, das per AJAX in die Seite eingefügt wird
         if (!isset($_SESSION['user_id'])) {
             echo '<p style="color:#888; font-size:14px;">Nicht eingeloggt.</p>';
             return;
         }
+        //direktes echoen von HTML (bei AJAX-Anfragen)
 
         $uid      = $_SESSION['user_id'];
         $username = $_SESSION['username'] ?? '';
@@ -94,3 +107,5 @@ class ListingController extends Controller {
         }
     }
 }
+//MVC: Model View Controller, Controller enthält keine SQL-Queries und kein HTML
+//Controller muss für jede Funktion eine Seite rendern
