@@ -1,4 +1,5 @@
 ﻿<footer>
+<!-- Lukas -->
     <div class="footer-top">
         <div class="footer-logo-dsc">
             <div class="footer-logo">Auto<span>24</span></div>

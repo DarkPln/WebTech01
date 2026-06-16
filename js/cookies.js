@@ -1,7 +1,7 @@
-// ===== COOKIE-HILFSFUNKTIONEN =====
+// Cookies hilfsfkten
 // Lukas
 
-// Setzt ein Cookie mit Name, Wert und Ablaufzeit in Tagen
+// Setzt  Cookie mit name, wert und ablaufzeit in Tagen
 function setCookie(name, value, days) {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
     document.cookie = name + '=' + encodeURIComponent(value) +
@@ -18,10 +18,21 @@ function getCookie(name) {
 
 // Prüft ob Cookies im Browser aktiviert sind
 function areCookiesEnabled() {
-    return navigator.cookieEnabled;
+    // navigator.cookieEnabled ist unzuverlässig: moderne Browser liefern oft
+    // weiterhin "true", selbst wenn Cookies (z.B. über die Datenschutz-
+    // Einstellungen) tatsächlich blockiert sind. Daher zusätzlich aktiv
+    // testen, ob ein Cookie wirklich gespeichert werden kann.
+    if (!navigator.cookieEnabled) return false;
+
+    document.cookie = 'auto24_cookietest=1; path=/; SameSite=Lax';
+    var works = document.cookie.indexOf('auto24_cookietest=') !== -1;
+    if (works) {
+        document.cookie = 'auto24_cookietest=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
+    return works;
 }
 
-// ===== COOKIE-BANNER =====
+// cookie Banner 
 
 // Zeigt Cookie-Deaktiviert-Warnung oder Consent-Banner je nach Browserzustand
 function initCookieBanner() {

@@ -1,4 +1,6 @@
 // Suchkonfigurator öffnen/schließen (Fahrzeugliste)
+// Niclas 
+
 function toggleSearchConfig() {
     const config = document.getElementById('searchConfigurator');
     const btn    = document.getElementById('searchToggleBtn');
