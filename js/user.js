@@ -1,5 +1,4 @@
-// ===== NUTZERBEREICH (Dashboard) =====
-// Autor: tim
+//Tim
 
 function showMsg(el, text) {
     if (!el) return;

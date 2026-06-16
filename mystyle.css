@@ -515,6 +515,33 @@ nav {
     text-transform: uppercase;
 }
 
+@media (max-width: 1000px) {
+    nav {
+        padding: 10px 24px;
+    }
+    .nav-links {
+        gap: 14px;
+    }
+    .nav-logo {
+        font-size: 28px;
+    }
+    .nav-right {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 880px) {
+    .nav-links {
+        display: none;
+    }
+    nav {
+        padding: 10px 16px;
+    }
+    .nav-logo {
+        font-size: 24px;
+    }
+}
+
 a {
     display: block;
     text-align: center;

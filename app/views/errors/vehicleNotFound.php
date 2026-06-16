@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <title>Fahrzeug nicht gefunden – Auto24</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <!-- Niclas: Implementiert css Datei -->    
 </head>
 <body>
+    <!-- Niclas: Link zu einer Seite und fügt Inhalt mit require direkt hier ein;
+     Unterschied zu include: bei require bricht PHP ab, wenn Datei nicht da, 
+     bei include läuft PHP mit Warnung weiter -->
+     <?php require VIEW_PATH . 'partials/nav.php'; ?>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
 
     <main class="error-page">

@@ -1,5 +1,4 @@
-// ===== INSERATE =====
-// Autor: tim
+//Tim
 
 function checkVehicleField(f) {
     if (f.value.trim()) f.classList.add('field-ok');
