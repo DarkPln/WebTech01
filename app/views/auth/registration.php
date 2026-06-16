@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 ﻿<!-- Niclas: Registrierung -->
-=======
-﻿<!-- Tim -->
->>>>>>> b20444d6f5d84630a20a78d1036731ba44121bc6
 <!DOCTYPE html>
 <html lang="de">
 <head>
