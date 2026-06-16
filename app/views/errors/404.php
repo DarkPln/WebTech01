@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Seite nicht gefunden – Auto24</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <!-- Niclas: Implementiert css Datei -->
 </head>
 <body>
+    <!-- Niclas: Link zu einer Seite und fügt Inhalt mit require direkt hier ein;
+     Unterschied zu include: bei require bricht PHP ab, wenn Datei nicht da, 
+     bei include läuft PHP mit Warnung weiter -->
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
 
     <main class="error-page">
@@ -16,6 +20,7 @@
                 Sehr geehrter Kunde, leider ist die von Ihnen gewünschte Seite derzeit nicht verfügbar.
                 Dies kann an unterschiedlichen Gründen liegen.
             </p>
+            <!-- Niclas: Zwei Buttons, die den Nutzer zurück zur Hauptseite oder zum Fahrzeugangebot führen -->
             <div class="error-actions">
                 <a href="<?= BASE_URL ?>/cars" class="error-btn-primary">Fahrzeugangebot ansehen</a>
                 <a href="<?= BASE_URL ?>/" class="error-btn-secondary">Zur Hauptseite</a>
@@ -26,3 +31,4 @@
     <?php require VIEW_PATH . 'partials/footer.php'; ?>
 </body>
 </html>
+<!-- Niclas: 404 Fehlerseite -->
