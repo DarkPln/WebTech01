@@ -1,4 +1,4 @@
-body {
+﻿body {
     background-color: #0a0a0a;
     margin: 0;
     padding: 0;
@@ -106,9 +106,9 @@ textarea::placeholder {
     font-style: italic;
 }
 
-/* Spezifische Breite für das Suchfeld nach Automarke */
+/* Spezifische Breite fÃ¼r das Suchfeld nach Automarke */
 #carSearchInput {
-    max-width: 600px; /* Erhöht die maximale Breite (statt 400px) */
+    max-width: 600px; /* ErhÃ¶ht die maximale Breite (statt 400px) */
     width: 100%;
 }
 
@@ -220,7 +220,7 @@ select:disabled {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23666666" d="M1 1l5 5 5-5"/></svg>');
 }
 
-/* ===== FORMULAR-ZUSTÄNDE ===== */
+/* ===== FORMULAR-ZUSTÃ„NDE ===== */
 
 input:disabled,
 textarea:disabled,
@@ -1432,7 +1432,7 @@ button.car-fav {
     margin-right: auto;
 }
 
-/* ===== ÜBER UNS SEITE (Tim) ===== */
+/* ===== ÃœBER UNS SEITE (Tim) ===== */
 
 .about-services-section {
     padding: 40px 4rem;
@@ -1981,8 +1981,8 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     transform: none;
 }
 
-.btn-reject { background: #5a0000 !important; border-color: #8B0000 !important; }
-.btn-reject:hover { background: #7a0000 !important; }
+.btn-reject { background: #5a0000; border-color: #8B0000; }
+.btn-reject:hover { background: #7a0000; }
 
 .admin-user-row {
     display: flex;
@@ -2014,10 +2014,10 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 .user-locked { color: #ff7070; }
 
 
-.btn-lock       { background: #5a0000 !important; }
-.btn-lock:hover { background: #7a0000 !important; }
-.btn-unlock     { background: #0a3a0a !important; }
-.btn-unlock:hover { background: #145014 !important; }
+.btn-lock       { background: #5a0000; }
+.btn-lock:hover { background: #7a0000; }
+.btn-unlock     { background: #0a3a0a; }
+.btn-unlock:hover { background: #145014; }
 
 .admin-empty {
     color: #666;
@@ -2716,9 +2716,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .filter-btn {
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    width: auto;
+    min-width: 0;
+    max-width: none;
     padding: 8px 14px;
     margin: 5px;
     display: inline-block;
@@ -2726,9 +2726,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .filter-btn.active {
-    background-color: rgb(204, 0, 0) !important;
-    color: #fff !important;
-    border-color: rgb(204, 0, 0) !important;
+    background-color: rgb(204, 0, 0);
+    color: #fff;
+    border-color: rgb(204, 0, 0);
 }
 
 .filter-section {
@@ -2781,14 +2781,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .search-configurator .filter-btn {
-    padding: 5px 12px !important;
-    font-size: 11px !important;
-    margin: 0 !important;
-    width: 100% !important;
-    max-width: 180px !important;
+    padding: 5px 12px;
+    font-size: 11px;
+    margin: 0;
+    width: 100%;
+    max-width: 180px;
     text-align: center;
     letter-spacing: 1px;
-    display: block !important;
+    display: block;
 }
 
 .search-configurator .slider-container {
@@ -2812,9 +2812,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .configurator-actions .filter-btn {
-    width: 130px !important;
-    display: inline-block !important;
-    margin: 0 6px !important;
+    width: 130px;
+    display: inline-block;
+    margin: 0 6px;
 }
 
 .no-results-msg {
@@ -2846,45 +2846,45 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .search-bar-inline {
-    width: 420px !important;
-    max-width: 420px !important;
-    height: 44px !important;
-    margin: 0 auto !important;
-    padding: 9px 16px !important;
-    background: transparent !important;
-    border: 1px solid rgba(204, 0, 0, 0.45) !important;
-    border-radius: 8px !important;
-    color: #f0f0f0 !important;
-    font-family: 'DM Sans', sans-serif !important;
-    font-size: 13px !important;
-    outline: none !important;
-    box-shadow: none !important;
-    box-sizing: border-box !important;
-    transition: border-color 0.2s !important;
+    width: 420px;
+    max-width: 420px;
+    height: 44px;
+    margin: 0 auto;
+    padding: 9px 16px;
+    background: transparent;
+    border: 1px solid rgba(204, 0, 0, 0.45);
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    box-shadow: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
 }
 
 .search-bar-inline::placeholder {
-    color: #666 !important;
-    font-style: normal !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
+    color: #666;
+    font-style: normal;
+    letter-spacing: 0;
+    text-transform: none;
 }
 
 .search-bar-inline:focus {
-    border-color: rgba(204, 0, 0, 0.85) !important;
-    background: transparent !important;
-    box-shadow: none !important;
+    border-color: rgba(204, 0, 0, 0.85);
+    background: transparent;
+    box-shadow: none;
 }
 
 
 body.light-mode .search-bar-inline {
-    color: #1a1a1a !important;
-    border-color: rgba(180, 0, 0, 0.4) !important;
-    background: transparent !important;
+    color: #1a1a1a;
+    border-color: rgba(180, 0, 0, 0.4);
+    background: transparent;
 }
 
 body.light-mode .search-bar-inline::placeholder {
-    color: #999 !important;
+    color: #999;
 }
 
 .search-toggle-btn {
@@ -2979,7 +2979,7 @@ body.light-mode .search-toggle-btn.active {
 }
 
 .fav-notification::before {
-    content: '♡';
+    content: 'â™¡';
     font-size: 18px;
     color: rgb(204, 0, 0);
     flex-shrink: 0;
@@ -3109,21 +3109,21 @@ body.light-mode .upload-area p strong { color: #333; }
 #vehicleForm input[required],
 #vehicleForm select[required],
 #vehicleForm textarea[required] {
-    border-color: rgb(227, 27, 7) !important;
+    border-color: rgb(227, 27, 7);
 }
 
 /* Grün sobald ausgefüllt (Klasse wird per JS gesetzt) */
 #vehicleForm input[required].field-ok,
 #vehicleForm select[required].field-ok,
 #vehicleForm textarea[required].field-ok {
-    border-color: #2ecc71 !important;
+    border-color: #2ecc71;
 }
 
 /* Fokus: Farbe des jeweiligen Zustands beibehalten */
 #vehicleForm input[required]:focus,
-#vehicleForm select[required]:focus { border-color: rgb(227, 27, 7) !important; box-shadow: 0 0 0 3px rgba(227,27,7,0.15); }
+#vehicleForm select[required]:focus { border-color: rgb(227, 27, 7); box-shadow: 0 0 0 3px rgba(227,27,7,0.15); }
 #vehicleForm input[required].field-ok:focus,
-#vehicleForm select[required].field-ok:focus { border-color: #2ecc71 !important; box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
+#vehicleForm select[required].field-ok:focus { border-color: #2ecc71; box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
 
 /* ===== USER DASHBOARD ===== */
 
