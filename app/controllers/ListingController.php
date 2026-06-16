@@ -8,9 +8,6 @@ class ListingController extends Controller {
 
     //prüft hochgeladende Bilder; erstellt neues Inserat in DB
     public function create(): void {
-        ob_start();
-        //puffert PHP-Ausgabe, damit später mit ob_end_clean() die Ausgabe gelöscht werden kann 
-        //(z.B. Fehlermeldungen), bevor  $this->json() eine JSON-Antwort gesendet wird
         $userId   = $_SESSION['user_id'] ?? null;
         $username = $_SESSION['username'] ?? 'Gast';
 
@@ -36,12 +33,9 @@ class ListingController extends Controller {
 
         try {
             $listingKey = Listing::create($_POST, $uploadedImages, $userId, $username);
-            ob_end_clean();
-            //Ausgabe kann gelöscht werden, da jetzt eine JSON-Antwort gesendet wird    
             $this->json(['success' => true, 'id' => $listingKey]);
             //erfogreiche Erstellung Inserat: JSON-Antwort: true
         } catch (Throwable $e) {
-            ob_end_clean();
             $this->json(['success' => false, 'message' => $e->getMessage()]);
         }
         //bei Fehler
