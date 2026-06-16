@@ -2388,27 +2388,6 @@ details.faq-item a {
     text-align: left;
 }
 
-.ai-disclaimer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    max-width: 820px;
-    margin: 0 auto 8px;
-    padding: 10px 16px;
-    background: rgba(227, 27, 27, 0.05);
-    border: 1px solid rgba(227, 27, 27, 0.2);
-    border-radius: 6px;
-    font-size: 12px;
-    color: #888;
-    text-align: left;
-}
-
-.ai-disclaimer::before {
-    content: '🤖';
-    font-size: 14px;
-    flex-shrink: 0;
-}
-
 body.light-mode .faq-category h2 { border-bottom-color: #ddd; }
 body.light-mode details.faq-item { background: #fff; border-color: #ddd; }
 body.light-mode details.faq-item[open] { border-color: rgba(200, 20, 20, 0.4); }

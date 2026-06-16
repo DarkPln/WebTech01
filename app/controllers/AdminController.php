@@ -51,6 +51,9 @@ class AdminController extends Controller {
 
         Listing::updateStatus($key, $status);
 
+
+        // Lukas message logik (geht nur von admin aus, es gibt keine user zu user) 
+
         $userId = (int)($listing['user_id'] ?? 0);
         if ($userId > 0 && $oldStatus !== $status && in_array($status, ['genehmigt', 'abgelehnt'], true)) {
             $carLabel = $listing['make'] . ' ' . $listing['model'];

@@ -3,6 +3,9 @@
 // Lukas Favoritenlogik
 
 class Favorite extends Model {
+
+// fügt fav hinzu bzw entfernt wenn schon favorit 
+
     public static function toggle(int $userId, int $carId): string {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT id FROM favorites WHERE user_id = $userId AND car_id = $carId");
@@ -15,7 +18,7 @@ class Favorite extends Model {
     }
 
 
-// 
+// holt die favoriten aus der favorites tabelle der db und gibt array zurück
 
     public static function findByUser(int $userId): array {
         $db  = self::db();
@@ -23,7 +26,7 @@ class Favorite extends Model {
         return $res ? array_column(mysqli_fetch_all($res, MYSQLI_ASSOC), 'car_id') : [];
     }
 
-// holt Autos von User die er als Favoriten gespeichert hat 
+// baut auf findByUser auf; holt autos von User die er als Favoriten gespeichert hat mit allen dazugehörigen daten  
 
     public static function getCarsForUser(int $userId): array {
         $db      = self::db();

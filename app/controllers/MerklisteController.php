@@ -2,7 +2,8 @@
 
 class MerklisteController extends Controller {
    
-// Berechnung Mengenrabatt und laden der Merkliste bzw der favoriten eines nutzers, wenn er eingeloggt ist.
+// Lukas Favoriten Logik bzw aufgeklappte Merkliste 
+// Berechnung Mengenrabatt und laden der Merkliste bzw der favoriten eines nutzers, wenn eingeloggt
 
 public function index(): void {
         $userId = $_SESSION['user_id'] ?? null;
@@ -32,6 +33,8 @@ public function index(): void {
         $this->render('merkliste/index', compact('gemerkteAutos', 'total', 'anzahl', 'rabattProzent', 'rabattBetrag', 'endbetrag'));
     }
 
+// favoriten entfernen; einzelentfernung (id) bzw clear all also leeren  
+
     public function remove(): void {
         $userId = $_SESSION['user_id'] ?? null;
         $useDB  = ($userId !== null && $userId > 0);
@@ -46,6 +49,8 @@ public function index(): void {
                 mysqli_query($db, "DELETE FROM favorites WHERE user_id = $userId");
             }
         } else {
+
+        // gast - zweig 
             if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
             if (isset($_POST['remove_id'])) {
                 $rid = (int)$_POST['remove_id'];

@@ -1,6 +1,11 @@
 <?php
 
 class MessageController extends Controller {
+  
+// Lukas: serverseitiges Messaging; sprich nur der server schreibt hier (kein angebundens MailSystem o. Ä.)
+
+// nur für eingeloggte User 
+
     public function listHtml(): void {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
             echo '<p class="msg-empty">Nicht eingeloggt.</p>';
@@ -22,7 +27,7 @@ class MessageController extends Controller {
         }
 
         foreach ($rows as $m) {
-            $cls   = $m['is_read'] ? 'msg-card' : 'msg-card unread';
+            $cls   = $m['is_read'] ? 'msg-card' : 'msg-card unread'; // für css 
             $title = htmlspecialchars($m['title']);
             $body  = htmlspecialchars($m['body'] ?? '');
             $date  = date('d.m.Y, H:i', strtotime($m['created_at']));
@@ -36,6 +41,8 @@ class MessageController extends Controller {
         }
     }
 
+// nachrichten als gelesen markieren
+
     public function markRead(): void {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
             $this->json(['success' => false]);
@@ -45,6 +52,9 @@ class MessageController extends Controller {
         $this->json(['success' => true]);
     }
 
+
+// unread badge/count 
+    
     public function unreadCount(): void {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
             $this->json(['count' => 0]);
