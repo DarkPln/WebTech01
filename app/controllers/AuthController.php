@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim
 
 class AuthController extends Controller {
     public function loginView(): void {

@@ -1009,6 +1009,7 @@ button.car-fav {
     font-size: 13px;
     color: #ccc;
     padding-bottom: 16px;
+    text-align: left; 
 }
 
 .cmp-actions {

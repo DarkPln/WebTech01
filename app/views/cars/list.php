@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
+<!-- Lukas + Niclas: php -->
 <head>
     <meta charset="UTF-8">
     <title>Fahrzeug Liste - Auto24</title>
@@ -171,13 +172,6 @@
 
     <?php require VIEW_PATH . 'partials/footer.php'; ?>
     <script src="<?= BASE_URL ?>/js/favLogik.js"></script>
-    <script>
-        function toggleSearchConfig() {
-            const config = document.getElementById('searchConfigurator');
-            const btn    = document.getElementById('searchToggleBtn');
-            config.classList.toggle('open');
-            btn.classList.toggle('active');
-        }
-    </script>
+    <script src="<?= BASE_URL ?>/js/searchConfig.js"></script>
 </body>
 </html>

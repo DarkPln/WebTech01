@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim
 
 class AdminController extends Controller {
     public function index(): void {
