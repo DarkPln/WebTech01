@@ -1,5 +1,7 @@
 ﻿<?php
 
+// Tim, Lukas, Niclas 
+
 // ── Constants ────────────────────────────────────────────────────────────────
 define('BASE_PATH', __DIR__ . '/');
 define('BASE_URL',  '/WebTech01');

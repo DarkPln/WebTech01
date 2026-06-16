@@ -1,5 +1,8 @@
 <?php
 
+
+// Lukas 
+
 class Car extends Model {
     public static function getAll(array $filters = []): array {
         $db    = self::db();

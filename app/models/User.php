@@ -1,4 +1,4 @@
-<!-- Tim -->
+<!-- Tim, Lukas -->
 <?php
 
 class User extends Model {

@@ -125,6 +125,9 @@ class AuthController extends Controller {
         ]);
     }
 
+
+// Lukas 
+
     public function update(): void {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
             $this->json(['success' => false, 'message' => 'Nicht eingeloggt']);

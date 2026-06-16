@@ -1,7 +1,7 @@
 // ===== INITIALISIERUNG =====
 // Einstiegspunkt: lädt alle Seitenmodule in der richtigen Reihenfolge.
-// Funktionen sind ausgelagert in js/core.js, js/auth.js, js/user.js,
-// js/buchung.js, js/admin.js, js/inserat.js, js/utils.js
+
+// Lukas, Niclas, Tim 
 
 document.addEventListener('DOMContentLoaded', async () => {
     initCookieBanner();

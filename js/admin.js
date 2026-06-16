@@ -77,6 +77,8 @@ async function adminSetStatus(bookingId, status, reason) {
     await renderAdminOrders();
 }
 
+// Lukas 
+
 async function adminRejectOrder(bookingId) {
     var reason = prompt('Bitte geben Sie einen Ablehnungsgrund an (z.B. nicht verfügbare Items):');
     if (reason === null) return;

@@ -45,6 +45,8 @@ function getBuchungsHinweis() {
     return null;
 }
 
+// Lukas
+
 // Buchen-Button auf der Fahrzeugdetailseite (ID "buchungsBtn")
 function initBookingButton() {
     var btn = document.getElementById('buchungsBtn');
