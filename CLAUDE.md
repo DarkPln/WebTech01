@@ -33,7 +33,7 @@ Auto24 is a PHP/JS car marketplace built on a custom MVC framework with a front 
 - `VIEW_PATH` — shortcut to `app/views/`
 
 **Database access:**
-All DB access goes through `Database::getInstance()` which returns a singleton `mysqli` connection to `localhost/auto24`. Queries use `mysqli_real_escape_string()` — no prepared statements.
+All DB access goes through `Database::getInstance()` which returns a singleton `mysqli` connection to `localhost/auto24`. Queries are built via plain string interpolation — no escaping, no prepared statements (intentional for this project; SQL-injection hardening is out of scope).
 
 **Auth:**
 Session-based via PHP `$_SESSION`. Two hardcoded accounts in `AuthController::login()`: `admin`/`Admin1234` (admin) and `TestUser`/`TestPass123` (demo user). Passwords for real users are stored in plaintext in the DB.

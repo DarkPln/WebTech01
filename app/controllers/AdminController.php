@@ -132,14 +132,11 @@ class AdminController extends Controller {
         $status     = $input['status'] ?? '';
         $reason     = $input['reason'] ?? '';
 
-        $db          = Database::getInstance();
-        $eStatus     = mysqli_real_escape_string($db, $status);
-        $eReason     = mysqli_real_escape_string($db, $reason);
-        $eBookingKey = mysqli_real_escape_string($db, $bookingKey);
+        $db = Database::getInstance();
 
-        mysqli_query($db, "UPDATE bookings SET status='$eStatus', reason='$eReason', updated_at=NOW() WHERE booking_key='$eBookingKey'");
+        mysqli_query($db, "UPDATE bookings SET status='$status', reason='$reason', updated_at=NOW() WHERE booking_key='$bookingKey'");
 
-        $bkgRes  = mysqli_query($db, "SELECT user_id, car_name FROM bookings WHERE booking_key='$eBookingKey'");
+        $bkgRes  = mysqli_query($db, "SELECT user_id, car_name FROM bookings WHERE booking_key='$bookingKey'");
         $booking = mysqli_fetch_assoc($bkgRes);
         if ($booking && (int)$booking['user_id'] > 0) {
             $userId  = (int)$booking['user_id'];
@@ -210,9 +207,8 @@ class AdminController extends Controller {
         $input    = json_decode(file_get_contents('php://input'), true) ?? [];
         $username = $input['username'] ?? '';
 
-        $db    = Database::getInstance();
-        $eUser = mysqli_real_escape_string($db, $username);
-        $res   = mysqli_query($db, "SELECT id FROM users WHERE username = '$eUser'");
+        $db  = Database::getInstance();
+        $res = mysqli_query($db, "SELECT id FROM users WHERE username = '$username'");
         $row   = mysqli_fetch_assoc($res);
         if (!$row) { $this->json(['success' => false, 'message' => 'Nutzer nicht gefunden']); return; }
 

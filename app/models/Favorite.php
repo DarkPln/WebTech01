@@ -1,5 +1,7 @@
 <?php
 
+// Lukas Favoritenlogik
+
 class Favorite extends Model {
     public static function toggle(int $userId, int $carId): string {
         $db  = self::db();
@@ -12,17 +14,22 @@ class Favorite extends Model {
         return 'added';
     }
 
+
+// 
+
     public static function findByUser(int $userId): array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT car_id FROM favorites WHERE user_id = $userId");
         return $res ? array_column(mysqli_fetch_all($res, MYSQLI_ASSOC), 'car_id') : [];
     }
 
+// holt Autos von User die er als Favoriten gespeichert hat 
+
     public static function getCarsForUser(int $userId): array {
         $db      = self::db();
         $favIds  = self::findByUser($userId);
         if (empty($favIds)) return [];
-        $list = implode(',', array_map('intval', $favIds));
+        $list = implode(',', $favIds);
         $res  = mysqli_query($db, "SELECT * FROM cars WHERE iid IN ($list)");
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }

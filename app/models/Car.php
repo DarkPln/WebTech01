@@ -27,19 +27,19 @@ class Car extends Model {
 
     public static function create(array $d): bool {
         $db = self::db();
-        $name      = self::escape($d['name']);
-        $descr     = self::escape($d['beschreibung'] ?? '');
-        $img       = self::escape($d['imagepath']);
+        $name      = $d['name'];
+        $descr     = $d['beschreibung'] ?? '';
+        $img       = $d['imagepath'];
         $preis     = (float)$d['preis'];
-        $kat       = self::escape($d['kategorie']);
-        $unkat     = self::escape($d['unterkategorie']);
-        $marke     = self::escape($d['marke']);
-        $modell    = self::escape($d['modell']);
+        $kat       = $d['kategorie'];
+        $unkat     = $d['unterkategorie'];
+        $marke     = $d['marke'];
+        $modell    = $d['modell'];
         $baujahr   = (int)$d['baujahr'];
-        $kraft     = self::escape($d['kraftstoff']);
+        $kraft     = $d['kraftstoff'];
         $km        = (int)$d['kilometerstand'];
         $ps        = (int)$d['leistung_ps'];
-        $antrieb   = self::escape($d['antrieb']);
+        $antrieb   = $d['antrieb'];
 
         $nxtRes  = mysqli_query($db, "SELECT COALESCE(MAX(iid), 100) + 1 AS next FROM cars");
         $nextIid = (int)mysqli_fetch_assoc($nxtRes)['next'];

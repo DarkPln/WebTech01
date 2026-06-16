@@ -159,9 +159,8 @@ class AuthController extends Controller {
 
         $userId = (int)$_SESSION['user_id'];
         $db     = Database::getInstance();
-        $eUser  = mysqli_real_escape_string($db, $newUsername);
 
-        $chkRes = mysqli_query($db, "SELECT id FROM users WHERE username = '$eUser' AND id != $userId");
+        $chkRes = mysqli_query($db, "SELECT id FROM users WHERE username = '$newUsername' AND id != $userId");
         if (mysqli_fetch_assoc($chkRes)) {
             $this->json(['success' => false, 'message' => 'Benutzername bereits vergeben']);
             return;

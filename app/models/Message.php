@@ -18,11 +18,9 @@ class Message extends Model {
     }
 
     public static function create(int $userId, string $title, string $body): bool {
-        $db    = self::db();
-        $eTitle = self::escape($title);
-        $eBody  = self::escape($body);
+        $db = self::db();
         return (bool)mysqli_query($db,
-            "INSERT INTO messages (user_id, title, body, is_read) VALUES ($userId, '$eTitle', '$eBody', 0)"
+            "INSERT INTO messages (user_id, title, body, is_read) VALUES ($userId, '$title', '$body', 0)"
         );
     }
 }
