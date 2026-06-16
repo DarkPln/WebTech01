@@ -6,8 +6,7 @@ class User extends Model {
 // user finden
     public static function findByUsername(string $username): ?array {
         $db   = self::db();
-        $u    = self::escape($username);
-        $res  = mysqli_query($db, "SELECT id, username, password, is_locked, is_admin FROM users WHERE username = '$u'");
+        $res  = mysqli_query($db, "SELECT id, username, password, is_locked, is_admin FROM users WHERE username = '$username'");
         return $res ? mysqli_fetch_assoc($res) ?: null : null;
     }
 
@@ -23,17 +22,14 @@ class User extends Model {
     // user anlegen
     public static function create(string $username, string $password): bool {
         $db = self::db();
-        $u  = self::escape($username);
-        $p  = self::escape($password);
-        return (bool)mysqli_query($db, "INSERT INTO users (username, password) VALUES ('$u', '$p')");
+        return (bool)mysqli_query($db, "INSERT INTO users (username, password) VALUES ('$username', '$password')");
     }
 
 
     // gibt es user schon? reg 
     public static function usernameExists(string $username): bool {
         $db  = self::db();
-        $u   = self::escape($username);
-        $res = mysqli_query($db, "SELECT id FROM users WHERE username = '$u'");
+        $res = mysqli_query($db, "SELECT id FROM users WHERE username = '$username'");
         return $res && mysqli_num_rows($res) > 0;
     }
 
@@ -42,8 +38,7 @@ class User extends Model {
         $db   = self::db();
         $sets = [];
         foreach ($fields as $col => $val) {
-            $safe   = self::escape((string)$val);
-            $sets[] = "$col = '$safe'";
+            $sets[] = "$col = '$val'";
         }
         return (bool)mysqli_query($db, "UPDATE users SET " . implode(', ', $sets) . " WHERE id = $id");
     }

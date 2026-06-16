@@ -65,7 +65,7 @@ class FavoriteController extends Controller {
             $cars   = [];
             if (!empty($favIds)) {
                 $db   = Database::getInstance();
-                $list = implode(',', array_map('intval', $favIds));
+                $list = implode(',', $favIds);
                 $res  = mysqli_query($db, "SELECT * FROM cars WHERE iid IN ($list)");
                 $cars = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
             }

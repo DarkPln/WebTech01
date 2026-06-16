@@ -16,21 +16,9 @@ function getCookie(name) {
     }, null);
 }
 
-// Löscht ein Cookie sofort
-function deleteCookie(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax';
-}
-
-// Prüft ob Cookies im Browser aktiviert sind, indem ein Test-Cookie gesetzt und gelesen wird
+// Prüft ob Cookies im Browser aktiviert sind
 function areCookiesEnabled() {
-    try {
-        document.cookie = '__auto24test=1; SameSite=Lax';
-        var enabled = document.cookie.indexOf('__auto24test') !== -1;
-        deleteCookie('__auto24test');
-        return enabled;
-    } catch (e) {
-        return false;
-    }
+    return navigator.cookieEnabled;
 }
 
 // ===== COOKIE-BANNER =====

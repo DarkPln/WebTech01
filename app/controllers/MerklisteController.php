@@ -1,7 +1,10 @@
 <?php
 
 class MerklisteController extends Controller {
-    public function index(): void {
+   
+// Berechnung Mengenrabatt und laden der Merkliste bzw der favoriten eines nutzers, wenn er eingeloggt ist.
+
+public function index(): void {
         $userId = $_SESSION['user_id'] ?? null;
         $useDB  = ($userId !== null && $userId > 0);
 
@@ -14,7 +17,7 @@ class MerklisteController extends Controller {
                 $gemerkteAutos = [];
             } else {
                 $db    = Database::getInstance();
-                $list  = implode(',', array_map('intval', $favIds));
+                $list  = implode(',', $favIds);
                 $res   = mysqli_query($db, "SELECT * FROM cars WHERE iid IN ($list)");
                 $gemerkteAutos = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
             }

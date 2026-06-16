@@ -57,11 +57,10 @@ class ListingController extends Controller {
         $uid      = $_SESSION['user_id'];
         $username = $_SESSION['username'] ?? '';
         $db       = Database::getInstance();
-        $eUname   = mysqli_real_escape_string($db, $username);
         $res      = mysqli_query($db,
             "SELECT listing_key AS id, make, model, year, price, status, created_at AS createdAt
              FROM listings
-             WHERE user_id = $uid OR username = '$eUname'
+             WHERE user_id = $uid OR username = '$username'
              ORDER BY created_at DESC"
         );
         $inserate = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
