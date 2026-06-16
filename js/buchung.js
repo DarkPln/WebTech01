@@ -1,5 +1,4 @@
-// ===== BUCHUNGEN =====
-// Autor: tim
+//Tim
 
 // Sendet eine neue Buchung an den Server und gibt die Antwort zurück
 async function createBooking(carId, carName, carPrice) {

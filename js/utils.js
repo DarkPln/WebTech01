@@ -1,5 +1,5 @@
 // ===== UTILITIES & UI-HILFEN =====
-// Niclas + tim
+// Niclas
 
 /* Light Mode Toggle: Niclas */
 function toggleMode() {

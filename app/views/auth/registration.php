@@ -1,4 +1,4 @@
-﻿<!-- Niclas -->
+﻿<!-- Tim -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -48,4 +48,4 @@
     <?php require VIEW_PATH . 'partials/footer.php'; ?>
 </body>
 </html>
-<!-- Niclas -->
+<!-- Tim -->
