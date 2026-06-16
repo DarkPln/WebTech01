@@ -1,3 +1,4 @@
+//Modell
 <?php
 
 abstract class Model {
