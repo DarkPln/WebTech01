@@ -1141,6 +1141,7 @@ button.car-fav {
     color: rgb(227, 27, 27);
 }
 
+/* Scrollbereich: overflow:hidden schneidet Karten ab, grab-Cursor zeigt Draggbarkeit */
 .car-carousel-viewport {
     overflow: hidden;
     cursor: grab;
@@ -1148,10 +1149,12 @@ button.car-fav {
     -webkit-user-select: none;
 }
 
+/* Cursor wechselt zu grabbing sobald carousel.js isDragging=true setzt */
 .car-carousel-viewport.dragging {
     cursor: grabbing;
 }
 
+/* Flex-Zeile die per JS mit translateX verschoben wird; will-change aktiviert GPU-Layer */
 .car-carousel-track {
     display: flex;
     gap: 40px;
@@ -1159,6 +1162,7 @@ button.car-fav {
     padding: 8px 0 20px;
 }
 
+/* Einzelne Karte mit fester Breite 480px, flex-shrink:0 verhindert Schrumpfen */
 .carousel-card {
     flex: 0 0 480px;
     background: #111;
@@ -1183,6 +1187,7 @@ button.car-fav {
     background: #1a1a1a;
 }
 
+/* pointer-events:none verhindert, dass Bild-Drag den Karussell-Drag stört */
 .carousel-card-img img {
     width: 100%;
     height: 100%;
@@ -1209,6 +1214,7 @@ button.car-fav {
     text-transform: uppercase;
 }
 
+/* text-overflow:ellipsis kürzt lange Modellnamen mit "…" */
 .carousel-card-model {
     font-size: 28px;
     font-weight: 600;
@@ -1388,8 +1394,9 @@ button.car-fav {
     font-weight: 700;
 }
 
-/* ===== AUTH-SEITEN ===== */
+/*AUTH-SEITEN*/
 
+/* Vollbild-Zentrierungslayout für Login, Registrierung und Logout */
 .auth-section {
     min-height: calc(100vh - 64px);
     display: flex;
@@ -1401,6 +1408,7 @@ button.car-fav {
         linear-gradient(135deg, #0a0a0a 0%, #180505 50%, #0a0a0a 100%);
 }
 
+/* Karten-Box, die das Formular umschließt; max 440px damit es auf mobil gut passt */
 .auth-card {
     background: #111111;
     border: 1px solid #2e2e2e;
@@ -1433,6 +1441,7 @@ button.car-fav {
     margin-bottom: 8px;
 }
 
+/* Fehlertext unter einem Eingabefeld; min-height:16px verhindert Layout-Sprung wenn leer */
 .field-error {
     display: block;
     font-size: 12px;
@@ -1445,7 +1454,7 @@ button.car-fav {
     margin-right: auto;
 }
 
-/* ÜBER UNS SEITE (Tim),    Service-Karten, Kontaktbox und Team-Grid */
+/* ÜBER UNS SEITE (Tim), Service-Karten, Kontaktbox und Team-Grid */
 
 /* Abschnitt mit den vier Service-Karten */
 .about-services-section {
@@ -1715,6 +1724,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 /*BUCHUNGS-STATUS BADGES*/
 
+/* Basis-Stil für alle Status-Pillen; Farbe kommt von der jeweiligen status-* Klasse */
 .buchung-status {
     display: inline-block;
     padding: 4px 12px;
@@ -1726,6 +1736,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     white-space: nowrap;
 }
 
+/* Farbcodes spiegeln die DB-Werte in BookingController::listHtml() wider */
 .status-bestellt       { background: #1a3a7a; color: #aac4ff; border: 1px solid #2255cc; }
 .status-in_bearbeitung { background: #4a3000; color: #ffc96e; border: 1px solid #cc8800; }
 .status-versandt       { background: #2e1a5a; color: #c9a8ff; border: 1px solid #7744cc; }
@@ -1735,6 +1746,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 /*BUCHUNGEN SEITE*/
 
+/* Zentrierter Inhaltsbereich der Buchungsübersicht */
 .buchungen-wrapper {
     width: 100%;
     max-width: 720px;
@@ -1747,6 +1759,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     padding: 40px 0;
 }
 
+/* Einzelne Buchungskarte; vom Server gerendert und per JS per innerHTML eingefügt */
 .buchung-card {
     background: #111;
     border: 1px solid #2e2e2e;
@@ -1785,6 +1798,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     flex-wrap: wrap;
 }
 
+/* Roter Hinweiskasten für den Ablehnungsgrund; nur sichtbar wenn status=abgelehnt */
 .buchung-reason {
     background: rgba(170, 34, 34, 0.12);
     border: 1px solid rgba(170, 34, 34, 0.4);
@@ -1822,6 +1836,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 
 /*ADMIN SEITE*/
 
+/* Eigene fixierte Nav für das Admin-Dashboard (getrennt von der öffentlichen nav) */
 .admin-nav {
     position: fixed;
     top: 0;
@@ -1839,6 +1854,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     box-sizing: border-box;
 }
 
+/* Rotes "Admin"-Pill neben dem Logo */
 .admin-badge {
     font-size: 11px;
     letter-spacing: 2px;
@@ -1929,6 +1945,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     color: white;
 }
 
+/* Tab-Inhalt standardmäßig versteckt; JS setzt .active um ihn einzublenden */
 .admin-tab-content {
     display: none;
     padding: 24px 0;
@@ -1938,6 +1955,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     display: block;
 }
 
+/* Karte für eine einzelne Buchung im Admin-Dashboard (vom Server als HTML-Fragment gerendert) */
 .admin-order-card {
     background: #111;
     border: 1px solid #2e2e2e;
@@ -1983,6 +2001,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     margin-top: 4px;
 }
 
+/* max-width:none und width:auto überschreiben die globale Button-Regel (400px breit) */
 .admin-order-actions button,
 .admin-user-row button {
     max-width: none;
@@ -1995,14 +2014,17 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     letter-spacing: 0;
 }
 
+/* transform:none verhindert den globalen translateY-Hover-Effekt bei Admin-Buttons */
 .admin-order-actions button:hover,
 .admin-user-row button:hover {
     transform: none;
 }
 
+/* Dunkelroter Ablehnen-Button in Buchungs- und Inserat-Karten */
 .btn-reject { background: #5a0000; border-color: #8B0000; }
 .btn-reject:hover { background: #7a0000; }
 
+/* Zeile für einen registrierten Nutzer in der Admin-Nutzerliste */
 .admin-user-row {
     display: flex;
     align-items: center;
@@ -2015,6 +2037,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     flex-wrap: wrap;
 }
 
+/* flex:1 lässt den Namen den verfügbaren Platz einnehmen */
 .admin-user-name {
     flex: 1;
     font-weight: 600;
@@ -2029,10 +2052,11 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     letter-spacing: 0.5px;
 }
 
+/* Grün/Rot je nachdem ob Konto aktiv oder gesperrt ist */
 .user-active { color: #6be46b; }
 .user-locked { color: #ff7070; }
 
-
+/* Sperren-Button (dunkelrot) und Entsperren-Button (dunkelgrün) */
 .btn-lock       { background: #5a0000; }
 .btn-lock:hover { background: #7a0000; }
 .btn-unlock     { background: #0a3a0a; }
@@ -3155,6 +3179,7 @@ body.light-mode .upload-area p strong { color: #333; }
 
 /* USER DASHBOARD */
 
+/* Zentrierter Hauptcontainer der Nutzerprofil-Seite (user/index.php) */
 .user-dashboard {
     max-width: 860px;
     margin: 0 auto;
@@ -3180,6 +3205,7 @@ body.light-mode .upload-area p strong { color: #333; }
     color: rgb(227,27,27);
 }
 
+/* Link zum Admin-Dashboard, per JS nur eingeblendet wenn authState.isAdmin */
 .user-admin-link {
     font-size: 13px;
     color: #888;
@@ -3195,6 +3221,7 @@ body.light-mode .upload-area p strong { color: #333; }
 body.light-mode .user-admin-link { border-color: #ccc; color: #555; }
 body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; background: rgba(0,0,0,0.04); }
 
+/* Roter Abmelden-Link oben rechts im Dashboard-Header */
 .user-logout-link {
     font-size: 13px;
     color: rgb(227, 27, 27);
@@ -3207,22 +3234,25 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
 
 .user-logout-link:hover { color: #fff; background: rgb(200, 20, 20); border-color: rgb(200, 20, 20); }
 
+/* Override der globalen grünen Validierungsborder im Dashboard, neutrale Farbe stattdessen */
 .user-dashboard input:valid:not(:focus):not(:placeholder-shown):not([type="submit"]):not([type="reset"]):not([type="button"]),
 .user-dashboard textarea:valid:not(:focus):not(:placeholder-shown) {
     border-color: #333333;
 }
 
-/* Profile two-column grid */
+/* 2-spaltiges Grid für Username/E-Mail/Telefon/Stadt im Profil-Tab */
 .user-profile-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0 24px;
 }
 
+/* grid-column: 1 / -1 lässt ein Feld über beide Spalten laufen */
 .user-profile-grid .full-width {
     grid-column: 1 / -1;
 }
 
+/* Trennlinie zwischen Abschnitten (z.B. "Profildaten" / "Passwort") */
 .user-section-title {
     font-size: 13px;
     font-weight: 600;
@@ -3234,7 +3264,7 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
     border-bottom: 1px solid #2e2e2e;
 }
 
-/* Message cards */
+/* Einzelne Inbox-Nachricht; vom Server gerendert und per JS per innerHTML eingefügt */
 .msg-card {
     background: #111;
     border: 1px solid #2e2e2e;
@@ -3244,6 +3274,7 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
     transition: border-color 0.2s;
 }
 
+/* Ungelesene Nachricht: linker roter Rand und leicht hellerer Hintergrund */
 .msg-card.unread {
     border-left: 3px solid rgb(227,27,27);
     background: #141414;
@@ -3263,6 +3294,7 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
     flex: 1;
 }
 
+/* Roter Punkt-Prefix vor dem Titel bei ungelesenen Nachrichten */
 .msg-card.unread .msg-card-title::before {
     content: '● ';
     color: rgb(227,27,27);
@@ -3288,7 +3320,7 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
     padding: 32px 0;
 }
 
-/* Tab badge */
+/* Rotes Zähler-Badge im Tab-Header für ungelesene Nachrichten, per JS eingeblendet */
 .tab-badge {
     display: none;
     align-items: center;
@@ -3312,6 +3344,7 @@ body.light-mode .user-admin-link:hover { color: #111; border-color: #aaa; backgr
     margin-bottom: 16px;
 }
 
+/* "Alle als gelesen markieren"-Button, transform:none verhindert globalen Hover-Effekt */
 .msg-mark-read-btn {
     font-size: 12px;
     color: #888;
