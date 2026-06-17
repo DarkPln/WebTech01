@@ -1,5 +1,5 @@
-﻿/* Lukas, Tim, Niclas */
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+<!-- Lukas, Tim, Niclas -->
 <html lang="de">
 <head>
     <meta charset="UTF-8">
