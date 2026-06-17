@@ -6,7 +6,7 @@ class AdminController extends Controller {
 
     // Admin-Dashboard anzeigen
     public function index(): void {
-        $this->render('admin/index');
+        $this->render('admin/panel');
     }
 
     // Alle Inserate als JSON zurückgeben
