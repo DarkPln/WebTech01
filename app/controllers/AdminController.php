@@ -9,8 +9,6 @@ class AdminController extends Controller {
         $this->render('admin/index');
     }
 
-    // ---- Listings ----
-
     // Alle Inserate als JSON zurückgeben
     public function getListings(): void {
         $this->requireAdmin();
@@ -142,8 +140,6 @@ class AdminController extends Controller {
         }
     }
 
-    // ---- Orders (Bookings) ----
-
     // Alle Buchungen als JSON zurückgeben
     public function getOrders(): void {
         $this->requireAdmin();
@@ -189,7 +185,7 @@ class AdminController extends Controller {
         // $_SESSION direkt prüfen, da requireAdmin() JSON statt HTML zurückgeben würde
         if (empty($_SESSION['is_admin'])) { $this->emptyMsg('Kein Zugriff.'); return; }
 
-        // URL-Parameter ?bereich → SQL-WHERE Bedingung
+        // URL-Parameter ?bereich -> SQL-WHERE Bedingung
         $bereich   = $_GET['bereich'] ?? 'new';
         $filterMap = ['new' => "status='bestellt'", 'processing' => "status IN('in_bearbeitung','versandt')", 'rejected' => "status IN('abgelehnt','storniert')", 'completed' => "status='fertig'"];
 
@@ -213,7 +209,7 @@ class AdminController extends Controller {
             $reason = $b['reason']
                 ? '<div class="buchung-reason">Grund: ' . htmlspecialchars($b['reason']) . '</div>'
                 : '';
-            // Buttons je nach Workflow-Stufe (bestellt → in_bearbeitung → versandt → fertig)
+            // Buttons je nach Workflow-Stufe (bestellt -> in_bearbeitung -> versandt -> fertig)
             $actions = '';
             if ($b['status'] === 'bestellt') {
                 $actions = <<<HTML
@@ -256,8 +252,6 @@ class AdminController extends Controller {
         }
     }
 
-    // ---- Users ----
-
     // Alle Nutzer als JSON zurückgeben
     public function getUsers(): void {
         $this->requireAdmin();
@@ -271,7 +265,7 @@ class AdminController extends Controller {
         $input    = json_decode(file_get_contents('php://input'), true) ?? [];
         $username = $input['username'] ?? '';
 
-        // toggleLock() braucht die numerische ID, nicht den Usernamen
+        // toggleLock() braucht die ID, nicht den Usernamen
         $db  = Database::getInstance();
         $res = mysqli_query($db, "SELECT id FROM users WHERE username = '$username'");
         $row = mysqli_fetch_assoc($res);
@@ -309,8 +303,6 @@ class AdminController extends Controller {
             HTML;
         }
     }
-
-    // ---- Cars ----
 
     // Fahrzeug aus dem Marktplatz löschen
     public function deleteCar(): void {
@@ -357,8 +349,6 @@ class AdminController extends Controller {
             HTML;
         }
     }
-
-    // ---- Hilfsmethoden ----
 
     // Einheitliche Fehlermeldung für leere Admin-Tabs
     private function emptyMsg(string $text): void {
