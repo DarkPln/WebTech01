@@ -52,6 +52,7 @@ class CarController extends Controller {
                     $notFoundIds[] = $id;
                 }
             }
+            //Fehler, wenn Fahrzeug nicht gefunden:
             if (empty($fahrzeuge)) {
                 $this->render('errors/vehicleNotFound');
                 return;
