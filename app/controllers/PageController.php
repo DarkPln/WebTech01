@@ -1,4 +1,5 @@
 <?php
+// views rendern wenn sie existieren bzw in der whitelist stehen 
 
 class PageController extends Controller {
     public function show(string $page): void {
