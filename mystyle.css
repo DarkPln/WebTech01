@@ -1031,14 +1031,14 @@ button.car-fav {
     display: block;
     font-size: 15px;
     color: #888;
-    margin-bottom: 8px;
+    margin-bottom: 25px;
 }
 
 .item-compare-row {
     display: flex;
-    gap: 284px;
+    gap: 8px;
     align-items: center;
-    
+    justify-content: space-between;
 }
 
 .compare-button{
@@ -1063,6 +1063,10 @@ button.car-fav {
     color: #fff;
     font-size: 14px;
     min-width: 220px;
+}
+
+#cmpAddSelect {
+    width: 250px;
 }
 
 .item-compare-row select option {
@@ -1093,6 +1097,8 @@ button.car-fav {
 
 .item-compare-btn{
     margin: 0;
+    width: 250px !important;
+    
 }
 
 /*FAHRZEUG-CAROUSEL (Startseite)*/
@@ -2630,6 +2636,11 @@ body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color:
 .item-btn-secondary:hover {
     border-color: #CC0000;
     color: #FF1A1A;
+}
+
+.cmp-actions .item-btn-secondary{
+    width: auto;
+    padding: 14px 40px;
 }
 
 .item-buchungs-note {

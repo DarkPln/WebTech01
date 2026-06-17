@@ -3,12 +3,18 @@
 class ListingController extends Controller {
     //Rendert die Seite zum Erstellen eines neuen Inserats (keine Logik):
     public function sellView(): void {
+        $this->requireLogin();
         $this->render('listings/sell');
     }
 
     //prüft hochgeladende Bilder; erstellt neues Inserat in DB
     public function create(): void {
-        $userId   = $_SESSION['user_id'] ?? null;
+        if (!isset($_SESSION['user_id'])) {
+            $this->json(['success' => false, 'message' => 'Nicht eingeloggt']);
+            return;
+        }
+
+        $userId   = $_SESSION['user_id'];
         $username = $_SESSION['username'] ?? 'Gast';
 
         $uploadedImages = [];

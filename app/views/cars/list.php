@@ -112,6 +112,8 @@
         </div>
     </div>
 
+// Niclas: car cards mit grid 
+
     <div id="carLayout" class="cars-grid horizontal-layout">
         <?php foreach ($fahrzeuge as $auto): ?>
             <div class="car-card"

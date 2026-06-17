@@ -30,7 +30,7 @@ class AuthController extends Controller {
         if (empty($_SESSION['is_admin'])) {
             $this->redirect(BASE_URL . '/auth/login');
         }
-        $this->render('admin/index');
+        $this->render('admin/panel');
     }
 
     // Login verarbeiten und Session setzen

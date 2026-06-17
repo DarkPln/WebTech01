@@ -6,7 +6,7 @@ class BookingController extends Controller {
 
     // Buchungsübersicht des Nutzers anzeigen
     public function index(): void {
-        $this->render('bookings/index');
+        $this->render('bookings/list');
     }
 
     // Neue Buchung erstellen
