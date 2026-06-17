@@ -17,7 +17,7 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
 
 <?php if ($compareMode): ?>
 
-<!-- ═══════════════ VERGLEICHSANSICHT ═══════════════ -->
+<!-- vergleichssicht  -->
 <div class="cmp-wrap">
 
     <div class="cmp-header">
@@ -115,7 +115,7 @@ $currentIdsJson = json_encode(array_map('intval', $currentIds));
 
 <?php else: ?>
 
-<!-- ═══════════════ EINZELANSICHT ═══════════════ -->
+<!-- Einzelansicht --> 
 <div class="item-wrap">
 
     <div>
