@@ -11,7 +11,7 @@ body {
     font-style: normal;
 }
 
-/* ===== TYPOGRAFIE ===== */
+/*TYPOGRAFIE*/
 
 p {
     text-align: center;
@@ -46,7 +46,7 @@ a:hover {
     color: rgb(164, 18, 18);
 }
 
-/* ===== FORMULAR-STYLING ===== */
+/*FORMULAR-STYLING*/
 
 label {
     display: block;
@@ -108,9 +108,9 @@ textarea::placeholder {
     font-style: italic;
 }
 
-/* Spezifische Breite fÃ¼r das Suchfeld nach Automarke */
+/* Spezifische Breite für das Suchfeld nach Automarke */
 #carSearchInput {
-    max-width: 600px; /* ErhÃ¶ht die maximale Breite (statt 400px) */
+    max-width: 600px; /* Erhöht die maximale Breite (statt 400px) */
     width: 100%;
 }
 
@@ -182,7 +182,7 @@ label + br {
     display: none;
 }
 
-/* ===== CHECKBOX UND RADIO ===== */
+/* CHECKBOX */
 
 input[type="checkbox"] {
     width: 18px;
@@ -207,7 +207,7 @@ input[type="radio"] + label {
     cursor: pointer;
 }
 
-/* ===== SELECT ===== */
+/* SELECT */
 
 select {
     cursor: pointer;
@@ -222,7 +222,7 @@ select:disabled {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23666666" d="M1 1l5 5 5-5"/></svg>');
 }
 
-/* ===== FORMULAR-ZUSTÃ„NDE ===== */
+/* FORMULAR-ZUSTÄNDE */
 
 input:disabled,
 textarea:disabled,
@@ -246,7 +246,7 @@ textarea:valid:not(:focus):not(:placeholder-shown) {
     border-color: #2ecc71;
 }
 
-/* ===== ACCESSIBILITY ===== */
+/* ACCESSIBILITY */
 
 *:focus-visible {
     outline: 3px solid rgb(227, 27, 27);
@@ -259,7 +259,7 @@ input[type="reset"] {
     min-height: 44px;
 }
 
-/* ===== NOSCRIPT-BANNER ===== */
+/* NOSCRIPT-BANNER*/
 
 .noscript-banner {
     background: #111;
@@ -270,7 +270,7 @@ input[type="reset"] {
     text-align: center;
 }
 
-/* ===== HILFSKLASSEN ===== */
+/* HILFSKLASSEN */
 
 .demo-hint {
     font-size: 12px;
@@ -298,7 +298,7 @@ input[type="reset"] {
     text-align: center;
 }
 
-/* ===== RESPONSIVE ===== */
+/* RESPONSIVE */
 
 @media screen and (max-width: 768px) {
     h1 { font-size: 28px; }
@@ -335,7 +335,7 @@ input[type="reset"] {
     footer { padding: 30px 1rem 20px; }
 }
 
-/* ===== FOOTER ===== */
+/*FOOTER*/
 
 footer {
     border-top: 1px solid rgba(211, 211, 211, 0.311);
@@ -421,7 +421,7 @@ footer {
     color: rgb(227, 27, 27);
 }
 
-/* ===== LISTEN ===== */
+/*LISTEN*/
 
 ul {
     list-style-type: none;
@@ -436,7 +436,7 @@ li {
     margin: 5px 0;
 }
 
-/* ===== NAVIGATION ===== */
+/*NAVIGATION*/
 
 nav {
     position: fixed;
@@ -550,7 +550,7 @@ a {
     color: rgb(250, 250, 250);
 }
 
-/* ===== AUTO-GRID ===== */
+/*AUTO-GRID*/
 
 .cars-grid {
     display: grid;
@@ -750,7 +750,7 @@ button.car-fav {
     text-decoration: none;
 }
 
-/* ===== STARTSEITE ===== */
+/*STARTSEITE*/
 
 .home-main {
     padding-top: 64px;
@@ -896,7 +896,7 @@ button.car-fav {
     color: lightgray;
 }
 
-/* ===== FAHRZEUGVERGLEICH ===== */
+/*FAHRZEUGVERGLEICH*/
 
 .cmp-wrap {
     max-width: 1100px;
@@ -1095,7 +1095,7 @@ button.car-fav {
     margin: 0;
 }
 
-/* ===== FAHRZEUG-CAROUSEL (Startseite) ===== */
+/*FAHRZEUG-CAROUSEL (Startseite)*/
 
 .car-carousel-section {
     padding: 48px 0 60px;
@@ -1219,7 +1219,7 @@ button.car-fav {
     font-weight: 500;
 }
 
-/* ===== FAVORITENLISTE (Lukas) ===== */
+/*FAVORITENLISTE (Lukas)*/
 
 .nFav-btn {
     font-size: 13px;
@@ -1439,12 +1439,14 @@ button.car-fav {
     margin-right: auto;
 }
 
-/* ===== ÃœBER UNS SEITE (Tim) ===== */
+/* ÜBER UNS SEITE (Tim),    Service-Karten, Kontaktbox und Team-Grid */
 
+/* Abschnitt mit den vier Service-Karten */
 .about-services-section {
     padding: 40px 4rem;
 }
 
+/* 2-spaltiges Grid für die Service-Karten */
 .about-service-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1480,6 +1482,7 @@ button.car-fav {
     margin: 0;
 }
 
+/* Zentrierte Box für Adresse und Kontaktdaten */
 .about-contact-wrapper {
     max-width: 600px;
     margin: 30px auto;
@@ -1498,6 +1501,7 @@ button.car-fav {
     color: white;
 }
 
+/* Labels (Telefon, E-Mail etc.) in Rot hervorheben */
 .about-contact-card strong {
     color: rgb(227, 27, 27);
 }
@@ -1508,6 +1512,7 @@ button.car-fav {
     color: lightgray;
 }
 
+/* Responsive Grid für Team-Karten, bricht automatisch um */
 .about-team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1523,6 +1528,7 @@ button.car-fav {
 }
 
 @media screen and (max-width: 600px) {
+    /* Auf kleinen Bildschirmen: Service-Karten einspaltig */
     .about-service-grid { grid-template-columns: 1fr; }
 }
 
@@ -1530,7 +1536,7 @@ button.car-fav {
     .about-services-section { padding: 30px 1rem; }
 }
 
-/* ===== LIGHT MODE (Niclas / Tim) ===== */
+/*LIGHT MODE (Niclas / Tim)*/
 
 body.light-mode {
     background-color: #f2f2f2;
@@ -1688,7 +1694,7 @@ body.light-mode h1, body.light-mode h2, body.light-mode h3 { color: #1a1a1a; }
 body.light-mode a { color: #1a1a1a; }
 body.light-mode a:hover { color: rgb(200,20,20); }
 
-/* ===== LAYOUT-UMSCHALTUNG (Niclas) ===== */
+/*LAYOUT-UMSCHALTUNG (Niclas)*/
 
 .cars-grid.vertical-layout {
     grid-template-columns: 1fr;
@@ -1701,7 +1707,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-/* ===== BUCHUNGS-STATUS BADGES ===== */
+/*BUCHUNGS-STATUS BADGES*/
 
 .buchung-status {
     display: inline-block;
@@ -1721,7 +1727,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
 .status-storniert      { background: #222;    color: #888;    border: 1px solid #444; }
 .status-abgelehnt      { background: #3a0a0a; color: #ff8888; border: 1px solid #882222; }
 
-/* ===== BUCHUNGEN SEITE ===== */
+/*BUCHUNGEN SEITE*/
 
 .buchungen-wrapper {
     width: 100%;
@@ -1808,7 +1814,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     background: rgba(139,0,0,0.2);
 }
 
-/* ===== ADMIN SEITE ===== */
+/*ADMIN SEITE*/
 
 .admin-nav {
     position: fixed;
@@ -2033,7 +2039,7 @@ body.light-mode a:hover { color: rgb(200,20,20); }
     font-size: 14px;
 }
 
-/* ===== MERKLISTE (Lukas) ===== */
+/*MERKLISTE (Lukas)*/
 
 .merkliste-wrap {
     max-width: 900px;
@@ -2314,7 +2320,7 @@ body.light-mode .merkliste-summary-sep {
 
 .merkliste-btn-ghost:hover { border-color: #CC0000; color: #FF1A1A; }
 
-/* ===== FAQ ===== */
+/*FAQ*/
 
 .faq-section {
     max-width: 820px;
@@ -2402,7 +2408,7 @@ body.light-mode details.faq-item summary { color: #1a1a1a; }
 body.light-mode details.faq-item p { color: #555; }
 body.light-mode .ai-disclaimer { background: rgba(200,20,20,0.04); border-color: rgba(200,20,20,0.15); color: #777; }
 
-/* ===== FAHRZEUGDETAIL ===== */
+/*FAHRZEUGDETAIL*/
 
 .item-wrap {
     max-width: 1100px;
@@ -2832,7 +2838,7 @@ input[type="range"]::-moz-range-thumb {
     letter-spacing: 0.5px;
 }
 
-/* ===== SUCHKONFIGURATOR TOGGLE ===== */
+/* SUCHKONFIGURATOR TOGGLE */
 
 .search-config-bar {
     margin-top: 80px;
@@ -2958,7 +2964,7 @@ body.light-mode .search-toggle-btn.active {
     color: #1a1a1a;
 }
 
-/* ===== FAV NOTIFICATION ===== */
+/* FAV NOTIFICATION*/
 
 .fav-notification {
     position: fixed;
@@ -3006,8 +3012,7 @@ body.light-mode .fav-notification {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== BILD-UPLOAD (Tim) ===== */
-
+/* Klickbare Dropzone mit gestricheltem Rand */
 .upload-area {
     border: 2px dashed #c00;
     border-radius: 8px;
@@ -3021,6 +3026,7 @@ body.light-mode .fav-notification {
     justify-self: center;
 }
 
+/* Visuelles Feedback beim Hover oder aktivem Drag-over */
 .upload-area:hover,
 .upload-area.dragover {
     background: rgba(200, 0, 0, 0.08);
@@ -3043,6 +3049,7 @@ body.light-mode .fav-notification {
     color: #ccc;
 }
 
+/* Flex-Raster für die hochgeladenen Vorschaubilder */
 .image-preview-grid {
     display: flex;
     flex-wrap: wrap;
@@ -3051,6 +3058,7 @@ body.light-mode .fav-notification {
     margin-bottom: 16px;
 }
 
+/* Einzelnes Vorschaubild mit festem 4:3-Seitenverhältnis */
 .image-preview-item {
     position: relative;
     width: 130px;
@@ -3068,6 +3076,7 @@ body.light-mode .fav-notification {
     display: block;
 }
 
+/* X-Button oben rechts auf jedem Vorschaubild zum Entfernen */
 .image-preview-item .remove-img {
     position: absolute;
     top: 5px;
@@ -3096,6 +3105,7 @@ body.light-mode .fav-notification {
     background: rgba(180, 0, 0, 0.85);
 }
 
+/* Zähler (z.B. "3 / 10 Bilder") – per JS eingeblendet */
 .upload-count {
     display: none;
     font-size: 12px;
@@ -3119,7 +3129,7 @@ body.light-mode .upload-area p strong { color: #333; }
     border-color: rgb(227, 27, 7);
 }
 
-/* Grün sobald ausgefüllt (Klasse wird per JS gesetzt) */
+/* Grün sobald ausgefüllt (Klasse .field-ok wird per JS gesetzt) */
 #vehicleForm input[required].field-ok,
 #vehicleForm select[required].field-ok,
 #vehicleForm textarea[required].field-ok {
@@ -3132,7 +3142,7 @@ body.light-mode .upload-area p strong { color: #333; }
 #vehicleForm input[required].field-ok:focus,
 #vehicleForm select[required].field-ok:focus { border-color: #2ecc71; box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
 
-/* ===== USER DASHBOARD ===== */
+/* USER DASHBOARD */
 
 .user-dashboard {
     max-width: 860px;
@@ -3325,7 +3335,7 @@ body.light-mode .msg-mark-read-btn:hover { color: #111; border-color: #aaa; }
 }
 body.light-mode .image-preview-item { border-color: #ccc; background: #f4f4f4; }
 
-/* ===== FINANZIERUNGSRECHNER (Detailseite) ===== */
+/* FINANZIERUNGSRECHNER (Detailseite)*/
 
 .item-financing {
     border: 1px solid #2e2e2e;
@@ -3447,7 +3457,7 @@ body.light-mode .item-financing-result strong { color: #111; }
     gap: 1rem;
 }
 
-/* ===== INLINE-CSS ERSATZ ===== */
+/* INLINE-CSS ERSATZ */
 
 /* Pflichtfeld-Sternchen und optionale Labels */
 .required     { color: rgb(227, 27, 7); }
@@ -3587,7 +3597,7 @@ body.light-mode .item-financing-result strong { color: #111; }
 body.light-mode .error-message { color: #555; }
 .merkliste-footer-btns form { margin: 0; }
 
-/* ===== COOKIE-BANNER ===== */
+/*COOKIE-BANNER*/
 .cookie-disabled-banner {
     position: fixed;
     top: 64px;
