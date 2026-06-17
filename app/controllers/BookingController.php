@@ -1,27 +1,33 @@
 <?php
 // Tim
 
+// Verwaltet Buchungen: erstellen, stornieren und anzeigen
 class BookingController extends Controller {
+
+    // Buchungsübersicht des Nutzers anzeigen
     public function index(): void {
         $this->render('bookings/index');
     }
 
+    // Neue Buchung erstellen
     public function create(): void {
         if (!isset($_SESSION['user_id'])) {
             $this->json(['success' => false, 'message' => 'Nicht eingeloggt']);
             return;
         }
 
-        $input     = json_decode(file_get_contents('php://input'), true) ?? [];
-        $carId     = (int)($input['carId'] ?? 0);
-        $carName   = trim($input['carName'] ?? '');
-        $carPrice  = (float)($input['carPrice'] ?? 0);
+        // Roher JSON-Body lesen, da JS application/json schickt statt $_POST
+        $input    = json_decode(file_get_contents('php://input'), true) ?? [];
+        $carId    = (int)($input['carId'] ?? 0);
+        $carName  = trim($input['carName'] ?? '');
+        $carPrice = (float)($input['carPrice'] ?? 0);
 
         if (!$carId) {
             $this->json(['success' => false, 'message' => 'Ungültige Fahrzeug-ID']);
             return;
         }
 
+        // Gesperrte Konten dürfen nicht buchen (hardcoded Accounts user_id 0/-1 überspringen)
         $uid = $_SESSION['user_id'];
         if ($uid > 0) {
             $db      = Database::getInstance();
@@ -33,6 +39,7 @@ class BookingController extends Controller {
             }
         }
 
+        // Buchung in DB anlegen und generierten Key zurückgeben
         $key = Booking::create([
             'user_id'   => $uid,
             'username'  => $_SESSION['username'],
@@ -44,15 +51,18 @@ class BookingController extends Controller {
         $this->json(['success' => true, 'id' => $key]);
     }
 
+    // Eigene Buchung stornieren (nur der Buchungsbesitzer darf stornieren)
     public function cancel(): void {
         if (!isset($_SESSION['user_id'])) {
             $this->json(['success' => false, 'message' => 'Nicht eingeloggt']);
             return;
         }
 
+        // Roher JSON-Body lesen, da JS application/json schickt statt $_POST
         $input = json_decode(file_get_contents('php://input'), true) ?? [];
         $key   = $input['id'] ?? '';
 
+        // user_id wird mitgegeben damit Nutzer nur eigene Buchungen stornieren können
         if (Booking::cancel($key, (int)$_SESSION['user_id'])) {
             $this->json(['success' => true]);
         } else {
@@ -60,6 +70,7 @@ class BookingController extends Controller {
         }
     }
 
+    // Alle Buchungen des eingeloggten Nutzers als JSON zurückgeben
     public function listJson(): void {
         if (!isset($_SESSION['user_id'])) {
             $this->json(['success' => false, 'bookings' => []]);
@@ -69,18 +80,19 @@ class BookingController extends Controller {
     }
 
 
+// Lukas
 
-// Lukas 
-
+    // HTML-Fragment mit allen Buchungen des Nutzers (JS setzt es per innerHTML ein)
     public function listHtml(): void {
         if (!isset($_SESSION['user_id'])) {
             echo '<p class="buchungen-empty">Nicht eingeloggt.</p>';
             return;
         }
 
-        $uid      = (int)$_SESSION['user_id'];
-        $db       = Database::getInstance();
-        $res      = mysqli_query($db,
+        $uid = (int)$_SESSION['user_id'];
+        $db  = Database::getInstance();
+        // LEFT JOIN auf cars um das Vorschaubild zu laden (kann NULL sein wenn Auto gelöscht wurde)
+        $res = mysqli_query($db,
             "SELECT b.booking_key AS id, b.car_name AS carName, b.car_price AS carPrice,
                     b.status, b.reason, b.created_at AS createdAt,
                     c.imagepath
@@ -91,6 +103,7 @@ class BookingController extends Controller {
         );
         $buchungen = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 
+        // Status-DB-Werte auf lesbare Labels mappen
         $statusLabels = [
             'bestellt'       => 'Bestellt',
             'in_bearbeitung' => 'In Bearbeitung',
@@ -107,12 +120,12 @@ class BookingController extends Controller {
         }
 
         foreach ($buchungen as $buchung) {
-            $datum    = date('d.m.Y', strtotime($buchung['createdAt']));
-            $label    = $statusLabels[$buchung['status']] ?? $buchung['status'];
-            $id       = htmlspecialchars($buchung['id']);
-            $status   = htmlspecialchars($buchung['status']);
-            $carName  = htmlspecialchars($buchung['carName']);
-            $price    = number_format($buchung['carPrice'], 0, ',', '.');
+            $datum   = date('d.m.Y', strtotime($buchung['createdAt']));
+            $label   = $statusLabels[$buchung['status']] ?? $buchung['status'];
+            $id      = htmlspecialchars($buchung['id']);
+            $status  = htmlspecialchars($buchung['status']);
+            $carName = htmlspecialchars($buchung['carName']);
+            $price   = number_format($buchung['carPrice'], 0, ',', '.');
             ?>
 <div class="buchung-card">
     <div class="buchung-header">
@@ -126,7 +139,7 @@ class BookingController extends Controller {
     <?php if ($buchung['status'] === 'abgelehnt' && $buchung['reason']): ?>
     <div class="buchung-reason">Ablehnungsgrund: <?= htmlspecialchars($buchung['reason']) ?></div>
     <?php endif; ?>
-    <?php if ($buchung['status'] === 'bestellt'): ?>
+    <?php if ($buchung['status'] === 'bestellt'): // Stornieren nur bei noch offenen Buchungen ?>
     <div class="buchung-actions">
         <button class="buchung-cancel-btn" onclick="handleCancelBooking('<?= $id ?>')">Buchung stornieren</button>
     </div>
