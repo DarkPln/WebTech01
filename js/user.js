@@ -1,5 +1,6 @@
 //Tim
 
+// Meldung in ein Element schreiben und nach 3,5 Sekunden wieder ausblenden
 function showMsg(el, text) {
     if (!el) return;
     el.textContent = text;
@@ -7,6 +8,7 @@ function showMsg(el, text) {
     setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 
+// Anzahl ungelesener Nachrichten laden und Badge in der Nav aktualisieren
 function loadUnreadBadge() {
     var badge = document.getElementById('msgBadge');
     if (!badge) return;
@@ -25,6 +27,7 @@ function loadUnreadBadge() {
         });
 }
 
+// Nachrichten-HTML vom Server laden, in den Container einsetzen und Badge aktualisieren
 function loadMessages() {
     var container = document.getElementById('messagesContainer');
     if (!container) return Promise.resolve();
@@ -45,9 +48,11 @@ function renderUserInserate() {
         .then(text => { container.innerHTML = text; });
 }
 
+// Nutzerprofil-Seite initialisieren: Tabs, Profilformular und Passwortformular verdrahten
 function initUserForm() {
     if (!document.getElementById('tabProfil')) return;
 
+    // Nicht eingeloggte Nutzer zur Login-Seite weiterleiten
     if (!authState.loggedIn) {
         window.location.href = BASE_URL + '/auth/login';
         return;
@@ -56,9 +61,11 @@ function initUserForm() {
     var displayName = document.getElementById('display-username');
     if (displayName) displayName.textContent = authState.username;
 
+    // Admin-Dashboard-Link nur für Admins einblenden
     var adminLink = document.getElementById('adminDashboardLink');
     if (adminLink && authState.isAdmin) adminLink.style.display = 'inline-block';
 
+    // Tab-Klick: aktiven Tab wechseln und Tab-Inhalt bei Bedarf nachladen
     document.querySelectorAll('.admin-tab[data-target]').forEach(function(tab) {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -82,11 +89,13 @@ function initUserForm() {
     var profileOk     = document.getElementById('profileSuccess');
     var profileErr    = document.getElementById('profileError');
 
+    // Formularfelder mit aktuellen Profildaten aus authState vorbelegen
     if (usernameInput) usernameInput.value = authState.username;
     if (emailInput && authState.email) emailInput.value = authState.email;
     if (phoneInput && authState.phone) phoneInput.value = authState.phone;
     if (cityInput  && authState.city)  cityInput.value  = authState.city;
 
+    // Speichern-Button deaktivieren wenn der Username ungültig ist
     function checkProfileValidity() {
         profileSave.disabled = validateUsername(usernameInput.value).length > 0;
     }
@@ -97,6 +106,7 @@ function initUserForm() {
         checkProfileValidity();
     });
 
+    // Profildaten per fetch() speichern und authState sofort aktualisieren
     profileForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (profileSave.disabled) return;
@@ -113,6 +123,7 @@ function initUserForm() {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
+                    // authState sofort aktualisieren damit Nav-Anzeige ohne Reload stimmt
                     authState.username = data.username;
                     if (displayName) displayName.textContent = data.username;
                     if (emailInput) authState.email = emailInput.value.trim();
@@ -134,6 +145,7 @@ function initUserForm() {
     var passwordOk      = document.getElementById('passwordSuccess');
     var passwordErr     = document.getElementById('passwordError');
 
+    // Speichern-Button nur freischalten wenn Passwort gültig und Wiederholung übereinstimmt
     function checkPasswordValidity() {
         passwordSave.disabled =
             validatePassword(passwordInput.value).length > 0 ||
@@ -152,6 +164,7 @@ function initUserForm() {
         checkPasswordValidity();
     });
 
+    // Passwort per fetch() ändern, Felder nach Erfolg leeren
     passwordForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (passwordSave.disabled) return;
@@ -181,6 +194,7 @@ function initUserForm() {
     checkPasswordValidity();
 
     loadUnreadBadge();
+    // "Alle als gelesen markieren"-Button, alle Nachrichten auf gelesen setzen und Liste neu laden
     var markBtn = document.getElementById('markAllReadBtn');
     if (markBtn) {
         markBtn.addEventListener('click', () => {

@@ -3,7 +3,7 @@
 
 class User extends Model {
 
-// user finden
+// user finden und Daten zurückgeben, z.B. für Login oder Profilseite
     public static function findByUsername(string $username): ?array {
         $db   = self::db();
         $res  = mysqli_query($db, "SELECT id, username, password, is_locked, is_admin FROM users WHERE username = '$username'");
@@ -26,14 +26,14 @@ class User extends Model {
     }
 
 
-    // gibt es user schon? reg 
+    // gibt es user schon? wird bei Registrierung geprüft
     public static function usernameExists(string $username): bool {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT id FROM users WHERE username = '$username'");
         return $res && mysqli_num_rows($res) > 0;
     }
 
-    // user tab update von db; dynamisch über array 
+    // user tab update von db, dynamisch über array 
     public static function update(int $id, array $fields): bool {
         $db   = self::db();
         $sets = [];

@@ -4,6 +4,9 @@
 // Lukas 
 
 class Car extends Model {
+
+    // lädt alle cars aus der db; aber filtert alle ab status bearbeitet heraus 
+
     public static function getAll(array $filters = []): array {
         $db    = self::db();
         $where = "iid NOT IN (
@@ -16,17 +19,23 @@ class Car extends Model {
         return $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     }
 
+    // gibt auto mit mitgegebener id 
     public static function getById(int $id): ?array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT * FROM cars WHERE iid = $id");
         return $res ? mysqli_fetch_assoc($res) ?: null : null;
     }
 
+    // für carousel: lädt autos aus db 
+
     public static function getForCarousel(): array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT iid, marke, modell, preis, imagepath, baujahr FROM cars ORDER BY id ASC");
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
+
+
+// prüfen ob insert geklappt hat siehe listing 
 
     public static function create(array $d): bool {
         $db = self::db();
@@ -53,22 +62,26 @@ class Car extends Model {
         );
     }
 
+// auto löschen
     public static function delete(int $id): bool {
         return (bool)mysqli_query(self::db(), "DELETE FROM cars WHERE iid = $id");
     }
 
+// alle anzeigen für admin dashboard 
     public static function getAll_admin(): array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT * FROM cars ORDER BY id DESC");
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
+// anzeigen aber nicht mit allen daten sondern nur die 4 (slide in favoriten panle)
     public static function getAllBasic(): array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT iid, marke, modell, baujahr FROM cars ORDER BY marke, modell ASC");
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
+// autos die gebucht sind also alles außer bestellt
     public static function isBooked(int $id): bool {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT COUNT(*) AS cnt FROM bookings WHERE car_id = $id AND status IN ('in_bearbeitung','versandt','fertig')");

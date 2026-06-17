@@ -3,7 +3,11 @@
 // Lukas: Inserat logik 
 
 class Listing extends Model {
-    public static function create(array $d, array $images, ?int $userId, string $username): string {
+   
+
+// autos hinzufügen 
+
+public static function create(array $d, array $images, ?int $userId, string $username): string {
         $db  = self::db();
         $key = 'i_' . time() . '_' . bin2hex(random_bytes(3));
 
@@ -34,12 +38,16 @@ class Listing extends Model {
         return $key;
     }
 
+
+// inserat  userid bezogen suchen 
+
     public static function findByUser(int $userId): array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT * FROM listings WHERE user_id = $userId ORDER BY created_at DESC");
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
+// inserat von tabelle listing holen
     public static function getAll(): array {
         $db  = self::db();
         $res = mysqli_query($db,
@@ -51,17 +59,23 @@ class Listing extends Model {
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
+// alle inserate ohne die passenden namen holen 
+
     public static function getAllRaw(): array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT * FROM listings ORDER BY created_at DESC");
         return $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     }
 
+// inserat per key von listings suchen 
+
     public static function findByKey(string $key): ?array {
         $db  = self::db();
         $res = mysqli_query($db, "SELECT * FROM listings WHERE listing_key = '$key'");
         return $res ? mysqli_fetch_assoc($res) ?: null : null;
     }
+
+// status updaten von bestimmten inserat 
 
     public static function updateStatus(string $key, string $status): bool {
         $db = self::db();
