@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<!-- Admin-Navigation mit Logo, Zurück-Link und Abmelden-Button -->
 <nav class="admin-nav">
     <div class="admin-nav-left">
         <a href="<?= BASE_URL ?>/" class="nav-logo nav-logo--sm">Auto<span>24</span></a>
@@ -15,16 +16,19 @@
     </div>
     <div class="admin-nav-right">
         <a href="<?= BASE_URL ?>/" class="admin-back-link">← Zur Seite</a>
+        <!-- adminLogout() in admin.js: POST zu /api/auth/logout, dann Weiterleitung -->
         <button class="admin-logout-btn" onclick="adminLogout()">Abmelden</button>
     </div>
 </nav>
 
 <main class="admin-main">
+    <!-- #adminDashboard wird von initAdminPage() in admin.js eingeblendet, nur wenn isAdmin -->
     <div id="adminDashboard">
         <div class="admin-container">
             <h1 class="admin-page-title">Admin <span>Dashboard</span></h1>
             <p class="admin-page-sub">Auftragsübersicht und Nutzerverwaltung</p>
 
+            <!-- JS lädt beim Tab-Klick den Inhalt per fetch() und setzt ihn per innerHTML -->
             <div class="admin-tabs">
                 <button class="admin-tab active" data-target="tabNeu">Neue Aufträge</button>
                 <button class="admin-tab" data-target="tabBearbeitung">In Bearbeitung</button>
@@ -35,31 +39,46 @@
                 <button class="admin-tab" data-target="tabFahrzeuge">Fahrzeuge</button>
             </div>
 
+            <!-- Tab-Inhalte: leere divs, werden per JS mit HTML-Fragmenten vom Server befüllt -->
+
+            <!-- Neue Buchungen (status = bestellt) → renderAdminOrders('new') -->
             <div id="tabNeu" class="admin-tab-content active">
                 <h3 class="admin-tab-title">Neue Aufträge (Status: Bestellt)</h3>
                 <div id="adminOrdersNew"></div>
             </div>
+
+            <!-- Buchungen in Bearbeitung oder versandt -> renderAdminOrders('processing') -->
             <div id="tabBearbeitung" class="admin-tab-content">
                 <h3 class="admin-tab-title">Aufträge in Bearbeitung & Versandt</h3>
                 <div id="adminOrdersProcessing"></div>
             </div>
+
+            <!-- Abgelehnte/stornierte Buchungen -> renderAdminOrders('rejected') -->
             <div id="tabAbgelehnt" class="admin-tab-content">
                 <h3 class="admin-tab-title">Abgelehnte & stornierte Aufträge</h3>
                 <div id="adminOrdersRejected"></div>
             </div>
+
+            <!-- Abgeschlossene Buchungen -> renderAdminOrders('completed') -->
             <div id="tabAbgeschlossen" class="admin-tab-content">
                 <h3 class="admin-tab-title">Abgeschlossene Aufträge</h3>
                 <div id="adminOrdersCompleted"></div>
             </div>
+
+            <!-- Nutzerliste mit Sperr-Buttons -> renderAdminUsers() -->
             <div id="tabNutzer" class="admin-tab-content">
                 <h3 class="admin-tab-title">Registrierte Nutzer</h3>
                 <p class="admin-tab-hint">Gesperrte Nutzer können keine Buchungen tätigen.</p>
                 <div id="adminUsersList"></div>
             </div>
+
+            <!-- Eingereichte Inserate mit Genehmigen/Ablehnen -> renderAdminInserate() -->
             <div id="tabInserate" class="admin-tab-content">
                 <h3 class="admin-tab-title">Eingereichte Inserate</h3>
                 <div id="adminInserate"></div>
             </div>
+
+            <!-- Alle Fahrzeuge im Marktplatz mit Lösch-Button -> renderAdminCars() -->
             <div id="tabFahrzeuge" class="admin-tab-content">
                 <h3 class="admin-tab-title">Fahrzeuge verwalten</h3>
                 <p class="admin-tab-hint">Gelöschte Fahrzeuge werden dauerhaft aus der Fahrzeugliste entfernt.</p>
