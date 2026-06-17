@@ -37,25 +37,26 @@ function initLoginForm() {
         successMessage.style.display = 'block';
     }
 
-    loginForm.addEventListener('submit', async (e) => {
+    loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (loginBtn.disabled) return;
 
-        const r    = await fetch(BASE_URL + '/api/auth/login', {
+        fetch(BASE_URL + '/api/auth/login', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ username: username.value.trim(), password: password.value }),
-        });
-        const data = await r.json();
-
-        if (data.success) {
-            window.location.href = data.isAdmin ? BASE_URL + '/admin' : BASE_URL + '/user';
-        } else {
-            if (errorMessage) {
-                errorMessage.textContent = data.message || 'Falscher Benutzername oder Passwort.';
-                errorMessage.style.display = 'block';
-            }
-        }
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.isAdmin ? BASE_URL + '/admin' : BASE_URL + '/user';
+                } else {
+                    if (errorMessage) {
+                        errorMessage.textContent = data.message || 'Falscher Benutzername oder Passwort.';
+                        errorMessage.style.display = 'block';
+                    }
+                }
+            });
     });
 
     checkFormValidity();
@@ -97,32 +98,35 @@ function initRegistrationForm() {
         checkFormValidity();
     });
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (submitBtn.disabled) return;
 
-        const r    = await fetch(BASE_URL + '/api/auth/register', {
+        fetch(BASE_URL + '/api/auth/register', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ username: benutzername.value.trim(), password: passwort.value }),
-        });
-        const data = await r.json();
-
-        if (data.success) {
-            window.location.href = BASE_URL + '/auth/login?registered=1';
-        } else {
-            if (errorMessage) {
-                errorMessage.textContent = data.message || 'Registrierung fehlgeschlagen.';
-                errorMessage.style.display = 'block';
-            }
-        }
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = BASE_URL + '/auth/login?registered=1';
+                } else {
+                    if (errorMessage) {
+                        errorMessage.textContent = data.message || 'Registrierung fehlgeschlagen.';
+                        errorMessage.style.display = 'block';
+                    }
+                }
+            });
     });
 
     submitBtn.disabled = true;
 }
 
-async function initLogout() {
-    if (!document.getElementById('logoutPage')) return;
-    await fetch(BASE_URL + '/api/auth/logout', { method: 'POST' });
-    authState = { loggedIn: false, username: '', isAdmin: false, isLocked: false };
+function initLogout() {
+    if (!document.getElementById('logoutPage')) return Promise.resolve();
+    return fetch(BASE_URL + '/api/auth/logout', { method: 'POST' })
+        .then(() => {
+            authState = { loggedIn: false, username: '', isAdmin: false, isLocked: false };
+        });
 }

@@ -1,124 +1,128 @@
 //Tim
 
 // Admin-Seite initialisieren: Dashboard zeigen wenn eingeloggt, sonst zu Login weiterleiten
-async function initAdminPage() {
+function initAdminPage() {
     var loginBereich = document.getElementById('adminLoginSection');
     var dashboard    = document.getElementById('adminDashboard');
-    if (!loginBereich && !dashboard) return;
+    if (!loginBereich && !dashboard) return Promise.resolve();
 
     if (authState.isAdmin) {
         if (loginBereich) loginBereich.style.display = 'none';
         if (dashboard)    dashboard.style.display    = 'block';
 
-        await renderAdminOrders();
-        await renderAdminUsers();
-        await renderAdminInserate();
-        await renderAdminCars();
-
-        document.querySelectorAll('.admin-tab').forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                var zielBereich = document.getElementById(tab.dataset.target);
-                if (zielBereich) zielBereich.classList.add('active');
+        return renderAdminOrders()
+            .then(() => renderAdminUsers())
+            .then(() => renderAdminInserate())
+            .then(() => renderAdminCars())
+            .then(() => {
+                document.querySelectorAll('.admin-tab').forEach(function(tab) {
+                    tab.addEventListener('click', function() {
+                        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+                        tab.classList.add('active');
+                        var zielBereich = document.getElementById(tab.dataset.target);
+                        if (zielBereich) zielBereich.classList.add('active');
+                    });
+                });
             });
-        });
     } else {
         window.location.href = BASE_URL + '/auth/login';
+        return Promise.resolve();
     }
 }
 
 // Alle vier Auftrags-Tabs parallel vom Server laden und befüllen
-async function renderAdminOrders() {
+function renderAdminOrders() {
     const bereiche     = ['new', 'processing', 'rejected', 'completed'];
     const containerIds = ['adminOrdersNew', 'adminOrdersProcessing', 'adminOrdersRejected', 'adminOrdersCompleted'];
 
-    const antworten = await Promise.all(
+    return Promise.all(
         bereiche.map(b => fetch(BASE_URL + '/api/admin/orders-html?bereich=' + b).then(r => r.text()))
-    );
-
-    bereiche.forEach((_, i) => {
-        document.getElementById(containerIds[i]).innerHTML = antworten[i];
+    ).then(antworten => {
+        bereiche.forEach((_, i) => {
+            document.getElementById(containerIds[i]).innerHTML = antworten[i];
+        });
     });
 }
 
 // PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
-async function renderAdminInserate() {
+function renderAdminInserate() {
     var container = document.getElementById('adminInserate');
-    if (!container) return;
-    const antwort       = await fetch(BASE_URL + '/api/admin/listings-html');
-    container.innerHTML = await antwort.text();
+    if (!container) return Promise.resolve();
+    return fetch(BASE_URL + '/api/admin/listings-html')
+        .then(antwort => antwort.text())
+        .then(text => { container.innerHTML = text; });
 }
 
-async function adminSetInseratStatus(id, status) {
-    await fetch(BASE_URL + '/api/admin/listings', {
+function adminSetInseratStatus(id, status) {
+    return fetch(BASE_URL + '/api/admin/listings', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ id, status })
-    });
-    await renderAdminInserate();
+    }).then(() => renderAdminInserate());
 }
 
 // PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
-async function renderAdminUsers() {
+function renderAdminUsers() {
     var container = document.getElementById('adminUsersList');
-    if (!container) return;
-    const antwort       = await fetch(BASE_URL + '/api/admin/users-html');
-    container.innerHTML = await antwort.text();
+    if (!container) return Promise.resolve();
+    return fetch(BASE_URL + '/api/admin/users-html')
+        .then(antwort => antwort.text())
+        .then(text => { container.innerHTML = text; });
 }
 
-async function adminSetStatus(bookingId, status, reason) {
-    await fetch(BASE_URL + '/api/admin/orders', {
+function adminSetStatus(bookingId, status, reason) {
+    return fetch(BASE_URL + '/api/admin/orders', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ id: bookingId, status, reason: reason || '' })
-    });
-    await renderAdminOrders();
+    }).then(() => renderAdminOrders());
 }
 
-// Lukas 
+// Lukas
 
-async function adminRejectOrder(bookingId) {
+function adminRejectOrder(bookingId) {
     var reason = prompt('Bitte geben Sie einen Ablehnungsgrund an (z.B. nicht verfügbare Items):');
     if (reason === null) return;
-    await adminSetStatus(bookingId, 'abgelehnt', reason || 'Kein Grund angegeben');
+    return adminSetStatus(bookingId, 'abgelehnt', reason || 'Kein Grund angegeben');
 }
 
-async function adminToggleLock(username) {
-    await fetch(BASE_URL + '/api/admin/users', {
+function adminToggleLock(username) {
+    return fetch(BASE_URL + '/api/admin/users', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ username })
-    });
-    await renderAdminUsers();
+    }).then(() => renderAdminUsers());
 }
 
-async function renderAdminCars() {
+function renderAdminCars() {
     var container = document.getElementById('adminCars');
-    if (!container) return;
-    const antwort       = await fetch(BASE_URL + '/api/admin/cars-html');
-    container.innerHTML = await antwort.text();
+    if (!container) return Promise.resolve();
+    return fetch(BASE_URL + '/api/admin/cars-html')
+        .then(antwort => antwort.text())
+        .then(text => { container.innerHTML = text; });
 }
 
-async function adminDeleteCar(iid, btn) {
+function adminDeleteCar(iid, btn) {
     if (!confirm('Fahrzeug dauerhaft löschen?')) return;
     btn.disabled = true;
-    const res  = await fetch(BASE_URL + '/api/admin/cars', {
+    fetch(BASE_URL + '/api/admin/cars', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ iid })
-    });
-    const data = await res.json();
-    if (data.success) {
-        await renderAdminCars();
-    } else {
-        alert(data.message || 'Löschen fehlgeschlagen');
-        btn.disabled = false;
-    }
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                return renderAdminCars();
+            } else {
+                alert(data.message || 'Löschen fehlgeschlagen');
+                btn.disabled = false;
+            }
+        });
 }
 
-async function adminLogout() {
-    await fetch(BASE_URL + '/api/auth/logout', { method: 'POST' });
-    window.location.reload();
+function adminLogout() {
+    fetch(BASE_URL + '/api/auth/logout', { method: 'POST' })
+        .then(() => window.location.reload());
 }

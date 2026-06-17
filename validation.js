@@ -1,21 +1,26 @@
 // ===== INITIALISIERUNG =====
 // Einstiegspunkt: lädt alle Seitenmodule in der richtigen Reihenfolge.
 
-// Lukas, Niclas, Tim 
+// Lukas, Niclas, Tim
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     initCookieBanner();
     applyUrlFilter();
     initLoginForm();
     initRegistrationForm();
     initItemFinancing();
-    await initLogout();
-    await loadAuthState();
-    initNavAuthLink();
-    initUserForm();
-    initVehicleForm();
-    await initBookingsPage();
-    initBookingButton();
-    initBookingButtons();
-    await initAdminPage();
+
+    initLogout()
+        .then(() => loadAuthState())
+        .then(() => {
+            initNavAuthLink();
+            initUserForm();
+            initVehicleForm();
+            return initBookingsPage();
+        })
+        .then(() => {
+            initBookingButton();
+            initBookingButtons();
+            return initAdminPage();
+        });
 });

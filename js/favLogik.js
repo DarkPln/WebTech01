@@ -1,9 +1,9 @@
-// Favoriten Logik Lukas 
+// Favoriten Logik Lukas
 const favorites   = new Set();
 const favCarData  = {};          // id → { make, model, year, fuel, km, price, imgSrc }
 
-// panel öffnen/schliessen 
-async function togglePanel() {
+// panel öffnen/schliessen
+function togglePanel() {
     const panel   = document.getElementById('favList');
     const overlay = document.getElementById('favOvl');
     if (!panel) return;
@@ -13,21 +13,22 @@ async function togglePanel() {
     document.body.style.overflow = isOpen ? '' : 'hidden';
 
     if (!isOpen) {
-        // panel öffnet: Autodaten von Server holen und Panel  rendern
-        try {
-            const res  = await fetch(BASE_URL + '/api/favorites/get');
-            const data = await res.json();
-            if (Array.isArray(data.cars)) {
-                data.cars.forEach(car => {
-                    favCarData[parseInt(car.iid, 10)] = car;
-                });
-            }
-        } catch (e) {}
-        renderList();
+        // panel öffnet: Autodaten von Server holen und Panel rendern
+        fetch(BASE_URL + '/api/favorites/get')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data.cars)) {
+                    data.cars.forEach(car => {
+                        favCarData[parseInt(car.iid, 10)] = car;
+                    });
+                }
+            })
+            .catch(() => {})
+            .then(() => renderList());
     }
 }
 
-// Notification 
+// Notification
 let notTimer = null;
 
 function showNotification(msg) {
@@ -44,9 +45,9 @@ function showNotification(msg) {
 }
 
 // wird dann in ToggleFavorite und removefav aufgerufen um serverseitig die session/db zu aktualisieren
-async function sendFavAction(action, carId) { 
+function sendFavAction(action, carId) {
     const body = carId !== undefined ? { action, carId } : { action };
-    await fetch(BASE_URL + '/api/favorites/toggle', {
+    return fetch(BASE_URL + '/api/favorites/toggle', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -150,7 +151,7 @@ function renderList() {
 }
 
 // ── HERZ TOGGLEN ──
-async function toggleFavorite(btn) {
+function toggleFavorite(btn) {
     const card = btn.closest('.car-card');
     if (!card) return;
 
@@ -184,11 +185,11 @@ async function toggleFavorite(btn) {
     }
 
     updateUI();
-    await sendFavAction('toggle', id);
+    sendFavAction('toggle', id);
 }
 
 // ── EINZELN ENTFERNEN ──
-async function removeFav(id) {
+function removeFav(id) {
     id = parseInt(id, 10);
     if (!favorites.has(id)) return;
 
@@ -203,11 +204,11 @@ async function removeFav(id) {
 
     if (d) showNotification(`<strong>${d.make} ${d.model}</strong> aus Merkliste entfernt`);
     updateUI();
-    await sendFavAction('toggle', id);
+    sendFavAction('toggle', id);
 }
 
 // ── ALLE ENTFERNEN ──
-async function clearAllFavs() {
+function clearAllFavs() {
     favorites.forEach(id => {
         const card = document.querySelector(`.car-card[data-id="${id}"]`);
         if (card) {
@@ -217,7 +218,7 @@ async function clearAllFavs() {
     });
     favorites.clear();
     updateUI();
-    await sendFavAction('clear');
+    sendFavAction('clear');
 }
 
 // ── MERKLISTE: CHECKBOX-BUCHUNG ──
@@ -261,53 +262,54 @@ function initMerklisteBuchung() {
 }
 
 // ── EINZIGER DOMContentLoaded BLOCK ──
-document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-    // Session-Daten holen
-    try {
-        const res  = await fetch(BASE_URL + '/api/favorites/get');
-        const data = await res.json();
-
-        if (Array.isArray(data.cars)) {
-            data.cars.forEach(car => {
-                favCarData[parseInt(car.iid, 10)] = car;
+    function wireUp() {
+        // Herz-Buttons verdrahten
+        document.querySelectorAll('.car-fav').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleFavorite(this);
             });
-        }
+        });
 
-        if (data.favorites && data.favorites.length > 0) {
-            data.favorites.forEach(id => {
-                favorites.add(parseInt(id, 10));
+        // Clear-Button verdrahten
+        const clearBtn = document.getElementById('clearFavListBtn');
+        if (clearBtn) clearBtn.addEventListener('click', clearAllFavs);
 
-                const card = document.querySelector(`.car-card[data-id="${id}"]`);
-                if (card) {
-                    const btn = card.querySelector('.car-fav');
-                    if (btn) {
-                        btn.innerHTML         = '&#9829;';
-                        btn.style.color       = 'red';
-                        btn.style.borderColor = 'red';
-                    }
-                }
-            });
-            updateUI();
-        }
-    } catch (e) {
-        console.error('Fehler beim Laden der Merkliste:', e);
+        // Merkliste Checkbox-Buchung initialisieren
+        initMerklisteBuchung();
     }
 
-    // Herz-Buttons verdrahten
-    document.querySelectorAll('.car-fav').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            toggleFavorite(this);
-        });
-    });
+    // Session-Daten holen
+    fetch(BASE_URL + '/api/favorites/get')
+        .then(res => res.json())
+        .then(data => {
+            if (Array.isArray(data.cars)) {
+                data.cars.forEach(car => {
+                    favCarData[parseInt(car.iid, 10)] = car;
+                });
+            }
 
-    // Clear-Button verdrahten
-    const clearBtn = document.getElementById('clearFavListBtn');
-    if (clearBtn) clearBtn.addEventListener('click', clearAllFavs);
+            if (data.favorites && data.favorites.length > 0) {
+                data.favorites.forEach(id => {
+                    favorites.add(parseInt(id, 10));
 
-    // Merkliste Checkbox-Buchung initialisieren
-    initMerklisteBuchung();
+                    const card = document.querySelector(`.car-card[data-id="${id}"]`);
+                    if (card) {
+                        const btn = card.querySelector('.car-fav');
+                        if (btn) {
+                            btn.innerHTML         = '&#9829;';
+                            btn.style.color       = 'red';
+                            btn.style.borderColor = 'red';
+                        }
+                    }
+                });
+                updateUI();
+            }
+        })
+        .catch(e => {
+            console.error('Fehler beim Laden der Merkliste:', e);
+        })
+        .then(wireUp);
 });
-
-

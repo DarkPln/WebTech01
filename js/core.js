@@ -1,4 +1,4 @@
-// Lukas 
+// Lukas
 
 function validateUsername(value) {
     const errors = [];
@@ -44,11 +44,9 @@ function validateField(field, validator, extraArg) {
 // Wird beim Seitenstart einmal geladen; alle anderen Funktionen lesen dieses Objekt.
 let authState = { loggedIn: false, username: '', isAdmin: false, isLocked: false };
 
-async function loadAuthState() {
-    try {
-        const r = await fetch(BASE_URL + '/api/auth/status');
-        authState = await r.json();
-    } catch (e) {
-        authState = { loggedIn: false };
-    }
+function loadAuthState() {
+    return fetch(BASE_URL + '/api/auth/status')
+        .then(r => r.json())
+        .then(data => { authState = data; })
+        .catch(() => { authState = { loggedIn: false }; });
 }
