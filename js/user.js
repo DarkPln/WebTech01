@@ -48,6 +48,10 @@ function renderUserInserate() {
         .then(text => { container.innerHTML = text; });
 }
 
+
+// Lukas 
+
+
 // Nutzerprofil-Seite initialisieren: Tabs, Profilformular und Passwortformular verdrahten
 function initUserForm() {
     if (!document.getElementById('tabProfil')) return;

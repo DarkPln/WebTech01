@@ -1,4 +1,4 @@
-﻿<!-- Niclas -->
+﻿<!-- Niclas,Tim  -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -22,6 +22,8 @@
         </div>
     </section>
 
+
+   <!-- Tim -->  
     <?php if (!empty($carouselCars)): ?>
     <section class="car-carousel-section">
         <div class="car-carousel-heading">
@@ -51,6 +53,8 @@
     </section>
     <?php endif; ?>
 
+
+    <!-- Niclas-->   
     <section class="home-section">
         <h2>Unsere Kategorien</h2>
         <div class="home-category-grid">

@@ -1,4 +1,3 @@
-// ===== UTILITIES & UI-HILFEN =====
 // Niclas
 
 /* Light Mode Toggle: Niclas */

@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- Lukas: pdf view -->
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -15,6 +17,7 @@
     </div>
 </div>
 
+<!-- Lukas: Download Fkt --> 
 <button class="print-btn" onclick="window.print()">Als PDF speichern / Drucken</button>
 
 <div class="pdf-title"><?= htmlspecialchars($fahrzeug['marke'] . ' ' . $fahrzeug['modell']) ?></div>
