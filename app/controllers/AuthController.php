@@ -152,17 +152,14 @@ class AuthController extends Controller {
     }
 
 
-// Lukas
+// Lukas; update fkt für User Tab 
 
-    // Profildaten aktualisieren (Username, Passwort, E-Mail, Telefon, Stadt)
     public function update(): void {
-        // Hardcoded Accounts (user_id 0/-1) können ihr Profil nicht ändern
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {
             $this->json(['success' => false, 'message' => 'Nicht eingeloggt']);
             return;
         }
 
-        // Roher JSON-Body lesen, da JS application/json schickt statt $_POST
         $input       = json_decode(file_get_contents('php://input'), true) ?? [];
         $newUsername = trim($input['username'] ?? '');
         $newPassword = $input['password'] ?? '';
@@ -170,13 +167,13 @@ class AuthController extends Controller {
         $newPhone    = trim($input['phone'] ?? '');
         $newCity     = trim($input['city']  ?? '');
 
-        // Mindestlängen validieren
+// auch hier prüfung passwort
+
         if (strlen($newUsername) < 5) {
             $this->json(['success' => false, 'message' => 'Benutzername zu kurz (min. 5 Zeichen)']);
             return;
         }
 
-        // Passwort nur prüfen wenn eines mitgeschickt wurde (leeres Feld = nicht ändern)
         if ($newPassword !== '' && strlen($newPassword) < 10) {
             $this->json(['success' => false, 'message' => 'Passwort zu kurz (min. 10 Zeichen)']);
             return;
@@ -185,7 +182,6 @@ class AuthController extends Controller {
         $userId = (int)$_SESSION['user_id'];
         $db     = Database::getInstance();
 
-        // Prüfen ob der neue Username von einem anderen Nutzer bereits belegt ist
         $chkRes = mysqli_query($db, "SELECT id FROM users WHERE username = '$newUsername' AND id != $userId");
         if (mysqli_fetch_assoc($chkRes)) {
             $this->json(['success' => false, 'message' => 'Benutzername bereits vergeben']);
@@ -193,11 +189,12 @@ class AuthController extends Controller {
         }
 
         $fields = ['username' => $newUsername, 'email' => $newEmail, 'phone' => $newPhone, 'city' => $newCity];
-        // Passwort nur ins Update-Array wenn es geändert werden soll
         if ($newPassword !== '') $fields['password'] = $newPassword;
 
+        
+// delegation an model speicherung in db 
+
         User::update($userId, $fields);
-        // Session-Username sofort aktualisieren damit Nav-Anzeige stimmt
         $_SESSION['username'] = $newUsername;
         $this->json(['success' => true, 'username' => $newUsername]);
     }

@@ -1,4 +1,4 @@
--- Auto24 Datenbankschema
+-- Auto24 Datenbankschema - kann einfach in phpmyadmin SQL kopiert werden  
 
 CREATE DATABASE IF NOT EXISTS auto24
     CHARACTER SET utf8mb4
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
  
--- Fahrzeugkatalog (aus items.json)
+-- Fahrzeugliste (statt items.json)
 CREATE TABLE IF NOT EXISTS cars (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     iid             INT          NOT NULL UNIQUE,

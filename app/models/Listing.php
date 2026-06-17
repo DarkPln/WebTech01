@@ -1,6 +1,6 @@
 <?php
 
-// Lukas 
+// Lukas: Inserat logik 
 
 class Listing extends Model {
     public static function create(array $d, array $images, ?int $userId, string $username): string {

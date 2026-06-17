@@ -1,5 +1,6 @@
 // Tim
 
+// Nav-Link je nach Login-Status auf Nutzerprofil oder Login-Seite setzen
 function initNavAuthLink() {
     var link = document.getElementById('navAuthLink');
     if (!link) return;
@@ -12,6 +13,7 @@ function initNavAuthLink() {
     }
 }
 
+// Login-Formular initialisieren: Validierung, Fehlermeldungen und Submit-Handler
 function initLoginForm() {
     const loginForm      = document.getElementById('loginForm');
     if (!loginForm) return;
@@ -22,6 +24,7 @@ function initLoginForm() {
     const errorMessage   = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
 
+    // Submit-Button deaktivieren solange ein Feld leer ist
     function checkFormValidity() {
         loginBtn.disabled = username.value.trim().length === 0 || password.value.length === 0;
     }
@@ -31,12 +34,14 @@ function initLoginForm() {
     password.addEventListener('input',  () => { if (errorMessage) errorMessage.style.display = 'none'; checkFormValidity(); });
     password.addEventListener('change', checkFormValidity);
 
+    // Erfolgreiche Registrierung zuvor per URL-Parameter ?registered=1 signalisiert
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('registered') === '1' && successMessage) {
         successMessage.textContent = 'Registrierung erfolgreich! Bitte jetzt einloggen.';
         successMessage.style.display = 'block';
     }
 
+    // Login-Daten per fetch() an den Server schicken, bei Erfolg zu Admin oder Nutzerprofil weiterleiten
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (loginBtn.disabled) return;
@@ -49,6 +54,7 @@ function initLoginForm() {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
+                    // Admin -> /admin, normaler Nutzer -> /user
                     window.location.href = data.isAdmin ? BASE_URL + '/admin' : BASE_URL + '/user';
                 } else {
                     if (errorMessage) {
@@ -60,9 +66,11 @@ function initLoginForm() {
     });
 
     checkFormValidity();
+    // Autofill-Werte des Browsers werden erst nach kurzer Verzögerung sichtbar
     setTimeout(checkFormValidity, 300);
 }
 
+// Registrierungsformular initialisieren: Echtzeit-Validierung und Submit-Handler
 function initRegistrationForm() {
     const form = document.getElementById('registrationForm');
     if (!form) return;
@@ -73,6 +81,7 @@ function initRegistrationForm() {
     const submitBtn           = document.getElementById('submitBtn');
     const errorMessage        = document.getElementById('reg-error');
 
+    // Submit-Button nur freischalten wenn alle Felder die Validierungsregeln erfüllen
     function checkFormValidity() {
         submitBtn.disabled =
             validateUsername(benutzername.value).length > 0 ||
@@ -88,6 +97,7 @@ function initRegistrationForm() {
 
     passwort.addEventListener('input', () => {
         validateField(passwort, validatePassword);
+        // Passwort-Wiederholung sofort neu prüfen wenn das Hauptfeld sich ändert
         if (passwortWiederholen.value.length > 0)
             validateField(passwortWiederholen, validatePasswordMatch, passwort.value);
         checkFormValidity();
@@ -98,6 +108,7 @@ function initRegistrationForm() {
         checkFormValidity();
     });
 
+    // Registrierungsdaten per fetch() senden, bei Erfolg zur Login-Seite mit ?registered=1 weiterleiten
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (submitBtn.disabled) return;
@@ -123,6 +134,7 @@ function initRegistrationForm() {
     submitBtn.disabled = true;
 }
 
+// Logout-POST auslösen wenn die Logout-Seite geladen wird, authState danach zurücksetzen
 function initLogout() {
     if (!document.getElementById('logoutPage')) return Promise.resolve();
     return fetch(BASE_URL + '/api/auth/logout', { method: 'POST' })

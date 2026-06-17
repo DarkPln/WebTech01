@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
 </head>
 <body>
+    <!-- Gemeinsame Navigation (nav.php) -->
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
 
+    <!-- initLogoutPage() in auth.js erkennt diese id und löst den Logout-POST aus -->
     <div id="logoutPage"></div>
 
     <main class="home-main">
@@ -22,6 +24,7 @@
         </section>
     </main>
 
+    <!-- footer.php lädt alle JS-Dateien global; validation.js ruft danach initLogoutPage() auf -->
     <?php require VIEW_PATH . 'partials/footer.php'; ?>
 </body>
 </html>
