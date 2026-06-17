@@ -48,8 +48,4 @@
     <?php require VIEW_PATH . 'partials/footer.php'; ?>
 </body>
 </html>
-<<<<<<< HEAD
 <!-- Niclas: Registrierung -->
-=======
-<!-- Tim -->
->>>>>>> b20444d6f5d84630a20a78d1036731ba44121bc6
