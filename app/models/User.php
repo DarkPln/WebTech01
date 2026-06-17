@@ -33,7 +33,7 @@ class User extends Model {
         return $res && mysqli_num_rows($res) > 0;
     }
 
-    // user tab update; dynamisch über array
+    // user tab update von db; dynamisch über array 
     public static function update(int $id, array $fields): bool {
         $db   = self::db();
         $sets = [];
