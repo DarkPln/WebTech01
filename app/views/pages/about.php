@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Über uns - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 
 <body class="about-page">
@@ -86,8 +86,8 @@
             <h2>Bereit loszulegen?</h2>
             <p>Entdecken Sie unsere große Auswahl an Fahrzeugen oder verkaufen Sie Ihr eigenes Auto.</p>
             <div class="home-buttons">
-                <a href="<?= BASE_URL ?>/cars" class="home-btn-primary">Fahrzeuge ansehen</a>
-                <a href="<?= BASE_URL ?>/" class="home-btn-secondary">Zur Startseite</a>
+                <a href="<?php echo  BASE_URL ?>/cars" class="home-btn-primary">Fahrzeuge ansehen</a>
+                <a href="<?php echo  BASE_URL ?>/" class="home-btn-secondary">Zur Startseite</a>
             </div>
         </section>
 

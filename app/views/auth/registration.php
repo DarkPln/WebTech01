@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrierung - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
@@ -40,7 +40,7 @@
                     <input type="reset" value="Zurücksetzen">
                 </form>
 
-                <p><a href="<?= BASE_URL ?>/auth/login">Bereits ein Konto? Jetzt einloggen</a></p>
+                <p><a href="<?php echo  BASE_URL ?>/auth/login">Bereits ein Konto? Jetzt einloggen</a></p>
             </div>
         </section>
     </main>

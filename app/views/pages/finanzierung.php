@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Finanzierung - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
@@ -101,8 +101,8 @@
             <h2>Fahrzeug gefunden?</h2>
             <p>Entdecken Sie unsere aktuellen Gebraucht- und Neuwagen und berechnen Sie direkt Ihre persönliche Finanzierungsrate.</p>
             <div class="home-buttons">
-                <a href="<?= BASE_URL ?>/cars" class="home-btn-primary">Fahrzeuge ansehen</a>
-                <a href="<?= BASE_URL ?>/partner" class="home-btn-secondary">Unsere Partnerbanken</a>
+                <a href="<?php echo  BASE_URL ?>/cars" class="home-btn-primary">Fahrzeuge ansehen</a>
+                <a href="<?php echo  BASE_URL ?>/partner" class="home-btn-secondary">Unsere Partnerbanken</a>
             </div>
         </section>
 

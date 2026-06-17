@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin – Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
 
 <!-- Admin-Navigation mit Logo, Zurück-Link und Abmelden-Button -->
 <nav class="admin-nav">
     <div class="admin-nav-left">
-        <a href="<?= BASE_URL ?>/" class="nav-logo nav-logo--sm">Auto<span>24</span></a>
+        <a href="<?php echo  BASE_URL ?>/" class="nav-logo nav-logo--sm">Auto<span>24</span></a>
         <span class="admin-badge">Admin</span>
     </div>
     <div class="admin-nav-right">
-        <a href="<?= BASE_URL ?>/" class="admin-back-link">← Zur Seite</a>
+        <a href="<?php echo  BASE_URL ?>/" class="admin-back-link">← Zur Seite</a>
         <!-- adminLogout() in admin.js: POST zu /api/auth/logout, dann Weiterleitung -->
         <button class="admin-logout-btn" onclick="adminLogout()">Abmelden</button>
     </div>

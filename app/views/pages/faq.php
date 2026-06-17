@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Hilfe & FAQ - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
@@ -51,7 +51,7 @@
 
                 <details class="faq-item">
                     <summary>Wie kann ich mein Fahrzeug inserieren?</summary>
-                    <p>Registrieren Sie sich kostenlos auf Auto24 und füllen Sie das Formular auf der <a href="<?= BASE_URL ?>/listings/sell">Fahrzeug verkaufen</a>-Seite aus. Geben Sie alle relevanten Daten und Fotos Ihres Fahrzeugs an. Nach Prüfung durch unser Team wird Ihr Inserat veröffentlicht.</p>
+                    <p>Registrieren Sie sich kostenlos auf Auto24 und füllen Sie das Formular auf der <a href="<?php echo  BASE_URL ?>/listings/sell">Fahrzeug verkaufen</a>-Seite aus. Geben Sie alle relevanten Daten und Fotos Ihres Fahrzeugs an. Nach Prüfung durch unser Team wird Ihr Inserat veröffentlicht.</p>
                 </details>
 
                 <details class="faq-item">
@@ -75,12 +75,12 @@
 
                 <details class="faq-item">
                     <summary>Wie funktioniert die Fahrzeugfinanzierung bei Auto24?</summary>
-                    <p>Über unsere <a href="<?= BASE_URL ?>/finanzierung">Finanzierungsseite</a> können Sie monatliche Raten berechnen und verschiedene Angebote unserer Partnerbanken vergleichen. Nach der Online-Anfrage erhalten Sie innerhalb von 24 Stunden eine Rückmeldung.</p>
+                    <p>Über unsere <a href="<?php echo  BASE_URL ?>/finanzierung">Finanzierungsseite</a> können Sie monatliche Raten berechnen und verschiedene Angebote unserer Partnerbanken vergleichen. Nach der Online-Anfrage erhalten Sie innerhalb von 24 Stunden eine Rückmeldung.</p>
                 </details>
 
                 <details class="faq-item">
                     <summary>Welche Kfz-Versicherung brauche ich?</summary>
-                    <p>In Deutschland ist eine Kfz-Haftpflichtversicherung gesetzlich vorgeschrieben. Zusätzlich empfehlen wir je nach Fahrzeugwert eine Teilkasko- oder Vollkaskoversicherung. Informationen und Angebote finden Sie auf unserer <a href="<?= BASE_URL ?>/versicherung">Versicherungsseite</a>.</p>
+                    <p>In Deutschland ist eine Kfz-Haftpflichtversicherung gesetzlich vorgeschrieben. Zusätzlich empfehlen wir je nach Fahrzeugwert eine Teilkasko- oder Vollkaskoversicherung. Informationen und Angebote finden Sie auf unserer <a href="<?php echo  BASE_URL ?>/versicherung">Versicherungsseite</a>.</p>
                 </details>
 
                 <details class="faq-item">
@@ -109,7 +109,7 @@
 
                 <details class="faq-item">
                     <summary>Sind meine Daten sicher?</summary>
-                    <p>Ja. Ihre Zugangsdaten werden ausschließlich lokal in Ihrem Browser gespeichert und nicht an unsere Server übertragen. Details finden Sie in unserer <a href="<?= BASE_URL ?>/datenschutz">Datenschutzerklärung</a>.</p>
+                    <p>Ja. Ihre Zugangsdaten werden ausschließlich lokal in Ihrem Browser gespeichert und nicht an unsere Server übertragen. Details finden Sie in unserer <a href="<?php echo  BASE_URL ?>/datenschutz">Datenschutzerklärung</a>.</p>
                 </details>
             </div>
 
@@ -119,8 +119,8 @@
             <h2>Weitere Fragen?</h2>
             <p>Haben Sie eine Frage, die hier nicht beantwortet wird? Kontaktieren Sie uns direkt – wir helfen Ihnen gerne weiter.</p>
             <div class="home-buttons">
-                <a href="<?= BASE_URL ?>/about" class="home-btn-primary">Kontakt aufnehmen</a>
-                <a href="<?= BASE_URL ?>/" class="home-btn-secondary">Zur Startseite</a>
+                <a href="<?php echo  BASE_URL ?>/about" class="home-btn-primary">Kontakt aufnehmen</a>
+                <a href="<?php echo  BASE_URL ?>/" class="home-btn-secondary">Zur Startseite</a>
             </div>
         </section>
 

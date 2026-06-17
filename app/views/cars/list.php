@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fahrzeug Liste - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 
 <body>
@@ -117,49 +117,49 @@
     <div id="carLayout" class="cars-grid horizontal-layout">
         <?php foreach ($fahrzeuge as $auto): ?>
             <div class="car-card"
-                data-id="<?= $auto['iid'] ?>"
-                data-make="<?= htmlspecialchars($auto['marke']) ?>"
-                data-model="<?= htmlspecialchars($auto['modell']) ?>"
-                data-year="<?= $auto['baujahr'] ?>"
-                data-fuel="<?= htmlspecialchars($auto['kraftstoff']) ?>"
-                data-km="<?= $auto['kilometerstand'] ?>"
-                data-drive="<?= htmlspecialchars($auto['antrieb']) ?>"
-                data-price="<?= $auto['preis'] ?>"
-                data-power="<?= $auto['leistung_ps'] ?>"
-                data-kategorie="<?= htmlspecialchars($auto['kategorie']) ?>">
+                data-id="<?php echo  $auto['iid'] ?>"
+                data-make="<?php echo  htmlspecialchars($auto['marke']) ?>"
+                data-model="<?php echo  htmlspecialchars($auto['modell']) ?>"
+                data-year="<?php echo  $auto['baujahr'] ?>"
+                data-fuel="<?php echo  htmlspecialchars($auto['kraftstoff']) ?>"
+                data-km="<?php echo  $auto['kilometerstand'] ?>"
+                data-drive="<?php echo  htmlspecialchars($auto['antrieb']) ?>"
+                data-price="<?php echo  $auto['preis'] ?>"
+                data-power="<?php echo  $auto['leistung_ps'] ?>"
+                data-kategorie="<?php echo  htmlspecialchars($auto['kategorie']) ?>">
 
                 <div class="car-image">
-                    <span class="car-badge-used"><?= strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebrauchtwagen' ?></span>
-                    <button class="car-fav" type="button" data-id="<?= $auto['iid'] ?>">♡</button>
-                    <img src="<?= htmlspecialchars($auto['imagepath']) ?>" alt="<?= htmlspecialchars($auto['name']) ?>" class="car-img">
+                    <span class="car-badge-used"><?php echo  strtolower($auto['kategorie']) === 'neuwagen' ? 'Neuwagen' : 'Gebrauchtwagen' ?></span>
+                    <button class="car-fav" type="button" data-id="<?php echo  $auto['iid'] ?>">♡</button>
+                    <img src="<?php echo  htmlspecialchars($auto['imagepath']) ?>" alt="<?php echo  htmlspecialchars($auto['name']) ?>" class="car-img">
                 </div>
 
                 <div class="car-body">
-                    <div class="car-make"><?= strtoupper(htmlspecialchars($auto['marke'])) ?></div>
-                    <div class="car-model"><?= htmlspecialchars($auto['modell']) ?></div>
+                    <div class="car-make"><?php echo  strtoupper(htmlspecialchars($auto['marke'])) ?></div>
+                    <div class="car-model"><?php echo  htmlspecialchars($auto['modell']) ?></div>
                     <div class="car-year">
-                        <?= $auto['baujahr'] ?> · <?= htmlspecialchars($auto['kraftstoff']) ?> · <?= ucfirst(htmlspecialchars($auto['unterkategorie'])) ?>
+                        <?php echo  $auto['baujahr'] ?> · <?php echo  htmlspecialchars($auto['kraftstoff']) ?> · <?php echo  ucfirst(htmlspecialchars($auto['unterkategorie'])) ?>
                     </div>
                     <div class="car-specs">
                         <div class="car-spec">
-                            <div class="car-spec-val"><?= $auto['leistung_ps'] ?> PS</div>
+                            <div class="car-spec-val"><?php echo  $auto['leistung_ps'] ?> PS</div>
                             <div class="car-spec-key">Leistung</div>
                         </div>
                         <div class="car-spec">
-                            <div class="car-spec-val"><?= number_format($auto['kilometerstand'], 0, ',', '.') ?> km</div>
+                            <div class="car-spec-val"><?php echo  number_format($auto['kilometerstand'], 0, ',', '.') ?> km</div>
                             <div class="car-spec-key">Kilometerstand</div>
                         </div>
                         <div class="car-spec">
-                            <div class="car-spec-val"><?= htmlspecialchars($auto['antrieb']) ?></div>
+                            <div class="car-spec-val"><?php echo  htmlspecialchars($auto['antrieb']) ?></div>
                             <div class="car-spec-key">Antrieb</div>
                         </div>
                     </div>
                     <div class="car-footer">
                         <div>
-                            <div class="car-price"><?= number_format($auto['preis'], 0, ',', '.') ?> €</div>
+                            <div class="car-price"><?php echo  number_format($auto['preis'], 0, ',', '.') ?> €</div>
                             <div class="car-price-note">inkl. MwSt.</div>
                         </div>
-                        <a href="<?= BASE_URL ?>/cars/detail?id=<?= $auto['iid'] ?>">
+                        <a href="<?php echo  BASE_URL ?>/cars/detail?id=<?php echo  $auto['iid'] ?>">
                             <button class="car-btn">Details</button>
                         </a>
                     </div>
@@ -173,7 +173,7 @@
     </div>
 
     <?php require VIEW_PATH . 'partials/footer.php'; ?>
-    <script src="<?= BASE_URL ?>/js/favLogik.js"></script>
-    <script src="<?= BASE_URL ?>/js/searchConfig.js"></script>
+    <script src="<?php echo  BASE_URL ?>/js/favLogik.js"></script>
+    <script src="<?php echo  BASE_URL ?>/js/searchConfig.js"></script>
 </body>
 </html>

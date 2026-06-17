@@ -38,14 +38,21 @@ class Router {
 // Pfad auflösen 
 
     public function dispatch(): void {
+      
+    
         $method = $_SERVER['REQUEST_METHOD'];
         $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// abschneiden damit /WebTech01/cars zb zu /cars wird für matching
 
         $basePath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
         if ($basePath !== '' && str_starts_with($uri, $basePath)) {
             $uri = substr($uri, strlen($basePath));
         }
         $uri = '/' . ltrim($uri, '/');
+
+// Lukas, Tim 
+// registrierte Routen werden durchgegangen ob Methode passt ob Pattern passt; wenn beides passt -> controller erstellen und meth aurufen
 
         foreach ($this->routes as [$routeMethod, $pattern, $handler]) {
             if ($routeMethod !== $method) continue;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>AGB - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>

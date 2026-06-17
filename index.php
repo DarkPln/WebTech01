@@ -2,15 +2,14 @@
 
 // Tim, Lukas, Niclas 
 
-// ── Constants ────────────────────────────────────────────────────────────────
+// Konstanten
 define('BASE_PATH', __DIR__ . '/');
 define('BASE_URL',  '/WebTech01');
 define('VIEW_PATH', BASE_PATH . 'app/views/');
 
-// ── Session ──────────────────────────────────────────────────────────────────
 session_start();
 
-// ── Core autoloader ──────────────────────────────────────────────────────────
+//  Core autoloader
 foreach (['Database', 'Model', 'Controller', 'Router'] as $class) {
     require BASE_PATH . "core/{$class}.php";
 }
@@ -30,10 +29,9 @@ foreach ([
     require BASE_PATH . "app/controllers/{$class}.php";
 }
 
-// ── Static assets pass-through (images, CSS, JS) ─────────────────────────────
 // .htaccess handles this — PHP never sees requests for real files/dirs.
 
-// ── Router ───────────────────────────────────────────────────────────────────
+//  Router 
 $router = new Router();
 
 // Pages

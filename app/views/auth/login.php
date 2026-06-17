@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <!-- Gemeinsame Navigation (nav.php), zeigt Login/Logout-Status per JS -->
@@ -38,8 +38,8 @@
                 </form>
 
                 <!-- BASE_URL stellt sicher dass Links in Unterverzeichnissen funktionieren -->
-                <p><a href="<?= BASE_URL ?>/auth/register">Noch kein Konto? Jetzt registrieren</a></p>
-                <p><a href="<?= BASE_URL ?>/">Zurück zur Startseite</a></p>
+                <p><a href="<?php echo  BASE_URL ?>/auth/register">Noch kein Konto? Jetzt registrieren</a></p>
+                <p><a href="<?php echo  BASE_URL ?>/">Zurück zur Startseite</a></p>
             </div>
         </section>
     </main>

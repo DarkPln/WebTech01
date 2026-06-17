@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Seite nicht gefunden – Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
     <!-- Niclas: Implementiert css Datei -->
 </head>
 <body>
@@ -22,8 +22,8 @@
             </p>
             <!-- Niclas: Zwei Buttons, die den Nutzer zurück zur Hauptseite oder zum Fahrzeugangebot führen -->
             <div class="error-actions">
-                <a href="<?= BASE_URL ?>/cars" class="error-btn-primary">Fahrzeugangebot ansehen</a>
-                <a href="<?= BASE_URL ?>/" class="error-btn-secondary">Zur Hauptseite</a>
+                <a href="<?php echo  BASE_URL ?>/cars" class="error-btn-primary">Fahrzeugangebot ansehen</a>
+                <a href="<?php echo  BASE_URL ?>/" class="error-btn-secondary">Zur Hauptseite</a>
             </div>
         </div>
     </main>

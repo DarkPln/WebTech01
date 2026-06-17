@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Partner - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
@@ -96,7 +96,7 @@
             <h2>Interesse an einer Partnerschaft?</h2>
             <p>Werden Sie Teil des Auto24-Netzwerks und profitieren Sie von unserer Reichweite und unserem Kundenstamm.</p>
             <div class="home-buttons">
-                <a href="<?= BASE_URL ?>/about" class="home-btn-primary">Kontakt aufnehmen</a>
+                <a href="<?php echo  BASE_URL ?>/about" class="home-btn-primary">Kontakt aufnehmen</a>
             </div>
         </section>
 

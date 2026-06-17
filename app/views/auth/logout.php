@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Abgemeldet - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <!-- Gemeinsame Navigation (nav.php) -->
@@ -18,8 +18,8 @@
             <div class="auth-card">
                 <h1>Abgemeldet</h1>
                 <p>Sie wurden erfolgreich abgemeldet.</p>
-                <p><a href="<?= BASE_URL ?>/auth/login">Zum Login</a></p>
-                <p><a href="<?= BASE_URL ?>/">Zur Hauptseite</a></p>
+                <p><a href="<?php echo  BASE_URL ?>/auth/login">Zum Login</a></p>
+                <p><a href="<?php echo  BASE_URL ?>/">Zur Hauptseite</a></p>
             </div>
         </section>
     </main>

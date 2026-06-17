@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Versicherung - Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
@@ -74,22 +74,22 @@
                 <div class="home-category-card">
                     <h3>HUK-Coburg</h3>
                     <p>Deutschlands größter Kfz-Versicherer mit über 13 Millionen Kunden und ausgezeichneten Leistungen.</p>
-                    <a href="<?= BASE_URL ?>/partner">Mehr erfahren</a>
+                    <a href="<?php echo  BASE_URL ?>/partner">Mehr erfahren</a>
                 </div>
                 <div class="home-category-card">
                     <h3>ADAC Versicherung</h3>
                     <p>Exklusiver Kfz-Schutz für ADAC-Mitglieder mit besonderem Pannenschutz und Pannenhilfe.</p>
-                    <a href="<?= BASE_URL ?>/partner">Mehr erfahren</a>
+                    <a href="<?php echo  BASE_URL ?>/partner">Mehr erfahren</a>
                 </div>
                 <div class="home-category-card">
                     <h3>Allianz</h3>
                     <p>Umfassender Versicherungsschutz mit individuell anpassbaren Tarifen und schneller Schadensabwicklung.</p>
-                    <a href="<?= BASE_URL ?>/partner">Mehr erfahren</a>
+                    <a href="<?php echo  BASE_URL ?>/partner">Mehr erfahren</a>
                 </div>
                 <div class="home-category-card">
                     <h3>Zurich</h3>
                     <p>Weltweiter Assistance-Service und zuverlässiger Schutz mit attraktiven Rabatten für unfallfreies Fahren.</p>
-                    <a href="<?= BASE_URL ?>/partner">Mehr erfahren</a>
+                    <a href="<?php echo  BASE_URL ?>/partner">Mehr erfahren</a>
                 </div>
             </div>
         </section>
@@ -98,8 +98,8 @@
             <h2>Jetzt Angebot anfordern</h2>
             <p>Kontaktieren Sie uns oder einen unserer Versicherungspartner direkt – für ein individuelles Angebot zugeschnitten auf Ihr Fahrzeug.</p>
             <div class="home-buttons">
-                <a href="<?= BASE_URL ?>/partner" class="home-btn-primary">Zu den Partnern</a>
-                <a href="<?= BASE_URL ?>/faq" class="home-btn-secondary">Häufige Fragen</a>
+                <a href="<?php echo  BASE_URL ?>/partner" class="home-btn-primary">Zu den Partnern</a>
+                <a href="<?php echo  BASE_URL ?>/faq" class="home-btn-secondary">Häufige Fragen</a>
             </div>
         </section>
 

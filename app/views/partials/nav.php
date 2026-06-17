@@ -36,13 +36,13 @@ $lightModeCookie = !empty($_COOKIE['auto24_lightMode']) && $_COOKIE['auto24_ligh
 </div>
 
 <nav>
-    <a href="<?= BASE_URL ?>/" class="nav-logo">Auto<span>24</span></a>
+    <a href="<?php echo  BASE_URL ?>/" class="nav-logo">Auto<span>24</span></a>
     <ul class="nav-links">
-        <li><a href="<?= BASE_URL ?>/cars">Auto kaufen</a></li>
-        <li><a href="<?= BASE_URL ?>/listings/sell">Auto verkaufen</a></li>
+        <li><a href="<?php echo  BASE_URL ?>/cars">Auto kaufen</a></li>
+        <li><a href="<?php echo  BASE_URL ?>/listings/sell">Auto verkaufen</a></li>
     </ul>
     <div class="nav-right">
-        <a href="<?= BASE_URL ?>/auth/login" class="nav-auth-link" id="navAuthLink">Login</a>
+        <a href="<?php echo  BASE_URL ?>/auth/login" class="nav-auth-link" id="navAuthLink">Login</a>
         <?php if ($showFav): ?>
         <button class="nFav-btn" id="nFavBtn" onclick="togglePanel()">
             <span class="navFav-label">♡ Merkliste</span>
@@ -75,7 +75,7 @@ $lightModeCookie = !empty($_COOKIE['auto24_lightMode']) && $_COOKIE['auto24_ligh
             <span class="total-cost-value" id="totalCostValue">0 €</span>
         </div>
         <button class="clear-fav-list-btn" id="clearFavListBtn">Favoriten leeren</button>
-        <a href="<?= BASE_URL ?>/merkliste" class="open-full-favs-btn">Ganze Merkliste öffnen</a>
+        <a href="<?php echo  BASE_URL ?>/merkliste" class="open-full-favs-btn">Ganze Merkliste öffnen</a>
     </div>
 </div>
 <?php endif; ?>

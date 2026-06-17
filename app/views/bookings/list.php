@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Meine Buchungen – Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
 
@@ -25,10 +25,10 @@
                 <p class="buchungen-loading">Buchungen werden geladen…</p>
             </div>
 
-            <a href="<?= BASE_URL ?>/cars" class="home-btn-secondary buchungen-cars-link">
+            <a href="<?php echo  BASE_URL ?>/cars" class="home-btn-secondary buchungen-cars-link">
                 Weitere Fahrzeuge ansehen
             </a>
-            <a href="<?= BASE_URL ?>/user" class="buchungen-back-link">
+            <a href="<?php echo  BASE_URL ?>/user" class="buchungen-back-link">
                 ← Zurück zum Profil
             </a>
         </div>

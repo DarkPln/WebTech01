@@ -129,19 +129,19 @@ class BookingController extends Controller {
             ?>
 <div class="buchung-card">
     <div class="buchung-header">
-        <div class="buchung-car"><?= $carName ?></div>
-        <span class="buchung-status status-<?= $status ?>"><?= $label ?></span>
+        <div class="buchung-car"><?php echo  $carName ?></div>
+        <span class="buchung-status status-<?php echo  $status ?>"><?php echo  $label ?></span>
     </div>
     <div class="buchung-meta">
-        <span>Preis: <strong><?= $price ?> €</strong></span>
-        <span>Bestellt am: <?= $datum ?></span>
+        <span>Preis: <strong><?php echo  $price ?> €</strong></span>
+        <span>Bestellt am: <?php echo  $datum ?></span>
     </div>
     <?php if ($buchung['status'] === 'abgelehnt' && $buchung['reason']): ?>
-    <div class="buchung-reason">Ablehnungsgrund: <?= htmlspecialchars($buchung['reason']) ?></div>
+    <div class="buchung-reason">Ablehnungsgrund: <?php echo  htmlspecialchars($buchung['reason']) ?></div>
     <?php endif; ?>
     <?php if ($buchung['status'] === 'bestellt'): // Stornieren nur bei noch offenen Buchungen ?>
     <div class="buchung-actions">
-        <button class="buchung-cancel-btn" onclick="handleCancelBooking('<?= $id ?>')">Buchung stornieren</button>
+        <button class="buchung-cancel-btn" onclick="handleCancelBooking('<?php echo  $id ?>')">Buchung stornieren</button>
     </div>
     <?php endif; ?>
 </div>

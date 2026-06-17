@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fahrzeug nicht gefunden – Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
     <!-- Niclas: Implementiert css Datei -->    
 </head>
 <body>
@@ -23,8 +23,8 @@
                 Bitte prüfen Sie, ob Sie ein anderes Fahrzeug suchen wollten oder schauen Sie sich bei unseren Angeboten um.
             </p>
             <div class="error-actions">
-                <a href="<?= BASE_URL ?>/cars" class="error-btn-primary">Fahrzeugangebot ansehen</a>
-                <a href="<?= BASE_URL ?>/" class="error-btn-secondary">Zur Hauptseite</a>
+                <a href="<?php echo  BASE_URL ?>/cars" class="error-btn-primary">Fahrzeugangebot ansehen</a>
+                <a href="<?php echo  BASE_URL ?>/" class="error-btn-secondary">Zur Hauptseite</a>
             </div>
         </div>
     </main>

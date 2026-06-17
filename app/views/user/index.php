@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mein Konto – Auto24</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/mystyle.css">
+    <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body>
     <?php require VIEW_PATH . 'partials/nav.php'; ?>
@@ -15,8 +15,8 @@
             <div class="user-dashboard-header">
                 <h1>Willkommen, <span id="display-username"></span></h1>
                 <div class="user-dashboard-actions">
-                    <a href="<?= BASE_URL ?>/admin" id="adminDashboardLink" class="user-admin-link">Admin Dashboard</a>
-                    <a href="<?= BASE_URL ?>/auth/logout" class="user-logout-link">Abmelden</a>
+                    <a href="<?php echo  BASE_URL ?>/admin" id="adminDashboardLink" class="user-admin-link">Admin Dashboard</a>
+                    <a href="<?php echo  BASE_URL ?>/auth/logout" class="user-logout-link">Abmelden</a>
                 </div>
             </div>
 
