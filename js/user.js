@@ -53,14 +53,12 @@ function initUserForm() {
         return;
     }
 
-    // --- Header ---
     var displayName = document.getElementById('display-username');
     if (displayName) displayName.textContent = authState.username;
 
     var adminLink = document.getElementById('adminDashboardLink');
     if (adminLink && authState.isAdmin) adminLink.style.display = 'inline-block';
 
-    // --- Tab switching ---
     document.querySelectorAll('.admin-tab[data-target]').forEach(function(tab) {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -75,7 +73,6 @@ function initUserForm() {
         });
     });
 
-    // --- Profile form ---
     var profileForm   = document.getElementById('profileForm');
     var usernameInput = document.getElementById('username');
     var emailInput    = document.getElementById('email');
@@ -130,7 +127,6 @@ function initUserForm() {
 
     checkProfileValidity();
 
-    // --- Password form ---
     var passwordForm    = document.getElementById('passwordForm');
     var passwordInput   = document.getElementById('password');
     var passwordConfirm = document.getElementById('password_confirm');
@@ -184,7 +180,6 @@ function initUserForm() {
 
     checkPasswordValidity();
 
-    // --- Unread badge + mark-all-read ---
     loadUnreadBadge();
     var markBtn = document.getElementById('markAllReadBtn');
     if (markBtn) {
@@ -195,6 +190,5 @@ function initUserForm() {
         });
     }
 
-    // --- Initial load for default tab ---
     renderUserInserate();
 }

@@ -54,6 +54,7 @@ function renderAdminInserate() {
         .then(text => { container.innerHTML = text; });
 }
 
+// Inserat-Status (genehmigt/abgelehnt) an den Server schicken und Tab neu laden
 function adminSetInseratStatus(id, status) {
     return fetch(BASE_URL + '/api/admin/listings', {
         method:  'POST',
@@ -71,6 +72,7 @@ function renderAdminUsers() {
         .then(text => { container.innerHTML = text; });
 }
 
+// Buchungs-Status ändern und optional einen Ablehnungsgrund mitschicken, danach Tabs neu laden
 function adminSetStatus(bookingId, status, reason) {
     return fetch(BASE_URL + '/api/admin/orders', {
         method:  'POST',
