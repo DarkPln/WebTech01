@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim
 
 // Verwaltet Inserate, Buchungen, Nutzer und Fahrzeuge im Admin-Dashboard
 class AdminController extends Controller {
@@ -62,7 +62,9 @@ class AdminController extends Controller {
 
         Listing::updateStatus($key, $status);
 
-        // Inbox-Nachricht nur senden wenn Status sich tatsächlich geändert hat
+
+        // Lukas message logik (geht nur von admin aus, es gibt keine user zu user) 
+
         $userId = (int)($listing['user_id'] ?? 0);
         if ($userId > 0 && $oldStatus !== $status && in_array($status, ['genehmigt', 'abgelehnt'], true)) {
             $carLabel = $listing['make'] . ' ' . $listing['model'];

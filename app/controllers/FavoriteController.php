@@ -1,13 +1,21 @@
 <?php
 
+// Lukas favLogik 
+
 class FavoriteController extends Controller {
-    public function toggle(): void {
+    
+// favoriten hinzufügen, entfernen 
+
+public function toggle(): void {
         $input  = json_decode(file_get_contents('php://input'), true) ?? [];
         $action = $input['action'] ?? '';
         $carId  = isset($input['carId']) ? (int)$input['carId'] : null;
 
         $userId = $_SESSION['user_id'] ?? null;
         $useDB  = ($userId !== null && $userId > 0);
+
+
+        // wenn user eingloggt dann clear und json antwort 
 
         if ($useDB) {
             $db = Database::getInstance();
@@ -23,11 +31,26 @@ class FavoriteController extends Controller {
                 return;
             }
 
+            
+// fav hinzufügen bzw entfernen -> model 'added' / 'removed' 
+
             $status = Favorite::toggle((int)$userId, $carId);
+
+// favs von user 
+
             $favs   = Favorite::findByUser((int)$userId);
+
+
             $this->json(['success' => true, 'status' => $status, 'favorites' => $favs]);
         } else {
-            if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
+
+
+// gäste 
+
+            if (!isset($_SESSION['favorites'])){ 
+                $_SESSION['favorites'] = [];
+            }
+    
 
             if ($action === 'clear') {
                 $_SESSION['favorites'] = [];
@@ -45,6 +68,9 @@ class FavoriteController extends Controller {
                 $status = 'removed';
             } else {
                 $_SESSION['favorites'][] = $carId;
+
+                // auto zu sessionhinzufügen 
+
                 $status = 'added';
             }
 
@@ -52,15 +78,20 @@ class FavoriteController extends Controller {
         }
     }
 
+
+// favorites holen 
+
     public function get(): void {
         $userId = $_SESSION['user_id'] ?? null;
         $useDB  = ($userId !== null && $userId > 0);
 
+        // eingloggte 
         if ($useDB) {
             $favIds = Favorite::findByUser((int)$userId);
             $cars   = empty($favIds) ? [] : Favorite::getCarsForUser((int)$userId);
             $this->json(['favorites' => $favIds, 'cars' => $cars]);
         } else {
+        // gäste 
             $favIds = $_SESSION['favorites'] ?? [];
             $cars   = [];
             if (!empty($favIds)) {

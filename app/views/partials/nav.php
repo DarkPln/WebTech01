@@ -1,6 +1,10 @@
 <?php if (!isset($showFav)) $showFav = false; ?>
 
+
+
 <?php
+
+//Lukas
 // Cookie wird serverseitig gelesen und sofort per Inline-Script gesetzt,
 // damit der Light-Mode OHNE JavaScript-Flash angewendet wird.
 // localStorage kann das nicht — es ist erst nach dem DOM-Aufbau lesbar.
@@ -16,14 +20,14 @@ $lightModeCookie = !empty($_COOKIE['auto24_lightMode']) && $_COOKIE['auto24_ligh
 
 <!-- Warnung wenn Cookies im Browser deaktiviert sind (wird per JS eingeblendet) -->
 <div id="cookieDisabledBanner" class="cookie-disabled-banner" style="display:none;">
-    &#9888; Cookies sind in Ihrem Browser deaktiviert. Bitte aktivieren Sie Cookies, um Auto24 vollständig nutzen zu können (z.&nbsp;B. für den Login und Ihre Einstellungen).
+    &#9888; Cookies sind in Ihrem Browser deaktiviert. Bitte aktivieren Sie Cookies, um Auto24 vollständig nutzen zu können (z.B. für den Login und Ihre Einstellungen).
 </div>
 
 <!-- Cookie-Consent-Banner (wird per JS eingeblendet wenn noch keine Entscheidung getroffen) -->
 <div id="cookieConsentBanner" class="cookie-consent-banner" style="display:none;">
     <div class="cookie-consent-text">
         <strong>Cookie-Hinweis</strong>
-        Wir verwenden Cookies, um Ihre Einstellungen (z.&nbsp;B. Anzeigemodus) zu speichern und die Nutzung unserer Website zu verbessern. Sie können Cookies jederzeit in Ihren Browsereinstellungen deaktivieren.
+        Wir verwenden Cookies, um Ihre Einstellungen (z.B. Anzeigemodus) zu speichern und die Nutzung unserer Website zu verbessern. Sie können Cookies jederzeit in Ihren Browsereinstellungen deaktivieren.
     </div>
     <div class="cookie-consent-actions">
         <button class="cookie-btn cookie-btn--accept" onclick="acceptCookies()">Akzeptieren</button>

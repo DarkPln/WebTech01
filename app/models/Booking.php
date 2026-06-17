@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim
 
 class Booking extends Model {
     public static function create(array $d): string {

@@ -2,7 +2,8 @@
 
 class MerklisteController extends Controller {
    
-// Berechnung Mengenrabatt und laden der Merkliste bzw der favoriten eines nutzers, wenn er eingeloggt ist.
+// Lukas Favoriten Logik bzw aufgeklappte Merkliste 
+// Berechnung Mengenrabatt und laden der Merkliste bzw der favoriten eines nutzers, wenn eingeloggt
 
 public function index(): void {
         $userId = $_SESSION['user_id'] ?? null;
@@ -22,7 +23,7 @@ public function index(): void {
                 $gemerkteAutos = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
             }
         }
-
+        //Mengenrabatt: 10% ab 2 Autos, 20% ab 3 Autos:
         $total         = array_sum(array_column($gemerkteAutos, 'preis'));
         $anzahl        = count($gemerkteAutos);
         $rabattProzent = $anzahl >= 3 ? 20 : ($anzahl >= 2 ? 10 : 0);
@@ -30,7 +31,10 @@ public function index(): void {
         $endbetrag     = $total - $rabattBetrag;
 
         $this->render('merkliste/index', compact('gemerkteAutos', 'total', 'anzahl', 'rabattProzent', 'rabattBetrag', 'endbetrag'));
+        //Keine Änderung auf DB, daher kein Redirect nötig; einfach neu rendern mit aktualisierten Daten
     }
+
+// favoriten entfernen; einzelentfernung (id) bzw clear all also leeren  
 
     public function remove(): void {
         $userId = $_SESSION['user_id'] ?? null;
@@ -46,6 +50,8 @@ public function index(): void {
                 mysqli_query($db, "DELETE FROM favorites WHERE user_id = $userId");
             }
         } else {
+
+        // gast - zweig 
             if (!isset($_SESSION['favorites'])) $_SESSION['favorites'] = [];
             if (isset($_POST['remove_id'])) {
                 $rid = (int)$_POST['remove_id'];
@@ -57,5 +63,6 @@ public function index(): void {
         }
 
         $this->redirect(BASE_URL . '/merkliste');
+        //redirect wenn Änderung auf DB erfolt und neu geladen werden muss
     }
 }

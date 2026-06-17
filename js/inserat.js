@@ -88,25 +88,25 @@ function initVehicleForm() {
 
         fileInput.addEventListener('change', function() {
             addFiles(Array.from(fileInput.files));
-            fileInput.value = ''; // damit beim selben bild nochmal feuert 
+            fileInput.value = ''; // damit beim selben bild nochmal feuert
         });
     }
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         var submitBtn = document.getElementById('vehicleSubmitBtn');
         var errorDiv  = document.getElementById('vehicleError');
-        if (errorDiv) errorDiv.style.display = 'none'; // wenn von vorher noch da dann verstecken 
+        if (errorDiv) errorDiv.style.display = 'none'; // wenn von vorher noch da dann verstecken
 
         var valid        = true;
-        var firstInvalid = null; // scroll hierhin; siehe unten 
+        var firstInvalid = null; // scroll hierhin; siehe unten
         form.querySelectorAll('[required]').forEach(function(f) {
             if (!f.value.trim()) {
                 f.classList.add('invalid');
                 f.classList.remove('field-ok');
                 valid = false;
-                if (!firstInvalid) firstInvalid = f; // rot setzen 
+                if (!firstInvalid) firstInvalid = f; // rot setzen
             } else {
                 f.classList.remove('invalid'); // grün setzen
                 f.classList.add('field-ok');
@@ -151,35 +151,36 @@ function initVehicleForm() {
         fd.append('phone',     document.getElementById('sell-phone').value.trim());
         selectedFiles.forEach(function(file) { fd.append('images[]', file); });
 
-        try {
-            const r    = await fetch(BASE_URL + '/api/listings/create', { method: 'POST', body: fd });
-            const data = await r.json();
-
-            if (data.success) {
-                form.reset();
-                selectedFiles = [];
-                renderPreviews();
-                form.style.display = 'none';
-                var successDiv = document.getElementById('vehicleSuccess');
-                if (successDiv) {
-                    successDiv.textContent = 'Ihr Inserat wurde erfolgreich eingereicht und wird innerhalb von 24 Stunden geprüft.';
-                    successDiv.style.display = 'block';
-                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        fetch(BASE_URL + '/api/listings/create', { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    form.reset();
+                    selectedFiles = [];
+                    renderPreviews();
+                    form.style.display = 'none';
+                    var successDiv = document.getElementById('vehicleSuccess');
+                    if (successDiv) {
+                        successDiv.textContent = 'Ihr Inserat wurde erfolgreich eingereicht und wird innerhalb von 24 Stunden geprüft.';
+                        successDiv.style.display = 'block';
+                        successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    if (errorDiv) {
+                        errorDiv.textContent = data.message || 'Einreichen fehlgeschlagen. Bitte versuchen Sie es erneut.';
+                        errorDiv.style.display = 'block';
+                        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                 }
-            } else {
+            })
+            .catch(function(err) {
                 if (errorDiv) {
-                    errorDiv.textContent = data.message || 'Einreichen fehlgeschlagen. Bitte versuchen Sie es erneut.';
+                    errorDiv.textContent = 'Netzwerkfehler – bitte Seite neu laden und erneut versuchen.';
                     errorDiv.style.display = 'block';
-                    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-            }
-        } catch (err) {
-            if (errorDiv) {
-                errorDiv.textContent = 'Netzwerkfehler – bitte Seite neu laden und erneut versuchen.';
-                errorDiv.style.display = 'block';
-            }
-        } finally {
-            if (submitBtn) { submitBtn.disabled = false; submitBtn.value = 'Inserat einreichen'; }
-        }
+            })
+            .finally(function() {
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.value = 'Inserat einreichen'; }
+            });
     });
 }

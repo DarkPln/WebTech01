@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim, Lukas
 
 class User extends Model {
 

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿/* Lukas, Tim, Niclas */
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">

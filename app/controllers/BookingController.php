@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim
 
 class BookingController extends Controller {
     public function index(): void {
@@ -67,6 +67,10 @@ class BookingController extends Controller {
         }
         $this->json(['success' => true, 'bookings' => Booking::findByUser((int)$_SESSION['user_id'])]);
     }
+
+
+
+// Lukas 
 
     public function listHtml(): void {
         if (!isset($_SESSION['user_id'])) {

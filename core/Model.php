@@ -1,4 +1,5 @@
 <?php
+//Modell
 
 abstract class Model {
 

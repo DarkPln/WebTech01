@@ -1,4 +1,5 @@
 <?php
+//Niclas
 
 abstract class Controller {
 
@@ -16,7 +17,6 @@ abstract class Controller {
     }
 
     protected function json(array $data): void {
-        while (ob_get_level() > 0) ob_end_clean();
         header('Content-Type: application/json');
         echo json_encode($data);
     }

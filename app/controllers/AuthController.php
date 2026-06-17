@@ -1,5 +1,5 @@
-<!-- Tim -->
 <?php
+// Tim
 
 class AuthController extends Controller {
     public function loginView(): void {
@@ -27,7 +27,6 @@ class AuthController extends Controller {
     }
 
     public function login(): void {
-        ob_start();
         $input    = json_decode(file_get_contents('php://input'), true) ?? [];
         $username = trim($input['username'] ?? '');
         $password = $input['password'] ?? '';
@@ -36,7 +35,6 @@ class AuthController extends Controller {
             $_SESSION['user_id']  = 0;
             $_SESSION['username'] = 'admin';
             $_SESSION['is_admin'] = true;
-            ob_end_clean();
             $this->json(['success' => true, 'isAdmin' => true, 'username' => 'admin']);
             return;
         }
@@ -45,7 +43,6 @@ class AuthController extends Controller {
             $_SESSION['user_id']  = -1;
             $_SESSION['username'] = 'TestUser';
             $_SESSION['is_admin'] = false;
-            ob_end_clean();
             $this->json(['success' => true, 'isAdmin' => false, 'username' => 'TestUser']);
             return;
         }
@@ -53,13 +50,11 @@ class AuthController extends Controller {
         $user = User::findByUsername($username);
 
         if (!$user || $user['password'] !== $password) {
-            ob_end_clean();
             $this->json(['success' => false, 'message' => 'Falscher Benutzername oder Passwort']);
             return;
         }
 
         if ($user['is_locked']) {
-            ob_end_clean();
             $this->json(['success' => false, 'message' => 'Ihr Konto ist vom Administrator gesperrt']);
             return;
         }
@@ -68,7 +63,6 @@ class AuthController extends Controller {
         $_SESSION['username'] = $user['username'];
         $_SESSION['is_admin'] = (bool)$user['is_admin'];
 
-        ob_end_clean();
         $this->json(['success' => true, 'isAdmin' => (bool)$user['is_admin'], 'username' => $user['username']]);
     }
 
@@ -97,10 +91,7 @@ class AuthController extends Controller {
     }
 
     public function status(): void {
-        ob_start();
-
         if (!isset($_SESSION['user_id'])) {
-            ob_end_clean();
             $this->json(['loggedIn' => false]);
             return;
         }
@@ -123,7 +114,6 @@ class AuthController extends Controller {
             }
         }
 
-        ob_end_clean();
         $this->json([
             'loggedIn' => true,
             'username' => $_SESSION['username'],
@@ -134,6 +124,9 @@ class AuthController extends Controller {
             'city'     => $city,
         ]);
     }
+
+
+// Lukas 
 
     public function update(): void {
         if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] <= 0) {

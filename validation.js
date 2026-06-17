@@ -1,21 +1,26 @@
 // ===== INITIALISIERUNG =====
 // Einstiegspunkt: lädt alle Seitenmodule in der richtigen Reihenfolge.
-// Funktionen sind ausgelagert in js/core.js, js/auth.js, js/user.js,
-// js/buchung.js, js/admin.js, js/inserat.js, js/utils.js
 
-document.addEventListener('DOMContentLoaded', async () => {
+// Lukas, Niclas, Tim
+
+document.addEventListener('DOMContentLoaded', () => {
     initCookieBanner();
     applyUrlFilter();
     initLoginForm();
     initRegistrationForm();
     initItemFinancing();
-    await initLogout();
-    await loadAuthState();
-    initNavAuthLink();
-    initUserForm();
-    initVehicleForm();
-    await initBookingsPage();
-    initBookingButton();
-    initBookingButtons();
-    await initAdminPage();
+
+    initLogout()
+        .then(() => loadAuthState())
+        .then(() => {
+            initNavAuthLink();
+            initUserForm();
+            initVehicleForm();
+            return initBookingsPage();
+        })
+        .then(() => {
+            initBookingButton();
+            initBookingButtons();
+            return initAdminPage();
+        });
 });

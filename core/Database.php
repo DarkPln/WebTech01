@@ -1,5 +1,7 @@
 <?php
 
+// Lukas
+
 class Database {
     private static ?mysqli $instance = null;
 

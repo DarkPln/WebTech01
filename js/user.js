@@ -7,37 +7,42 @@ function showMsg(el, text) {
     setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 
-async function loadUnreadBadge() {
+function loadUnreadBadge() {
     var badge = document.getElementById('msgBadge');
     if (!badge) return;
-    try {
-        const r    = await fetch(BASE_URL + '/api/messages/unread-count');
-        const data = await r.json();
-        if (data.count > 0) {
-            badge.textContent = data.count;
-            badge.style.display = 'inline-flex';
-        } else {
+    fetch(BASE_URL + '/api/messages/unread-count')
+        .then(r => r.json())
+        .then(data => {
+            if (data.count > 0) {
+                badge.textContent = data.count;
+                badge.style.display = 'inline-flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        })
+        .catch(() => {
             badge.style.display = 'none';
-        }
-    } catch (e) {
-        badge.style.display = 'none';
-    }
+        });
 }
 
-async function loadMessages() {
+function loadMessages() {
     var container = document.getElementById('messagesContainer');
-    if (!container) return;
-    const r = await fetch(BASE_URL + '/api/messages/list-html');
-    container.innerHTML = await r.text();
-    loadUnreadBadge();
+    if (!container) return Promise.resolve();
+    return fetch(BASE_URL + '/api/messages/list-html')
+        .then(r => r.text())
+        .then(text => {
+            container.innerHTML = text;
+            loadUnreadBadge();
+        });
 }
 
 // PHP rendert das fertige HTML, JS fügt es nur noch in die Seite ein
-async function renderUserInserate() {
+function renderUserInserate() {
     var container = document.getElementById('userInserate');
-    if (!container) return;
-    const antwort       = await fetch(BASE_URL + '/api/listings/list-html');
-    container.innerHTML = await antwort.text();
+    if (!container) return Promise.resolve();
+    return fetch(BASE_URL + '/api/listings/list-html')
+        .then(antwort => antwort.text())
+        .then(text => { container.innerHTML = text; });
 }
 
 function initUserForm() {
@@ -95,10 +100,10 @@ function initUserForm() {
         checkProfileValidity();
     });
 
-    profileForm.addEventListener('submit', async (e) => {
+    profileForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (profileSave.disabled) return;
-        const r    = await fetch(BASE_URL + '/api/auth/update', {
+        fetch(BASE_URL + '/api/auth/update', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({
@@ -107,18 +112,20 @@ function initUserForm() {
                 phone:    phoneInput ? phoneInput.value.trim() : '',
                 city:     cityInput  ? cityInput.value.trim()  : '',
             }),
-        });
-        const data = await r.json();
-        if (data.success) {
-            authState.username = data.username;
-            if (displayName) displayName.textContent = data.username;
-            if (emailInput) authState.email = emailInput.value.trim();
-            if (phoneInput) authState.phone = phoneInput.value.trim();
-            if (cityInput)  authState.city  = cityInput.value.trim();
-            showMsg(profileOk, 'Profil gespeichert!');
-        } else {
-            showMsg(profileErr, data.message || 'Fehler beim Speichern.');
-        }
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    authState.username = data.username;
+                    if (displayName) displayName.textContent = data.username;
+                    if (emailInput) authState.email = emailInput.value.trim();
+                    if (phoneInput) authState.phone = phoneInput.value.trim();
+                    if (cityInput)  authState.city  = cityInput.value.trim();
+                    showMsg(profileOk, 'Profil gespeichert!');
+                } else {
+                    showMsg(profileErr, data.message || 'Fehler beim Speichern.');
+                }
+            });
     });
 
     checkProfileValidity();
@@ -149,10 +156,10 @@ function initUserForm() {
         checkPasswordValidity();
     });
 
-    passwordForm.addEventListener('submit', async (e) => {
+    passwordForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (passwordSave.disabled) return;
-        const r    = await fetch(BASE_URL + '/api/auth/update', {
+        fetch(BASE_URL + '/api/auth/update', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({
@@ -161,16 +168,18 @@ function initUserForm() {
                 email:    authState.email || '',
                 phone:    authState.phone || '',
             }),
-        });
-        const data = await r.json();
-        if (data.success) {
-            passwordInput.value   = '';
-            passwordConfirm.value = '';
-            checkPasswordValidity();
-            showMsg(passwordOk, 'Passwort erfolgreich geändert!');
-        } else {
-            showMsg(passwordErr, data.message || 'Fehler beim Ändern.');
-        }
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    passwordInput.value   = '';
+                    passwordConfirm.value = '';
+                    checkPasswordValidity();
+                    showMsg(passwordOk, 'Passwort erfolgreich geändert!');
+                } else {
+                    showMsg(passwordErr, data.message || 'Fehler beim Ändern.');
+                }
+            });
     });
 
     checkPasswordValidity();
@@ -179,10 +188,10 @@ function initUserForm() {
     loadUnreadBadge();
     var markBtn = document.getElementById('markAllReadBtn');
     if (markBtn) {
-        markBtn.addEventListener('click', async () => {
-            await fetch(BASE_URL + '/api/messages/mark-read', { method: 'POST' });
-            await loadMessages();
-            loadUnreadBadge();
+        markBtn.addEventListener('click', () => {
+            fetch(BASE_URL + '/api/messages/mark-read', { method: 'POST' })
+                .then(() => loadMessages())
+                .then(() => loadUnreadBadge());
         });
     }
 

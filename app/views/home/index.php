@@ -61,12 +61,13 @@
             </div>
             <div class="home-category-card">
                 <h3>Auto verkaufen</h3>
-                <p>Inserieren Sie Ihr Fahrzeug schnell und unkompliziert.</p>
+                <p>Inserieren Sie Ihr Fahrzeug schnell und unkompliziert.
+                </p>
                 <a href="<?= BASE_URL ?>/listings/sell">Autos verkaufen</a>
             </div>
             <div class="home-category-card">
                 <h3>Login-Bereich</h3>
-                <p>Melden Sie sich an, um Inserate zu verwalten.</p>
+                <p>Melden Sie sich an, um Inserate aufzugeben oder Autos zu buchen.</p>
                 <a href="<?= BASE_URL ?>/auth/login">Zum Login</a>
             </div>
         </div>
