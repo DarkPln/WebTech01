@@ -92,7 +92,7 @@ function updateUI() {
     renderList();
 }
 
-// ── AUTO-DATEN HOLEN (DOM-Card oder gespeicherte Server-Daten) ──
+// auto daten holen DOM oder server-daten
 function getCarData(id) {
     const card = document.querySelector(`.car-card[data-id="${id}"]`);
     if (card) {
@@ -120,7 +120,7 @@ function getCarData(id) {
     };
 }
 
-// ── PANEL-LISTE RENDERN ──
+// fav Panel rendern 
 function renderList() {
     const list = document.getElementById('favItems');
     if (!list) return;
@@ -150,7 +150,7 @@ function renderList() {
     });
 }
 
-// ── HERZ TOGGLEN ──
+// herz togglen 
 function toggleFavorite(btn) {
     const card = btn.closest('.car-card');
     if (!card) return;
@@ -188,7 +188,7 @@ function toggleFavorite(btn) {
     sendFavAction('toggle', id);
 }
 
-// ── EINZELN ENTFERNEN ──
+// fav einzeln entfernen 
 function removeFav(id) {
     id = parseInt(id, 10);
     if (!favorites.has(id)) return;
@@ -207,7 +207,7 @@ function removeFav(id) {
     sendFavAction('toggle', id);
 }
 
-// ── ALLE ENTFERNEN ──
+// alle entfernen 
 function clearAllFavs() {
     favorites.forEach(id => {
         const card = document.querySelector(`.car-card[data-id="${id}"]`);
@@ -221,7 +221,7 @@ function clearAllFavs() {
     sendFavAction('clear');
 }
 
-// ── MERKLISTE: CHECKBOX-BUCHUNG ──
+// merkliste: buchen über checkboxes 
 function initMerklisteBuchung() {
     const checkboxes = document.querySelectorAll('.merkliste-checkbox');
     const buchungBtn = document.getElementById('buchungAusgewaehlt');

@@ -14,12 +14,12 @@ foreach (['Database', 'Model', 'Controller', 'Router'] as $class) {
     require BASE_PATH . "core/{$class}.php";
 }
 
-// ── Models ───────────────────────────────────────────────────────────────────
+//  Model 
 foreach (['Car', 'User', 'Listing', 'Booking', 'Message', 'Favorite'] as $class) {
     require BASE_PATH . "app/models/{$class}.php";
 }
 
-// ── Controllers ──────────────────────────────────────────────────────────────
+// Controller
 foreach ([
     'HomeController', 'AuthController', 'CarController',
     'ListingController', 'BookingController', 'AdminController',
@@ -29,7 +29,7 @@ foreach ([
     require BASE_PATH . "app/controllers/{$class}.php";
 }
 
-// .htaccess handles this — PHP never sees requests for real files/dirs.
+// .htaccess behandelt das; php sieht keine request von echten files vom dir wie zb mystyle.css
 
 //  Router 
 $router = new Router();
@@ -49,37 +49,37 @@ $router->get('/bookings',        [BookingController::class,  'index']);
 $router->get('/merkliste',       [MerklisteController::class,'index']);
 $router->post('/merkliste/remove', [MerklisteController::class,'remove']);
 
-// Static pages — must be registered after all specific routes
+// "Füll"-Seiten nav unten im footer 
 $router->get('/{page}', [PageController::class, 'show']);
 
-// Auth API
+// auth API
 $router->get('/api/auth/status',    [AuthController::class, 'status']);
 $router->post('/api/auth/login',    [AuthController::class, 'login']);
 $router->post('/api/auth/logout',   [AuthController::class, 'logout']);
 $router->post('/api/auth/register', [AuthController::class, 'register']);
 $router->post('/api/auth/update',   [AuthController::class, 'update']);
 
-// Listings API
+// listings API
 $router->post('/api/listings/create',   [ListingController::class, 'create']);
 $router->get('/api/listings/list',      [ListingController::class, 'list']);
 $router->get('/api/listings/list-html', [ListingController::class, 'listHtml']);
 
-// Bookings API
+// bookings API
 $router->post('/api/bookings/create',   [BookingController::class, 'create']);
 $router->post('/api/bookings/cancel',   [BookingController::class, 'cancel']);
 $router->get('/api/bookings/list',      [BookingController::class, 'listJson']);
 $router->get('/api/bookings/list-html', [BookingController::class, 'listHtml']);
 
-// Messages API
+// msg API
 $router->get('/api/messages/list-html',   [MessageController::class, 'listHtml']);
 $router->post('/api/messages/mark-read',  [MessageController::class, 'markRead']);
 $router->get('/api/messages/unread-count',[MessageController::class, 'unreadCount']);
 
-// Favorites API
+// favorites API
 $router->post('/api/favorites/toggle', [FavoriteController::class, 'toggle']);
 $router->get('/api/favorites/get',     [FavoriteController::class, 'get']);
 
-// Admin API
+// admin API
 $router->get('/api/admin/listings',      [AdminController::class, 'getListings']);
 $router->post('/api/admin/listings',     [AdminController::class, 'updateListing']);
 $router->get('/api/admin/listings-html', [AdminController::class, 'listingsHtml']);

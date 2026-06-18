@@ -83,11 +83,16 @@ function adminSetStatus(bookingId, status, reason) {
 
 // Lukas
 
+// buchung ablehnen; mit grund der vom admin formuliert werden kann 
+
 function adminRejectOrder(bookingId) {
     var reason = prompt('Bitte geben Sie einen Ablehnungsgrund an (z.B. nicht verfügbare Items):');
     if (reason === null) return;
     return adminSetStatus(bookingId, 'abgelehnt', reason || 'Kein Grund angegeben');
 }
+
+
+// user sperrung 
 
 function adminToggleLock(username) {
     return fetch(BASE_URL + '/api/admin/users', {
@@ -97,6 +102,9 @@ function adminToggleLock(username) {
     }).then(() => renderAdminUsers());
 }
 
+
+// fahrzeuge anzeigen für löschung
+
 function renderAdminCars() {
     var container = document.getElementById('adminCars');
     if (!container) return Promise.resolve();
@@ -105,13 +113,15 @@ function renderAdminCars() {
         .then(text => { container.innerHTML = text; });
 }
 
+// löschung auto 
+
 function adminDeleteCar(iid, btn) {
     if (!confirm('Fahrzeug dauerhaft löschen?')) return;
     btn.disabled = true;
     fetch(BASE_URL + '/api/admin/cars', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ iid })
+        body:    JSON.stringify({ id: iid })
     })
         .then(res => res.json())
         .then(data => {
@@ -123,6 +133,8 @@ function adminDeleteCar(iid, btn) {
             }
         });
 }
+
+// admin logoout 
 
 function adminLogout() {
     fetch(BASE_URL + '/api/auth/logout', { method: 'POST' })

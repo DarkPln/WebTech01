@@ -18,7 +18,7 @@ class AdminController extends Controller {
     // Inserat genehmigen oder ablehnen; bei Genehmigung in cars-Tabelle kopieren
     public function updateListing(): void {
         $this->requireAdmin();
-        // Roher JSON-Body lesen, da JS application/json schickt statt $_POST
+        // Roher JSON-Body lesen, da JS admin application/json schickt
         $input  = json_decode(file_get_contents('php://input'), true) ?? [];
         $key    = $input['id']     ?? '';
         $status = $input['status'] ?? '';
@@ -37,7 +37,7 @@ class AdminController extends Controller {
             $kraftMap  = ['benzin' => 'Benzin', 'diesel' => 'Diesel', 'elektro' => 'Elektro', 'hybrid' => 'Hybrid', 'lpg' => 'LPG'];
             // Bilder stehen als JSON-Array in der DB; ?? '[]' verhindert Fehler bei NULL
             $imagesArr = json_decode($listing['images'] ?? '[]', true);
-            // Erstes Bild als Vorschaubild, Platzhalter wenn keins vorhanden
+            // Bild als Vorschaubild, Platzhalter wenn keins vorhanden
             $imagepath = !empty($imagesArr[0]) ? $imagesArr[0] : 'https://placehold.co/800x500/1a1a1a/cccccc?text=Kein+Bild';
 
             // Felder aus listing in cars-Format übertragen
