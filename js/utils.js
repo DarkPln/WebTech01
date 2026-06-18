@@ -14,9 +14,10 @@ function toggleMode() {
 }
 
 (function applyStoredMode() {
-    // PHP setzt light-mode bereits serverseitig via $_COOKIE (nav.php) — kein Flash.
-    // Dieser Fallback greift nur wenn kein Cookie vorhanden ist (z.B. Cookies abgelehnt),
-    // dann liest localStorage den zuletzt gespeicherten Wert.
+   
+
+// Fallback für nicht akzeptierte/gespeicherte Cookies damit der mode switch trotzdem funktioniert 
+
     if (!document.body.classList.contains('light-mode') &&
         localStorage.getItem('auto24_lightMode') === '1') {
         document.body.classList.add('light-mode');
