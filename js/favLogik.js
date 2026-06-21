@@ -261,7 +261,7 @@ function initMerklisteBuchung() {
     });
 }
 
-// ── EINZIGER DOMContentLoaded BLOCK ──
+
 document.addEventListener('DOMContentLoaded', function () {
 
     function wireUp() {

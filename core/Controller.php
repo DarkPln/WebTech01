@@ -1,12 +1,12 @@
 <?php
-//Niclas
+//Niclas, Lukas 
 
 abstract class Controller {
 
 
         // seite wird gerendet vermittlung an view bzw an die php datei die displayed 
     protected function render(string $view, array $data = []): void {
-        extract($data);
+        extract($data); // array keys zu variablen damit nutzbar in den views 
         $viewPath = BASE_PATH . 'app/views/' . $view . '.php';
         if (!file_exists($viewPath)) {
             http_response_code(404);

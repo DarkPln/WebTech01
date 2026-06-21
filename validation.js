@@ -1,4 +1,4 @@
-// ===== INITIALISIERUNG =====
+// Initialisierung  
 // Einstiegspunkt: lädt alle Seitenmodule in der richtigen Reihenfolge.
 
 // Lukas, Niclas, Tim
