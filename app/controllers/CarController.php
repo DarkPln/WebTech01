@@ -64,7 +64,7 @@ class CarController extends Controller {
             $currentIds  = array_column($fahrzeuge, 'iid');
             $this->render('cars/detail', compact('fahrzeug', 'isSold', 'showFav', 'compareMode', 'fahrzeuge', 'alleCars', 'currentIds', 'notFoundIds'));
         }
-        //compact() erstellt ein Array aus den übergebenen Variablen, damit sie in der View (home/detail.php) verfügbar sind 
+        //compact() erstellt ein Array aus den übergebenen Variablen, damit sie in der View (cars/detail.php) verfügbar sind 
     }
     //Beide Fälle (Einzel- und Vergleichsansicht) werden in der gleichen View cars/detail.php behandelt
 
