@@ -1,6 +1,6 @@
 <?php
 //Modell
-
+// Niclas
 abstract class Model {
 
 //verbindung db

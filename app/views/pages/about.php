@@ -16,7 +16,7 @@
             <div class="home-hero-content">
                 <div class="home-badge">Über uns</div>
                 <h1>Auto<span>24</span></h1>
-                <p>Die führende Online-Plattform für den Kauf und Verkauf von Fahrzeugen. Unkompliziert, sicher und schnell – Ihre vertrauenswürdige Fahrzeugbörse seit 2024.</p>
+                <p>Die führende Online-Plattform für den Kauf und Verkauf von Fahrzeugen. Unkompliziert, sicher und schnell - Ihre vertrauenswürdige Fahrzeugbörse seit 2024.</p>
             </div>
         </section>
 

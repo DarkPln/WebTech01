@@ -27,7 +27,7 @@
                     <p>Effektiver Jahreszins</p>
                 </div>
                 <div class="finance-info-card">
-                    <h3>12–48</h3>
+                    <h3>12-48</h3>
                     <p>Laufzeit in Monaten</p>
                 </div>
                 <div class="finance-info-card">
@@ -48,10 +48,10 @@
 
         <section class="home-section">
             <div class="finance-calc-card">
-                <h3>Auto24 Bank – Finanzierungshilfe</h3>
+                <h3>Auto24 Bank - Finanzierungshilfe</h3>
                 <label for="financingInput">Finanzierungsbetrag (€):</label>
                 <input type="number" id="financingInput" placeholder="z. B. 25000" min="1000">
-                <label for="loanTermInput">Laufzeit in Monaten (12 – 48):</label>
+                <label for="loanTermInput">Laufzeit in Monaten (12 - 48):</label>
                 <input type="number" id="loanTermInput" placeholder="z. B. 36" min="12" max="48">
                 <input type="submit" value="Rate berechnen" onclick="calculateFinancing()">
                 <p id="financingResult"></p>

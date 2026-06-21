@@ -15,7 +15,7 @@
             <div class="home-hero-content">
                 <div class="home-badge">Rundum geschützt</div>
                 <h1>Kfz-Versicherung</h1>
-                <p>Finden Sie die passende Kfz-Versicherung für Ihr Fahrzeug – vom gesetzlich vorgeschriebenen Haftpflichtschutz bis zur umfassenden Vollkasko.</p>
+                <p>Finden Sie die passende Kfz-Versicherung für Ihr Fahrzeug - vom gesetzlich vorgeschriebenen Haftpflichtschutz bis zur umfassenden Vollkasko.</p>
             </div>
         </section>
 
@@ -26,7 +26,7 @@
                 <div class="insurance-card">
                     <div class="insurance-badge">Pflicht</div>
                     <h3>Haftpflicht</h3>
-                    <p>Die Kfz-Haftpflichtversicherung ist in Deutschland gesetzlich vorgeschrieben. Sie deckt Schäden ab, die Sie mit Ihrem Fahrzeug bei Dritten verursachen – sowohl Personen- als auch Sachschäden.</p>
+                    <p>Die Kfz-Haftpflichtversicherung ist in Deutschland gesetzlich vorgeschrieben. Sie deckt Schäden ab, die Sie mit Ihrem Fahrzeug bei Dritten verursachen - sowohl Personen- als auch Sachschäden.</p>
                     <ul>
                         <li>Personenschäden bis 7,5 Mio. €</li>
                         <li>Sachschäden bis 1,22 Mio. €</li>
@@ -65,7 +65,7 @@
 
         <section class="home-about">
             <h2>Welche Versicherung brauche ich?</h2>
-            <p>Bei älteren Fahrzeugen (über 5–7 Jahre) reicht häufig eine Haftpflicht- oder Teilkaskoversicherung. Bei Neuwagen und Fahrzeugen mit hohem Restwert empfehlen wir eine Vollkaskoversicherung. Unser Tipp: Vergleichen Sie die Kosten der Versicherungsprämie mit dem Wiederbeschaffungswert Ihres Fahrzeugs.</p>
+            <p>Bei älteren Fahrzeugen (über 5-7 Jahre) reicht häufig eine Haftpflicht- oder Teilkaskoversicherung. Bei Neuwagen und Fahrzeugen mit hohem Restwert empfehlen wir eine Vollkaskoversicherung. Unser Tipp: Vergleichen Sie die Kosten der Versicherungsprämie mit dem Wiederbeschaffungswert Ihres Fahrzeugs.</p>
         </section>
 
         <section class="home-section">
@@ -96,7 +96,7 @@
 
         <section class="home-about">
             <h2>Jetzt Angebot anfordern</h2>
-            <p>Kontaktieren Sie uns oder einen unserer Versicherungspartner direkt – für ein individuelles Angebot zugeschnitten auf Ihr Fahrzeug.</p>
+            <p>Kontaktieren Sie uns oder einen unserer Versicherungspartner direkt - für ein individuelles Angebot zugeschnitten auf Ihr Fahrzeug.</p>
             <div class="home-buttons">
                 <a href="<?php echo  BASE_URL ?>/partner" class="home-btn-primary">Zu den Partnern</a>
                 <a href="<?php echo  BASE_URL ?>/faq" class="home-btn-secondary">Häufige Fragen</a>
@@ -109,4 +109,4 @@
 
 </body>
 </html>
-<!-- Tim -->
+

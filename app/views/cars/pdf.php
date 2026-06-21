@@ -4,7 +4,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo  htmlspecialchars($fahrzeug['name']) ?> – Fahrzeugdaten</title>
+    <title><?php echo  htmlspecialchars($fahrzeug['name']) ?> - Fahrzeugdaten</title>
     <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
 </head>
 <body class="pdf-page">
@@ -50,8 +50,8 @@
     <tr><td class="label">Kilometerstand</td> <td class="value"><?php echo  number_format($fahrzeug['kilometerstand'], 0, ',', '.') ?> km</td></tr>
     <tr><td class="label">Leistung</td>       <td class="value"><?php echo  (int)$fahrzeug['leistung_ps'] ?> PS</td></tr>
     <tr><td class="label">Antrieb</td>        <td class="value"><?php echo  htmlspecialchars($fahrzeug['antrieb']) ?></td></tr>
-    <tr><td class="label">Getriebe</td>       <td class="value"><?php echo  htmlspecialchars($fahrzeug['gearbox'] ?? '–') ?></td></tr>
-    <tr><td class="label">Kategorie</td>      <td class="value"><?php echo  htmlspecialchars(ucfirst($fahrzeug['kategorie'] ?? '–')) ?></td></tr>
+    <tr><td class="label">Getriebe</td>       <td class="value"><?php echo  htmlspecialchars($fahrzeug['gearbox'] ?? '-') ?></td></tr>
+    <tr><td class="label">Kategorie</td>      <td class="value"><?php echo  htmlspecialchars(ucfirst($fahrzeug['kategorie'] ?? '-')) ?></td></tr>
 </table>
 
 <?php if (!empty($fahrzeug['beschreibung'])): ?>
@@ -62,7 +62,7 @@
 <div class="pdf-footer">
     AUTO24 GmbH  - Altschauerberg 8, 85049 Ingolstadt  -
     info@auto24.de  - +49 (0) 841 / 123 456<br>
-    Mo–Fr 8:00–18:00 Uhr  - Geschäftsführer: Lukas Neumayer, Niclas Reuter, Tim Höhn
+    Mo-Fr 8:00-18:00 Uhr  - Geschäftsführer: Lukas Neumayer, Niclas Reuter, Tim Höhn
 </div>
 
 

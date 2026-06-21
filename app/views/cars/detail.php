@@ -3,7 +3,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $compareMode ? 'Fahrzeugvergleich' : htmlspecialchars($fahrzeug['name']); ?> – Auto24</title>
+    <title><?php echo $compareMode ? 'Fahrzeugvergleich' : htmlspecialchars($fahrzeug['name']); ?> - Auto24</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/mystyle.css">
 </head>
 <body>

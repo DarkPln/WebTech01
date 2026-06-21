@@ -30,7 +30,7 @@ public function index(): void {
         $rabattBetrag  = $total * ($rabattProzent / 100);
         $endbetrag     = $total - $rabattBetrag;
 
-        $this->render('merkliste/index', compact('gemerkteAutos', 'total', 'anzahl', 'rabattProzent', 'rabattBetrag', 'endbetrag'));
+        $this->render('merkliste/merkliste', compact('gemerkteAutos', 'total', 'anzahl', 'rabattProzent', 'rabattBetrag', 'endbetrag'));
         //Keine Änderung auf DB, daher kein Redirect nötig; einfach neu rendern mit aktualisierten Daten
     }
 
@@ -63,6 +63,6 @@ public function index(): void {
         }
 
         $this->redirect(BASE_URL . '/merkliste');
-        //redirect wenn Änderung auf DB erfolt und neu geladen werden muss
+        //redirect wenn Änderung auf DB erfolgt und neu geladen werden muss
     }
 }

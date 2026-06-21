@@ -71,7 +71,7 @@ class Router {
         if (file_exists($viewPath)) {
             require $viewPath;
         } else {
-            echo '404 – Seite nicht gefunden';
+            echo '404 - Seite nicht gefunden';
         }
     }
 }

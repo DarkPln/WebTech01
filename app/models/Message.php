@@ -1,5 +1,5 @@
 <?php
-// MEssage logik Lukas 
+// Message logik Lukas 
 
 class Message extends Model {
 

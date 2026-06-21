@@ -1,6 +1,6 @@
 <?php
 // Tim, Lukas
-// views rendern wenn sie existieren bzw in der whitelist stehen 
+// views rendern wenn sie existieren bzw in der whitelist stehen bzw in allowed
 
 class PageController extends Controller {
     public function show(string $page): void {

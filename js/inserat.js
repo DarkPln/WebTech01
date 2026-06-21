@@ -175,7 +175,7 @@ function initVehicleForm() {
             })
             .catch(function(err) {
                 if (errorDiv) {
-                    errorDiv.textContent = 'Netzwerkfehler – bitte Seite neu laden und erneut versuchen.';
+                    errorDiv.textContent = 'Netzwerkfehler - bitte Seite neu laden und erneut versuchen.';
                     errorDiv.style.display = 'block';
                 }
             })

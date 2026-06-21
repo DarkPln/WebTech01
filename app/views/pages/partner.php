@@ -33,7 +33,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-card-logo">Santander</div>
-                    <p>Santander Consumer Finance – spezialisiert auf Fahrzeugfinanzierungen mit attraktiven Konditionen.</p>
+                    <p>Santander Consumer Finance - spezialisiert auf Fahrzeugfinanzierungen mit attraktiven Konditionen.</p>
                 </div>
                 <div class="partner-card">
                     <div class="partner-card-logo">Targobank</div>
@@ -50,7 +50,7 @@
             <div class="partner-grid">
                 <div class="partner-card">
                     <div class="partner-card-logo">HUK-Coburg</div>
-                    <p>Kfz-Versicherungen zu fairen Preisen – Deutschlands größter Kfz-Versicherer für Privatpersonen.</p>
+                    <p>Kfz-Versicherungen zu fairen Preisen - Deutschlands größter Kfz-Versicherer für Privatpersonen.</p>
                 </div>
                 <div class="partner-card">
                     <div class="partner-card-logo">ADAC</div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-card-logo">Zurich</div>
-                    <p>Zurich Versicherung – zuverlässiger Schutz für Ihr Fahrzeug mit weltweiter Assistance.</p>
+                    <p>Zurich Versicherung - zuverlässiger Schutz für Ihr Fahrzeug mit weltweiter Assistance.</p>
                 </div>
             </div>
         </section>
@@ -106,4 +106,4 @@
 
 </body>
 </html>
-<!-- Tim -->
+

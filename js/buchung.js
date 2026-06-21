@@ -66,7 +66,7 @@ function initBookingButton() {
     });
 }
 
-// Buchen-Buttons in der Merkliste (Klasse "buchungsBtn", mehrere möglich) – Lukas
+// Buchen-Buttons in der Merkliste (Klasse "buchungsBtn", mehrere möglich) - Lukas
 function initBookingButtons() {
     var buttons = document.querySelectorAll('.buchungsBtn');
     if (!buttons.length) return;

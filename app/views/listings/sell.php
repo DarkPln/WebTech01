@@ -14,7 +14,7 @@
             <div class="home-hero-content">
                 <div class="home-badge">Kostenlos inserieren</div>
                 <h1>Fahrzeug inserieren</h1>
-                <p>Füllen Sie das Formular aus – wir prüfen Ihr Inserat und schalten es innerhalb von 24 Stunden frei.</p>
+                <p>Füllen Sie das Formular aus - wir prüfen Ihr Inserat und schalten es innerhalb von 24 Stunden frei.</p>
             </div>
         </section>
 
@@ -37,7 +37,7 @@
                         <div>
                             <label for="sell-fuel">Kraftstoffart *</label>
                             <select id="sell-fuel" name="fuel" required>
-                                <option value="">– bitte wählen –</option>
+                                <option value="">- bitte wählen -</option>
                                 <option value="benzin">Benzin</option>
                                 <option value="diesel">Diesel</option>
                                 <option value="elektro">Elektro</option>
@@ -48,7 +48,7 @@
                         <div>
                             <label for="sell-gearbox">Getriebe *</label>
                             <select id="sell-gearbox" name="gearbox" required>
-                                <option value="">– bitte wählen –</option>
+                                <option value="">- bitte wählen -</option>
                                 <option value="manuell">Manuell</option>
                                 <option value="automatik">Automatik</option>
                                 <option value="halbautomatik">Halbautomatik</option>
@@ -60,7 +60,7 @@
                         <div>
                             <label for="sell-antrieb">Antrieb *</label>
                             <select id="sell-antrieb" name="antrieb" required>
-                                <option value="">– bitte wählen –</option>
+                                <option value="">- bitte wählen -</option>
                                 <option value="Frontantrieb">Frontantrieb (FWD)</option>
                                 <option value="Hinterradantrieb">Hinterradantrieb (RWD)</option>
                                 <option value="Allradantrieb">Allradantrieb (AWD/4x4)</option>
@@ -71,7 +71,7 @@
                         <div>
                             <label for="sell-type">Fahrzeugtyp *</label>
                             <select id="sell-type" name="type" required>
-                                <option value="">– bitte wählen –</option>
+                                <option value="">- bitte wählen -</option>
                                 <option value="limousine">Limousine</option>
                                 <option value="kombi">Kombi</option>
                                 <option value="suv">SUV / Geländewagen</option>
@@ -84,7 +84,7 @@
                     </div>
                     <label for="sell-condition">Zustand *</label>
                     <select id="sell-condition" name="condition" required>
-                        <option value="">– bitte wählen –</option>
+                        <option value="">- bitte wählen -</option>
                         <option value="neuwertig">Neuwertig</option>
                         <option value="sehr-gut">Sehr gut</option>
                         <option value="gut">Gut</option>
@@ -104,7 +104,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
                         </svg>
                         <p><strong>Bild hier ablegen</strong> oder klicken zum Auswählen</p>
-                        <p>JPG, PNG, WEBP – max. 5 MB – 1 Foto (Pflichtfeld)</p>
+                        <p>JPG, PNG, WEBP - max. 5 MB - 1 Foto (Pflichtfeld)</p>
                     </div>
                     <input type="file" id="sell-images" accept="image/jpeg,image/png,image/webp">
                     <div class="image-preview-grid" id="imagePreviewGrid"></div>

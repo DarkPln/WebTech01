@@ -2,7 +2,7 @@
 
 // Tim, Lukas, Niclas 
 
-// Konstanten
+// pfade
 define('BASE_PATH', __DIR__ . '/');
 define('BASE_URL',  '/WebTech01');
 define('VIEW_PATH', BASE_PATH . 'app/views/');

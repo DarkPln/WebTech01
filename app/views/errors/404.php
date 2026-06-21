@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Seite nicht gefunden – Auto24</title>
+    <title>Seite nicht gefunden - Auto24</title>
     <link rel="stylesheet" href="<?php echo  BASE_URL ?>/mystyle.css">
     <!-- Niclas: Implementiert css Datei -->
 </head>

@@ -212,7 +212,10 @@ class AdminController extends Controller {
             // Buttons je nach Workflow-Stufe (bestellt -> in_bearbeitung -> versandt -> fertig)
             $actions = '';
             if ($b['status'] === 'bestellt') {
-                $actions = <<<HTML
+               
+               // heredoc ansonsten aufwendige konkatenation und backslashes
+               
+               $actions = <<<HTML
                     <div class="admin-order-actions">
                         <button onclick="adminSetStatus('$id','in_bearbeitung')">In Bearbeitung</button>
                         <button class="btn-reject" onclick="adminRejectOrder('$id')">Ablehnen</button>

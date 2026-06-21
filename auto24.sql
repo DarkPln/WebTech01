@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS listings (
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Dummy Daten KI generiert! (u.a. Claude verwendet)
+-- Dummy Daten KI generiert! (u.a. Claude verwendet) Das sind die im JSON auch! in JSON keine Kommentare möglich daher hier angemerkt!  
 -- Also Fahrzeugdaten stimmen nicht mit Realität überein SQ7 hat ja nicht 250 ps etc..
 
 INSERT INTO cars (iid, name, beschreibung, imagepath, preis, kategorie, unterkategorie, marke, modell, baujahr, kraftstoff, kilometerstand, leistung_ps, antrieb) VALUES

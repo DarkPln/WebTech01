@@ -98,7 +98,7 @@
                 </details>
 
                 <details class="faq-item">
-                    <summary>Ich habe mein Passwort vergessen – was kann ich tun?</summary>
+                    <summary>Ich habe mein Passwort vergessen - was kann ich tun?</summary>
                     <p>Da wir Passwörter lokal in Ihrem Browser speichern, kann ein vergessenes Passwort leider nicht zurückgesetzt werden. In diesem Fall müssen Sie ein neues Konto anlegen. Wir arbeiten an einer serverseitigen Lösung für zukünftige Versionen.</p>
                 </details>
 
@@ -117,7 +117,7 @@
 
         <section class="home-about">
             <h2>Weitere Fragen?</h2>
-            <p>Haben Sie eine Frage, die hier nicht beantwortet wird? Kontaktieren Sie uns direkt – wir helfen Ihnen gerne weiter.</p>
+            <p>Haben Sie eine Frage, die hier nicht beantwortet wird? Kontaktieren Sie uns direkt - wir helfen Ihnen gerne weiter.</p>
             <div class="home-buttons">
                 <a href="<?php echo  BASE_URL ?>/about" class="home-btn-primary">Kontakt aufnehmen</a>
                 <a href="<?php echo  BASE_URL ?>/" class="home-btn-secondary">Zur Startseite</a>
