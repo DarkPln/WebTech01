@@ -25,6 +25,8 @@ function initAdminPage() {
                     });
                 });
             });
+
+
     } else {
         window.location.href = BASE_URL + '/auth/login';
         return Promise.resolve();

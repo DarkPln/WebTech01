@@ -29,6 +29,23 @@ function handleCancelBooking(buchungsId) {
 // Gemeinsamer Click-Handler für alle Buchen-Buttons
 function handleBuchungsKlick(carId, carName, carPrice) {
     if (!confirm('Möchten Sie "' + carName + '" jetzt buchen?')) return;
+
+    // TIMER-IDEE: Hier könnte ein Reservierungs-Countdown starten (z.B. 10 Minuten).
+    // Solange der Timer läuft, gilt das Fahrzeug als "reserviert" und andere User
+    // sehen es als nicht mehr verfügbar. Bei Ablauf: Buchung abbrechen + User benachrichtigen.
+    //
+    // let seconds = 600;
+    // const timerId = setInterval(() => {
+    //     seconds--;
+    //     document.getElementById('buchungsTimer').textContent =
+    //         `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+    //     if (seconds <= 0) {
+    //         clearInterval(timerId);
+    //         alert('Zeit abgelaufen – Reservierung wurde aufgehoben.');
+    //         window.location.reload();
+    //     }
+    // }, 1000);
+
     createBooking(carId, carName, carPrice).then(ergebnis => {
         if (ergebnis.success) {
             window.location.href = BASE_URL + '/bookings';
